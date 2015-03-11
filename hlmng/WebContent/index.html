@@ -1,0 +1,21 @@
+<!doctype html>
+<html ng-app>
+<head>
+<meta charset="utf-8">
+<title>Hello AngularJS</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+<script src="js/getHTTP.js"></script>
+</head>
+
+<body>
+	<div ng-init="url='rest/user';" ng-controller="getHTTP">
+		<ul>
+			<li ng-repeat="x in httpResponse">{{ x }}</li>
+		</ul>
+<!-- 		<p>The ID is {{httpResponse.deviceID}}</p>
+		<p>The name is {{httpResponse.name}}</p> -->
+	</div>
+</body>
+</html>
+
