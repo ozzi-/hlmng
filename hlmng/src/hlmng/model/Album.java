@@ -3,7 +3,7 @@ package hlmng.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Album {
+public class Album{
 	private int id;
 	private String album;
 	private String artist;

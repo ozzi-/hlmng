@@ -38,6 +38,7 @@ public enum UserDao implements Dao {
 
 	@Override
 	public void updateElement(Object model) {
+		System.out.println(model.toString());
 		User user = (User) model;
 		dbHandle.doUpdateGetResult("update " + tablename + " set name='"
 				+ user.getName() + "' , deviceID='" + user.getDeviceID()
