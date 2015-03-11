@@ -2,6 +2,8 @@ package hlmng.dao;
 
 import hlmng.model.User;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,83 +11,117 @@ import java.util.List;
 
 import db.DB;
 
+
 public enum UserDao implements Dao {
 	instance;
 
+
+	private static final String tablename="user";
+	
+    private static final String addElement = "insert into "+tablename+" (name, deviceID, regID) values (?, ?, ?);";
+    private static final String removeElement = "delete from "+tablename+" where userID = ?;";
+    private static final String listElements = "select * from "+tablename+";";
+    private static final String getElement = "select * from "+tablename+" where userID = ?;";
+    private static final String updateElement = "upadte "+tablename+" set name = ? , deviceID = ? , regID = ? where userID = ?;";
+   
+	
+    
 	private DB dbHandle;
-	private String tablename;
+	private Connection dbConnection;
 
 	UserDao() {
 		dbHandle = new DB("hlmng");
-		tablename = "user";
+		dbConnection = dbHandle.getConnection();
 	}
 
 	@Override
-	public void addElement(Object model) {
+	public boolean addElement(Object model) {
 		User user = (User) model;
-		dbHandle.doUpdateGetResult("insert into " + tablename
-				+ " (name, deviceID) values ('" + user.getName() + "' , '"
-				+ user.getDeviceID() + "')");
+        PreparedStatement ps;
+        int rs=0;
+		try {
+			ps = dbConnection.prepareStatement(addElement);
+	        ps.setString(1,user.getName());
+	        ps.setString(2,user.getDeviceID());
+	        ps.setString(3,user.getRegID());
+	        rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return (rs==1);
 	}
 
 	@Override
 	public boolean deleteElement(String idS) {
 		int id = Integer.parseInt(idS);
-		int delRet = dbHandle.doUpdateGetResult("delete from " + tablename
-				+ " where userID=" + id);
-		return ((delRet == 1 ? true : false));
+        PreparedStatement ps;
+        int rs=0;
+		try {
+			ps = dbConnection.prepareStatement(removeElement);
+	        ps.setInt(1,id);
+	        rs = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return (rs==1);
+		
 	}
 
 	@Override
-	public void updateElement(Object model) {
-		System.out.println(model.toString());
-		User user = (User) model;
-		dbHandle.doUpdateGetResult("update " + tablename + " set name='"
-				+ user.getName() + "' , deviceID='" + user.getDeviceID()
-				+ " where userID=" + user.getUserID());
+	public boolean updateElement(Object element) {
+		User user = (User) element;
+		 PreparedStatement ps;
+	        int rs=0;
+			try {
+				ps = dbConnection.prepareStatement(updateElement);
+		        ps.setString(1,user.getName());
+		        ps.setString(2,user.getDeviceID());
+		        ps.setString(3,user.getRegID());
+		        ps.setInt(4,user.getUserID());
+		        rs = ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return (rs==1);
 	}
 
+
+	
 	@Override
 	public Object getElement(String idS) {
 		int id = Integer.parseInt(idS);
-		ResultSet rs = dbHandle.doQueryGetResult("select * from " + tablename
-				+ " where userID=" + id);
-		int userID = -1;
-		String name = "<error>";
-		String deviceID = "<error>";
+		PreparedStatement ps;
+        ResultSet rs;
+        User user=null;
 		try {
-			if (!rs.isBeforeFirst()) {
-				return null;
-			}
-			rs.next();
-			userID = rs.getInt("userID");
-			name = rs.getString("name");
-			deviceID = rs.getString("deviceID");
+			ps = dbConnection.prepareStatement(getElement);
+			ps.setInt(1,id);
+	        rs = ps.executeQuery();
+	        if (rs.isBeforeFirst() ) {     
+	        	rs.next();
+	        	user=getUserFromRS(rs);
+	        } 
 		} catch (SQLException e) {
-			System.err
-					.println("Error when trying to build album from SQL Resultset");
 			e.printStackTrace();
 		}
-		return new User(userID, name, deviceID);
+		return user;
 	}
 
 	@Override
 	public List<Object> listElements() {
-		ResultSet rs = dbHandle.doQueryGetResult("select * from " + tablename);
-		int userID = 0;
-		String name = "";
-		String deviceID = "";
+        PreparedStatement ps;
+        ResultSet rs;
 		List<Object> userList = new ArrayList<Object>();
 		try {
+			ps = dbConnection.prepareStatement(listElements);
+	        rs = ps.executeQuery();
 			while (rs.next()) {
-				userID = rs.getInt("userID");
-				name = rs.getString("name");
-				deviceID = rs.getString("deviceID");
-				userList.add(new User(userID, name, deviceID));
+				userList.add(getUserFromRS(rs));
 			}
 		} catch (SQLException e) {
-			System.err
-					.println("Error when trying to build User list from SQL Resultset");
 			e.printStackTrace();
 		}
 		return userList;
@@ -96,4 +132,21 @@ public enum UserDao implements Dao {
 		return instance;
 	}
 
+	
+	private User getUserFromRS(ResultSet rs){
+		int userID = -1;
+		String name = "<error>";
+		String deviceID = "<error>";
+		String regID = "<error>";
+		try {
+			userID = rs.getInt("userID");
+			name = rs.getString("name");
+			deviceID = rs.getString("deviceID");
+			regID = rs.getString("regID");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new User(userID, name, deviceID,regID);
+	}
+	
 }

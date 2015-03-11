@@ -101,4 +101,8 @@ public class DB {
 	    }
 	    return crs;
 	}
+	
+	public Connection getConnection() {
+		return connection;
+	}
 }

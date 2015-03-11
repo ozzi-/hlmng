@@ -1,4 +1,4 @@
-package hlmng.album;
+package hlmng.resource;
 
 import hlmng.dao.AlbumDao;
 import hlmng.model.Album;

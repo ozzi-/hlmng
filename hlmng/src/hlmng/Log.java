@@ -39,7 +39,7 @@ public class Log {
 			if (logger == null) {
 				startLogger();
 			}
-	       logger.log(level, message);
+	       //logger.log(level, message); TODO
 	}
 
 

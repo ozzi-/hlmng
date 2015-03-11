@@ -1,4 +1,4 @@
-package hlmng;
+package hlmng.resource;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ public class FormCreator {
 	String httpOutput=" <!DOCTYPE html> <html> <head> <title>Form to create a new resource of type "+name+"</title> </head>";
 	name=name.toLowerCase();
 	
-	Class<?> cls = Class.forName("model."+upperCaseFirstLetter(name));
+	Class<?> cls = Class.forName("hlmng.model."+upperCaseFirstLetter(name));
 	Field[] methods = cls.getDeclaredFields();
 	
 	httpOutput+="<body>Form to create a new resource of type "+name+" <form action=\"../"+name+"\" method=\"POST\">";
