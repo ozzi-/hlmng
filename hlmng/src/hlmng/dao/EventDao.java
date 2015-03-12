@@ -1,7 +1,7 @@
 package hlmng.dao;
 
 import hlmng.Log;
-import hlmng.model.User;
+import hlmng.model.Event;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,39 +14,44 @@ import java.util.logging.Level;
 import db.DB;
 
 
-public enum UserDao implements Dao {
+public enum EventDao implements Dao{
 	instance;
 	
-	private static final String addElement = QueryBuilder.BuildQuery("User",QueryBuilder.opType.add);
-    private static final String removeElement = QueryBuilder.BuildQuery("User",QueryBuilder.opType.delete);
-    private static final String listElements = QueryBuilder.BuildQuery("User",QueryBuilder.opType.list);
-    private static final String getElement = QueryBuilder.BuildQuery("User",QueryBuilder.opType.get);
-    private static final String updateElement = QueryBuilder.BuildQuery("User",QueryBuilder.opType.update);
+    private static final String addElement = QueryBuilder.BuildQuery("Event",QueryBuilder.opType.add);
+    private static final String removeElement = QueryBuilder.BuildQuery("Event",QueryBuilder.opType.delete);
+    private static final String listElements = QueryBuilder.BuildQuery("Event",QueryBuilder.opType.list);
+    private static final String getElement = QueryBuilder.BuildQuery("Event",QueryBuilder.opType.get);
+    private static final String updateElement = QueryBuilder.BuildQuery("Event",QueryBuilder.opType.update);
     
-
+    
     
 	private DB dbHandle;
 	private Connection dbConnection;
 
-	UserDao() {
+	EventDao() {
 		dbHandle = new DB("hlmng");
 		dbConnection = dbHandle.getConnection();
 	}
-
+    
+    
 	@Override
 	public boolean addElement(Object model) {
-		User user = (User) model;
+		Event event = (Event) model;
         PreparedStatement ps;
         int rs=0;
-		try {
+		try {			
 			ps = dbConnection.prepareStatement(addElement);
-			ps = DB.setAllFieldsOfPS(ps, User.class, user,null);
-			rs = ps.executeUpdate();
+	        ps.setString(1,event.getName());
+	        ps.setString(2,event.getDescription());
+	        ps.setString(3, event.getStart());
+	        ps.setString(4, event.getEnd());
+	        rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-		Log.addEntry(Level.INFO,"User Element add ("+user+")="+rs);
+
+		Log.addEntry(Level.INFO,"Event Element add ("+event+")="+rs);
 		return (rs==1);
 	}
 
@@ -57,77 +62,77 @@ public enum UserDao implements Dao {
         int rs=0;
 		try {
 			ps = dbConnection.prepareStatement(removeElement);
-			ps=DB.setIdFieldOfPS(ps,id);
+	        ps.setInt(1,id);
 	        rs = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-		Log.addEntry(Level.INFO,"User Element delete ("+id+")="+rs);
+		Log.addEntry(Level.INFO,"Event Element delete ("+id+")="+rs);
 		return (rs==1);
-		
 	}
 
 	@Override
-	public boolean updateElement(Object element, String idS) {
+	public boolean updateElement(Object model, String idS) {
 		int id = Integer.parseInt(idS);
-		User user = (User) element;
+		Event event = (Event) model;
 		PreparedStatement ps;
 		int rs=0;
 		try {
 			ps = dbConnection.prepareStatement(updateElement);
-			ps = DB.setAllFieldsOfPS(ps, User.class, user,id);
+	        ps.setString(1,event.getName());
+	        ps.setString(2,event.getDescription());
+	        ps.setString(3,event.getStart());
+	        ps.setString(4,event.getEnd());
+			ps.setInt(4,id);
 			rs = ps.executeUpdate();
-		}catch (SQLException e) {	
+		}catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-		Log.addEntry(Level.INFO,"User Element update ("+user+")="+rs);
+		Log.addEntry(Level.INFO,"User Element update ("+event+")="+rs);
 		return (rs==1);
 	}
 
-
-	
 	@Override
 	public Object getElement(String idS) {
 		int id = Integer.parseInt(idS);
 		PreparedStatement ps;
         ResultSet rs;
-        User user=null;
+        Event event=null;
 		try {
 			ps = dbConnection.prepareStatement(getElement);
-			ps=DB.setIdFieldOfPS(ps,id);
+			ps.setInt(1,id);
 	        rs = ps.executeQuery();
 	        if (rs.isBeforeFirst() ) {     
 	        	rs.next();
-				user=DB.getObjectFromRS(rs,User.class);
-			} 
+				event=DB.getObjectFromRS(rs,Event.class);
+	        } 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		Log.addEntry(Level.INFO,"User Element get ("+user+")");
-		return user;
+		Log.addEntry(Level.INFO,"Event Element get ("+event+")");
+		return event;
 	}
 
 	@Override
 	public List<Object> listElements() {
         PreparedStatement ps;
         ResultSet rs;
-		List<Object> userList = new ArrayList<Object>();
+		List<Object> eventList = new ArrayList<Object>();
 		try {
 			ps = dbConnection.prepareStatement(listElements);
 	        rs = ps.executeQuery();
 			while (rs.next()) {
-				userList.add(DB.getObjectFromRS(rs,User.class));
+				eventList.add(DB.getObjectFromRS(rs,Event.class));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		Log.addEntry(Level.INFO,"User Element list ("+userList.hashCode()+"["+userList.size()+"])");
-		return userList;
+		Log.addEntry(Level.INFO,"Event Element list ("+eventList.hashCode()+"["+eventList.size()+"])");
+		return eventList;
 	}
 
-	@Override
 	public Dao getInstance() {
 		return instance;
 	}

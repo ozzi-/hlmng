@@ -1,6 +1,9 @@
 package hlmng;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +16,8 @@ import java.util.logging.SimpleFormatter;
 public class Log {
 	
 	private static Logger logger=null;
-
+	private static boolean debug=true;
+	
 	protected static void startLogger() {
 		logger = Logger.getLogger("hlmng");
 		FileHandler fh = null;
@@ -39,8 +43,18 @@ public class Log {
 			if (logger == null) {
 				startLogger();
 			}
-	       //logger.log(level, message); TODO
+			if(debug){
+				System.err.println(getTime()+" | "+level+" | "+message);
+			}else{
+				logger.log(level, message);				
+			}
 	}
 
+	
+	public static String getTime(){
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
 
 }

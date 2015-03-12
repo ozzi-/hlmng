@@ -1,10 +1,10 @@
 package hlmng.resource;
 
-import hlmng.auth.AuthChecker;
-import hlmng.dao.UserDao;
-import hlmng.model.User;
+import hlmng.dao.EventDao;
+import hlmng.model.Event;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,8 +25,8 @@ import javax.ws.rs.core.UriInfo;
 
 
 
-@Path("/user")
-public class UserResource  {
+@Path("/event")
+public class EventResource  {
 	
     @Context
     private UriInfo uriInfo;
@@ -40,8 +40,8 @@ public class UserResource  {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getUsers() {
-		return UserDao.instance.listElements();
+	public List<Object> getEvent() {
+		return EventDao.instance.listElements();
 	}
 
 	
@@ -49,33 +49,37 @@ public class UserResource  {
 	@Path("count")
 	@Produces(MediaType.TEXT_PLAIN)
 	public int getCount() {
-		return UserDao.instance.listElements().size();
+		return EventDao.instance.listElements().size();
 	}
+
+
 
 	
 	@GET
 	@Path("{id}")
-	public User getUser(@PathParam("id") String id,
+	public Event getEvent(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
-		AuthChecker.check(headers, servletResponse);
-		Object obj=UserDao.instance.getElement(id);
+		Object obj=EventDao.instance.getElement(id);
 		if(obj==null){
 		    response.sendError(Response.Status.NOT_FOUND.getStatusCode());
 		}
-		return (User)obj;
-	}
+		Event evt=(Event) obj;
+		return evt;
+
 	
+	}
+	 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putUser(User element,@PathParam("id") String id) {
+	public Response putEvent(Event element,@PathParam("id") String id) {
 		Response res;
-		if (UserDao.instance.getElement(id)!=null) {
-			UserDao.instance.updateElement(element,id);
+		if (EventDao.instance.getElement(id)!=null) {
+			EventDao.instance.updateElement(element,id);
 			res = Response.accepted().build();
 		}else{
-			UserDao.instance.addElement(element);
+			EventDao.instance.addElement(element);
 			res = Response.created(uriInfo.getAbsolutePath()).build();	
 		}
 		return res;	
@@ -83,8 +87,8 @@ public class UserResource  {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newUser(User element) throws IOException {
-		UserDao.instance.addElement(element);
+	public Response newEvent(Event element) throws IOException {
+		EventDao.instance.addElement(element);
 		return Response.ok().build();
 	}
 	
@@ -92,13 +96,16 @@ public class UserResource  {
 	@POST
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response newUser(@FormParam("name") String name,
-			@FormParam("deviceID") String deviceID, @FormParam("regID") String regID,
+	public Response newEvent(@FormParam("name") String name,
+			@FormParam("description") String description, 
+			@FormParam("start") String start,
+			@FormParam("end") String end,
 			@Context HttpServletResponse servletResponse) throws IOException {
-		User addUser = new User(name, deviceID,regID);
-		UserDao.instance.addElement(addUser);
+		Event addEvent = new Event(name,description,start,end);
+		EventDao.instance.addElement(addEvent);
 		return Response.ok().build();
 	}
 
 
 }
+

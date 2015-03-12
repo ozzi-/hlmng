@@ -4,10 +4,15 @@ import java.util.List;
 
 
 public interface Dao {
-	public boolean addElement(Object model);
-	public boolean deleteElement(String id);
-	public boolean updateElement(Object model);
-	public Object getElement(String idS);
-	public List<Object> listElements();
-	public Dao getInstance();
+	public abstract boolean addElement(Object model);
+	public abstract boolean deleteElement(String idS);
+	public abstract boolean updateElement(Object model, String idS);
+	public abstract Object getElement(String idS);
+	public abstract List<Object> listElements();
+	public abstract Dao getInstance();
+	
+	
 }
+	
+
+

@@ -13,6 +13,9 @@ public class User{
 		this.regID=regID;
 	}
 	
+	public User(){
+		
+	}
 	public User(int userID, String name, String deviceID,String regID){
 		this.userID=userID;
 		this.name=name;
