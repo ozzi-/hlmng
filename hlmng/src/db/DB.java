@@ -1,7 +1,5 @@
 package db;
 
-import hlmng.dao.QueryBuilder;
-
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -62,6 +60,17 @@ public class DB {
 	}
 
 	
+	
+
+	public static <T> PreparedStatement setIdFieldOfPS(PreparedStatement ps, int id) {
+		try {
+			ps.setObject(1,id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
+	}
+
 	public static <T> T getObjectFromRS(ResultSet resultSet, Class<T> type) {
 		T instance=null;
 		try {
@@ -77,19 +86,8 @@ public class DB {
 		}
 		return instance;
 	}
-	
 
-	public static <T> PreparedStatement setIdFieldOfPS(PreparedStatement ps, int id) {
-		try {
-			ps.setObject(1,id);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return ps;
-	}
-
-
-	public static <T> PreparedStatement setAllFieldsOfPS(PreparedStatement ps, Class<T> classType,T instance,Integer idLastParam) {
+	public static <T> PreparedStatement setAllFieldsOfPS(PreparedStatement ps, Class<?> classType,T tModel,Integer idLastParam) {
 		int i=0;
 		Object value;
 		PropertyDescriptor propertyDescriptor;
@@ -101,7 +99,7 @@ public class DB {
 				try {
 					propertyDescriptor = new PropertyDescriptor(field.getName(), classType);
 					Method method = propertyDescriptor.getReadMethod();
-					value = method.invoke(instance);
+					value = method.invoke(tModel);
 					ps.setObject(++i, value);
 				} catch (Exception e) {
 					e.printStackTrace();

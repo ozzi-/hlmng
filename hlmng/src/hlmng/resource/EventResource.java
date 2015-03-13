@@ -1,10 +1,9 @@
 package hlmng.resource;
 
-import hlmng.dao.EventDao;
+import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +40,7 @@ public class EventResource  {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEvent() {
-		return EventDao.instance.listElements();
+		return GenDaoLoader.instance.getEventDao().listElements();
 	}
 
 	
@@ -49,7 +48,7 @@ public class EventResource  {
 	@Path("count")
 	@Produces(MediaType.TEXT_PLAIN)
 	public int getCount() {
-		return EventDao.instance.listElements().size();
+		return GenDaoLoader.instance.getEventDao().listElements().size();
 	}
 
 
@@ -60,27 +59,28 @@ public class EventResource  {
 	public Event getEvent(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
-		Object obj=EventDao.instance.getElement(id);
-		if(obj==null){
-		    response.sendError(Response.Status.NOT_FOUND.getStatusCode());
-		}
+		Object obj =  GenDaoLoader.instance.getEventDao().getElement(id);
+		ResourceHelper.sendErrorIfNull(obj,response);
 		Event evt=(Event) obj;
 		return evt;
 
 	
 	}
-	 
+
+
+
+
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response putEvent(Event element,@PathParam("id") String id) {
 		Response res;
-		if (EventDao.instance.getElement(id)!=null) {
-			EventDao.instance.updateElement(element,id);
+		if (GenDaoLoader.instance.getEventDao().getElement(id)!=null){
+			GenDaoLoader.instance.getEventDao().updateElement(element, id);
 			res = Response.accepted().build();
 		}else{
-			EventDao.instance.addElement(element);
-			res = Response.created(uriInfo.getAbsolutePath()).build();	
+			boolean ok = GenDaoLoader.instance.getEventDao().addElement(element);
+			res= ResourceHelper.returnOkOrErrorResponse(ok);
 		}
 		return res;	
 	}
@@ -88,9 +88,11 @@ public class EventResource  {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newEvent(Event element) throws IOException {
-		EventDao.instance.addElement(element);
-		return Response.ok().build();
+		boolean ok = GenDaoLoader.instance.getEventDao().addElement(element);
+		return ResourceHelper.returnOkOrErrorResponse(ok);
 	}
+
+
 	
 	// FORMS
 	@POST
@@ -102,8 +104,8 @@ public class EventResource  {
 			@FormParam("end") String end,
 			@Context HttpServletResponse servletResponse) throws IOException {
 		Event addEvent = new Event(name,description,start,end);
-		EventDao.instance.addElement(addEvent);
-		return Response.ok().build();
+		boolean ok = GenDaoLoader.instance.getEventDao().addElement(addEvent);
+		return ResourceHelper.returnOkOrErrorResponse(ok);
 	}
 
 

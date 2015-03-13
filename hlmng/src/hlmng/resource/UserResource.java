@@ -1,7 +1,7 @@
 package hlmng.resource;
 
 import hlmng.auth.AuthChecker;
-import hlmng.dao.UserDao;
+import hlmng.dao.GenDaoLoader;
 import hlmng.model.User;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ import javax.ws.rs.core.UriInfo;
 
 
 @Path("/user")
-public class UserResource  {
+public class  UserResource  {
 	
     @Context
     private UriInfo uriInfo;
@@ -36,12 +36,12 @@ public class UserResource  {
 	private String id;
 	@Context 
 	private HttpServletResponse response;
-
 	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getUsers() {
-		return UserDao.instance.listElements();
+		return GenDaoLoader.instance.getUserDao().listElements();
 	}
 
 	
@@ -49,7 +49,7 @@ public class UserResource  {
 	@Path("count")
 	@Produces(MediaType.TEXT_PLAIN)
 	public int getCount() {
-		return UserDao.instance.listElements().size();
+		return GenDaoLoader.instance.getUserDao().listElements().size();
 	}
 
 	
@@ -59,10 +59,8 @@ public class UserResource  {
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
 		AuthChecker.check(headers, servletResponse);
-		Object obj=UserDao.instance.getElement(id);
-		if(obj==null){
-		    response.sendError(Response.Status.NOT_FOUND.getStatusCode());
-		}
+		Object obj=GenDaoLoader.instance.getUserDao().getElement(id);
+		ResourceHelper.sendErrorIfNull(obj,response);
 		return (User)obj;
 	}
 	
@@ -71,12 +69,12 @@ public class UserResource  {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response putUser(User element,@PathParam("id") String id) {
 		Response res;
-		if (UserDao.instance.getElement(id)!=null) {
-			UserDao.instance.updateElement(element,id);
+		if (GenDaoLoader.instance.getUserDao().getElement(id)!=null){
+			GenDaoLoader.instance.getUserDao().updateElement(element, id);
 			res = Response.accepted().build();
 		}else{
-			UserDao.instance.addElement(element);
-			res = Response.created(uriInfo.getAbsolutePath()).build();	
+			boolean ok = GenDaoLoader.instance.getUserDao().addElement(element);
+			res =  ResourceHelper.returnOkOrErrorResponse(ok);	
 		}
 		return res;	
 	}
@@ -84,8 +82,8 @@ public class UserResource  {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newUser(User element) throws IOException {
-		UserDao.instance.addElement(element);
-		return Response.ok().build();
+		boolean ok = GenDaoLoader.instance.getUserDao().addElement(element);
+		return ResourceHelper.returnOkOrErrorResponse(ok);
 	}
 	
 	// FORMS
@@ -95,9 +93,9 @@ public class UserResource  {
 	public Response newUser(@FormParam("name") String name,
 			@FormParam("deviceID") String deviceID, @FormParam("regID") String regID,
 			@Context HttpServletResponse servletResponse) throws IOException {
-		User addUser = new User(name, deviceID,regID);
-		UserDao.instance.addElement(addUser);
-		return Response.ok().build();
+		Object addUser = (Object)new User(name, deviceID,regID);
+		boolean ok = GenDaoLoader.instance.getUserDao().addElement(addUser);
+		return ResourceHelper.returnOkOrErrorResponse(ok);
 	}
 
 

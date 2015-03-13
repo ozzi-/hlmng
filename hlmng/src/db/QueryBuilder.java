@@ -1,11 +1,11 @@
-package hlmng.dao;
+package db;
 
 import java.lang.reflect.Field;
 
 public class QueryBuilder {
 
 	public static String BuildQuery(String className, opType type){
-		System.out.println("BUILDING QUERY");
+		System.out.println("Building Query for "+className+" for type "+type.toString());
 		String query=null;
 		String tableName = className.toLowerCase();
 		String tableID=tableName+"ID";
