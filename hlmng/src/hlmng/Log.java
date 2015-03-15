@@ -40,7 +40,7 @@ public class Log {
 	
 	
 	public static void addEntry(Level level, String message){
-			if (logger == null) {
+			if (logger == null && !debug) {
 				startLogger();
 			}
 			if(debug){

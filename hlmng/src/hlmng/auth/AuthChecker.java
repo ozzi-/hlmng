@@ -18,7 +18,7 @@ import org.json.simple.parser.ParseException;
 
 /**
  * 
- * AuthChecker provides a public method "check" which inspects the http headers
+ * AuthChecker provides a public method "check" which inspects the HTTP headers
  * and makes a lookup if a auth was provided and if it was correct.
  * If anything is wrong then a 401 message is sent to the client.
  *
@@ -28,7 +28,10 @@ public class AuthChecker {
 	private static List<AuthCredential> logins=new ArrayList<AuthCredential>();
 	private static boolean loginsLoaded=false;
 	
-	
+	/**
+	 * Load the logins from the backendlogins json file. This method is called  automatically if required
+	 * @return true if were able to load
+	 */
 	private static boolean loadLogins(){
        JSONParser parser = new JSONParser();
        JSONArray jArray=null;
@@ -47,6 +50,12 @@ public class AuthChecker {
 		return true;
 	}
 	
+	/**
+	 * Checks if a Authorization header is sent and if it contains an authorized Base64 encoded login
+	 * If something isn't ok a unauthorized will be sent, if everything is ok -> do nothing and continue
+	 * @param headers
+	 * @param servletResponse
+	 */
 	public static void check(@Context HttpHeaders headers, @Context HttpServletResponse servletResponse) {
 		AuthCredential authCredentials = null;
 

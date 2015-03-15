@@ -1,9 +1,7 @@
 package db;
 
-import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,12 +11,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import com.owlike.genson.convert.DefaultConverters.PrimitiveConverterFactory.booleanConverter;
 import com.sun.rowset.CachedRowSetImpl;
 
-
-
-
+/**
+ * This class handles the creation of a DB connection, allows building dynamic prepared statements.
+ * This only works if you are using the same class name and field names as declared in the SQL Database!
+ * @author ozgheb
+ *
+ */
 public class DB {
 	private static final String dbClassName = "com.mysql.jdbc.Driver";
 	private static final String dbRoot = "jdbc:mysql://127.0.0.1/";
@@ -60,8 +60,13 @@ public class DB {
 	}
 
 	
-	
-
+	/**
+	 * Use this to build a prepared statement where you only have to set an ID.	
+	 * Example: Select Element or Delete Element
+	 * @param PreparedStatement which you want to set the fields
+	 * @param The ID value which will be set as first field in the prepared statement
+	 * @return The prepared Statment
+	 */
 	public static <T> PreparedStatement setIdFieldOfPS(PreparedStatement ps, int id) {
 		try {
 			ps.setObject(1,id);
@@ -71,6 +76,12 @@ public class DB {
 		return ps;
 	}
 
+	/**
+	 * Returns (the first) object from the result set
+	 * @param resultSet of the query returning (hopefully only one) object
+	 * @param Add the type class of the desired document so it can be dynamically built
+	 * @return
+	 */
 	public static <T> T getObjectFromRS(ResultSet resultSet, Class<T> type) {
 		T instance=null;
 		try {
@@ -87,6 +98,16 @@ public class DB {
 		return instance;
 	}
 
+	
+
+	/** 
+	 * Use this to build a prepared statement where you have to set all fields.
+	 * @param The prepared statement which you want to set the values
+	 * @param The class type of the provided object
+	 * @param The object which will provide the values, all fields will be extracted and set
+	 * @param If you are making an insert statment you won't have to add a ID so pass NULL! Else the ID should be the one of the object in the DB which you want to change (... where ID={x} ) 
+	 * @return The prepared statement 
+	 */
 	public static <T> PreparedStatement setAllFieldsOfPS(PreparedStatement ps, Class<?> classType,T tModel,Integer idLastParam) {
 		int i=0;
 		Object value;
@@ -115,11 +136,13 @@ public class DB {
 		}
 		return ps;
 	}
-	
-	
-	
 
 	
+	/**
+	 * @deprecated
+	 * @param updateStr
+	 * @return
+	 */
 	public int doUpdateGetResult(String updateStr) {
 		Statement stmt = null;
 	    ResultSet resultSet = null;
@@ -144,6 +167,12 @@ public class DB {
 	    return resultVal;
 	}
 	
+	
+	/**
+	 * @deprecated
+	 * @param queryStr
+	 * @return
+	 */
 	public ResultSet doQueryGetResult(String queryStr) {
 	    Statement stmt = null;
 	    ResultSet resultSet = null;

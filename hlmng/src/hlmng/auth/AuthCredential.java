@@ -30,6 +30,11 @@ public class AuthCredential{
 		this.password = password;
 	}
 	
+	/** 
+	 * Compare to accounts if username and pw is the same
+	 * @param the other AuthCredential object you wish to compare
+	 * @return true if same or false if something is different
+	 */
 	public boolean equals(AuthCredential other){
 		if(this.getUsername().equals(other.getUsername()) && this.getPassword().equals(other.getPassword())){
 			return true;

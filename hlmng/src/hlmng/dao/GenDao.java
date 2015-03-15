@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 import db.DB;
@@ -22,6 +23,7 @@ public class GenDao {
     private String getElement; 
     private String updateElement;
     private String className;
+    private Map joinElement;
 	private Class<?> classType;
 	private static DB dbHandle = new DB("hlmng");
 	private static Connection dbConnection = dbHandle.getConnection();
@@ -40,6 +42,7 @@ public class GenDao {
 	    listElements = QueryBuilder.BuildQuery(className,QueryBuilder.opType.list);
 	    getElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.get);
 	    updateElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.update);
+	    joinElement = QueryBuilder.BuildJoinQuery(className);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -117,21 +120,39 @@ public class GenDao {
 		return element;
 	}
 	
-	public <T> List<Object> listElements() {
-        PreparedStatement ps;
+	public <T> List<Object> listByFK(String fkName, String idFkS){
+		int idFK = Integer.parseInt(idFkS);
+        PreparedStatement ps; // TODO refactor this
         ResultSet rs;
-		List<Object> userList = new ArrayList<Object>();
+		List<Object> elemList = new ArrayList<Object>();
 		try {
-			ps = dbConnection.prepareStatement(listElements);
+			ps = dbConnection.prepareStatement(joinElement.get(fkName).toString());
+			ps=DB.setIdFieldOfPS(ps,idFK);
 	        rs = ps.executeQuery();
 			while (rs.next()) {
-				userList.add(DB.getObjectFromRS(rs,classType));
+				elemList.add(DB.getObjectFromRS(rs,classType));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		Log.addEntry(Level.INFO,className+" Element list ("+userList.hashCode()+"["+userList.size()+"])");
-		return userList;
+		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
+		return elemList;
 	}
-
+	
+	public <T> List<Object> listElements() {
+        PreparedStatement ps;
+        ResultSet rs;
+		List<Object> elemList = new ArrayList<Object>();
+		try {
+			ps = dbConnection.prepareStatement(listElements);
+	        rs = ps.executeQuery();
+			while (rs.next()) {
+				elemList.add(DB.getObjectFromRS(rs,classType));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
+		return elemList;
+	}
 }

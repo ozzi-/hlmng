@@ -2,6 +2,7 @@ package hlmng.resource;
 
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
+import hlmng.model.EventItem;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,7 +68,16 @@ public class EventResource  {
 	
 	}
 
-
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("{id}/eventitems")
+	public List<Object> getEventItems(@PathParam("id") String id,
+			@Context HttpHeaders headers,
+			@Context HttpServletResponse servletResponse) throws IOException{
+		Object obj=GenDaoLoader.instance.getEventItemDao().listByFK("eventIDFK",id);
+		ResourceHelper.sendErrorIfNull(obj,response);
+		return (List<Object>) obj;
+	}
 
 
 	@PUT
