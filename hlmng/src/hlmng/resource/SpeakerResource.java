@@ -1,7 +1,6 @@
 package hlmng.resource;
 
 import hlmng.dao.GenDaoLoader;
-import hlmng.model.Media;
 import hlmng.model.Speaker;
 
 import java.io.IOException;
@@ -67,7 +66,8 @@ public class SpeakerResource  {
 	public List<Object> getSpeakerMedia(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
-		return  GenDaoLoader.instance.getMediaDao().getElements(id);
+		Speaker speaker =  (Speaker)GenDaoLoader.instance.getSpeakerDao().getElement(id);
+		return  GenDaoLoader.instance.getMediaDao().getElements(Integer.toString(speaker.getMediaIDFK()));
 	}
 
 	@PUT

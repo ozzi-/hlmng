@@ -125,6 +125,32 @@ public class GenDao {
 		return element;
 	}
 	
+	
+	
+	public <T> List<Object> listByFK(String fkName, String idFkS){
+		int idFK = Integer.parseInt(idFkS);
+        PreparedStatement ps;
+        ResultSet rs;
+		List<Object> elemList = new ArrayList<Object>();
+		try {
+			ps = dbConnection.prepareStatement(fkElement.get(fkName).toString());
+			ps=DB.setIdFieldOfPS(ps,idFK);
+	        rs = ps.executeQuery();
+			while (rs.next()) {
+				elemList.add(DB.getObjectFromRS(rs,classType));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
+		return elemList;
+	}
+	
+	
+	/**
+	 * 
+	 * @return A list of all elements from the specified class/model
+	 */
 	public <T> List<Object> listElements() {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -144,7 +170,7 @@ public class GenDao {
 
 	/**
 	 * @param id
-	 * @return A list with all elements from said class where the ID is = @param
+	 * @return  @return A list of all elements from the specified class/model where the ID is equal to @param
 	 */
 	public <T> List<Object> getElements(String idS) {
 		int id = Integer.parseInt(idS);
@@ -165,23 +191,5 @@ public class GenDao {
 		return elemList;
 	}
 	
-	public <T> List<Object> listByFK(String fkName, String idFkS){
-		int idFK = Integer.parseInt(idFkS);
-        PreparedStatement ps; // TODO refactor this
-        ResultSet rs;
-		List<Object> elemList = new ArrayList<Object>();
-		try {
-			ps = dbConnection.prepareStatement(fkElement.get(fkName).toString());
-			ps=DB.setIdFieldOfPS(ps,idFK);
-	        rs = ps.executeQuery();
-			while (rs.next()) {
-				elemList.add(DB.getObjectFromRS(rs,classType));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
-		return elemList;
-	}
 	
 }
