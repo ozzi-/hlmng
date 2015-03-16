@@ -78,6 +78,17 @@ public class EventResource  {
 		ResourceHelper.sendErrorIfNull(obj,response);
 		return (List<Object>) obj;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("{id}/eventrooms")
+	public List<Object> getEventRooms(@PathParam("id") String id,
+			@Context HttpHeaders headers,
+			@Context HttpServletResponse servletResponse) throws IOException{
+		Object obj=GenDaoLoader.instance.getEventRoomDao().listByFK("eventIDFK",id);
+		ResourceHelper.sendErrorIfNull(obj,response);
+		return (List<Object>) obj;
+	}
 
 
 	@PUT
