@@ -3,7 +3,9 @@ package hlmng.dao;
 import hlmng.model.Event;
 import hlmng.model.EventItem;
 import hlmng.model.EventRoom;
+import hlmng.model.Speaker;
 import hlmng.model.User;
+import hlmng.model.Media;
 
 public enum GenDaoLoader {
 	instance;
@@ -12,6 +14,8 @@ public enum GenDaoLoader {
 	private GenDao eventDao;
 	private GenDao eventItemDao;
 	private GenDao eventRoomDao;
+	private GenDao speakerDao;
+	private GenDao mediaDao;
 
 	private GenDaoLoader() {
 		System.out.println("GenDaoLoader starting!");
@@ -19,6 +23,8 @@ public enum GenDaoLoader {
 		eventDao = new GenDao(Event.class);
 		eventItemDao = new GenDao(EventItem.class);
 		eventRoomDao= new GenDao(EventRoom.class);
+		speakerDao= new GenDao(Speaker.class);
+		mediaDao= new GenDao(Media.class);
 	}
 
 	public GenDao getUserDao() {
@@ -38,8 +44,12 @@ public enum GenDaoLoader {
 		return eventRoomDao;
 	}
 
-	public void setEventRoomDao(GenDao eventRoomDao) {
-		this.eventRoomDao = eventRoomDao;
+	public GenDao getSpeakerDao() {
+		return speakerDao;
+	}
+
+	public GenDao getMediaDao() {
+		return mediaDao;
 	}
 
 }

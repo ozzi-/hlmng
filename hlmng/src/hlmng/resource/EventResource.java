@@ -2,7 +2,6 @@ package hlmng.resource;
 
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
-import hlmng.model.EventItem;
 
 import java.io.IOException;
 import java.util.List;

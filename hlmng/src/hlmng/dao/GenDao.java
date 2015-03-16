@@ -23,7 +23,7 @@ public class GenDao {
     private String getElement; 
     private String updateElement;
     private String className;
-    private Map joinElement;
+    private Map fkElement;
 	private Class<?> classType;
 	private static DB dbHandle = new DB("hlmng");
 	private static Connection dbConnection = dbHandle.getConnection();
@@ -42,7 +42,7 @@ public class GenDao {
 	    listElements = QueryBuilder.BuildQuery(className,QueryBuilder.opType.list);
 	    getElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.get);
 	    updateElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.update);
-	    joinElement = QueryBuilder.BuildJoinQuery(className);
+	    fkElement = QueryBuilder.buildFKQuery(className);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -100,6 +100,11 @@ public class GenDao {
 		return (rs==1);
 	}
 	
+	/**
+	 * Gets (the first) element from said class where ID = @param
+	 * @param idS
+	 * @return
+	 */
 	public <T> Object getElement(String idS) {
 		int id = Integer.parseInt(idS);
 		PreparedStatement ps;
@@ -120,13 +125,53 @@ public class GenDao {
 		return element;
 	}
 	
+	public <T> List<Object> listElements() {
+		PreparedStatement ps;
+		ResultSet rs;
+		List<Object> elemList = new ArrayList<Object>();
+		try {
+			ps = dbConnection.prepareStatement(listElements);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				elemList.add(DB.getObjectFromRS(rs,classType));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
+		return elemList;
+	}
+
+	/**
+	 * @param id
+	 * @return A list with all elements from said class where the ID is = @param
+	 */
+	public <T> List<Object> getElements(String idS) {
+		int id = Integer.parseInt(idS);
+		PreparedStatement ps;
+        ResultSet rs;
+		List<Object> elemList = new ArrayList<Object>();
+		try {
+			ps = dbConnection.prepareStatement(getElement);
+			ps=DB.setIdFieldOfPS(ps,id);
+	        rs = ps.executeQuery();
+	        while(rs.next()){
+				elemList.add(DB.getObjectFromRS(rs,classType));
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Log.addEntry(Level.INFO,className+" Elements get list ("+elemList+")");
+		return elemList;
+	}
+	
 	public <T> List<Object> listByFK(String fkName, String idFkS){
 		int idFK = Integer.parseInt(idFkS);
         PreparedStatement ps; // TODO refactor this
         ResultSet rs;
 		List<Object> elemList = new ArrayList<Object>();
 		try {
-			ps = dbConnection.prepareStatement(joinElement.get(fkName).toString());
+			ps = dbConnection.prepareStatement(fkElement.get(fkName).toString());
 			ps=DB.setIdFieldOfPS(ps,idFK);
 	        rs = ps.executeQuery();
 			while (rs.next()) {
@@ -139,20 +184,4 @@ public class GenDao {
 		return elemList;
 	}
 	
-	public <T> List<Object> listElements() {
-        PreparedStatement ps;
-        ResultSet rs;
-		List<Object> elemList = new ArrayList<Object>();
-		try {
-			ps = dbConnection.prepareStatement(listElements);
-	        rs = ps.executeQuery();
-			while (rs.next()) {
-				elemList.add(DB.getObjectFromRS(rs,classType));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
-		return elemList;
-	}
 }
