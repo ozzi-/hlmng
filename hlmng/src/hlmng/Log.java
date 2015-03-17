@@ -10,14 +10,18 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 /**
- * Example usage: 		Log.addEntry(Level.INFO, "USER RESSOURCE " + id + " GET");
- *
+ * Example usage: Log.addEntry(Level.INFO, "USER RESSOURCE " + id + " GET"); 
+ * @author ozgheb
  */
 public class Log {
-	
-	private static Logger logger=null;
-	private static boolean debug=true;
-	
+
+	/**
+	 * Set sysErr true to redirect log output to system.error.
+	 * Set sysErr to false to write log output into a (numbered) logfile.
+	 */
+	private static boolean sysErr = true;
+	private static Logger logger = null;
+
 	protected static void startLogger() {
 		logger = Logger.getLogger("hlmng");
 		FileHandler fh = null;
@@ -35,23 +39,21 @@ public class Log {
 		logger.setLevel(Level.ALL);
 		SimpleFormatter formatter = new SimpleFormatter();
 		fh.setFormatter(formatter);
-		addEntry(Level.INFO,"Successfully started logger");
-	}
-	
-	
-	public static void addEntry(Level level, String message){
-			if (logger == null && !debug) {
-				startLogger();
-			}
-			if(debug){
-				System.err.println(getTime()+" | "+level+" | "+message);
-			}else{
-				logger.log(level, message);				
-			}
+		addEntry(Level.INFO, "Successfully started logger");
 	}
 
-	
-	public static String getTime(){
+	public static void addEntry(Level level, String message) {
+		if (logger == null && !sysErr) {
+			startLogger();
+		}
+		if (sysErr) {
+			System.err.println(getTime() + " | " + level + " | " + message);
+		} else {
+			logger.log(level, message);
+		}
+	}
+
+	public static String getTime() {
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		return dateFormat.format(date);

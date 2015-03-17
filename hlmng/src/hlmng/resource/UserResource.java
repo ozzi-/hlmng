@@ -73,8 +73,8 @@ public class  UserResource  {
 			GenDaoLoader.instance.getUserDao().updateElement(element, id);
 			res = Response.accepted().build();
 		}else{
-			boolean ok = GenDaoLoader.instance.getUserDao().addElement(element);
-			res =  ResourceHelper.returnOkOrErrorResponse(ok);	
+			int insertedID = GenDaoLoader.instance.getUserDao().addElement(element);
+			res =  ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);	
 		}
 		return res;	
 	}
@@ -82,8 +82,8 @@ public class  UserResource  {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newUser(User element) throws IOException {
-		boolean ok = GenDaoLoader.instance.getUserDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(ok);
+		int insertedID = GenDaoLoader.instance.getUserDao().addElement(element);
+		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
 	}
 	
 	// FORMS
@@ -94,8 +94,8 @@ public class  UserResource  {
 			@FormParam("deviceID") String deviceID, @FormParam("regID") String regID,
 			@Context HttpServletResponse servletResponse) throws IOException {
 		Object addUser = (Object)new User(name, deviceID,regID);
-		boolean ok = GenDaoLoader.instance.getUserDao().addElement(addUser);
-		return ResourceHelper.returnOkOrErrorResponse(ok);
+		int insertedID = GenDaoLoader.instance.getUserDao().addElement(addUser);
+		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
 	}
 
 

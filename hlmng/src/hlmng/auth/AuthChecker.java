@@ -29,7 +29,7 @@ public class AuthChecker {
 	private static boolean loginsLoaded=false;
 	
 	/**
-	 * Load the logins from the backendlogins json file. This method is called  automatically if required
+	 * Load the logins from the backendlogis json file. This method is called  automatically if required
 	 * @return true if were able to load
 	 */
 	private static boolean loadLogins(){
