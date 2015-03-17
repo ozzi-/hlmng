@@ -18,8 +18,6 @@ public class ResourceHelper {
 		}
 	}
 	
-
-
 	static void sendErrorIfNull(Object obj,HttpServletResponse response) throws IOException {
 		if(obj==null){
 		    response.sendError(Response.Status.NOT_FOUND.getStatusCode());

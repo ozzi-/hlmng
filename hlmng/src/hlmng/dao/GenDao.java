@@ -81,6 +81,7 @@ public class GenDao {
 			ps = dbConnection.prepareStatement(removeElement);
 			ps=DB.setIdFieldOfPS(ps,id);
 	        rs = ps.executeUpdate();
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -101,6 +102,7 @@ public class GenDao {
 			ps = dbConnection.prepareStatement(updateElement);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel,id);
 			rs = ps.executeUpdate();
+			ps.close();
 		}catch (Exception e) {	
 			e.printStackTrace();
 			return false;
@@ -127,6 +129,7 @@ public class GenDao {
 	        	rs.next();
 				element=DB.getObjectFromRS(rs,classType);
 			} 
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -148,6 +151,7 @@ public class GenDao {
 			while (rs.next()) {
 				elemList.add(DB.getObjectFromRS(rs,classType));
 			}
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -170,6 +174,7 @@ public class GenDao {
 			while (rs.next()) {
 				elemList.add(DB.getObjectFromRS(rs,classType));
 			}
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -193,12 +198,11 @@ public class GenDao {
 	        while(rs.next()){
 				elemList.add(DB.getObjectFromRS(rs,classType));
 			} 
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		Log.addEntry(Level.INFO,className+" Elements get list ("+elemList+")");
 		return elemList;
 	}
-	
-	
 }
