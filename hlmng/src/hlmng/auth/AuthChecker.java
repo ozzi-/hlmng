@@ -78,7 +78,6 @@ public class AuthChecker {
 		try {
 			servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,"");
 		} catch (IOException e) {
-			// TODO  what do?
 			e.printStackTrace();
 		}
 	}
