@@ -78,8 +78,8 @@ public class EventItemResource  {
 			GenDaoLoader.instance.getEventItemDao().updateElement(element, id);
 			res = Response.accepted().build();
 		}else{
-			boolean ok = GenDaoLoader.instance.getEventItemDao().addElement(element);
-			res= ResourceHelper.returnOkOrErrorResponse(ok);
+			int insertedID = GenDaoLoader.instance.getEventItemDao().addElement(element);
+			res= ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
 		}
 		return res;	
 	}
@@ -87,8 +87,8 @@ public class EventItemResource  {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newEvent(EventItem element) throws IOException {
-		boolean ok = GenDaoLoader.instance.getEventItemDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(ok);
+		int insertedID = GenDaoLoader.instance.getEventItemDao().addElement(element);
+		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
 	}
 
 

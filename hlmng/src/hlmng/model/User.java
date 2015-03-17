@@ -1,20 +1,18 @@
 package hlmng.model;
 
 public class User{
+	
 	private String name;
 	private String deviceID;
 	private String regID;
 	private int userID;
 	
-	// CTOR for form
 	public User(String name, String deviceID, String regID){
 		this.name=name;
 		this.deviceID=deviceID;
 		this.regID=regID;
 	}
-	
-	public User(){
-		
+	public User(){	
 	}
 	public User(int userID, String name, String deviceID,String regID){
 		this.userID=userID;
@@ -54,5 +52,4 @@ public class User{
 	public void setDeviceID(String deviceID) {
 		this.deviceID = deviceID;
 	}
-
 }

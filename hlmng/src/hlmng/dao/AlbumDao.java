@@ -17,8 +17,8 @@ public enum AlbumDao {
   private String tablename;
   
   private AlbumDao() {
-	  dbAlbum = new DB("albums");
-	  tablename = "the_classics";
+	dbAlbum = new DB("albums");
+	tablename = "the_classics";
   }
   
   public void addAlbum(Album album){

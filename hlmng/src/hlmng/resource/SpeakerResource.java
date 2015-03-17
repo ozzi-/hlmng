@@ -79,8 +79,8 @@ public class SpeakerResource  {
 			GenDaoLoader.instance.getSpeakerDao().updateElement(element, id);
 			res = Response.accepted().build();
 		}else{
-			boolean ok = GenDaoLoader.instance.getSpeakerDao().addElement(element);
-			res= ResourceHelper.returnOkOrErrorResponse(ok);
+			int insertedID = GenDaoLoader.instance.getSpeakerDao().addElement(element);
+			res= ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
 		}
 		return res;	
 	}
@@ -88,8 +88,8 @@ public class SpeakerResource  {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newSpeaker(Speaker element) throws IOException {
-		boolean ok = GenDaoLoader.instance.getSpeakerDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(ok);
+		int insertedID = GenDaoLoader.instance.getSpeakerDao().addElement(element);
+		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
 	}
 }
 

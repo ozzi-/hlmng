@@ -7,6 +7,11 @@ import hlmng.model.Speaker;
 import hlmng.model.User;
 import hlmng.model.Media;
 
+/**
+ * Helper method which builds all specific Dao's of our generic Dao.
+ * @author ozgheb
+ *
+ */
 public enum GenDaoLoader {
 	instance;
 	
@@ -18,7 +23,7 @@ public enum GenDaoLoader {
 	private GenDao mediaDao;
 
 	private GenDaoLoader() {
-		System.out.println("GenDaoLoader starting!");
+		System.out.println("GenDaoLoader starting");
 		userDao = new GenDao(User.class);
 		eventDao = new GenDao(Event.class);
 		eventItemDao = new GenDao(EventItem.class);
@@ -34,7 +39,6 @@ public enum GenDaoLoader {
 	public GenDao getEventDao() {
 		return eventDao;
 	}
-	
 
 	public GenDao getEventItemDao() {
 		return eventItemDao;

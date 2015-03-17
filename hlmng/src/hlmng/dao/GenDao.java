@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import com.mysql.jdbc.Statement;
+
 import db.DB;
 import db.QueryBuilder;
 
@@ -23,7 +25,7 @@ public class GenDao {
     private String getElement; 
     private String updateElement;
     private String className;
-    private Map fkElement;
+    private Map<?, ?> fkElement;
 	private Class<?> classType;
 	private static DB dbHandle = new DB("hlmng");
 	private static Connection dbConnection = dbHandle.getConnection();
@@ -45,24 +47,31 @@ public class GenDao {
 	    fkElement = QueryBuilder.buildFKQuery(className);
 	}
 	
+	/**
+	 * 
+	 * @param model
+	 * @return returns -1 if not inserted, else id
+	 */
 	@SuppressWarnings("unchecked")
-	public <T> boolean addElement(Object model) {
+	public <T> int addElement(Object model) {
 		T tModel=null;
         PreparedStatement ps;
-        int rs=0;
+        int insertedID=-1;
 		try {
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
-			ps = dbConnection.prepareStatement(addElement);
+			ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel ,null);
-			rs = ps.executeUpdate();
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			rs.next();
+			insertedID = rs.getInt(1);
+			ps.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
 		}
-		Log.addEntry(Level.INFO,className+" Element add ("+tModel+")="+rs);
-		return (rs==1);
+		Log.addEntry(Level.INFO,className+" Element add ("+tModel+") ID="+insertedID);
+		return insertedID;
 	}
-	
 	
 	public boolean deleteElement(String idS) {
 		int id = Integer.parseInt(idS);

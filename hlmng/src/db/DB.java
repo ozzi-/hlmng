@@ -23,28 +23,26 @@ public class DB {
 	private static final String dbClassName = "com.mysql.jdbc.Driver";
 	private static final String dbRoot = "jdbc:mysql://127.0.0.1/";
 	private static final Properties loginData= new Properties();
-	private Connection connection;
+	private Connection connection=null;
 	
 	/**
 	 * 
 	 * Opens a Database connection where queries can be sent to
-	 * @param Database name which you want to open
+	 * @param Database name which you want to open 
 	 * 
 	 */
 	public DB(String dbName){
-	    try {
+		try {
 			Class.forName(dbClassName);
 		} catch (ClassNotFoundException e1) {
-			System.err.println("Failed to  load JDBC Driver");
 			e1.printStackTrace();
-		}
+		} 
 	    loginData.put("user","user");
 	    loginData.put("password","pw12");
 	    System.out.println("Creating DB Handler for:"+dbName);
 	    try {
 			connection = DriverManager.getConnection(dbRoot+dbName,loginData);
 		} catch (SQLException e) {
-			System.err.println("Failed top get connection");
 			e.printStackTrace();
 		}
 	}
@@ -76,6 +74,7 @@ public class DB {
 		return ps;
 	}
 
+
 	/**
 	 * Returns (the first) object from the result set
 	 * @param resultSet of the query returning (hopefully only one) object
@@ -90,6 +89,7 @@ public class DB {
 				Object value = resultSet.getObject(field.getName());
 				PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), type);
 				Method method = propertyDescriptor.getWriteMethod();
+				value=(value==null&&field.getName().contains("ID")?0:value);
 				method.invoke(instance, value);
 			}
 		} catch (Exception e) {
