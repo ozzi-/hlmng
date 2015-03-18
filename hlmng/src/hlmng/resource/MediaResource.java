@@ -1,5 +1,6 @@
 package hlmng.resource;
 
+import hlmng.Log;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -25,6 +27,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -85,21 +88,29 @@ public class MediaResource {
 	@Consumes("multipart/form-data")
 	public Response uploadFile(
 			@FormDataParam("file") InputStream fileInputStream,
+			@FormDataParam("file") FormDataBodyPart body,
 			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-
-		String filePath = fileRootDir + contentDispositionHeader.getFileName();
-
-		// save the file to the server
-		saveFile(fileInputStream, filePath);
-
-		String output = "File saved to server location : " + filePath;
-
-		return Response.status(200).entity(output).build();
-
+		String mimeType=body.getMediaType().toString();
+		Response response;
+		if(mimeType.equals("image/png")||mimeType.equals("image/jpeg")){
+			String filePath = fileRootDir + contentDispositionHeader.getFileName();
+			boolean savedOK=saveFile(fileInputStream, filePath);
+			if(savedOK){
+				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
+				response=Response.status(200).build();				
+			}else{
+				Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
+				response=Response.status(500).build();				
+			}
+		}else{
+			Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
+			response=Response.status(415).build();
+		}
+		return response;
 	}
 
 	// save uploaded file to a defined location on the server
-	private void saveFile(InputStream uploadedInputStream, String serverLocation) {
+	private boolean saveFile(InputStream uploadedInputStream, String serverLocation) {
 		try {
 			OutputStream outpuStream = new FileOutputStream(new File(
 					serverLocation));
@@ -112,11 +123,11 @@ public class MediaResource {
 			}
 			outpuStream.flush();
 			outpuStream.close();
+			return true;
 		} catch (IOException e) {
-
 			e.printStackTrace();
+			return false;
 		}
-
 	}
 
 	private Response mediaResponse(String fileName, String fileType) {
