@@ -4,11 +4,10 @@ import java.lang.reflect.Field;
 
 public class ModelHelper {
 	/**
-	 * Checks if two objects are from the same class and have the same field values
-	 * @param a
-	 * @param b
+	 * Checks if two objects are from the same class and have the same field values.
+	 * If anything is different false is returned.
 	 */
-	public static  <T> boolean Compare(T a, T b){
+	public static <T> boolean Compare(T a, T b){
 		if(!(a.getClass().getSimpleName().equals(b.getClass().getSimpleName()))){
 			return false;
 		}
