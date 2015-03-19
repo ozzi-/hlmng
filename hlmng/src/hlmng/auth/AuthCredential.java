@@ -2,16 +2,16 @@ package hlmng.auth;
 
 /**
  * 
- * AuthCredential is a container for a username and the according password
+ * AuthCredential is a container for a username and the according secret
  *
  */
 public class AuthCredential{
 	private String username;
-	private String password;
+	private String secret;
 
-	public AuthCredential(String username, String password) {
+	public AuthCredential(String username, String secret) {
 		this.username = username;
-		this.password = password;
+		this.secret = secret;
 	}
 
 	public String getUsername() {
@@ -22,21 +22,21 @@ public class AuthCredential{
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getSecret() {
+		return secret;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setSecret(String secret) {
+		this.secret = secret;
 	}
 	
 	/** 
-	 * Compare to accounts if username and pw is the same
+	 * Compare to accounts if username and secret is the same
 	 * @param the other AuthCredential object you wish to compare
 	 * @return true if same or false if something is different
 	 */
 	public boolean equals(AuthCredential other){
-		if(this.getUsername().equals(other.getUsername()) && this.getPassword().equals(other.getPassword())){
+		if(this.getUsername().equals(other.getUsername()) && this.getSecret().equals(other.getSecret())){
 			return true;
 		}
 		return false;

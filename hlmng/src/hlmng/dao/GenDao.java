@@ -22,13 +22,13 @@ public class GenDao {
     private String addElement; 
     private String removeElement;
     private String listElements;
-    private String getElement; 
+    protected String getElement; 
     private String updateElement;
     private String className;
     private Map<?, ?> fkElement;
 	private Class<?> classType;
 	private static DB dbHandle = new DB("hlmng");
-	private static Connection dbConnection = dbHandle.getConnection();
+	protected static Connection dbConnection = dbHandle.getConnection();
 	
 
 	public <T> GenDao(Class<T> classTypeP){

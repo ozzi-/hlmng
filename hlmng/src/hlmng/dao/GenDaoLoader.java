@@ -15,7 +15,7 @@ import hlmng.model.Media;
 public enum GenDaoLoader {
 	instance;
 	
-	private GenDao userDao;
+	private UserDao userDao;
 	private GenDao eventDao;
 	private GenDao eventItemDao;
 	private GenDao eventRoomDao;
@@ -24,7 +24,7 @@ public enum GenDaoLoader {
 
 	private GenDaoLoader() {
 		System.out.println("GenDaoLoader starting");
-		userDao = new GenDao(User.class);
+		userDao = new UserDao(User.class);
 		eventDao = new GenDao(Event.class);
 		eventItemDao = new GenDao(EventItem.class);
 		eventRoomDao= new GenDao(EventRoom.class);
@@ -32,7 +32,7 @@ public enum GenDaoLoader {
 		mediaDao= new GenDao(Media.class);
 	}
 
-	public GenDao getUserDao() {
+	public UserDao getUserDao() {
 		return userDao;
 	}
 

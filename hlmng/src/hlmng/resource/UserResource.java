@@ -58,7 +58,7 @@ public class  UserResource  {
 	public User getUser(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
-		AuthChecker.check(headers, servletResponse);
+		AuthChecker.check(headers, servletResponse,false);
 		Object obj=GenDaoLoader.instance.getUserDao().getElement(id);
 		ResourceHelper.sendErrorIfNull(obj,response);
 		return (User)obj;

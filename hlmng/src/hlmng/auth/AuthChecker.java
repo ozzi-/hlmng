@@ -1,10 +1,15 @@
 package hlmng.auth;
 
+import hlmng.dao.GenDaoLoader;
+import hlmng.model.User;
+import hlmng.model.UserActionLimiter;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
@@ -20,7 +25,7 @@ import org.json.simple.parser.ParseException;
  * 
  * AuthChecker provides a public method "check" which inspects the HTTP headers
  * and makes a lookup if a auth was provided and if it was correct.
- * If anything is wrong then a 401 message is sent to the client.
+ * If the login credentials are wrong a 401 is sent, if the formating / data is weird 400
  *
  */
 public class AuthChecker {
@@ -52,56 +57,109 @@ public class AuthChecker {
 	
 	/**
 	 * Checks if a Authorization header is sent and if it contains an authorized Base64 encoded login
-	 * If something isn't ok a unauthorized will be sent, if everything is ok -> do nothing and continue
+	 * Notice: This method sends according error codes if the user provided no, wrong or ill-formed authentication data!
 	 * @param headers
 	 * @param servletResponse
+	 * @param backEnd if set True the local json file is checked for logins, if false the HLMNG Database Table User
+	 * @return true if the user credentials are ok, else false
 	 */
-	public static void check(@Context HttpHeaders headers, @Context HttpServletResponse servletResponse) {
-		AuthCredential authCredentials = null;
-
+	public static boolean check(@Context HttpHeaders headers, @Context HttpServletResponse servletResponse,boolean backEnd) {
+		AuthCredential authCredential = null;
 		String authorizationHeader = headers.getHeaderString("Authorization");
 		// client not sending http auth credentials, tell him to do so
-		if(authorizationHeader==null){ 	
-			sendUnauthorized(servletResponse);
-		}else{ 
+		if (authorizationHeader == null) {
+			sendErrorAuthCode(servletResponse,HttpServletResponse.SC_UNAUTHORIZED);
+		} else {
 			// client is sending credentials, read them
-			authCredentials = decodeBasicAuthB64(authorizationHeader);
-			// if auth credentials somehow not decodeable 
-			if (authCredentials == null || !checkLoginInformation(authCredentials)) {
-				sendUnauthorized(servletResponse);
-			}				
+			authCredential = decodeBasicAuthB64(authorizationHeader);
+			if(authCredential==null){
+				sendErrorAuthCode(servletResponse,HttpServletResponse.SC_BAD_REQUEST);
+			}else{
+				if(backEnd){
+					if(!checkLoginInformationBackend((authCredential))){
+						sendErrorAuthCode(servletResponse,HttpServletResponse.SC_UNAUTHORIZED); 
+					}else{
+						return true;
+					}	 // TODO refactor this horror
+				}else{
+					int code = checkLoginInformation(authCredential);
+					if(code==HttpServletResponse.SC_OK){
+						return true;	
+					}else{
+						sendErrorAuthCode(servletResponse,code); 						
+					}
+				}
+			}
 		}
+		return false;
 	}
 	
-	private static void sendUnauthorized(HttpServletResponse servletResponse) {
+	/**
+	 * Sends a response with the provided error code
+	 * @param servletResponse
+	 * @param code
+	 */
+	private static void sendErrorAuthCode(HttpServletResponse servletResponse, int code) {
 		servletResponse.setHeader("WWW-Authenticate", "Basic realm=\"HLMNG\"");
 		try {
-			servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,"");
+			servletResponse.sendError(code,"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 	
+	/**
+	 * Tries to decode the authorization header, if something isn't conform null will be returned.
+	 * Expected input: "Basic base64{name:secret}"
+	 * @param authorizationHeader
+	 * @return auth credential or null
+	 */
 	private static AuthCredential decodeBasicAuthB64( String authorizationHeader) {
 		Base64 b = new Base64();
+		AuthCredential authCredential=null;
 		String[] authCredentials = null;
-		if (authorizationHeader.startsWith("Basic")) {
+		
+		if (authorizationHeader.startsWith("Basic")) { 
 			String base64Credentials = authorizationHeader.substring("Basic".length()).trim();
 			String credentials = new String(b.decode(base64Credentials), Charset.forName("UTF-8"));
-			authCredentials = credentials.split(":", 2);
-			return new AuthCredential(authCredentials[0], authCredentials[1]);
+			if(credentials.contains(":")){
+				authCredentials = credentials.split(":", 2);
+				if(authCredentials!=null && authCredentials[0]!=null && authCredentials[1] != null){
+					authCredential = new AuthCredential(authCredentials[0], authCredentials[1]);				
+				}				
+			}
 		}
-		return null;
+		return authCredential;
 	}
-
-	private static boolean checkLoginInformation(AuthCredential requestingCredential) {
+	
+	/**
+	 * Checks the Database if that user exists
+	 * @param authCredential
+	 * @return 
+	 */
+	private static int checkLoginInformation(AuthCredential authCredential) {
+		User userDB = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(),authCredential.getSecret());
+		if(UserActionLimiter.actionsExceeded(userDB.getName())){
+			return 429;
+		}
+		if(!(authCredential==null) && !(userDB==null) && (userDB.getName().equals(authCredential.getUsername()) && (userDB.getDeviceID().equals(authCredential.getSecret())))){
+			return HttpServletResponse.SC_OK;
+		}else {
+			return HttpServletResponse.SC_UNAUTHORIZED;
+		}
+	}
+	
+	/**
+	 * Checks the local json file for backend logins
+	 * @param requestingCredential
+	 * @return true if there is such a user, else false
+	 */
+	private static boolean checkLoginInformationBackend(AuthCredential requestingCredential) {
 		if(!loginsLoaded){
 			loadLogins();
 			loginsLoaded=true;
-			System.out.println("Loaded logins");
-		}		
-
+			hlmng.Log.addEntry(Level.INFO, "Loaded backend logins");
+		}	
 		for (AuthCredential authorizedCredentials  : logins) {
 			if(authorizedCredentials.equals(requestingCredential)){
 				return true;

@@ -1,6 +1,7 @@
 package hlmng.resource;
 
 import hlmng.Log;
+import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
 
@@ -89,10 +90,14 @@ public class MediaResource {
 	public Response uploadFile(
 			@FormDataParam("file") InputStream fileInputStream,
 			@FormDataParam("file") FormDataBodyPart body,
-			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-		String mimeType=body.getMediaType().toString();
+			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
+			@Context HttpHeaders headers, 
+			@Context HttpServletResponse servletResponse
+			) {
+		String mimeType=(body.getMediaType()==null)?"none provided" :body.getMediaType().toString() ;
+		boolean authenticated = AuthChecker.check(headers, servletResponse, false);
 		Response response;
-		if(mimeType.equals("image/png")||mimeType.equals("image/jpeg")){
+		if(authenticated && (mimeType.equals("image/png")||mimeType.equals("image/jpeg"))){
 			String filePath = fileRootDir + contentDispositionHeader.getFileName();
 			boolean savedOK=saveFile(fileInputStream, filePath);
 			if(savedOK){
@@ -103,7 +108,7 @@ public class MediaResource {
 				response=Response.status(500).build();				
 			}
 		}else{
-			Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
+			Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType+" or too many requests" );
 			response=Response.status(415).build();
 		}
 		return response;

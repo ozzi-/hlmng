@@ -1,5 +1,6 @@
 package hlmng.model;
 
+
 public class User{
 	
 	private String name;
@@ -20,6 +21,7 @@ public class User{
 		this.deviceID=deviceID;
 		this.regID=regID;
 	}
+	
 
 	public String getRegID() {
 		return regID;
