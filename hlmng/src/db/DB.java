@@ -1,5 +1,7 @@
 package db;
 
+import hlmng.Log;
+
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -10,13 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.logging.Level;
 
 import com.sun.rowset.CachedRowSetImpl;
 
 /**
  * This class handles the creation of a DB connection, allows building dynamic prepared statements.
  * This only works if you are using the same class name and field names as declared in the SQL Database!
- * @author ozgheb
  *
  */
 public class DB {
@@ -29,9 +31,10 @@ public class DB {
 	 * 
 	 * Opens a Database connection where queries can be sent to
 	 * @param Database name which you want to open 
+	 * @throws SQLException 
 	 * 
 	 */
-	public DB(String dbName){
+	public DB(String dbName) throws SQLException{
 		try {
 			Class.forName(dbClassName);
 		} catch (ClassNotFoundException e1) {
@@ -39,12 +42,7 @@ public class DB {
 		} 
 	    loginData.put("user","user");
 	    loginData.put("password","pw12");
-	    System.out.println("Creating DB Handler for:"+dbName);
-	    try {
-			connection = DriverManager.getConnection(dbRoot+dbName,loginData);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	    connection = DriverManager.getConnection(dbRoot+dbName,loginData);
 	}
 	
 	

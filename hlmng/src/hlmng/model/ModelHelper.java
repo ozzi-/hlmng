@@ -38,4 +38,24 @@ public class ModelHelper {
 		}
 		return true;
 	}
+	
+	public static <T> int HashCode(T obj){
+		Class<? extends Object> clsObj = obj.getClass();
+		Field[] methods = clsObj.getDeclaredFields();
+		int hash=0;
+	    int[] primes = new int[2];
+	    primes[0]=17;
+	    primes[1]=31;
+	    int i=0;
+		for (Field field : methods) {
+			field.setAccessible(true);
+			try {
+				hash = hash * primes[(++i%2)] + (field.get(obj)==null?"":field.get(obj)).toString().hashCode();
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace(); 
+			}
+		}
+		return hash;
+	}
+
 }

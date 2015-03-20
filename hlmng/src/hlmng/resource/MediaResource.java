@@ -53,27 +53,34 @@ public class MediaResource {
 	public List<Object> listMedia() {
 		List<Object> listMedia = GenDaoLoader.instance.getMediaDao()
 				.listElements();
-		setURLPath(listMedia);
+		setURLPathList(listMedia);
 		return listMedia;
 	}
 
 	@GET
 	@Path("{id}")
-	public Media getMedia(@PathParam("id") String id,
+	public Response getMedia(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException {
+		ResponseBuilder builder;
 		Object obj = GenDaoLoader.instance.getMediaDao().getElement(id);
-		ResourceHelper.sendErrorIfNull(obj, response);
-		Media media = (Media) obj;
-		return media;
+		if(obj==null){
+			builder = Response.status(404);
+		}else{
+			Media media = (Media) obj;
+			setURLPath(media);
+			builder = ResourceHelper.cacheControl(media,request);			
+		}
+        return builder.build();
 	}
+
 
 	@GET
 	@Path("jpg/{name}")
 	@Produces("image/jpeg")
-	public Response getJPG(@PathParam("name") String fileName)
+	public Response getJPG(@PathParam("name") String fileName, @Context HttpHeaders headers)
 			throws IOException {
-		return mediaResponse(fileName, "jpg");
+			return mediaResponse(fileName, "jpg");
 	}
 
 	@GET
@@ -139,20 +146,23 @@ public class MediaResource {
 		ResponseBuilder response;
 		File file = new File(fileRootDir + fileName);
 		if (file.canRead()) {
-			response = Response.ok((Object) file);
-			response.header("Content-Disposition",
-					"attachment; filename=hlmng." + fileType);
+			response = ResourceHelper.cacheControl((File) file,request);
+			//response.header("Content-Disposition", "attachment; filename=hlmng." + fileType); 
 		} else {
 			response = Response.status(Response.Status.NOT_FOUND);
 		}
 		return response.build();
 	}
 
-	private void setURLPath(List<Object> listMedia) {
+	private void setURLPathList(List<Object> listMedia) {
 		for (Object obj : listMedia) {
 			Media media = (Media) obj;
-			media.setLink(uri.getBaseUri().toString() + "media/"
-					+ media.getType() + "/" + media.getLink());
+			setURLPath(media);
 		}
+	}
+
+	private void setURLPath(Media media) {
+		media.setLink(uri.getBaseUri().toString() + "media/"
+				+ media.getType() + "/" + media.getLink());
 	}
 }

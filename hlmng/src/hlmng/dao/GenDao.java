@@ -27,11 +27,23 @@ public class GenDao {
     private String className;
     private Map<?, ?> fkElement;
 	private Class<?> classType;
-	private static DB dbHandle = new DB("hlmng");
-	protected static Connection dbConnection = dbHandle.getConnection();
+	private static DB dbHandle=null;
+	protected static Connection dbConnection;
 	
 
 	public <T> GenDao(Class<T> classTypeP){
+		if(dbHandle==null){
+			try {
+				String dbName="hlmng";
+				dbHandle= new DB(dbName);
+				dbConnection= dbHandle.getConnection();
+				Log.addEntry(Level.INFO,"Opening DB connection for DB:"+dbName);
+			} catch (SQLException e) {
+				Log.addEntry(Level.SEVERE, "Database connection failed!");
+				System.exit(-1);
+				e.printStackTrace();
+			}
+		}
 		System.out.println("GenDao creating for Class:"+classTypeP.getSimpleName());
 		className=classTypeP.getSimpleName();
 		try {
