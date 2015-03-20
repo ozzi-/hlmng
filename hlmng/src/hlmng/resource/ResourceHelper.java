@@ -1,7 +1,6 @@
 package hlmng.resource;
 
 import hlmng.Log;
-import hlmng.model.Media;
 import hlmng.model.ModelHelper;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class ResourceHelper {
 	static int cacheTime=1800;
 	/**
 	 * @param ok
-	 * @return If @param is true retruns a HTTP 200 (OK) Response, else a 500 (server error)
+	 * @return If @param is true returns a HTTP 200 (OK) Response, else a 500 (server error)
 	 */
 	static Response returnOkOrErrorResponse(boolean ok) {
 		if(ok){

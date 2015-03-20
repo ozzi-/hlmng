@@ -39,7 +39,7 @@ public class EventItemResource  {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getEvent() {
+	public List<Object> getEventItem() {
 		return GenDaoLoader.instance.getEventItemDao().listElements();
 	}
 
@@ -56,7 +56,7 @@ public class EventItemResource  {
 	
 	@GET
 	@Path("{id}")
-	public EventItem getEvent(@PathParam("id") String id,
+	public EventItem getEventItem(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
 		Object obj =  GenDaoLoader.instance.getEventItemDao().getElement(id);
@@ -65,14 +65,10 @@ public class EventItemResource  {
 		return evt;	
 	}
 
-
-
-
-
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putEvent(EventItem element,@PathParam("id") String id) {
+	public Response putEventItem(EventItem element,@PathParam("id") String id) {
 		Response res;
 		if (GenDaoLoader.instance.getEventItemDao().getElement(id)!=null){
 			GenDaoLoader.instance.getEventItemDao().updateElement(element, id);
@@ -86,14 +82,12 @@ public class EventItemResource  {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newEvent(EventItem element) throws IOException {
+	public Response newEventItem(EventItem element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getEventItemDao().addElement(element);
 		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
 	}
 
-
-	
-	// FORMS
+// FORMS
 //	@POST
 //	@Produces(MediaType.TEXT_HTML)
 //	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)

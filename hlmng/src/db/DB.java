@@ -1,7 +1,5 @@
 package db;
 
-import hlmng.Log;
-
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -12,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-import java.util.logging.Level;
 
 import com.sun.rowset.CachedRowSetImpl;
 
