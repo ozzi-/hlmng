@@ -9,13 +9,15 @@ public class EventItem {
 	private String endTime;
 	private int roomIDFK;
 	private int eventIDFK;
+	private String description;
 
 	public EventItem(){
 	}
 	
-	public EventItem(int eventItemID, String name, String date, String startTime, String endTime, int roomIDFK, int eventIDFK){
+	public EventItem(int eventItemID, String name, String description, String date, String startTime, String endTime, int roomIDFK, int eventIDFK){
 		this.eventItemID=eventItemID;
 		this.name=name;
+		this.setDescription(description);
 		this.date=date;
 		this.startTime = startTime;
 		this.endTime=endTime;
@@ -23,8 +25,9 @@ public class EventItem {
 		this.eventIDFK=eventIDFK;
 	}
 	
-	public EventItem(String name, String date, String startTime, String endTime, int roomIDFK, int eventIDFK){
+	public EventItem(String name, String description, String date, String startTime, String endTime, int roomIDFK, int eventIDFK){
 		this.name=name;
+		this.setDescription(description);
 		this.date=date;
 		this.startTime = startTime;
 		this.endTime=endTime;
@@ -87,5 +90,13 @@ public class EventItem {
 
 	public void setEventIDFK(int eventIDFK) {
 		this.eventIDFK = eventIDFK;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

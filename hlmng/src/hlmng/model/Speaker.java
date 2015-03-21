@@ -6,21 +6,24 @@ public class Speaker {
 	private String title;
 	private String description;
 	private int mediaIDFK;
+	private String nationality;
 	
 	public Speaker(){
 		
 	}
-	public Speaker(int speakerID, String name, String title, String description, int mediaIDFK){
+	public Speaker(int speakerID, String name, String title, String description, String nationality, int mediaIDFK){
 		this.speakerID=speakerID;
 		this.name=name;
 		this.title=title;
 		this.description=description;
+		this.nationality=nationality;
 		this.mediaIDFK=mediaIDFK;
 	}
-	public Speaker(String name, String title, String description, int mediaIDFK){
+	public Speaker(String name, String title, String description, String nationality, int mediaIDFK){
 		this.name=name;
 		this.title=title;
 		this.description=description;
+		this.nationality=nationality;
 		this.mediaIDFK=mediaIDFK;
 	}
 		
@@ -53,6 +56,12 @@ public class Speaker {
 	}
 	public void setMediaIDFK(int mediaIDFK) {
 		this.mediaIDFK = mediaIDFK;
+	}
+	public String getNationality() {
+		return nationality;
+	}
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
 	}
 
 }
