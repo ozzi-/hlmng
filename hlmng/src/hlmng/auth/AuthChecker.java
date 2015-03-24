@@ -4,8 +4,10 @@ import hlmng.dao.GenDaoLoader;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,9 @@ public class AuthChecker {
        JSONParser parser = new JSONParser();
        JSONArray jArray=null;
 		try { 
-			jArray = (JSONArray) parser.parse(new FileReader("backendlogins.json"));
+			URL url = AuthChecker.class.getResource("/backendlogins.json");
+			File file = new File(url.getPath());
+			jArray = (JSONArray) parser.parse(new FileReader(file));
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 			return false;
@@ -133,16 +137,16 @@ public class AuthChecker {
 	}
 	
 	/**
-	 * Checks the Database if that user exists
+	 * Checks the Database if that user exists, also checks for Action limit!
 	 * @param authCredential
 	 * @return 
 	 */
 	private static int checkLoginInformation(AuthCredential authCredential) {
 		User userDB = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(),authCredential.getSecret());
-		if(UserActionLimiter.actionsExceeded(userDB.getName())){
-			return 429;
-		}
 		if(!(authCredential==null) && !(userDB==null) && (userDB.getName().equals(authCredential.getUsername()) && (userDB.getDeviceID().equals(authCredential.getSecret())))){
+			if(UserActionLimiter.actionsExceeded(userDB.getName())){
+				return 429;
+			}
 			return HttpServletResponse.SC_OK;
 		}else {
 			return HttpServletResponse.SC_UNAUTHORIZED;

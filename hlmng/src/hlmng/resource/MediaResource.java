@@ -46,8 +46,9 @@ public class MediaResource {
 	private HttpServletResponse response;
 	@Context
 	UriInfo uri;
-	private static String fileRootDir = "media/";
-
+	private static String fileRootDir = "/home/ozzi/media/";
+	//private static String fileRootDir = "/home/student/media/";
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> listMedia() {

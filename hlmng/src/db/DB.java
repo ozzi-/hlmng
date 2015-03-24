@@ -19,7 +19,6 @@ import javax.sql.DataSource;
  *
  */
 public class DB {
-	
 
 	public static Connection getConnection() throws SQLException, NamingException{
 		Context initContext;

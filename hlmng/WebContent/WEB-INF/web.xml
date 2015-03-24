@@ -23,7 +23,6 @@
     <servlet-name>Jersey REST Service</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
-  <description>MySQL Test App</description>
   <resource-ref>
 	<description>hlmng</description>
 	<res-ref-name>jdbc/hlmng</res-ref-name>
