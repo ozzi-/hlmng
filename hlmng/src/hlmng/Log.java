@@ -11,7 +11,6 @@ import java.util.logging.SimpleFormatter;
 
 /**
  * Example usage: Log.addEntry(Level.INFO, "USER RESSOURCE " + id + " GET"); 
- * @author ozgheb
  */
 public class Log {
 

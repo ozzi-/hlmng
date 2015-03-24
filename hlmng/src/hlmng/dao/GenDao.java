@@ -6,12 +6,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import com.mysql.jdbc.Statement;
+import javax.naming.NamingException;
 
 import db.DB;
 import db.QueryBuilder;
@@ -27,23 +28,9 @@ public class GenDao {
     private String className;
     private Map<?, ?> fkElement;
 	private Class<?> classType;
-	private static DB dbHandle=null;
-	protected static Connection dbConnection;
-	
 
 	public <T> GenDao(Class<T> classTypeP){
-		if(dbHandle==null){
-			try {
-				String dbName="hlmng";
-				dbHandle= new DB(dbName);
-				dbConnection= dbHandle.getConnection();
-				Log.addEntry(Level.INFO,"Opening DB connection for DB:"+dbName);
-			} catch (SQLException e) {
-				Log.addEntry(Level.SEVERE, "Database connection failed!");
-				System.exit(-1);
-				e.printStackTrace();
-			}
-		}
+
 		System.out.println("GenDao creating for Class:"+classTypeP.getSimpleName());
 		className=classTypeP.getSimpleName();
 		try {
@@ -69,8 +56,10 @@ public class GenDao {
 		T tModel=null;
         PreparedStatement ps;
         int insertedID=-1;
+        Connection dbConnection=null;
 		try {
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
+			dbConnection = DB.getConnection();
 			ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel ,null);
 			ps.executeUpdate();
@@ -78,8 +67,12 @@ public class GenDao {
 			rs.next();
 			insertedID = rs.getInt(1);
 			ps.close();
+			DB.closeConnection(dbConnection);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			DB.closeConnection(dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element add ("+tModel+") ID="+insertedID);
 		return insertedID;
@@ -89,14 +82,18 @@ public class GenDao {
 		int id = Integer.parseInt(idS);
         PreparedStatement ps;
         int rs=0;
+        Connection dbConnection=null;
 		try {
+			dbConnection = DB.getConnection();
 			ps = dbConnection.prepareStatement(removeElement);
 			ps=DB.setIdFieldOfPS(ps,id);
 	        rs = ps.executeUpdate();
 			ps.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+		}
+		finally{
+			DB.closeConnection(dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element delete ("+id+")="+rs);
 		return (rs==1);
@@ -109,15 +106,20 @@ public class GenDao {
 		int id = Integer.parseInt(idS);
 		PreparedStatement ps;
 		int rs=0;
+        Connection dbConnection=null;
 		try {
+			dbConnection = DB.getConnection();
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
 			ps = dbConnection.prepareStatement(updateElement);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel,id);
 			rs = ps.executeUpdate();
 			ps.close();
+			DB.closeConnection(dbConnection);
 		}catch (Exception e) {	
 			e.printStackTrace();
-			return false;
+		}
+		finally{
+			DB.closeConnection(dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element update ("+tModel+")="+rs);
 		return (rs==1);
@@ -133,7 +135,9 @@ public class GenDao {
 		PreparedStatement ps;
         ResultSet rs;
         Object element=null;
+        Connection dbConnection=null;
 		try {
+			dbConnection = DB.getConnection();
 			ps = dbConnection.prepareStatement(getElement);
 			ps=DB.setIdFieldOfPS(ps,id);
 	        rs = ps.executeQuery();
@@ -142,8 +146,12 @@ public class GenDao {
 				element=DB.getObjectFromRS(rs,classType);
 			} 
 			ps.close();
-		} catch (SQLException e) {
+			DB.closeConnection(dbConnection);
+		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			DB.closeConnection(dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element get ("+element+")");
 		return element;
@@ -155,8 +163,10 @@ public class GenDao {
 		int idFK = Integer.parseInt(idFkS);
         PreparedStatement ps;
         ResultSet rs;
+        Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
 		try {
+			dbConnection = DB.getConnection();
 			ps = dbConnection.prepareStatement(fkElement.get(fkName).toString());
 			ps=DB.setIdFieldOfPS(ps,idFK);
 	        rs = ps.executeQuery();
@@ -164,8 +174,12 @@ public class GenDao {
 				elemList.add(DB.getObjectFromRS(rs,classType));
 			}
 			ps.close();
-		} catch (SQLException e) {
+			DB.closeConnection(dbConnection);
+		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			DB.closeConnection(dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
 		return elemList;
@@ -179,16 +193,21 @@ public class GenDao {
 	public <T> List<Object> listElements() {
 		PreparedStatement ps;
 		ResultSet rs;
+        Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
 		try {
+			dbConnection = DB.getConnection();
 			ps = dbConnection.prepareStatement(listElements);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				elemList.add(DB.getObjectFromRS(rs,classType));
 			}
 			ps.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			DB.closeConnection(dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
 		return elemList;
@@ -202,8 +221,10 @@ public class GenDao {
 		int id = Integer.parseInt(idS);
 		PreparedStatement ps;
         ResultSet rs;
+        Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
 		try {
+			dbConnection = DB.getConnection();
 			ps = dbConnection.prepareStatement(getElement);
 			ps=DB.setIdFieldOfPS(ps,id);
 	        rs = ps.executeQuery();
@@ -211,8 +232,11 @@ public class GenDao {
 				elemList.add(DB.getObjectFromRS(rs,classType));
 			} 
 			ps.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			DB.closeConnection(dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Elements get list ("+elemList+")");
 		return elemList;

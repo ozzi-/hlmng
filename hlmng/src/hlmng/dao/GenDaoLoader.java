@@ -1,12 +1,5 @@
 package hlmng.dao;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
-
-import com.sun.javafx.scene.layout.region.SliceSequenceConverter;
-import com.sun.org.apache.bcel.internal.generic.PUSH;
-
-import net.glxn.qrgen.QRCode;
-import hlmng.model.Challenge;
 import hlmng.model.Event;
 import hlmng.model.EventItem;
 import hlmng.model.EventRoom;
@@ -35,7 +28,6 @@ public enum GenDaoLoader {
 	private GenDao speakerDao;
 	private GenDao mediaDao;
 	private GenDao newsDao;
-	private GenDao challengeDao;
 	private GenDao qrCodeDao;
 	private GenDao voteDao;
 	private GenDao votingDao;
@@ -46,7 +38,6 @@ public enum GenDaoLoader {
 	
 	private GenDaoLoader() {
 		System.out.println("GenDaoLoader starting");
-		challengeDao=new GenDao(Challenge.class);
 		eventDao = new GenDao(Event.class);
 		eventItemDao = new GenDao(EventItem.class);
 		eventRoomDao= new GenDao(EventRoom.class);
@@ -85,9 +76,6 @@ public enum GenDaoLoader {
 	}
 	public GenDao getSpeakerDao() {
 		return speakerDao;
-	}
-	public GenDao getChallengeDao() {
-		return challengeDao;
 	}
 	public GenDao getMediaDao() {
 		return mediaDao;

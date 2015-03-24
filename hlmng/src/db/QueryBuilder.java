@@ -20,7 +20,6 @@ public class QueryBuilder {
 	 * @param className
 	 */
 	public static Map<String, String> buildFKQuery(String className) {
-		System.out.println("Building FK Query for " + className);
 		Map<String, String> map = new HashMap<String, String>();
 		String tableName = className.toLowerCase();
 		Class<?> cls;
@@ -48,8 +47,6 @@ public class QueryBuilder {
 	 * @return
 	 */
 	public static String BuildQuery(String className, opType type) {
-		System.out.println("Building Query for " + className + " for type "
-				+ type.toString());
 		String query = null;
 		String tableName = className.toLowerCase();
 		String tableID = tableName + "ID";

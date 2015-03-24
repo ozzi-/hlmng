@@ -2,9 +2,9 @@ package hlmng.dao;
 
 import hlmng.model.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import db.DB;
 
@@ -20,7 +20,9 @@ public class UserDao extends GenDao {
 		PreparedStatement ps;
         ResultSet rs;
         Object element=null;
+        Connection dbConnection =null;
 		try {
+			dbConnection = DB.getConnection();
 			ps = dbConnection.prepareStatement("SELECT * FROM user WHERE name = ? AND deviceID = ?");
 			ps.setString(1,userName);
 			ps.setString(2,deviceID);
@@ -30,8 +32,11 @@ public class UserDao extends GenDao {
 				element=DB.getObjectFromRS(rs,User.class);
 			} 
 			ps.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally{
+			DB.closeConnection(dbConnection);
 		}
 		// TODO Log.addEntry(Level.INFO,className+" Element get ("+element+")");
 		return (User) element;

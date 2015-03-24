@@ -4,14 +4,14 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Properties;
 
-import com.sun.rowset.CachedRowSetImpl;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 /**
  * This class handles the creation of a DB connection, allows building dynamic prepared statements.
@@ -19,35 +19,20 @@ import com.sun.rowset.CachedRowSetImpl;
  *
  */
 public class DB {
-	private static final String dbClassName = "com.mysql.jdbc.Driver";
-	private static final String dbRoot = "jdbc:mysql://127.0.0.1/";
-	private static final Properties loginData= new Properties();
-	private Connection connection=null;
 	
-	/**
-	 * 
-	 * Opens a Database connection where queries can be sent to
-	 * @param Database name which you want to open 
-	 * @throws SQLException 
-	 * 
-	 */
-	public DB(String dbName) throws SQLException{
-		try {
-			Class.forName(dbClassName);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
-		} 
-	    loginData.put("user","user");
-	    loginData.put("password","pw12");
-	    connection = DriverManager.getConnection(dbRoot+dbName,loginData);
+
+	public static Connection getConnection() throws SQLException, NamingException{
+		Context initContext;
+		initContext = new InitialContext();
+		Context envContext = (Context) initContext.lookup("java:comp/env");
+		DataSource ds = (DataSource) envContext.lookup("jdbc/hlmng");
+		return ds.getConnection();
 	}
 	
-	
-	public void closeDB(){
-		try {
+	public static void closeConnection(Connection connection){
+		try { 
 			connection.close();
 		} catch (SQLException e) {
-			//we tried...
 			e.printStackTrace();
 		}
 	}
@@ -133,70 +118,69 @@ public class DB {
 	}
 
 	
-	/**
-	 * @deprecated
-	 * @param updateStr
-	 * @return
-	 */
-	public int doUpdateGetResult(String updateStr) {
-		Statement stmt = null;
-	    ResultSet resultSet = null;
-	    int resultVal =0;
-	    try {
-	        stmt = connection.createStatement();
-	    	resultVal = stmt.executeUpdate(updateStr);	        	
-	    } catch (SQLException e) {
-	        throw new IllegalStateException("Unable to execute query: " + updateStr, e);
-	    }finally {
-	        try {
-	            if (resultSet != null) {
-	                resultSet.close();
-	            }
-	            if (stmt != null) {
-	                stmt.close();
-	            }
-	        } catch (SQLException e) {
-	            System.err.println("SQL EXCEPTION HANDLE & LOG ME");
-	        }
-	    }
-	    return resultVal;
-	}
-	
-	
-	/**
-	 * @deprecated
-	 * @param queryStr
-	 * @return
-	 */
-	public ResultSet doQueryGetResult(String queryStr) {
-	    Statement stmt = null;
-	    ResultSet resultSet = null;
-	    CachedRowSetImpl crs = null;
-	    try {
-	        stmt = connection.createStatement();
-	        resultSet = stmt.executeQuery(queryStr);	        		        	
-	        crs = new CachedRowSetImpl();
-	        crs.populate(resultSet);
-	    } catch (SQLException e) {
-	        throw new IllegalStateException("Unable to execute query: " + queryStr, e);
-	    }finally {
-	        try {
-	            if (resultSet != null) {
-	                resultSet.close();
-	            }
-	            if (stmt != null) {
-	                stmt.close();
-	            }
-	        } catch (SQLException e) {
-	            System.err.println("SQL EXCEPTION HANDLE & LOG ME");
-	        }
-	    }
-	    return crs;
-	}
-	
-	public Connection getConnection() {
-		return connection;
-	}
-
-
+//	/**
+//	 * @deprecated
+//	 * @param updateStr
+//	 * @return
+//	 */
+//	public int doUpdateGetResult(String updateStr) {
+//		Statement stmt = null;
+//	    ResultSet resultSet = null;
+//	    int resultVal =0;
+//	    try {
+//	        stmt = connection.createStatement();
+//	    	resultVal = stmt.executeUpdate(updateStr);	        	
+//	    } catch (SQLException e) {
+//	        throw new IllegalStateException("Unable to execute query: " + updateStr, e);
+//	    }finally {
+//	        try {
+//	            if (resultSet != null) {
+//	                resultSet.close();
+//	            }
+//	            if (stmt != null) {
+//	                stmt.close();
+//	            }
+//	        } catch (SQLException e) {
+//	            System.err.println("SQL EXCEPTION HANDLE & LOG ME");
+//	        }
+//	    }
+//	    return resultVal;
+//	}
+//	
+//	
+//	/**
+//	 * @deprecated
+//	 * @param queryStr
+//	 * @return
+//	 */
+//	public ResultSet doQueryGetResult(String queryStr) {
+//	    Statement stmt = null;
+//	    ResultSet resultSet = null;
+//	    CachedRowSetImpl crs = null;
+//	    try {
+//	        stmt = connection.createStatement();
+//	        resultSet = stmt.executeQuery(queryStr);	        		        	
+//	        crs = new CachedRowSetImpl();
+//	        crs.populate(resultSet);
+//	    } catch (SQLException e) {
+//	        throw new IllegalStateException("Unable to execute query: " + queryStr, e);
+//	    }finally {
+//	        try {
+//	            if (resultSet != null) {
+//	                resultSet.close();
+//	            }
+//	            if (stmt != null) {
+//	                stmt.close();
+//	            }
+//	        } catch (SQLException e) {
+//	            System.err.println("SQL EXCEPTION HANDLE & LOG ME");
+//	        }
+//	    }
+//	    return crs;
+//	}
+//	
+//	public Connection getConnection() {
+//		return connection;
+//	}
+//
 }
