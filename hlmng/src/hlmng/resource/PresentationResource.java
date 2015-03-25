@@ -71,7 +71,7 @@ public class PresentationResource  {
 			res = Response.accepted().build();
 		}else{
 			int insertedID = GenDaoLoader.instance.getPresentationDao().addElement(element);
-			res= ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+			res= ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 		}
 		return res;	
 	}
@@ -80,7 +80,7 @@ public class PresentationResource  {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newPresentation(Presentation element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getPresentationDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
 
 }

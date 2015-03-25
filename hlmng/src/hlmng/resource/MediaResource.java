@@ -63,18 +63,27 @@ public class MediaResource {
 	public Response getMedia(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException {
+		return getMediaAsResponse(id, uri, request);
+	}
+	
+	public static Response getMediaStatic(String idS, UriInfo uriS, Request requestS) throws IOException {
+		return getMediaAsResponse(idS, uriS, requestS);
+	}
+
+	private static Response getMediaAsResponse(String idS, UriInfo uriS,
+			Request requestS) {
 		ResponseBuilder builder;
-		Object obj = GenDaoLoader.instance.getMediaDao().getElement(id);
+		Object obj = GenDaoLoader.instance.getMediaDao().getElement(idS);
 		if(obj==null){
 			builder = Response.status(404);
 		}else{
 			Media media = (Media) obj;
-			setURLPath(media);
-			builder = ResourceHelper.cacheControl(media,request);			
+			ResourceHelper.setMediaURLPath(uriS,media);
+			builder = ResourceHelper.cacheControl(media,requestS);			
 		}
         return builder.build();
 	}
-
+	
 
 	@GET
 	@Path("jpg/{name}")
@@ -157,13 +166,8 @@ public class MediaResource {
 
 	private void setURLPathList(List<Object> listMedia) {
 		for (Object obj : listMedia) {
-			Media media = (Media) obj;
-			setURLPath(media);
+			ResourceHelper.setMediaURLPath(uri,(Media) obj);
 		}
 	}
 
-	private void setURLPath(Media media) {
-		media.setLink(uri.getBaseUri().toString() + "media/"
-				+ media.getType() + "/" + media.getLink());
-	}
 }

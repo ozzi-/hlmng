@@ -1,6 +1,7 @@
 package hlmng.resource;
 
 import hlmng.Log;
+import hlmng.model.Media;
 import hlmng.model.ModelHelper;
 
 import java.io.IOException;
@@ -8,12 +9,15 @@ import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.CacheControl;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 public class ResourceHelper {
+
 	
 	static int cacheTime=1800;
 	/**
@@ -58,4 +62,9 @@ public class ResourceHelper {
 		return builder;
 	}
 	 
+	
+	static void setMediaURLPath(UriInfo uri, Media media) {
+		media.setLink(uri.getBaseUri().toString() + "media/"
+				+ media.getType() + "/" + media.getLink());
+	}
 }

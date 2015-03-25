@@ -71,7 +71,7 @@ public class VoteResource  {
 			res = Response.accepted().build();
 		}else{
 			int insertedID = GenDaoLoader.instance.getVoteDao().addElement(element);
-			res= ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+			res= ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 		}
 		return res;	
 	}
@@ -80,7 +80,7 @@ public class VoteResource  {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newVote(Vote element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getVoteDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
 
 }

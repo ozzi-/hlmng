@@ -38,7 +38,7 @@
 		maxIdle="30"
 		maxWait="10000"
 		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/hlmng"
+		url="jdbc:mysql://localhost:3306/hlmng?autoReconnect=true"
 		username="user"
 		password="pw12"
 	/>

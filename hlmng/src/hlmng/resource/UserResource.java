@@ -36,11 +36,16 @@ public class  UserResource  {
 	private String id;
 	@Context 
 	private HttpServletResponse response;
+	@Context 
+	private HttpHeaders headers;
+	@Context 
+	private HttpServletResponse servletResponse;
 	
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getUsers() {
+		AuthChecker.check(headers, servletResponse,true);
 		return GenDaoLoader.instance.getUserDao().listElements();
 	}
 
@@ -55,9 +60,7 @@ public class  UserResource  {
 	
 	@GET
 	@Path("{id}")
-	public User getUser(@PathParam("id") String id,
-			@Context HttpHeaders headers,
-			@Context HttpServletResponse servletResponse) throws IOException{
+	public User getUser(@PathParam("id") String id) throws IOException{
 		AuthChecker.check(headers, servletResponse,false);
 		Object obj=GenDaoLoader.instance.getUserDao().getElement(id);
 		ResourceHelper.sendErrorIfNull(obj,response);
@@ -74,7 +77,7 @@ public class  UserResource  {
 			res = Response.accepted().build();
 		}else{
 			int insertedID = GenDaoLoader.instance.getUserDao().addElement(element);
-			res =  ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);	
+			res =  ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));	
 		}
 		return res;	
 	}
@@ -83,7 +86,7 @@ public class  UserResource  {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newUser(User element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getUserDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
 	
 	// FORMS
@@ -95,7 +98,7 @@ public class  UserResource  {
 			@Context HttpServletResponse servletResponse) throws IOException {
 		Object addUser = (Object)new User(name, deviceID,regID);
 		int insertedID = GenDaoLoader.instance.getUserDao().addElement(addUser);
-		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
 
 

@@ -34,6 +34,9 @@ public class SpeakerResource  {
 	private String id;
 	@Context 
 	private HttpServletResponse response;
+	@Context
+	UriInfo uri;
+
 
 	
 	@GET
@@ -52,7 +55,7 @@ public class SpeakerResource  {
 	
 	@GET
 	@Path("{id}")
-	public Speaker getSpeaker(@PathParam("id") String id,
+	public Speaker getSpeaker(@PathParam( 	"id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
 		Object obj =  GenDaoLoader.instance.getSpeakerDao().getElement(id);
@@ -63,11 +66,11 @@ public class SpeakerResource  {
 	
 	@GET
 	@Path("{id}/media")
-	public List<Object> getSpeakerMedia(@PathParam("id") String id,
+	public Response getSpeakerMedia(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
 		Speaker speaker =  (Speaker)GenDaoLoader.instance.getSpeakerDao().getElement(id);
-		return  GenDaoLoader.instance.getMediaDao().getElements(Integer.toString(speaker.getMediaIDFK()));
+		return MediaResource.getMediaStatic(Integer.toString(speaker.getMediaIDFK()), uri,request);
 	}
 
 	@PUT
@@ -80,7 +83,7 @@ public class SpeakerResource  {
 			res = Response.accepted().build();
 		}else{
 			int insertedID = GenDaoLoader.instance.getSpeakerDao().addElement(element);
-			res= ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+			res= ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 		}
 		return res;	
 	}
@@ -89,7 +92,7 @@ public class SpeakerResource  {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newSpeaker(Speaker element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getSpeakerDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
 }
 

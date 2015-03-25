@@ -43,10 +43,10 @@ public class AuthChecker {
        JSONParser parser = new JSONParser();
        JSONArray jArray=null;
 		try { 
-			URL url = AuthChecker.class.getResource("/backendlogins.json");
+			URL url = AuthChecker.class.getResource("/basckendlogins.json");
 			File file = new File(url.getPath());
 			jArray = (JSONArray) parser.parse(new FileReader(file));
-		} catch (IOException | ParseException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -160,10 +160,13 @@ public class AuthChecker {
 	 */
 	private static boolean checkLoginInformationBackend(AuthCredential requestingCredential) {
 		if(!loginsLoaded){
-			loadLogins();
-			loginsLoaded=true;
-			hlmng.Log.addEntry(Level.INFO, "Loaded backend logins");
-		}	
+			loginsLoaded=loadLogins();
+			if(loginsLoaded){
+				hlmng.Log.addEntry(Level.INFO, "Loaded backend logins");				
+			}else{
+				hlmng.Log.addEntry(Level.SEVERE, "Couldn't load backend logins");				
+			}
+		}
 		for (AuthCredential authorizedCredentials  : logins) {
 			if(authorizedCredentials.equals(requestingCredential)){
 				return true;

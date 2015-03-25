@@ -71,7 +71,7 @@ public class SocialResource  {
 			res = Response.accepted().build();
 		}else{
 			int insertedID = GenDaoLoader.instance.getSocialDao().addElement(element);
-			res= ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+			res= ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 		}
 		return res;	
 	}
@@ -80,7 +80,7 @@ public class SocialResource  {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newSocial(Social element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getSocialDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
+		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
 
 }
