@@ -88,18 +88,5 @@ public class  UserResource  {
 		int insertedID = GenDaoLoader.instance.getUserDao().addElement(element);
 		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
-	
-	// FORMS
-	@POST
-	@Produces(MediaType.TEXT_HTML)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response newUser(@FormParam("name") String name,
-			@FormParam("deviceID") String deviceID, @FormParam("regID") String regID,
-			@Context HttpServletResponse servletResponse) throws IOException {
-		Object addUser = (Object)new User(name, deviceID,regID);
-		int insertedID = GenDaoLoader.instance.getUserDao().addElement(addUser);
-		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
-	}
-
 
 }

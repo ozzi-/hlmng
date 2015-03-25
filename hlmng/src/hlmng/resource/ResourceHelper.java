@@ -31,10 +31,12 @@ public class ResourceHelper {
 		}
 	}
 	
-	static void sendErrorIfNull(Object obj,HttpServletResponse response) throws IOException {
+	static boolean sendErrorIfNull(Object obj,HttpServletResponse response) throws IOException {
 		if(obj==null){
 		    response.sendError(Response.Status.NOT_FOUND.getStatusCode());
+		    return true;
 		}
+		return false;
 	}
 	
 	/**

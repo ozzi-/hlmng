@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,32 +18,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-
-
 
 @Path("/news")
-public class NewsResource  {
-	
-    @Context
-    private UriInfo uriInfo;
-	@Context
-	private Request request;
-	@Context
-	private String id;
-	@Context 
-	private HttpServletResponse response;
+public class NewsResource extends Resource  {
 
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getNews() {
-		return GenDaoLoader.instance.getNewsDao().listElements();
-	}
-
-	
 	@GET
 	@Path("count")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -51,13 +31,29 @@ public class NewsResource  {
 	}
 	
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> getNews() {
+		List<Object> newsObjects = GenDaoLoader.instance.getNewsDao().listElements();
+		for (Object object : newsObjects) {
+			News news = (News) object;
+			String media = MediaResource.getMediaURL(uri, Integer.toString(news.getMediaIDFK()));
+			news.setMedia(media);
+		}
+		return newsObjects;
+	}
+	
+	@GET
 	@Path("{id}")
 	public News getNews(@PathParam("id") String id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException{
 		Object obj =  GenDaoLoader.instance.getNewsDao().getElement(id);
-		ResourceHelper.sendErrorIfNull(obj,response);
-		News evt=(News) obj;
+		News evt=null;
+		if(!ResourceHelper.sendErrorIfNull(obj,response)){
+			evt=(News) obj;
+			String media = MediaResource.getMediaURL(uri, id);
+			evt.setMedia(media); 			
+		}
 		return evt;	
 	}
 
@@ -80,6 +76,18 @@ public class NewsResource  {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response newNews(News element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getNewsDao().addElement(element);
+		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
+	}
+	
+	// FORMS
+	@POST
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response newNews(@FormParam("title") String title, @FormParam("text") String text,
+			@FormParam("author") String author, @FormParam("mediaIDFK") int mediaIDFK, @FormParam("eventIDFK") int eventIDFK,
+			@Context HttpServletResponse servletResponse) throws IOException {
+		Object addNews = (Object)new News(title,text, author, mediaIDFK, eventIDFK);
+		int insertedID = GenDaoLoader.instance.getNewsDao().addElement(addNews);
 		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
 

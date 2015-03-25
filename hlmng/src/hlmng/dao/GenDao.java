@@ -59,25 +59,24 @@ public class GenDao {
 	@SuppressWarnings("unchecked")
 	public <T> int addElement(Object model) {
 		T tModel=null;
-        PreparedStatement ps;
-        int insertedID=-1;
+		ResultSet rs=null;
+        PreparedStatement ps = null;
         Connection dbConnection=null;
+        int insertedID=-1;
 		try {
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
 			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel ,null);
 			ps.executeUpdate();
-			ResultSet rs = ps.getGeneratedKeys();
+			rs = ps.getGeneratedKeys();
 			rs.next();
 			insertedID = rs.getInt(1);
-			ps.close();
-			DB.closeConnection(dbConnection);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally{
-			closeDbConnection(dbConnection);
+			tryToClose(rs, ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element add ("+tModel+") ID="+insertedID);
 		return insertedID;
@@ -85,7 +84,7 @@ public class GenDao {
 	
 	public boolean deleteElement(String idS) {
 		int id = Integer.parseInt(idS);
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         int rs=0;
         Connection dbConnection=null;
 		try {
@@ -98,18 +97,20 @@ public class GenDao {
 			e.printStackTrace();
 		}
 		finally{
-			closeDbConnection(dbConnection);
+			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element delete ("+id+")="+rs);
 		return (rs==1);
 		
 	}
 	
+	
+
 	@SuppressWarnings("unchecked")
 	public <T> boolean updateElement(Object model, String idS) {
 		T tModel=null;
 		int id = Integer.parseInt(idS);
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		int rs=0;
         Connection dbConnection=null;
 		try {
@@ -118,13 +119,11 @@ public class GenDao {
 			ps = dbConnection.prepareStatement(updateElement);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel,id);
 			rs = ps.executeUpdate();
-			ps.close();
-			DB.closeConnection(dbConnection);
 		}catch (Exception e) {	
 			e.printStackTrace();
 		}
 		finally{
-			closeDbConnection(dbConnection);
+			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element update ("+tModel+")="+rs);
 		return (rs==1);
@@ -137,7 +136,7 @@ public class GenDao {
 	 */
 	public <T> Object getElement(String idS) {
 		int id = Integer.parseInt(idS);
-		PreparedStatement ps;
+		PreparedStatement ps = null;
         ResultSet rs;
         Object element=null;
         Connection dbConnection=null;
@@ -150,13 +149,11 @@ public class GenDao {
 	        	rs.next();
 				element=DB.getObjectFromRS(rs,classType);
 			} 
-			ps.close();
-			DB.closeConnection(dbConnection);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally{
-			closeDbConnection(dbConnection);
+			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element get ("+element+")");
 		return element;
@@ -166,7 +163,7 @@ public class GenDao {
 	
 	public <T> List<Object> listByFK(String fkName, String idFkS){
 		int idFK = Integer.parseInt(idFkS);
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ResultSet rs;
         Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
@@ -178,13 +175,11 @@ public class GenDao {
 			while (rs.next()) {
 				elemList.add(DB.getObjectFromRS(rs,classType));
 			}
-			ps.close();
-			DB.closeConnection(dbConnection);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally{
-			closeDbConnection(dbConnection);
+			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
 		return elemList;
@@ -212,17 +207,12 @@ public class GenDao {
 			e.printStackTrace();
 		}
 		finally{
-			closeDbConnection(dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
 		return elemList;
 	}
 
-	private void closeDbConnection(Connection dbConnection) {
-		if(dbConnection!=null){
-			DB.closeConnection(dbConnection);				
-		}
-	}
+
 
 	/**
 	 * @param id
@@ -230,7 +220,7 @@ public class GenDao {
 	 */
 	public <T> List<Object> getElements(String idS) {
 		int id = Integer.parseInt(idS);
-		PreparedStatement ps;
+		PreparedStatement ps = null;
         ResultSet rs;
         Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
@@ -247,7 +237,7 @@ public class GenDao {
 			e.printStackTrace();
 		}
 		finally{
-			closeDbConnection(dbConnection);
+			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Elements get list ("+elemList+")");
 		return elemList;
@@ -280,5 +270,16 @@ public class GenDao {
 		this.isTest = isTest;
 		this.loginDataForTest=loginData;
 		this.jdbcUrlForTest=jdbcUrl;
+	}
+	
+	
+	protected void tryToClose(ResultSet rs, PreparedStatement ps, Connection dbConnection) {
+		try{rs.close();  }catch(Exception exception){Log.addEntry(Level.WARNING, "Resultset couldn't be closed ("+exception.getMessage());exception.printStackTrace();}
+		tryToClose(ps, dbConnection);
+		
+	}
+	protected void tryToClose(PreparedStatement ps, Connection dbConnection) {
+		try{ps.close();}catch(Exception exception){Log.addEntry(Level.WARNING, "Preparedstatement couldn't be closed ("+exception.getMessage());exception.printStackTrace();}
+		try{dbConnection.close();}catch(Exception exception){Log.addEntry(Level.SEVERE, "Connection couldn't be closed ("+exception.getMessage());exception.printStackTrace();}		
 	}
 }

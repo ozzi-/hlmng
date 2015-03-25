@@ -84,6 +84,12 @@ public class MediaResource {
         return builder.build();
 	}
 	
+	public static String getMediaURL(UriInfo uri, String id){
+		Media media = (Media) GenDaoLoader.instance.getMediaDao().getElement(id);
+		ResourceHelper.setMediaURLPath(uri,media);
+		return media.getLink();
+	}
+	
 
 	@GET
 	@Path("jpg/{name}")

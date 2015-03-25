@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -18,24 +17,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 
 
 @Path("/event")
-public class EventResource  {
-	
-    @Context
-    private UriInfo uriInfo;
-	@Context
-	private Request request;
-	@Context
-	private String id;
-	@Context 
-	private HttpServletResponse response;
-
+public class EventResource extends Resource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -111,23 +98,5 @@ public class EventResource  {
 		int insertedID = GenDaoLoader.instance.getEventDao().addElement(element);
 		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
 	}
-
-
-	
-	// FORMS
-	@POST
-	@Produces(MediaType.TEXT_HTML)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response newEvent(@FormParam("name") String name,
-			@FormParam("description") String description, 
-			@FormParam("start") String start,
-			@FormParam("end") String end,
-			@Context HttpServletResponse servletResponse) throws IOException {
-		Event addEvent = new Event(name,description,start,end);
-		int insertedID = GenDaoLoader.instance.getEventDao().addElement(addEvent);
-		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
-	}
-
-
 }
 

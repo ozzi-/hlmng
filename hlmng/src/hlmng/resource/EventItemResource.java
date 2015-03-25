@@ -87,20 +87,5 @@ public class EventItemResource  {
 		return ResourceHelper.returnOkOrErrorResponse(insertedID==-1?false:true);
 	}
 
-// FORMS
-//	@POST
-//	@Produces(MediaType.TEXT_HTML)
-//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//	public Response newEvent(@FormParam("name") String name,
-//			@FormParam("description") String description, 
-//			@FormParam("start") String start,
-//			@FormParam("end") String end,
-//			@Context HttpServletResponse servletResponse) throws IOException {
-//		Event addEvent = new Event(name,description,start,end);
-//		boolean ok = GenDaoLoader.instance.getEventItemDao().addElement(addEvent);
-//		return ResourceHelper.returnOkOrErrorResponse(ok);
-//	}
-
-
 }
 

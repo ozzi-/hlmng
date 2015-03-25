@@ -1,10 +1,12 @@
 package hlmng.dao;
 
+import hlmng.Log;
 import hlmng.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
 
 import db.DB;
 
@@ -17,8 +19,8 @@ public class UserDao extends GenDao {
 		super(classTypeP);
 	}
 	public User getUserByNameAndDeviceID(String userName, String deviceID) {
-		PreparedStatement ps;
-        ResultSet rs;
+		PreparedStatement ps = null;
+        ResultSet rs = null;
         Object element=null;
         Connection dbConnection =null;
 		try {
@@ -36,9 +38,9 @@ public class UserDao extends GenDao {
 			e.printStackTrace();
 		}
 		finally{
-			DB.closeConnection(dbConnection);
+			tryToClose(rs, ps, dbConnection);
 		}
-		// TODO Log.addEntry(Level.INFO,className+" Element get ("+element+")");
+		Log.addEntry(Level.INFO,"User Element get ("+element+")");
 		return (User) element;
 	}
 

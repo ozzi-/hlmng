@@ -28,15 +28,6 @@ public class DB {
 		return ds.getConnection();
 	}
 	
-	public static void closeConnection(Connection connection){
-		try { 
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	
 	/**
 	 * Use this to build a prepared statement where you only have to set an ID.	
 	 * Example: Select Element or Delete Element
@@ -65,11 +56,13 @@ public class DB {
 		try {
 			instance = type.newInstance();
 			for (Field field : type.getDeclaredFields()) {
-				Object value = resultSet.getObject(field.getName());
-				PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), type);
-				Method method = propertyDescriptor.getWriteMethod();
-				value=(value==null&&field.getName().contains("ID")?0:value);
-				method.invoke(instance, value);
+				if(!(field.getName().equals("media"))){
+					Object value = resultSet.getObject(field.getName());
+					PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), type);
+					Method method = propertyDescriptor.getWriteMethod();
+					value=(value==null&&field.getName().contains("ID")?0:value);
+					method.invoke(instance, value);					
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,7 +77,7 @@ public class DB {
 	 * @param The prepared statement which you want to set the values
 	 * @param The class type of the provided object
 	 * @param The object which will provide the values, all fields will be extracted and set
-	 * @param If you are making an insert statment you won't have to add a ID so pass NULL! Else the ID should be the one of the object in the DB which you want to change (... where ID={x} ) 
+	 * @param If you are making an insert statement you won't have to add a ID so pass NULL! Else the ID should be the one of the object in the DB which you want to change (... where ID={x} ) 
 	 * @return The prepared statement 
 	 */
 	public static <T> PreparedStatement setAllFieldsOfPS(PreparedStatement ps, Class<?> classType,T tModel,Integer idLastParam) {
@@ -115,71 +108,4 @@ public class DB {
 		}
 		return ps;
 	}
-
-	
-//	/**
-//	 * @deprecated
-//	 * @param updateStr
-//	 * @return
-//	 */
-//	public int doUpdateGetResult(String updateStr) {
-//		Statement stmt = null;
-//	    ResultSet resultSet = null;
-//	    int resultVal =0;
-//	    try {
-//	        stmt = connection.createStatement();
-//	    	resultVal = stmt.executeUpdate(updateStr);	        	
-//	    } catch (SQLException e) {
-//	        throw new IllegalStateException("Unable to execute query: " + updateStr, e);
-//	    }finally {
-//	        try {
-//	            if (resultSet != null) {
-//	                resultSet.close();
-//	            }
-//	            if (stmt != null) {
-//	                stmt.close();
-//	            }
-//	        } catch (SQLException e) {
-//	            System.err.println("SQL EXCEPTION HANDLE & LOG ME");
-//	        }
-//	    }
-//	    return resultVal;
-//	}
-//	
-//	
-//	/**
-//	 * @deprecated
-//	 * @param queryStr
-//	 * @return
-//	 */
-//	public ResultSet doQueryGetResult(String queryStr) {
-//	    Statement stmt = null;
-//	    ResultSet resultSet = null;
-//	    CachedRowSetImpl crs = null;
-//	    try {
-//	        stmt = connection.createStatement();
-//	        resultSet = stmt.executeQuery(queryStr);	        		        	
-//	        crs = new CachedRowSetImpl();
-//	        crs.populate(resultSet);
-//	    } catch (SQLException e) {
-//	        throw new IllegalStateException("Unable to execute query: " + queryStr, e);
-//	    }finally {
-//	        try {
-//	            if (resultSet != null) {
-//	                resultSet.close();
-//	            }
-//	            if (stmt != null) {
-//	                stmt.close();
-//	            }
-//	        } catch (SQLException e) {
-//	            System.err.println("SQL EXCEPTION HANDLE & LOG ME");
-//	        }
-//	    }
-//	    return crs;
-//	}
-//	
-//	public Connection getConnection() {
-//		return connection;
-//	}
-//
 }
