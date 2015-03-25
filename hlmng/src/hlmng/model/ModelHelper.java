@@ -8,6 +8,9 @@ public class ModelHelper {
 	 * If anything is different false is returned.
 	 */
 	public static <T> boolean Compare(T a, T b){
+		if(a==null || b==null){
+			return false;
+		}
 		if(!(a.getClass().getSimpleName().equals(b.getClass().getSimpleName()))){
 			return false;
 		}

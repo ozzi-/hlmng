@@ -1,6 +1,7 @@
 package testing;
 
 import static org.junit.Assert.*;
+
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
@@ -16,11 +17,13 @@ import org.junit.Test;
 
 import com.owlike.genson.Genson;
 
+
 public class RestTest {
 
 	@Test
     public void testEventRest() throws IOException{
 		GenDao dao = GenDaoLoader.instance.getEventDao();
+		dao.setTest(true);
 		Event orig = new Event("eventname","description","2015-01-01","2015-01-01");
 		int elementID=dao.addElement(orig);
 		String response="";

@@ -3,6 +3,7 @@ package hlmng.dao;
 import hlmng.Log;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 
 import javax.naming.NamingException;
@@ -28,6 +30,7 @@ public class GenDao {
     private String className;
     private Map<?, ?> fkElement;
 	private Class<?> classType;
+	private boolean isTest=false;
 
 	public <T> GenDao(Class<T> classTypeP){
 
@@ -59,7 +62,7 @@ public class GenDao {
         Connection dbConnection=null;
 		try {
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel ,null);
 			ps.executeUpdate();
@@ -84,7 +87,7 @@ public class GenDao {
         int rs=0;
         Connection dbConnection=null;
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(removeElement);
 			ps=DB.setIdFieldOfPS(ps,id);
 	        rs = ps.executeUpdate();
@@ -108,7 +111,7 @@ public class GenDao {
 		int rs=0;
         Connection dbConnection=null;
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
 			ps = dbConnection.prepareStatement(updateElement);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel,id);
@@ -137,7 +140,7 @@ public class GenDao {
         Object element=null;
         Connection dbConnection=null;
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(getElement);
 			ps=DB.setIdFieldOfPS(ps,id);
 	        rs = ps.executeQuery();
@@ -166,7 +169,7 @@ public class GenDao {
         Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(fkElement.get(fkName).toString());
 			ps=DB.setIdFieldOfPS(ps,idFK);
 	        rs = ps.executeQuery();
@@ -196,7 +199,7 @@ public class GenDao {
         Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(listElements);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -230,7 +233,7 @@ public class GenDao {
         Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(getElement);
 			ps=DB.setIdFieldOfPS(ps,id);
 	        rs = ps.executeQuery();
@@ -246,5 +249,27 @@ public class GenDao {
 		}
 		Log.addEntry(Level.INFO,className+" Elements get list ("+elemList+")");
 		return elemList;
+	}
+
+	private Connection getDBConnection() throws SQLException, NamingException, ClassNotFoundException {
+		if(isTest()){
+			// This is used to connect in a JUnit Test as we don't have access to the context.xml etc.
+			Properties loginData= new Properties();
+			Class.forName("com.mysql.jdbc.Driver");
+		    loginData.put("user","user");
+		    loginData.put("password","pw12");
+			return DriverManager.getConnection("jdbc:mysql://127.0.0.1/"+"hlmng",loginData);
+
+		}else{
+			return DB.getConnection();			
+		}
+	}
+
+	public boolean isTest() {
+		return isTest;
+	}
+
+	public void setTest(boolean isTest) {
+		this.isTest = isTest;
 	}
 }
