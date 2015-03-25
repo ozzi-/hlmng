@@ -1,7 +1,6 @@
 package testing;
 
 import static org.junit.Assert.*;
-
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Properties;
 
 import org.junit.Test;
 
@@ -23,7 +23,10 @@ public class RestTest {
 	@Test
     public void testEventRest() throws IOException{
 		GenDao dao = GenDaoLoader.instance.getEventDao();
-		dao.setTest(true);
+		Properties loginData= new Properties();
+	    loginData.put("user","user");
+	    loginData.put("password","pw12");
+		dao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
 		Event orig = new Event("eventname","description","2015-01-01","2015-01-01");
 		int elementID=dao.addElement(orig);
 		String response="";

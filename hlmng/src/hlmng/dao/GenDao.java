@@ -31,6 +31,8 @@ public class GenDao {
     private Map<?, ?> fkElement;
 	private Class<?> classType;
 	private boolean isTest=false;
+	private Properties loginDataForTest;
+	private String jdbcUrlForTest;
 
 	public <T> GenDao(Class<T> classTypeP){
 
@@ -254,11 +256,8 @@ public class GenDao {
 	private Connection getDBConnection() throws SQLException, NamingException, ClassNotFoundException {
 		if(isTest()){
 			// This is used to connect in a JUnit Test as we don't have access to the context.xml etc.
-			Properties loginData= new Properties();
 			Class.forName("com.mysql.jdbc.Driver");
-		    loginData.put("user","user");
-		    loginData.put("password","pw12");
-			return DriverManager.getConnection("jdbc:mysql://127.0.0.1/"+"hlmng",loginData);
+			return DriverManager.getConnection(jdbcUrlForTest,loginDataForTest);
 
 		}else{
 			return DB.getConnection();			
@@ -269,7 +268,17 @@ public class GenDao {
 		return isTest;
 	}
 
-	public void setTest(boolean isTest) {
+	/**
+	 * If this is is called with isTest = True then then all Dao's will connect directly via provided login information
+	 * to the DB instead of using connection pooling and the context.xml in web/inf.
+	 * This due to the fact, that JUnit cannot use context.xml and other mechanisms.
+	 * @param isTest
+	 * @param loginData
+	 * @param jdbcUrl
+	 */
+	public void setTest(boolean isTest, Properties loginData, String jdbcUrl) {
 		this.isTest = isTest;
+		this.loginDataForTest=loginData;
+		this.jdbcUrlForTest=jdbcUrl;
 	}
 }
