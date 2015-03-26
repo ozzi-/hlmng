@@ -1,5 +1,6 @@
 package hlmng.resource;
 
+import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.News;
 
@@ -22,13 +23,10 @@ import javax.ws.rs.core.Response;
 
 @Path("/news")
 public class NewsResource extends Resource  {
+	private GenDao newsDao =GenDaoLoader.instance.getNewsDao();
 
-	@GET
-	@Path("count")
-	@Produces(MediaType.TEXT_PLAIN)
-	public int getCount() {
-		return GenDaoLoader.instance.getNewsDao().listElements().size();
-	}
+
+	// TODO refactor to new architecture
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

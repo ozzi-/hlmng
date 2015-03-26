@@ -34,18 +34,9 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 
 @Path("/media")
-public class MediaResource {
+public class MediaResource extends Resource{
 
-	@Context
-	private UriInfo uriInfo;
-	@Context
-	private Request request;
-	@Context
-	private String id;
-	@Context
-	private HttpServletResponse response;
-	@Context
-	UriInfo uri;
+	
 	private static String fileRootDir = "/home/ozzi/media/";
 	//private static String fileRootDir = "/home/student/media/";
 	
@@ -70,8 +61,7 @@ public class MediaResource {
 		return getMediaAsResponse(idS, uriS, requestS);
 	}
 
-	private static Response getMediaAsResponse(String idS, UriInfo uriS,
-			Request requestS) {
+	private static Response getMediaAsResponse(String idS, UriInfo uriS,Request requestS) {
 		ResponseBuilder builder;
 		Object obj = GenDaoLoader.instance.getMediaDao().getElement(idS);
 		if(obj==null){

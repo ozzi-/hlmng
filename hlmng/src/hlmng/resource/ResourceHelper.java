@@ -31,6 +31,14 @@ public class ResourceHelper {
 		}
 	}
 	
+	static Response returnOkOrNotFoundResponse(boolean ok) {
+		if(ok){
+			return Response.ok().build();			
+		}else{
+			return Response.status(404).build();
+		}
+	}
+	
 	static boolean sendErrorIfNull(Object obj,HttpServletResponse response) throws IOException {
 		if(obj==null){
 		    response.sendError(Response.Status.NOT_FOUND.getStatusCode());

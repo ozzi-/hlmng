@@ -35,6 +35,7 @@ public class QrCodeResource  {
 	@Context 
 	private HttpServletResponse response;
 
+	// TODO work out how to create, store, info containing, access system ... 
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

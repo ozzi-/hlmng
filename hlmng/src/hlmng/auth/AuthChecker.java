@@ -1,5 +1,6 @@
 package hlmng.auth;
 
+import hlmng.Log;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
@@ -42,7 +43,7 @@ public class AuthChecker {
        JSONParser parser = new JSONParser();
        JSONArray jArray=null;
 		try { 
-			URL url = AuthChecker.class.getResource("/basckendlogins.json");
+			URL url = AuthChecker.class.getResource("/backendlogins.json");
 			File file = new File(url.getPath());
 			jArray = (JSONArray) parser.parse(new FileReader(file));
 		} catch (Exception e) {
@@ -82,11 +83,13 @@ public class AuthChecker {
 					if(!checkLoginInformationBackend((authCredential))){
 						sendErrorAuthCode(servletResponse,HttpServletResponse.SC_UNAUTHORIZED); 
 					}else{
+						Log.addEntry(Level.INFO, "Successful backend auth");
 						return true;
 					}	 // TODO refactor this horror
 				}else{
 					int code = checkLoginInformation(authCredential);
 					if(code==HttpServletResponse.SC_OK){
+						Log.addEntry(Level.INFO, "Successful user auth");
 						return true;	
 					}else{
 						sendErrorAuthCode(servletResponse,code); 						
@@ -94,6 +97,7 @@ public class AuthChecker {
 				}
 			}
 		}
+		Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd);
 		return false;
 	}
 	
