@@ -17,7 +17,7 @@ public class UserActionLimiter {
 	/**
 	 * How many actions are allowed in the grace time
 	 */
-	private static int maxActionsAllowed=2;
+	private static int maxActionsAllowed=5;
 
 	
 	private static ArrayList<Long> addAction(String username){
@@ -33,7 +33,7 @@ public class UserActionLimiter {
 		return actionList;
 	}
 	/**
-	 * Checks if the user has made too many actions.
+	 * Checks if the user has made too many actions and adds an action.
 	 * @param username
 	 * @return true if the user made too many actions at said moment, false if he is allowed to do more actions
 	 */

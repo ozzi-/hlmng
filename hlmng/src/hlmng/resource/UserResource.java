@@ -4,6 +4,7 @@ import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.User;
+import hlmng.model.UserActionLimiter;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,7 +34,7 @@ public class  UserResource  extends Resource {
 		return GenDaoLoader.instance.getUserDao().listElements();
 	}
 	
-	@GET
+	@GET 
 	@Path("{id}")
 	public User getUser(@PathParam("id") String id) throws IOException{
 		return (User) getResource(userDao, id);
@@ -43,7 +44,7 @@ public class  UserResource  extends Resource {
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response putUser(User element,@PathParam("id") String id) throws IOException {
-		return putResource(userDao, element, id);
+		return putResource(userDao, element, id);			
 	}
 	
 	@DELETE
@@ -55,7 +56,10 @@ public class  UserResource  extends Resource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response postUser(User element) throws IOException {
-		return postResourceDo(userDao, element);
+		if(!UserActionLimiter.actionsExceeded("userCreation")){ // we don't want people spamming the profile creation
+			return postResourceDo(userDao, element);			
+		}
+		return Response.status(429).build();
 	}
 
 }

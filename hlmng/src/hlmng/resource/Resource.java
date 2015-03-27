@@ -60,7 +60,12 @@ public class Resource {
 		} 
 		return null;		
 	}
-	
+	/**
+	 * Create a new resource without auth checking.
+	 * @param dao
+	 * @param element
+	 * @return
+	 */
 	protected Response postResourceDo(GenDao dao, Object element){
 			int insertedID = dao.addElement(element);
 			return ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));			
