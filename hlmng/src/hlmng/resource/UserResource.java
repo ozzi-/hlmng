@@ -3,6 +3,7 @@ package hlmng.resource;
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
+import hlmng.dao.UserDao;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
 
@@ -55,11 +56,16 @@ public class  UserResource  extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postUser(User element) throws IOException {
-		if(!UserActionLimiter.actionsExceeded("userCreation")){ // we don't want people spamming the profile creation
-			return postResourceDo(userDao, element);			
+	public Response postUser(User element) throws IOException {	
+		User userNameExists = ((UserDao) userDao).getUserByName(element.getName());
+		if(userNameExists == null){ 
+			if(!UserActionLimiter.actionsExceeded("userCreation")){ // we don't want people spamming the profile creation
+				return postResourceDo(userDao, element);			
+			}
+			return Response.status(429).build();  // Too Many Requests			
+		}else{
+			return Response.status(422).build();  // Unprocessable Entity (exists)
 		}
-		return Response.status(429).build();
 	}
 
 }

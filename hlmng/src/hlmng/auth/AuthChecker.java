@@ -1,9 +1,9 @@
 package hlmng.auth;
 
-import hlmng.Log;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
+import hlmng.resource.Log;
 
 import java.io.File;
 import java.io.FileReader;
@@ -165,9 +165,9 @@ public class AuthChecker {
 		if(!loginsLoaded){
 			loginsLoaded=loadLogins();
 			if(loginsLoaded){
-				hlmng.Log.addEntry(Level.INFO, "Loaded backend logins");				
+				hlmng.resource.Log.addEntry(Level.INFO, "Loaded backend logins");				
 			}else{
-				hlmng.Log.addEntry(Level.SEVERE, "Couldn't load backend logins");				
+				hlmng.resource.Log.addEntry(Level.SEVERE, "Couldn't load backend logins");				
 			}
 		}
 		for (AuthCredential authorizedCredentials  : logins) {

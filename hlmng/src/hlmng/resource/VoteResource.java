@@ -1,6 +1,5 @@
 package hlmng.resource;
 
-import hlmng.Log;
 import hlmng.auth.AuthChecker;
 import hlmng.auth.AuthCredential;
 import hlmng.dao.GenDao;

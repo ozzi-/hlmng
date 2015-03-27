@@ -1,6 +1,6 @@
 package hlmng.dao;
 
-import hlmng.Log;
+import hlmng.resource.Log;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

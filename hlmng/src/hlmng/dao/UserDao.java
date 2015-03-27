@@ -1,7 +1,7 @@
 package hlmng.dao;
 
-import hlmng.Log;
 import hlmng.model.User;
+import hlmng.resource.Log;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,6 +43,31 @@ public class UserDao extends GenDao {
 			tryToClose(rs, ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,"User Element get by name and device id ("+element+")");
+		return (User) element;
+	}
+	
+	public User getUserByName(String userName) {
+		PreparedStatement ps = null;
+        ResultSet rs = null;
+        Object element=null;
+        Connection dbConnection =null;
+		try {
+			dbConnection = DB.getConnection();
+			ps = dbConnection.prepareStatement("SELECT * FROM user WHERE name = ?");
+			ps.setString(1,userName);
+	        rs = ps.executeQuery();
+	        if (rs.isBeforeFirst() ) {     
+	        	rs.next();
+				element=DB.getObjectFromRS(rs,User.class);
+			} 
+			ps.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			tryToClose(rs, ps, dbConnection);
+		}
+		Log.addEntry(Level.INFO,"User Element get by name ("+element+")");
 		return (User) element;
 	}
 

@@ -1,6 +1,5 @@
 package hlmng.resource;
 
-import hlmng.Log;
 import hlmng.model.Media;
 import hlmng.model.ModelHelper;
 

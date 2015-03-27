@@ -1,4 +1,4 @@
-package hlmng;
+package hlmng.resource;
 
 import java.io.IOException;
 import java.text.DateFormat;

@@ -1,6 +1,6 @@
 package hlmng.resource;
 
-import hlmng.Log;
+import hlmng.FileSettings;
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
@@ -33,12 +33,11 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 
+
 @Path("/media")
 public class MediaResource extends Resource{
 
 	
-	private static String fileRootDir = "/home/ozzi/media/";
-	//private static String fileRootDir = "/home/student/media/";
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -86,7 +85,7 @@ public class MediaResource extends Resource{
 	@Produces("image/jpeg")
 	public Response getJPG(@PathParam("name") String fileName, @Context HttpHeaders headers)
 			throws IOException {
-			return mediaResponse(fileName, "jpg");
+			return mediaResponse(FileSettings.mediaFileRootDir+fileName, "jpg", request);
 	}
 
 	@GET
@@ -94,7 +93,7 @@ public class MediaResource extends Resource{
 	@Produces("image/png")
 	public Response getPNG(@PathParam("name") String fileName)
 			throws IOException {
-		return mediaResponse(fileName, "png");
+		return mediaResponse(FileSettings.mediaFileRootDir+fileName, "png", request);
 	}
 
 	@POST
@@ -111,7 +110,7 @@ public class MediaResource extends Resource{
 		boolean authenticated = AuthChecker.check(headers, servletResponse, false);
 		Response response;
 		if(authenticated && (mimeType.equals("image/png")||mimeType.equals("image/jpeg"))){
-			String filePath = fileRootDir + contentDispositionHeader.getFileName();
+			String filePath = FileSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
 			boolean savedOK=saveFile(fileInputStream, filePath);
 			if(savedOK){
 				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
@@ -148,9 +147,9 @@ public class MediaResource extends Resource{
 		}
 	}
 
-	private Response mediaResponse(String fileName, String fileType) {
+	public static Response mediaResponse(String filePath, String fileType, Request request) {
 		ResponseBuilder response;
-		File file = new File(fileRootDir + fileName);
+		File file = new File(filePath);
 		if (file.canRead()) {
 			response = ResourceHelper.cacheControl((File) file,request);
 			//response.header("Content-Disposition", "attachment; filename=hlmng." + fileType); 
