@@ -65,16 +65,16 @@ public class NewsResource extends Resource  {
 			res = Response.accepted().build();
 		}else{
 			int insertedID = GenDaoLoader.instance.getNewsDao().addElement(element);
-			res= ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
+			res= ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));
 		}
 		return res;	
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newNews(News element) throws IOException {
+	public Response postNews(News element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getNewsDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
+		return ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));
 	}
 	
 	// FORMS
@@ -86,7 +86,7 @@ public class NewsResource extends Resource  {
 			@Context HttpServletResponse servletResponse) throws IOException {
 		Object addNews = (Object)new News(title,text, author, mediaIDFK, eventIDFK);
 		int insertedID = GenDaoLoader.instance.getNewsDao().addElement(addNews);
-		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
+		return ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));
 	}
 
 }

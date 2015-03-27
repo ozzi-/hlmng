@@ -42,19 +42,19 @@ public class EventRoomResource extends Resource  {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putEventRoom(EventRoom element,@PathParam("id") String id) {
+	public Response putEventRoom(EventRoom element,@PathParam("id") String id) throws IOException {
 		return putResource(eventRoomDao, element, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newEventRoom(EventRoom element) throws IOException {
-		return newResource(eventRoomDao, element, true);
+	public Response postEventRoom(EventRoom element) throws IOException {
+		return postResource(eventRoomDao, element, true);
 	}
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteEventRoom(EventRoom element,@PathParam("id") String id) {
+	public Response deleteEventRoom(EventRoom element,@PathParam("id") String id) throws IOException {
 		return deleteResource(eventRoomDao, id);
 	}
 	

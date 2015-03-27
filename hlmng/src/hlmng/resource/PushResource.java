@@ -39,21 +39,21 @@ public class PushResource  extends Resource{
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putPush(Push element,@PathParam("id") String id) {
+	public Response putPush(Push element,@PathParam("id") String id) throws IOException {
 		return putResource(pushDao, element, id);
 	}
 	
 	@DELETE
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deletePush(@PathParam("id") String id) {
+	public Response deletePush(@PathParam("id") String id) throws IOException {
 		return deleteResource(pushDao, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newPush(Push element) throws IOException {
-		return newResource(pushDao, element, true);
+	public Response postPush(Push element) throws IOException {
+		return postResource(pushDao, element, true);
 	}
 
 }

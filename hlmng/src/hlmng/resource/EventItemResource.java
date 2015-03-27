@@ -41,14 +41,14 @@ public class EventItemResource extends Resource{
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putEventItem(EventItem element,@PathParam("id") String id) {
+	public Response putEventItem(EventItem element,@PathParam("id") String id) throws IOException {
 		return putResource(eventItemDao, element, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newEventItem(EventItem element) throws IOException {
-		return newResource(eventItemDao, element,true);
+	public Response postEventItem(EventItem element) throws IOException {
+		return postResource(eventItemDao, element,true);
 	}
 	
 	@DELETE

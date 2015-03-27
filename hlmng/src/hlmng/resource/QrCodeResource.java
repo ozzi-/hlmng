@@ -36,6 +36,7 @@ public class QrCodeResource  {
 	private HttpServletResponse response;
 
 	// TODO work out how to create, store, info containing, access system ... 
+	// TODO use new architecture
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,16 +79,16 @@ public class QrCodeResource  {
 			res = Response.accepted().build();
 		}else{
 			int insertedID = GenDaoLoader.instance.getQrCodeDao().addElement(element);
-			res= ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
+			res= ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));
 		}
 		return res;	
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newQrCode(QrCode element) throws IOException {
+	public Response postwQrCode(QrCode element) throws IOException {
 		int insertedID = GenDaoLoader.instance.getQrCodeDao().addElement(element);
-		return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));
+		return ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));
 	}
 
 

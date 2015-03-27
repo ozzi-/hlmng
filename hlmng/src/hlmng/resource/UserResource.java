@@ -42,20 +42,20 @@ public class  UserResource  extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putUser(User element,@PathParam("id") String id) {
+	public Response putUser(User element,@PathParam("id") String id) throws IOException {
 		return putResource(userDao, element, id);
 	}
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteUser(@PathParam("id") String id) {
+	public Response deleteUser(@PathParam("id") String id) throws IOException {
 		return deleteResource(userDao, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newUser(User element) throws IOException {
-		return newResourceDo(userDao, element);
+	public Response postUser(User element) throws IOException {
+		return postResourceDo(userDao, element);
 	}
 
 }

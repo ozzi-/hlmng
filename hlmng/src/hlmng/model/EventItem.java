@@ -4,12 +4,12 @@ public class EventItem {
 	
 	private int eventItemID;
 	private String name;
+	private String description;
 	private String date;
 	private String startTime;
 	private String endTime;
 	private int roomIDFK;
 	private int eventIDFK;
-	private String description;
 
 	public EventItem(){
 	}

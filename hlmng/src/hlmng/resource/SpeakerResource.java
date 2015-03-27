@@ -48,20 +48,20 @@ public class SpeakerResource extends Resource  {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putSpeaker(Speaker element,@PathParam("id") String id) {
+	public Response putSpeaker(Speaker element,@PathParam("id") String id) throws IOException {
 		return putResource(speakerDao, element, id);
 	}
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteSpeaker(@PathParam("id") String id) {
+	public Response deleteSpeaker(@PathParam("id") String id) throws IOException {
 		return deleteResource(speakerDao, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newSpeaker(Speaker element) throws IOException {
-		return newResource(speakerDao, element, true);
+	public Response postSpeaker(Speaker element) throws IOException {
+		return postResource(speakerDao, element, true);
 	}
 }
 

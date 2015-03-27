@@ -2,7 +2,6 @@ package hlmng.resource;
 
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
-import hlmng.dao.GenDaoLoader;
 
 import java.io.IOException;
 
@@ -38,9 +37,11 @@ public class Resource {
 	 * @param id
 	 * @return 202 or 404 if not found
 	 */
-	protected Response deleteResource(GenDao dao, String id){
-		if(AuthChecker.check(headers, servletResponse, true)){
-			boolean deleted = GenDaoLoader.instance.getEventDao().deleteElement(id);
+	protected Response deleteResource(GenDao dao, String id) throws IOException{
+		if(!isNumeric(id)){
+		    response.sendError(400);
+		}else if(AuthChecker.check(headers, servletResponse, true)){
+			boolean deleted = dao.deleteElement(id);
 			return ResourceHelper.returnOkOrNotFoundResponse(deleted);			
 		} 
 		return null;
@@ -53,16 +54,16 @@ public class Resource {
 	 * @param backend
 	 * @return 202, 401
 	 */
-	protected Response newResource(GenDao dao, Object element, boolean backend){
+	protected Response postResource(GenDao dao, Object element, boolean backend){
 		if(AuthChecker.check(headers, servletResponse, backend)){
-			newResourceDo(dao, element);
+			postResourceDo(dao, element);
 		} 
 		return null;		
 	}
 	
-	protected Response newResourceDo(GenDao dao, Object element){
-			int insertedID = GenDaoLoader.instance.getEventDao().addElement(element);
-			return ResourceHelper.returnOkOrErrorResponse(!(insertedID==-1));			
+	protected Response postResourceDo(GenDao dao, Object element){
+			int insertedID = dao.addElement(element);
+			return ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));			
 	}
 	
 	/**
@@ -70,12 +71,25 @@ public class Resource {
 	 * @param dao
 	 * @param id
 	 * @return The Object or 404
-	 * @throws IOException
 	 */
 	protected Object getResource(GenDao dao, String id) throws IOException{
-		Object obj =  GenDaoLoader.instance.getEventDao().getElement(id);
-		ResourceHelper.sendErrorIfNull(obj,response);
-		return obj;
+		if(!isNumeric(id)){
+		    response.sendError(400);
+		}else{
+			Object obj =  dao.getElement(id);
+			ResourceHelper.sendErrorIfNull(obj,response);
+			return obj;			
+		}
+		return null;
+	}
+	
+	private static boolean isNumeric(String str){
+		if(str.length()>=10) // if the id is that long, don't even bother, this is wasting our cpu cycles 
+			return false; 
+	    for (char c : str.toCharArray()) {
+	        if (!Character.isDigit(c)) return false;
+	    }
+	    return true;
 	}
 	
 	/**
@@ -86,9 +100,11 @@ public class Resource {
 	 * @param id
 	 * @return a response, either 202 (accepted) or 404 if the provided ID doesn't exist.
 	 */
-	protected Response putResource(GenDao dao ,Object element, String id){
+	protected Response putResource(GenDao dao ,Object element, String id) throws IOException{
 		Response res;
-		if(AuthChecker. check(headers, servletResponse, true)){
+		if(!isNumeric(id)){
+		    response.sendError(400);
+		}else if(AuthChecker. check(headers, servletResponse, true)){
 			if (dao.getElement(id)!=null){
 				dao.updateElement(element, id);
 				res = Response.accepted().build();
@@ -100,3 +116,4 @@ public class Resource {
 		return null;
 	}
 }
+

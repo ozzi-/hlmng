@@ -21,13 +21,13 @@ public class ResourceHelper {
 	static int cacheTime=1800;
 	/**
 	 * @param ok
-	 * @return If @param is true returns a HTTP 200 (OK) Response, else a 500 (server error)
+	 * @return If @param is true returns a HTTP 200 (OK) Response, else 500 (bad request)
 	 */
-	static Response returnOkOrErrorResponse(boolean ok) {
+	static Response returnOkOrBadReqResponse(boolean ok) {
 		if(ok){
 			return Response.ok().build();			
 		}else{
-			return Response.serverError().build();
+			return Response.status(500).build();
 		}
 	}
 	

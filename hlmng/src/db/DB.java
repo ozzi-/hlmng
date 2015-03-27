@@ -56,11 +56,11 @@ public class DB {
 		try {
 			instance = type.newInstance();
 			for (Field field : type.getDeclaredFields()) {
-				if(!(field.getName().equals("media"))){
+				if(!(field.getName().equals("media"))){ // will be injected with URL afterwards
 					Object value = resultSet.getObject(field.getName());
 					PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), type);
 					Method method = propertyDescriptor.getWriteMethod();
-					value=(value==null&&field.getName().contains("ID")?0:value);
+					value=(value==null&&field.getName().contains("ID")?0:value); // we don't want ID(FK) with NULL, we want 0 
 					method.invoke(instance, value);					
 				}
 			}

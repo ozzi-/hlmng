@@ -29,7 +29,7 @@ public enum GenDaoLoader {
 	private GenDao mediaDao;
 	private GenDao newsDao;
 	private GenDao qrCodeDao;
-	private GenDao voteDao;
+	private VoteDao voteDao;
 	private GenDao votingDao;
 	private GenDao sliderDao;
 	private GenDao presentationDao;
@@ -50,7 +50,7 @@ public enum GenDaoLoader {
 		socialDao=new GenDao(Social.class);
 		speakerDao= new GenDao(Speaker.class);
 		userDao = new UserDao(User.class);
-		voteDao=new GenDao(Vote.class);
+		voteDao=new VoteDao(Vote.class);
 		votingDao=new GenDao(Voting.class);
 	}
 	public GenDao getSliderDao() {

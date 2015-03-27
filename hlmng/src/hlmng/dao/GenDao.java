@@ -78,7 +78,11 @@ public class GenDao {
 		finally{
 			tryToClose(rs, ps, dbConnection);
 		}
-		Log.addEntry(Level.INFO,className+" Element add ("+tModel+") ID="+insertedID);
+		if(insertedID!=-1){
+			Log.addEntry(Level.INFO,className+" Element add ("+tModel+") ID="+insertedID);			
+		}else{
+			Log.addEntry(Level.WARNING,className+" Element wasn't added due to malformed input ("+tModel+") ID="+insertedID);			
+		}
 		return insertedID;
 	}
 	
@@ -274,12 +278,18 @@ public class GenDao {
 	
 	
 	protected void tryToClose(ResultSet rs, PreparedStatement ps, Connection dbConnection) {
-		try{rs.close();  }catch(Exception exception){Log.addEntry(Level.WARNING, "Resultset couldn't be closed ("+exception.getMessage());exception.printStackTrace();}
+		if(rs!=null){
+			try{rs.close();  }catch(Exception exception){Log.addEntry(Level.WARNING, "Resultset couldn't be closed ("+exception.getMessage());exception.printStackTrace();}			
+		}
 		tryToClose(ps, dbConnection);
 		
 	}
 	protected void tryToClose(PreparedStatement ps, Connection dbConnection) {
-		try{ps.close();}catch(Exception exception){Log.addEntry(Level.WARNING, "Preparedstatement couldn't be closed ("+exception.getMessage());exception.printStackTrace();}
-		try{dbConnection.close();}catch(Exception exception){Log.addEntry(Level.SEVERE, "Connection couldn't be closed ("+exception.getMessage());exception.printStackTrace();}		
+		if(ps!=null){
+			try{ps.close();}catch(Exception exception){Log.addEntry(Level.WARNING, "Preparedstatement couldn't be closed ("+exception.getMessage());exception.printStackTrace();}			
+		}
+		if(dbConnection!=null){
+			try{dbConnection.close();}catch(Exception exception){Log.addEntry(Level.SEVERE, "Connection couldn't be closed ("+exception.getMessage());exception.printStackTrace();}					
+		}
 	}
 }

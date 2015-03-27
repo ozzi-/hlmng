@@ -18,6 +18,8 @@ public class UserDao extends GenDao {
 	public <T> UserDao(Class<T> classTypeP) {
 		super(classTypeP);
 	}
+	
+	
 	public User getUserByNameAndDeviceID(String userName, String deviceID) {
 		PreparedStatement ps = null;
         ResultSet rs = null;
@@ -40,7 +42,7 @@ public class UserDao extends GenDao {
 		finally{
 			tryToClose(rs, ps, dbConnection);
 		}
-		Log.addEntry(Level.INFO,"User Element get ("+element+")");
+		Log.addEntry(Level.INFO,"User Element get by name and device id ("+element+")");
 		return (User) element;
 	}
 

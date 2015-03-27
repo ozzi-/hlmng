@@ -121,7 +121,7 @@ public class AuthChecker {
 	 * @param authorizationHeader
 	 * @return auth credential or null
 	 */
-	private static AuthCredential decodeBasicAuthB64( String authorizationHeader) {
+	public static AuthCredential decodeBasicAuthB64( String authorizationHeader) {
 		Base64 b = new Base64();
 		AuthCredential authCredential=null;
 		String[] authCredentials = null;

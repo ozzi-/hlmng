@@ -35,20 +35,20 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}")
 	public Voting getVoting(@PathParam("id") String id) throws IOException{
-		return (Voting) getResource(votingDao, id); // TODO secure this for backend
+		return (Voting) getResource(votingDao, id);
 	}
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putVoting(Voting element,@PathParam("id") String id) {
+	public Response putVoting(Voting element,@PathParam("id") String id) throws IOException {
 		return putResource(votingDao, element, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newVoting(Voting element) throws IOException {
-		return newResourceDo(votingDao, element);
+	public Response postVoting(Voting element) throws IOException {
+		return postResourceDo(votingDao, element);
 	}
 
 }

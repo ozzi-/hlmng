@@ -48,21 +48,21 @@ public class PresentationResource extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putPresentation(Presentation element,@PathParam("id") String id) {
+	public Response putPresentation(Presentation element,@PathParam("id") String id) throws IOException {
 		return putResource(presentationDao, element, id);
 	}
 	
 
 	@DELETE
 	@Path("{id}")
-	public Response deletePresentation(@PathParam("id") String id) {
+	public Response deletePresentation(@PathParam("id") String id) throws IOException {
 		return deleteResource(presentationDao, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newPresentation(Presentation element) throws IOException {
-		return newResource(presentationDao, element, true);
+	public Response postPresentation(Presentation element) throws IOException {
+		return postResource(presentationDao, element, true);
 	}
 
 }

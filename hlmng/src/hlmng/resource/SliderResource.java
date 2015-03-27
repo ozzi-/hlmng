@@ -41,21 +41,21 @@ public class SliderResource extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putSlider(Slider element,@PathParam("id") String id) {
+	public Response putSlider(Slider element,@PathParam("id") String id) throws IOException {
 		return putResource(sliderDao, element, id);
 	}
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteSlider(@PathParam("id") String id) {
+	public Response deleteSlider(@PathParam("id") String id) throws IOException {
 		return deleteResource(sliderDao, id);
 	}
 
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response newSlider(Slider element) throws IOException {
-		return newResource(sliderDao, element, true);
+	public Response postSlider(Slider element) throws IOException {
+		return postResource(sliderDao, element, true);
 	}
 
 }

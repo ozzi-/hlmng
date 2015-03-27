@@ -5,25 +5,25 @@ public class Event {
 	private int eventID;
 	private String name;
 	private String description;
-	private String start;
-	private String end;
+	private String startDate;
+	private String endDate;
 
 	public Event(){
 		
 	}
-	public Event(int eventID, String name, String description, String start, String end){
+	public Event(int eventID, String name, String description, String startDate, String endDate){
 		this.eventID=eventID;
 		this.name=name;
 		this.description=description;
-		this.start=start;
-		this.end=end;
+		this.startDate=startDate;
+		this.endDate=endDate;
 	}
 	
-	public Event(String name, String description, String start, String end){
+	public Event(String name, String description, String startDate, String endDate){
 		this.name=name;
 		this.description=description;
-		this.start=start;
-		this.end=end;
+		this.startDate=startDate;
+		this.endDate=endDate;
 	}
 	
 	
@@ -45,17 +45,17 @@ public class Event {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getStart() {
-		return start;
+	public String getStartDate() {
+		return startDate;
 	}
-	public void setStart(String start) {
-		this.start = start;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
-	public String getEnd() {
-		return end;
+	public String getEndDate() {
+		return endDate;
 	}
-	public void setEnd(String end) {
-		this.end = end;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 }
