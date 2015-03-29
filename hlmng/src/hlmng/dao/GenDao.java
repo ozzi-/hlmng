@@ -86,8 +86,7 @@ public class GenDao {
 		return insertedID;
 	}
 	
-	public boolean deleteElement(String idS) {
-		int id = Integer.parseInt(idS);
+	public boolean deleteElement(int id) {
         PreparedStatement ps = null;
         int rs=0;
         Connection dbConnection=null;
@@ -111,9 +110,8 @@ public class GenDao {
 	
 
 	@SuppressWarnings("unchecked")
-	public <T> boolean updateElement(Object model, String idS) {
+	public <T> boolean updateElement(Object model, int id) {
 		T tModel=null;
-		int id = Integer.parseInt(idS);
 		PreparedStatement ps = null;
 		int rs=0;
         Connection dbConnection=null;
@@ -138,8 +136,7 @@ public class GenDao {
 	 * @param idS
 	 * @return
 	 */
-	public <T> Object getElement(String idS) {
-		int id = Integer.parseInt(idS);
+	public <T> Object getElement(int id) {
 		PreparedStatement ps = null;
         ResultSet rs;
         Object element=null;
@@ -165,8 +162,7 @@ public class GenDao {
 	
 	
 	
-	public <T> List<Object> listByFK(String fkName, String idFkS){
-		int idFK = Integer.parseInt(idFkS);
+	public <T> List<Object> listByFK(String fkName, int idFK){
         PreparedStatement ps = null;
         ResultSet rs;
         Connection dbConnection=null;
@@ -222,8 +218,7 @@ public class GenDao {
 	 * @param id
 	 * @return  @return A list of all elements from the specified class/model where the ID is equal to @param
 	 */
-	public <T> List<Object> getElements(String idS) {
-		int id = Integer.parseInt(idS);
+	public <T> List<Object> getElements(int id) {
 		PreparedStatement ps = null;
         ResultSet rs;
         Connection dbConnection=null;

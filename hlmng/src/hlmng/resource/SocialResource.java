@@ -34,21 +34,21 @@ public class SocialResource extends Resource  {
 	
 	@GET
 	@Path("{id}")
-	public Social getSocial(@PathParam("id") String id) throws IOException{
+	public Social getSocial(@PathParam("id") int id) throws IOException{
 		return (Social) getResource(socialDao, id);
 	}
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putSocial(Social element,@PathParam("id") String id) throws IOException {
+	public Response putSocial(Social element,@PathParam("id") int id) throws IOException {
 		return putResource(socialDao, element, id);
 	}
 	
 
 	@DELETE
 	@Path("{id}")
-	public Response deleteSocial(@PathParam("id") String id) throws IOException {
+	public Response deleteSocial(@PathParam("id") int id) throws IOException {
 		return deleteResource(socialDao, id);
 	}
 

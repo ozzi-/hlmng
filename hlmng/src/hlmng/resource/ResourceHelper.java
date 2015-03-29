@@ -40,7 +40,7 @@ public class ResourceHelper {
 	
 	static boolean sendErrorIfNull(Object obj,HttpServletResponse response) throws IOException {
 		if(obj==null){
-		    response.sendError(Response.Status.NOT_FOUND.getStatusCode());
+		    response.sendError(404);
 		    return true;
 		}
 		return false;

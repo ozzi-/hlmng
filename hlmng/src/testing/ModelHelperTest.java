@@ -20,10 +20,10 @@ public class ModelHelperTest {
 	@Before
 	public void init() {
 		genson = new Genson();
-		e1= genson.deserialize("{\"end\":\"2015-01-01\",\"eventID\":34,\"name\":\"eventname\",\"start\":\"2015-01-01\",\"description\":\"description\"}",Event.class);
-		e2= genson.deserialize("{\"eventID\":34,\"name\":\"eventname\",\"start\":\"2015-01-01\",\"description\":\"description\",\"end\":\"2015-01-01\"}",Event.class);
-		e3= genson.deserialize("{\"eventID\":35,\"name\":\"eventname\",\"start\":\"2015-01-01\",\"description\":\"description\",\"end\":\"2015-01-01\"}",Event.class);
-		e4= genson.deserialize("{\"name\":\"eventname\",\"start\":\"2015-01-01\",\"description\":\"description\",\"end\":\"2015-01-01\"}",Event.class);
+		e1= genson.deserialize("{\"endDate\":\"2015-01-01\",\"eventID\":34,\"name\":\"eventname\",\"startDate\":\"2015-01-01\",\"description\":\"description\"}",Event.class);
+		e2= genson.deserialize("{\"eventID\":34,\"name\":\"eventname\",\"startDate\":\"2015-01-01\",\"description\":\"description\",\"endDate\":\"2015-01-01\"}",Event.class);
+		e3= genson.deserialize("{\"eventID\":35,\"name\":\"eventname\",\"startDate\":\"2015-01-01\",\"description\":\"description\",\"endDate\":\"2015-01-01\"}",Event.class);
+		e4= genson.deserialize("{\"name\":\"eventname\",\"startDate\":\"2015-01-01\",\"description\":\"description\",\"endDate\":\"2015-01-01\"}",Event.class);
 	}
 	@Test
 	public void CompareOrderingTest(){

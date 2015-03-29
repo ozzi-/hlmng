@@ -50,19 +50,19 @@ public class MediaResource extends Resource{
 
 	@GET
 	@Path("{id}")
-	public Response getMedia(@PathParam("id") String id,
+	public Response getMedia(@PathParam("id") int id,
 			@Context HttpHeaders headers,
 			@Context HttpServletResponse servletResponse) throws IOException {
 		return getMediaAsResponse(id, uri, request);
 	}
 	
-	public static Response getMediaStatic(String idS, UriInfo uriS, Request requestS) throws IOException {
-		return getMediaAsResponse(idS, uriS, requestS);
+	public static Response getMediaStatic(int id, UriInfo uriS, Request requestS) throws IOException {
+		return getMediaAsResponse(id, uriS, requestS);
 	}
 
-	private static Response getMediaAsResponse(String idS, UriInfo uriS,Request requestS) {
+	private static Response getMediaAsResponse(int id, UriInfo uriS,Request requestS) {
 		ResponseBuilder builder;
-		Object obj = GenDaoLoader.instance.getMediaDao().getElement(idS);
+		Object obj = GenDaoLoader.instance.getMediaDao().getElement(id);
 		if(obj==null){
 			builder = Response.status(404);
 		}else{
@@ -73,7 +73,7 @@ public class MediaResource extends Resource{
         return builder.build();
 	}
 	
-	public static String getMediaURL(UriInfo uri, String id){
+	public static String getMediaURL(UriInfo uri, int id){
 		Media media = (Media) GenDaoLoader.instance.getMediaDao().getElement(id);
 		ResourceHelper.setMediaURLPath(uri,media);
 		return media.getLink();

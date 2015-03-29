@@ -34,14 +34,14 @@ public class VotingResource extends Resource {
 		
 	@GET
 	@Path("{id}")
-	public Voting getVoting(@PathParam("id") String id) throws IOException{
+	public Voting getVoting(@PathParam("id") int id) throws IOException{
 		return (Voting) getResource(votingDao, id);
 	}
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putVoting(Voting element,@PathParam("id") String id) throws IOException {
+	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException {
 		return putResource(votingDao, element, id);
 	}
 

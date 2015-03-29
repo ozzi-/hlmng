@@ -37,20 +37,20 @@ public class  UserResource  extends Resource {
 	
 	@GET 
 	@Path("{id}")
-	public User getUser(@PathParam("id") String id) throws IOException{
+	public User getUser(@PathParam("id") int id) throws IOException{
 		return (User) getResource(userDao, id);
 	}
 	
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putUser(User element,@PathParam("id") String id) throws IOException {
+	public Response putUser(User element,@PathParam("id") int id) throws IOException {
 		return putResource(userDao, element, id);			
 	}
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteUser(@PathParam("id") String id) throws IOException {
+	public Response deleteUser(@PathParam("id") int id) throws IOException {
 		return deleteResource(userDao, id);
 	}
 

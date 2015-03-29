@@ -42,7 +42,7 @@ public class VoteResource extends Resource  {
 	
 	@GET
 	@Path("{id}")
-	public Vote getVote(@PathParam("id") String id) throws IOException{
+	public Vote getVote(@PathParam("id") int id) throws IOException{
 		AuthChecker.check(headers, servletResponse, true);
 		return (Vote) getResource(voteDao, id);
 	}
@@ -50,7 +50,7 @@ public class VoteResource extends Resource  {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putVote(Vote element,@PathParam("id") String id) throws IOException {
+	public Response putVote(Vote element,@PathParam("id") int id) throws IOException {
 		return putResource(voteDao, element, id);
 	}
 
@@ -69,11 +69,11 @@ public class VoteResource extends Resource  {
 			Log.addEntry(Level.WARNING, "User tried to vote as somebody else. UserID:"+user.getUserID()+"  as "+element.getUserIDFK());
 			return Response.status(403).build();
 		}
-		Slider slider = (Slider) GenDaoLoader.instance.getSliderDao().getElement(Integer.toString(element.getSliderIDFK()));
+		Slider slider = (Slider) GenDaoLoader.instance.getSliderDao().getElement(element.getSliderIDFK());
 		if(slider==null){
 			return Response.status(400).build();
 		}
-		Voting voting = (Voting) GenDaoLoader.instance.getVotingDao().getElement(Integer.toString(slider.getVotingIDFK()));
+		Voting voting = (Voting) GenDaoLoader.instance.getVotingDao().getElement(slider.getVotingIDFK());
 		if(voting==null){
 			return Response.status(400).build();
 		}

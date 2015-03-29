@@ -39,7 +39,7 @@ public class RestTest {
 		orig.setEventID(elementID);
 		Genson genson = new Genson();
 		Event excpected = genson.deserialize(response, Event.class);
-		dao.deleteElement(Integer.toString(elementID));
+		dao.deleteElement(elementID);
 		assertTrue(ModelHelper.Compare(excpected,orig));
 	}
 

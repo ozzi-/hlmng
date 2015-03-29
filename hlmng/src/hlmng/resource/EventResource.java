@@ -41,14 +41,14 @@ public class EventResource extends Resource {
 	
 	@GET
 	@Path("{id}")
-	public Event getEvent(@PathParam("id") String id) throws IOException{
+	public Event getEvent(@PathParam("id") int id) throws IOException{
 		return (Event) getResource(eventDao, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@GET
 	@Path("{id}/eventitems")
-	public List<Object> getEventItems(@PathParam("id") String id) throws IOException{
+	public List<Object> getEventItems(@PathParam("id") int id) throws IOException{
 		Object obj=GenDaoLoader.instance.getEventItemDao().listByFK("eventIDFK",id);
 		ResourceHelper.sendErrorIfNull(obj,response);
 		return (List<Object>) obj;
@@ -57,7 +57,7 @@ public class EventResource extends Resource {
 	@SuppressWarnings("unchecked")
 	@GET
 	@Path("{id}/eventrooms")
-	public List<Object> getEventRooms(@PathParam("id") String id) throws IOException{
+	public List<Object> getEventRooms(@PathParam("id") int id) throws IOException{
 		Object obj=GenDaoLoader.instance.getEventRoomDao().listByFK("eventIDFK",id);
 		ResourceHelper.sendErrorIfNull(obj,response);
 		return (List<Object>) obj;
@@ -67,7 +67,7 @@ public class EventResource extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putEvent(Event element,@PathParam("id") String id) throws IOException {
+	public Response putEvent(Event element,@PathParam("id") int id) throws IOException {
 		return putResource(eventDao,element,id);
 	}
 
@@ -79,7 +79,7 @@ public class EventResource extends Resource {
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteEvent(@PathParam("id") String id) throws IOException {
+	public Response deleteEvent(@PathParam("id") int id) throws IOException {
 		return deleteResource(eventDao, id);
 	}
 }

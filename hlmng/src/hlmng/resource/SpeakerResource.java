@@ -33,28 +33,22 @@ public class SpeakerResource extends Resource  {
 	
 	@GET
 	@Path("{id}")
-	public Speaker getSpeaker(@PathParam("id") String id) throws IOException{
+	public Speaker getSpeaker(@PathParam("id") int id) throws IOException{
 		return (Speaker) getResource(speakerDao, id);
 	}
 	
-	// TODO return this anyways as media
-	@GET
-	@Path("{id}/media")
-	public Response getSpeakerMedia(@PathParam("id") String id) throws IOException{
-		Speaker speaker =  (Speaker)GenDaoLoader.instance.getSpeakerDao().getElement(id);
-		return MediaResource.getMediaStatic(Integer.toString(speaker.getMediaIDFK()), uri,request);
-	}
+	// TODO return media with speaker
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putSpeaker(Speaker element,@PathParam("id") String id) throws IOException {
+	public Response putSpeaker(Speaker element,@PathParam("id") int id) throws IOException {
 		return putResource(speakerDao, element, id);
 	}
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteSpeaker(@PathParam("id") String id) throws IOException {
+	public Response deleteSpeaker(@PathParam("id") int id) throws IOException {
 		return deleteResource(speakerDao, id);
 	}
 

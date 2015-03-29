@@ -33,7 +33,7 @@ public class DB {
 	 * Example: Select Element or Delete Element
 	 * @param PreparedStatement which you want to set the fields
 	 * @param The ID value which will be set as first field in the prepared statement
-	 * @return The prepared Statment
+	 * @return The prepared Statement
 	 */
 	public static <T> PreparedStatement setIdFieldOfPS(PreparedStatement ps, int id) {
 		try {

@@ -34,20 +34,20 @@ public class SliderResource extends Resource {
 	
 	@GET
 	@Path("{id}")
-	public Slider getSlider(@PathParam("id") String id) throws IOException{
+	public Slider getSlider(@PathParam("id") int id) throws IOException{
 		return (Slider) getResource(sliderDao, id);
 	}
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putSlider(Slider element,@PathParam("id") String id) throws IOException {
+	public Response putSlider(Slider element,@PathParam("id") int id) throws IOException {
 		return putResource(sliderDao, element, id);
 	}
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteSlider(@PathParam("id") String id) throws IOException {
+	public Response deleteSlider(@PathParam("id") int id) throws IOException {
 		return deleteResource(sliderDao, id);
 	}
 

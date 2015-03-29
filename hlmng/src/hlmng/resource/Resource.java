@@ -37,10 +37,8 @@ public class Resource {
 	 * @param id
 	 * @return 202 or 404 if not found
 	 */
-	protected Response deleteResource(GenDao dao, String id) throws IOException{
-		if(!isNumeric(id)){
-		    response.sendError(400);
-		}else if(AuthChecker.check(headers, servletResponse, true)){
+	protected Response deleteResource(GenDao dao, int id) throws IOException{
+		if(AuthChecker.check(headers, servletResponse, true)){
 			boolean deleted = dao.deleteElement(id);
 			return ResourceHelper.returnOkOrNotFoundResponse(deleted);			
 		} 
@@ -77,26 +75,15 @@ public class Resource {
 	 * @param id
 	 * @return The Object or 404
 	 */
-	protected Object getResource(GenDao dao, String id) throws IOException{
-		if(!isNumeric(id)){
-		    response.sendError(400);
-		}else{
-			Object obj =  dao.getElement(id);
-			ResourceHelper.sendErrorIfNull(obj,response);
+	protected Object getResource(GenDao dao, int id) throws IOException{
+		Object obj =  dao.getElement(id);
+		if(ResourceHelper.sendErrorIfNull(obj,response)==false){
 			return obj;			
 		}
 		return null;
 	}
 	
-	private static boolean isNumeric(String str){
-		if(str.length()>=10) // if the id is that long, don't even bother, this is wasting our cpu cycles 
-			return false; 
-	    for (char c : str.toCharArray()) {
-	        if (!Character.isDigit(c)) return false;
-	    }
-	    return true;
-	}
-	
+
 	/**
 	 * Tries to put (update) a given element for the ID provided.
 	 * Backend Login required.
@@ -105,11 +92,9 @@ public class Resource {
 	 * @param id
 	 * @return a response, either 202 (accepted) or 404 if the provided ID doesn't exist.
 	 */
-	protected Response putResource(GenDao dao ,Object element, String id) throws IOException{
+	protected Response putResource(GenDao dao ,Object element, int id) throws IOException{
 		Response res;
-		if(!isNumeric(id)){
-		    response.sendError(400);
-		}else if(AuthChecker. check(headers, servletResponse, true)){
+		if(AuthChecker. check(headers, servletResponse, true)){
 			if (dao.getElement(id)!=null){
 				dao.updateElement(element, id);
 				res = Response.accepted().build();

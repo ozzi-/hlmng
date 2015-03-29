@@ -41,21 +41,21 @@ public class PresentationResource extends Resource {
 	
 	@GET
 	@Path("{id}")
-	public Presentation getPresentation(@PathParam("id") String id) throws IOException{
+	public Presentation getPresentation(@PathParam("id") int id) throws IOException{
 		return (Presentation) getResource(presentationDao, id);	
 	}
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putPresentation(Presentation element,@PathParam("id") String id) throws IOException {
+	public Response putPresentation(Presentation element,@PathParam("id") int id) throws IOException {
 		return putResource(presentationDao, element, id);
 	}
 	
 
 	@DELETE
 	@Path("{id}")
-	public Response deletePresentation(@PathParam("id") String id) throws IOException {
+	public Response deletePresentation(@PathParam("id") int id) throws IOException {
 		return deleteResource(presentationDao, id);
 	}
 

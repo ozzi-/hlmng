@@ -34,14 +34,14 @@ public class EventItemResource extends Resource{
 	
 	@GET
 	@Path("{id}")
-	public EventItem getEventItem(@PathParam("id") String id) throws IOException{
+	public EventItem getEventItem(@PathParam("id") int id) throws IOException{
 		return (EventItem) getResource(eventItemDao, id);	
 	}
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putEventItem(EventItem element,@PathParam("id") String id) throws IOException {
+	public Response putEventItem(EventItem element,@PathParam("id") int id) throws IOException {
 		return putResource(eventItemDao, element, id);
 	}
 
@@ -53,7 +53,7 @@ public class EventItemResource extends Resource{
 	
 	@DELETE
 	@Path("{id}")
-	public Response deleteEventItem(@PathParam("id") String id) throws IOException {
+	public Response deleteEventItem(@PathParam("id") int id) throws IOException {
 		return deleteResource(eventItemDao, id);
 	}
 	

@@ -7,10 +7,8 @@ import hlmng.model.QrCode;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.file.Paths;
@@ -30,6 +28,7 @@ import javax.ws.rs.core.Response;
 
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 
@@ -51,18 +50,22 @@ public class QrCodeResource extends Resource {
 	@GET
 	@Path("{id}/render")
 	@Produces("image/png")
-	public Response getQrCodeRendered(@PathParam("id") String id) throws IOException{
+	public Response getQrCodeRendered(@PathParam("id") int id) throws IOException{
 		QrCode qrCode = ((QrCode)getResource(qrCodeDao, id));
-		if(!ResourceHelper.sendErrorIfNull(qrCode,response)){
-			String filePath = generateQR(qrCode.getQrCodeID(),qrCode.getPayload());
-			return MediaResource.mediaResponse(filePath, "png", request);			
+		if(qrCode!=null){
+			try {
+				String filePath = generateQR(qrCode.getQrCodeID(),qrCode.getPayload());
+				return MediaResource.mediaResponse(filePath, "png", request);			
+			} catch (WriterException e) {
+				response.sendError(500);
+			} 			
 		}
-		return null;
+		return null; 
 	} 
 	
 	@GET
 	@Path("{id}")
-	public QrCode getQrCode(@PathParam("id") String id) throws IOException{
+	public QrCode getQrCode(@PathParam("id") int id) throws IOException{
 		return (QrCode)getResource(qrCodeDao, id);
 	}
 
@@ -71,7 +74,7 @@ public class QrCodeResource extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putQrCode(QrCode element,@PathParam("id") String id) throws IOException {
+	public Response putQrCode(QrCode element,@PathParam("id") int id) throws IOException {
 		return putResource(qrCodeDao, element, id);
 	}
 
@@ -82,7 +85,7 @@ public class QrCodeResource extends Resource {
 	}
 	
 	// parts of the following method from http://stackoverflow.com/a/7756956
-	public String generateQR(int id,String payload){
+	public String generateQR(int id,String payload) throws WriterException, IOException{
 	    Charset charset = Charset.forName("UTF-8");
 	    CharsetEncoder encoder = charset.newEncoder();
         java.nio.file.Path filePath= Paths.get(FileSettings.qrFileRootDir+Integer.toString(id)+".png");
@@ -91,37 +94,23 @@ public class QrCodeResource extends Resource {
         if(f.exists() && !f.isDirectory()) { Log.addEntry(Level.INFO, "Already rendered QR Code with ID: "+id);  return filePath.toString(); }
          
 	    byte[] b = null;
-	    try {
-	        // Convert a string to UTF-8 bytes in a ByteBuffer
-	        ByteBuffer bbuf = encoder.encode(CharBuffer.wrap("HLMNG["+payload+"]HLMNG"));
-	        b = bbuf.array();
-	    } catch (CharacterCodingException e) {
-	        System.out.println(e.getMessage());
-	    }
+	   
+	   // Convert a string to UTF-8 bytes in a ByteBuffer
+	   ByteBuffer bbuf = encoder.encode(CharBuffer.wrap("HLMNG["+payload+"]HLMNG"));
+	   b = bbuf.array();
+
 	    String data;
-	    try {
-	        data = new String(b, "UTF-8");
-	        BitMatrix matrix = null;
-	        int h = 500;
-	        int w = 500;
-	        com.google.zxing.Writer writer = new MultiFormatWriter();
-	        try {
-	            Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(2);
-	            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-	            matrix = writer.encode(data,
-	            com.google.zxing.BarcodeFormat.QR_CODE, w, h, hints);
-	        } catch (com.google.zxing.WriterException e) {
-	            System.out.println(e.getMessage());
-	        }
-	        try {
-	        	MatrixToImageWriter.writeToPath(matrix, "PNG", filePath);
-	        	Log.addEntry(Level.INFO, "Rendered QR Code with ID: "+id);
-	        } catch (IOException e) {
-	            System.out.println(e.getMessage());
-	        }
-	    } catch (UnsupportedEncodingException e) {
-	        System.out.println(e.getMessage());
-	    }
+	    data = new String(b, "UTF-8");
+	    BitMatrix matrix = null;
+	    int h = 500;
+	    int w = 500;
+	    com.google.zxing.Writer writer = new MultiFormatWriter();
+	    Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(2);
+	    hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+	    matrix = writer.encode(data,
+	    com.google.zxing.BarcodeFormat.QR_CODE, w, h, hints);
+	    MatrixToImageWriter.writeToPath(matrix, "PNG", filePath);
+	    Log.addEntry(Level.INFO, "Rendered QR Code with ID: "+id);
 	    return filePath.toString();
 	}
 

@@ -32,21 +32,21 @@ public class PushResource  extends Resource{
 	
 	@GET
 	@Path("{id}")
-	public Push getPush(@PathParam("id") String id) throws IOException{
+	public Push getPush(@PathParam("id") int id) throws IOException{
 		return (Push)getResource(pushDao, id);
 	}
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putPush(Push element,@PathParam("id") String id) throws IOException {
+	public Response putPush(Push element,@PathParam("id") int id) throws IOException {
 		return putResource(pushDao, element, id);
 	}
 	
 	@DELETE
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response deletePush(@PathParam("id") String id) throws IOException {
+	public Response deletePush(@PathParam("id") int id) throws IOException {
 		return deleteResource(pushDao, id);
 	}
 
