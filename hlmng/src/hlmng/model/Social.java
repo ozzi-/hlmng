@@ -4,6 +4,7 @@ public class Social {
 	private int socialID;
 	private String text;
 	private String status;
+	private String media;
 	private int userIDFK;
 	private int mediaIDFK;
 	private int eventIDFK;
@@ -12,20 +13,22 @@ public class Social {
 
 	}
 
-	public Social(int socialID, String text, String status, int userIDFK,
+	public Social(int socialID, String text, String status, String media, int userIDFK,
 			int mediaIDFK, int eventIDFK) {
 		this.socialID = socialID;
 		this.text = text;
 		this.status = status;
+		this.setMedia(media);
 		this.userIDFK = userIDFK;
 		this.mediaIDFK = mediaIDFK;
 		this.eventIDFK = eventIDFK;
 	}
 
-	public Social(String text, String status, int userIDFK, int mediaIDFK,
+	public Social(String text, String status, String media, int userIDFK, int mediaIDFK,
 			int eventIDFK) {
 		this.text = text;
 		this.status = status;
+		this.setMedia(media);
 		this.userIDFK = userIDFK;
 		this.mediaIDFK = mediaIDFK;
 		this.eventIDFK = eventIDFK;
@@ -77,5 +80,13 @@ public class Social {
 
 	public void setEventIDFK(int eventIDFK) {
 		this.eventIDFK = eventIDFK;
+	}
+
+	public String getMedia() {
+		return media;
+	}
+
+	public void setMedia(String media) {
+		this.media = media;
 	}
 }

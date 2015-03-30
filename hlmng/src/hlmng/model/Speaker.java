@@ -5,6 +5,7 @@ public class Speaker {
 	private String name;
 	private String title;
 	private String description;
+	private String media;
 	private int mediaIDFK;
 	private String nationality;
 	
@@ -62,6 +63,12 @@ public class Speaker {
 	}
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
+	}
+	public String getMedia() {
+		return media;
+	}
+	public void setMedia(String media) {
+		this.media = media;
 	}
 
 }

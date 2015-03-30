@@ -26,7 +26,7 @@ public class UserDao extends GenDao {
         Object element=null;
         Connection dbConnection =null;
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement("SELECT * FROM user WHERE name = ? AND deviceID = ?");
 			ps.setString(1,userName);
 			ps.setString(2,deviceID);
@@ -37,6 +37,7 @@ public class UserDao extends GenDao {
 			} 
 			ps.close();
 		} catch (Exception e) {
+			Log.addEntry(Level.WARNING, "User couldn't be returned (by name and device id). "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally{
@@ -52,7 +53,7 @@ public class UserDao extends GenDao {
         Object element=null;
         Connection dbConnection =null;
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement("SELECT * FROM user WHERE name = ?");
 			ps.setString(1,userName);
 	        rs = ps.executeQuery();
@@ -62,6 +63,7 @@ public class UserDao extends GenDao {
 			} 
 			ps.close();
 		} catch (Exception e) {
+			Log.addEntry(Level.WARNING, "User couldn't be returned (by name). "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally{

@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 
-import db.DB;
-
 /**
  * Extends the generic dao with a few specific vote functions
  */
@@ -25,7 +23,7 @@ public class VoteDao extends GenDao {
         boolean hasVoted = true ;
         Connection dbConnection =null;
 		try {
-			dbConnection = DB.getConnection();
+			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement("SELECT * FROM vote WHERE userIDFK = ? AND sliderIDFK = ?");
 			ps.setInt(1,userID);
 			ps.setInt(2,sliderID);
@@ -33,6 +31,7 @@ public class VoteDao extends GenDao {
 	        hasVoted=(rs.next());
 	        ps.close();
 		} catch (Exception e) {
+			Log.addEntry(Level.WARNING, "Slider couldn't be returned (by user id). "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally{

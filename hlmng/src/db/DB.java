@@ -1,5 +1,7 @@
 package db;
 
+import hlmng.resource.Log;
+
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -7,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -15,11 +18,17 @@ import javax.sql.DataSource;
 
 /**
  * This class handles the creation of a DB connection, allows building dynamic prepared statements.
- * This only works if you are using the same class name and field names as declared in the SQL Database!
- *
+ * This only works if you are using the same class name and field names as in the SQL Database (automatic mapping by names)!
  */
 public class DB {
 
+	/**
+	 * See WEB-INF/web.xml and WEB-INF/context.xml for DB context settings
+	 * DO NOT use this directly, use the class dao, since it contains the logic for testing.
+	 * @return A connection from the connection pool, close properly!
+	 * @throws SQLException
+	 * @throws NamingException
+	 */
 	public static Connection getConnection() throws SQLException, NamingException{
 		Context initContext;
 		initContext = new InitialContext();
@@ -48,7 +57,7 @@ public class DB {
 	/**
 	 * Returns (the first) object from the result set
 	 * @param resultSet of the query returning (hopefully only one) object
-	 * @param Add the type class of the desired document so it can be dynamically built
+	 * @param Add the type class of the desired object so it can be dynamically built
 	 * @return
 	 */
 	public static <T> T getObjectFromRS(ResultSet resultSet, Class<T> type) {
@@ -59,12 +68,14 @@ public class DB {
 				if(!(field.getName().equals("media"))){ // will be injected with URL afterwards
 					Object value = resultSet.getObject(field.getName());
 					PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), type);
-					Method method = propertyDescriptor.getWriteMethod();
-					value=(value==null&&field.getName().contains("ID")?0:value); // we don't want ID(FK) with NULL, we want 0 
-					method.invoke(instance, value);					
+					Method method = propertyDescriptor.getWriteMethod(); 
+					if(value!=null){ // invoking with null throws exception, default is null anyways
+						method.invoke(instance, value);											
+					}
 				}
 			}
 		} catch (Exception e) {
+			Log.addEntry(Level.WARNING,"Object couldn't be extracted from result set. Class="+type.getSimpleName()+".\r\n"+e.getMessage());
 			e.printStackTrace();
 		}
 		return instance;
@@ -95,6 +106,7 @@ public class DB {
 					value = method.invoke(tModel);
 					ps.setObject(++i, value);
 				} catch (Exception e) {
+					Log.addEntry(Level.SEVERE, "Couldn't build prepared statment! \r\n"+e.getMessage());
 					e.printStackTrace();
 				}
 			}
@@ -103,6 +115,7 @@ public class DB {
 			try {
 				ps.setObject(++i,idLastParam);
 			} catch (Exception e) {
+				Log.addEntry(Level.SEVERE, "Couldn't build prepared statment (on last parameter)! \r\n"+e.getMessage());
 				e.printStackTrace();
 			}
 		}

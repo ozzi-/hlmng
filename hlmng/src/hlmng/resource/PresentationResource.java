@@ -31,14 +31,7 @@ public class PresentationResource extends Resource {
 		return GenDaoLoader.instance.getPresentationDao().listElements();
 	}
 
-	
-	@GET
-	@Path("count")
-	@Produces(MediaType.TEXT_PLAIN)
-	public int getCount() {
-		return GenDaoLoader.instance.getPresentationDao().listElements().size();
-	}
-	
+
 	@GET
 	@Path("{id}")
 	public Presentation getPresentation(@PathParam("id") int id) throws IOException{

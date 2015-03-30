@@ -84,7 +84,7 @@ public class QrCodeResource extends Resource {
 		return postResource(qrCodeDao, element, true);
 	}
 	
-	// parts of the following method from http://stackoverflow.com/a/7756956
+	// parts of the following method are from: http://stackoverflow.com/a/7756956
 	public String generateQR(int id,String payload) throws WriterException, IOException{
 	    Charset charset = Charset.forName("UTF-8");
 	    CharsetEncoder encoder = charset.newEncoder();

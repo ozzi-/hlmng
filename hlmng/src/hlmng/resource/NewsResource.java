@@ -40,7 +40,7 @@ public class NewsResource extends Resource  {
 	public News getNews(@PathParam("id") int id) throws IOException{
 		News news = (News)getResource(newsDao, id);
 		if(news!=null){
-			String media = MediaResource.getMediaURL(uri,id);
+			String media = MediaResource.getMediaURL(uri,news.getMediaIDFK());
 			news.setMedia(media);
 		}
 		return news;

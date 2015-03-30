@@ -70,35 +70,44 @@ public class AuthChecker {
 	public static boolean check(@Context HttpHeaders headers, @Context HttpServletResponse servletResponse,boolean backEnd) {
 		AuthCredential authCredential = null;
 		String authorizationHeader = headers.getHeaderString("Authorization");
-		// client not sending http auth credentials, tell him to do so
 		if (authorizationHeader == null) {
+			// client not sending http auth credentials, tell him to do so
 			sendErrorAuthCode(servletResponse,HttpServletResponse.SC_UNAUTHORIZED);
 		} else {
-			// client is sending credentials, read them
 			authCredential = decodeBasicAuthB64(authorizationHeader);
 			if(authCredential==null){
 				sendErrorAuthCode(servletResponse,HttpServletResponse.SC_BAD_REQUEST);
 			}else{
-				if(backEnd){
-					if(!checkLoginInformationBackend((authCredential))){
-						sendErrorAuthCode(servletResponse,HttpServletResponse.SC_UNAUTHORIZED); 
-					}else{
-						Log.addEntry(Level.INFO, "Successful backend auth");
-						return true;
-					}	 // TODO refactor this horror
-				}else{
-					int code = checkLoginInformation(authCredential);
-					if(code==HttpServletResponse.SC_OK){
-						Log.addEntry(Level.INFO, "Successful user auth");
-						return true;	
-					}else{
-						sendErrorAuthCode(servletResponse,code); 						
-					}
-				}
+				return checkLoginInformation(servletResponse, backEnd, authCredential);
 			}
 		}
 		Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd);
 		return false;
+	}
+
+	private static boolean checkLoginInformation(
+			HttpServletResponse servletResponse, boolean backEnd,
+			AuthCredential authCredential) {
+		if(backEnd){
+			if(!checkLoginInformationBackend((authCredential))){
+				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials");
+				sendErrorAuthCode(servletResponse,HttpServletResponse.SC_UNAUTHORIZED);
+				return false;
+			}else{
+				Log.addEntry(Level.INFO, "Successful backend auth");
+				return true;
+			}
+		}else{
+			int code = checkLoginInformation(authCredential);
+			if(code==HttpServletResponse.SC_OK){
+				Log.addEntry(Level.INFO, "Successful user auth");
+				return true;	
+			}else{
+				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials");
+				sendErrorAuthCode(servletResponse,code); 	
+				return false;
+			}
+		}
 	}
 	
 	/**

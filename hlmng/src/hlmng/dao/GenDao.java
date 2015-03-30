@@ -36,11 +36,12 @@ public class GenDao {
 
 	public <T> GenDao(Class<T> classTypeP){
 
-		System.out.println("GenDao creating for Class:"+classTypeP.getSimpleName());
 		className=classTypeP.getSimpleName();
+		System.out.println("GenDao creating for Class:"+className);
 		try {
 			classType = Class.forName("hlmng.model."+className);
 		} catch (ClassNotFoundException e) {
+			Log.addEntry(Level.SEVERE, "Missing class for dao creation. Class name: "+className);
 			e.printStackTrace();
 		}
 	    addElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.add);
@@ -52,9 +53,8 @@ public class GenDao {
 	}
 	
 	/**
-	 * 
 	 * @param model
-	 * @return returns -1 if not inserted, else id
+	 * @return returns -1 if not inserted, else the id of the freshly inserted row
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> int addElement(Object model) {
@@ -86,6 +86,10 @@ public class GenDao {
 		return insertedID;
 	}
 	
+	/**
+	 * @param id
+	 * @return True if element was deleted, false if not
+	 */
 	public boolean deleteElement(int id) {
         PreparedStatement ps = null;
         int rs=0;
@@ -97,18 +101,22 @@ public class GenDao {
 	        rs = ps.executeUpdate();
 			ps.close();
 		} catch (Exception e) {
+			Log.addEntry(Level.WARNING,"Element couldn't be deleted. "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally{
 			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element delete ("+id+")="+rs);
-		return (rs==1);
-		
+		return (rs==1);		
 	}
 	
 	
-
+	/**
+	 * @param model
+	 * @param id
+	 * @return True if element was updated, false if not
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> boolean updateElement(Object model, int id) {
 		T tModel=null;
@@ -122,6 +130,7 @@ public class GenDao {
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel,id);
 			rs = ps.executeUpdate();
 		}catch (Exception e) {	
+			Log.addEntry(Level.WARNING,"Element couldn't be updated. "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally{
@@ -151,6 +160,7 @@ public class GenDao {
 				element=DB.getObjectFromRS(rs,classType);
 			} 
 		} catch (Exception e) {
+			Log.addEntry(Level.WARNING,"Element couldn't be returned (GET). "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally{
@@ -176,6 +186,7 @@ public class GenDao {
 				elemList.add(DB.getObjectFromRS(rs,classType));
 			}
 		} catch (Exception e) {
+			Log.addEntry(Level.WARNING,"Elements couldn't be listed by FK. "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally{
@@ -204,6 +215,7 @@ public class GenDao {
 			}
 			ps.close();
 		} catch (Exception e) {
+			Log.addEntry(Level.WARNING,"Elements couldn't be listed. "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally{
@@ -213,49 +225,16 @@ public class GenDao {
 	}
 
 
-
-	/**
-	 * @param id
-	 * @return  @return A list of all elements from the specified class/model where the ID is equal to @param
-	 */
-	public <T> List<Object> getElements(int id) {
-		PreparedStatement ps = null;
-        ResultSet rs;
-        Connection dbConnection=null;
-		List<Object> elemList = new ArrayList<Object>();
-		try {
-			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement(getElement);
-			ps=DB.setIdFieldOfPS(ps,id);
-	        rs = ps.executeQuery();
-	        while(rs.next()){
-				elemList.add(DB.getObjectFromRS(rs,classType));
-			} 
-			ps.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		finally{
-			tryToClose( ps, dbConnection);
-		}
-		Log.addEntry(Level.INFO,className+" Elements get list ("+elemList+")");
-		return elemList;
-	}
-
-	private Connection getDBConnection() throws SQLException, NamingException, ClassNotFoundException {
+	protected Connection getDBConnection() throws SQLException, NamingException, ClassNotFoundException {
 		if(isTest()){
 			// This is used to connect in a JUnit Test as we don't have access to the context.xml etc.
 			Class.forName("com.mysql.jdbc.Driver");
 			return DriverManager.getConnection(jdbcUrlForTest,loginDataForTest);
-
 		}else{
 			return DB.getConnection();			
 		}
 	}
 
-	public boolean isTest() {
-		return isTest;
-	}
 
 	/**
 	 * If this is is called with isTest = True then then all Dao's will connect directly via provided login information
@@ -271,6 +250,9 @@ public class GenDao {
 		this.jdbcUrlForTest=jdbcUrl;
 	}
 	
+	public boolean isTest() {
+		return isTest;
+	}
 	
 	protected void tryToClose(ResultSet rs, PreparedStatement ps, Connection dbConnection) {
 		if(rs!=null){

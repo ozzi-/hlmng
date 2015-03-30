@@ -29,15 +29,6 @@ public class EventResource extends Resource {
 	public List<Object> getEvent() {
 		return GenDaoLoader.instance.getEventDao().listElements();
 	}
-
-	
-	@GET
-	@Path("count")
-	@Produces(MediaType.TEXT_PLAIN)
-	public int getCount() {
-		return GenDaoLoader.instance.getEventDao().listElements().size();
-	}
-
 	
 	@GET
 	@Path("{id}")
@@ -50,7 +41,6 @@ public class EventResource extends Resource {
 	@Path("{id}/eventitems")
 	public List<Object> getEventItems(@PathParam("id") int id) throws IOException{
 		Object obj=GenDaoLoader.instance.getEventItemDao().listByFK("eventIDFK",id);
-		ResourceHelper.sendErrorIfNull(obj,response);
 		return (List<Object>) obj;
 	}
 	
@@ -59,7 +49,6 @@ public class EventResource extends Resource {
 	@Path("{id}/eventrooms")
 	public List<Object> getEventRooms(@PathParam("id") int id) throws IOException{
 		Object obj=GenDaoLoader.instance.getEventRoomDao().listByFK("eventIDFK",id);
-		ResourceHelper.sendErrorIfNull(obj,response);
 		return (List<Object>) obj;
 	}
 

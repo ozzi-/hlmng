@@ -6,24 +6,21 @@ public class Presentation {
 	private String teamName;
 	private String date;
 	private String duration;
-	private int challengeIDFK;
 	public Presentation(){
 
 	}
-	public Presentation(int presentationID, String name, String teamName, String date, String duration, int challengeIDFK){
+	public Presentation(int presentationID, String name, String teamName, String date, String duration){
 		this.presentationID=presentationID;
 		this.name=name;
 		this.teamName=teamName;
 		this.date=date;
 		this.duration=duration;
-		this.challengeIDFK=challengeIDFK;
 	}
-	public Presentation(String name, String teamName, String date, String duration, int challengeIDFK){
+	public Presentation(String name, String teamName, String date, String duration){
 		this.name=name;
 		this.teamName=teamName;
 		this.date=date;
 		this.duration=duration;
-		this.challengeIDFK=challengeIDFK;
 	}
 	public int getPresentationID() {
 		return presentationID;
@@ -42,12 +39,6 @@ public class Presentation {
 	}
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
-	}
-	public int getChallengeIDFK() {
-		return challengeIDFK;
-	}
-	public void setChallengeIDFK(int challengeIDFK) {
-		this.challengeIDFK = challengeIDFK;
 	}
 	public String getDate() {
 		return date;

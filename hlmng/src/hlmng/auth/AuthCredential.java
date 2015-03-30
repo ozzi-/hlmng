@@ -1,5 +1,7 @@
 package hlmng.auth;
 
+import hlmng.model.ModelHelper;
+
 /**
  * 
  * AuthCredential is a container for a username and the according secret
@@ -36,9 +38,6 @@ public class AuthCredential{
 	 * @return true if same or false if something is different
 	 */
 	public boolean equals(AuthCredential other){
-		if(this.getUsername().equals(other.getUsername()) && this.getSecret().equals(other.getSecret())){
-			return true;
-		}
-		return false;
+		return ModelHelper.Compare(this, other);
 	}
 }

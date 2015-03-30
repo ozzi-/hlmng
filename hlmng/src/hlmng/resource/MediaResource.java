@@ -75,8 +75,11 @@ public class MediaResource extends Resource{
 	
 	public static String getMediaURL(UriInfo uri, int id){
 		Media media = (Media) GenDaoLoader.instance.getMediaDao().getElement(id);
-		ResourceHelper.setMediaURLPath(uri,media);
-		return media.getLink();
+		if(media!=null){
+			ResourceHelper.setMediaURLPath(uri,media);
+			return media.getLink();			
+		}
+		return null;
 	}
 	
 

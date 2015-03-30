@@ -26,18 +26,29 @@ public class SpeakerResource extends Resource  {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getSpeaker() {
-		return GenDaoLoader.instance.getSpeakerDao().listElements();
+	public List<Object> getSpeakers() {
+		List<Object> speakerObjects = GenDaoLoader.instance.getSpeakerDao().listElements();
+		for (Object object : speakerObjects) {
+			Speaker speaker = (Speaker) object;
+			System.out.println("MediaIDFK: "+speaker.getMediaIDFK());
+			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
+			speaker.setMedia(media);
+		}
+		return speakerObjects;
 	}
 
 	
 	@GET
 	@Path("{id}")
 	public Speaker getSpeaker(@PathParam("id") int id) throws IOException{
-		return (Speaker) getResource(speakerDao, id);
+		Speaker speaker = (Speaker) getResource(speakerDao, id);
+		if(speaker!=null){
+			String media = MediaResource.getMediaURL(uri,speaker.getMediaIDFK());
+			speaker.setMedia(media);
+		}
+		return speaker;
 	}
 	
-	// TODO return media with speaker
 
 	@PUT
 	@Path("{id}")

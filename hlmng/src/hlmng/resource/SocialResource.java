@@ -27,15 +27,24 @@ public class SocialResource extends Resource  {
 		
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getSocial() {
-		return GenDaoLoader.instance.getSocialDao().listElements();
+	public List<Object> getSocials() {
+		List<Object> socialObjects =  GenDaoLoader.instance.getSocialDao().listElements();
+		for (Object object : socialObjects) {
+			Social social = (Social) object;
+			String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+			social.setMedia(media);
+		}
+		return socialObjects;
 	}
 
 	
 	@GET
 	@Path("{id}")
 	public Social getSocial(@PathParam("id") int id) throws IOException{
-		return (Social) getResource(socialDao, id);
+		Social social = (Social) getResource(socialDao, id);
+		String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+		social.setMedia(media);
+		return social;
 	}
 
 	@PUT

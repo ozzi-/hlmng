@@ -44,8 +44,8 @@ public class ResourceHelper {
 		    return true;
 		}
 		return false;
-	}
-	
+	}	
+
 	/**
 	 * Either returns a 200 with the desired object if not in cache, else 304 not modified
 	 * @param object

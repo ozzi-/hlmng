@@ -1,20 +1,21 @@
 package db;
 
+import hlmng.resource.Log;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * This class dynamically builds SQL Prepared Queries (so with = ? etc.). There
  * are several types of statements available, see the enum opType
- * 
- * @author ozgheb
- * 
  */
 public class QueryBuilder {
 
 	/**
 	 * Builds a map for every "FK" (foreign key) containing field.
+	 * The map contains a simple select * from query with a where clause for saif FK.
 	 * Map<FKName,Query>
 	 * 
 	 * @param className
@@ -33,6 +34,7 @@ public class QueryBuilder {
 				}
 			}
 		} catch (ClassNotFoundException e) {
+			Log.addEntry(Level.SEVERE, "Missing model while building fk query! Model name: "+className);
 			e.printStackTrace();
 		}
 		return map;
@@ -81,6 +83,7 @@ public class QueryBuilder {
 				break;
 			}
 		} catch (ClassNotFoundException e) {
+			Log.addEntry(Level.SEVERE, "Missing model while building query! Model name: "+className);
 			e.printStackTrace();
 		}
 		return query;
