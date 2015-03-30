@@ -1,6 +1,7 @@
 package hlmng.resource;
 
 import hlmng.FileSettings;
+import hlmng.model.ModelHelper;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -38,6 +39,19 @@ public class Log {
 	
 	}
 
+	
+	public static void addEntry(Level level, String message, Object cause) {
+		if (logger == null && !FileSettings.logSysErr) {
+			startLogger();
+		}
+		message+=ModelHelper.valuestoString(cause);
+		if (FileSettings.logSysErr) {
+			System.err.println(getTime() + " | " + level + " | " + message);
+		} else {
+			logger.log(level, message);
+		}
+	}
+	
 	public static void addEntry(Level level, String message) {
 		if (logger == null && !FileSettings.logSysErr) {
 			startLogger();

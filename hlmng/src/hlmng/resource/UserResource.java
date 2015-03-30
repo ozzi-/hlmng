@@ -75,13 +75,13 @@ public class  UserResource  extends Resource {
 				element.setUserID(dbUser.getUserID());
 				userDao.updateElement(element, id);
 				res = Response.accepted().build();
-				Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") successfully changed his registration id");
+				Log.addEntry(Level.INFO, "User ("+authCredential.getUsername()+") successfully changed his registration id");
 			}else{
-				Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to edit a non existant user");
+				Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to edit a non existant user",element);
 				res = Response.status(404).build();
 			}
 		}else{
-			Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to PUT user with wrong credentials or wrong name");
+			Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to PUT user with wrong credentials or wrong name",element);
 			res = Response.status(401).build();
 		}
 		return res;		

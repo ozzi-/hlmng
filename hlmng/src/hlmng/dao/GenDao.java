@@ -79,9 +79,9 @@ public class GenDao {
 			tryToClose(rs, ps, dbConnection);
 		}
 		if(insertedID!=-1){
-			Log.addEntry(Level.INFO,className+" Element add ("+tModel+") ID="+insertedID);			
+			Log.addEntry(Level.INFO,className+" Element add ("+tModel+") ID="+insertedID,model);			
 		}else{
-			Log.addEntry(Level.WARNING,className+" Element wasn't added due to malformed input ("+tModel+") ID="+insertedID);			
+			Log.addEntry(Level.WARNING,className+" Element wasn't added due to malformed input ("+tModel+") ID="+insertedID,model);			
 		}
 		return insertedID;
 	}
@@ -130,13 +130,13 @@ public class GenDao {
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel,id);
 			rs = ps.executeUpdate();
 		}catch (Exception e) {	
-			Log.addEntry(Level.WARNING,"Element couldn't be updated. "+e.getMessage());
+			Log.addEntry(Level.WARNING,"Element couldn't be updated. "+e.getMessage(),model);
 			e.printStackTrace();
 		}
 		finally{
 			tryToClose( ps, dbConnection);
 		}
-		Log.addEntry(Level.INFO,className+" Element update ("+tModel+")="+rs);
+		Log.addEntry(Level.INFO,className+" Element update ("+tModel+")="+rs,model);
 		return (rs==1);
 	}
 	

@@ -81,7 +81,7 @@ public class AuthChecker {
 				return checkLoginInformation(servletResponse, backEnd, authCredential);
 			}
 		}
-		Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd);
+		Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+")",headers);
 		return false;
 	}
 
@@ -90,20 +90,20 @@ public class AuthChecker {
 			AuthCredential authCredential) {
 		if(backEnd){
 			if(!checkLoginInformationBackend((authCredential))){
-				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials");
+				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials",authCredential);
 				sendErrorAuthCode(servletResponse,HttpServletResponse.SC_UNAUTHORIZED);
 				return false;
 			}else{
-				Log.addEntry(Level.INFO, "Successful backend auth");
+				Log.addEntry(Level.INFO, "Successful backend auth",authCredential);
 				return true;
 			}
 		}else{
 			int code = checkLoginInformation(authCredential);
 			if(code==HttpServletResponse.SC_OK){
-				Log.addEntry(Level.INFO, "Successful user auth");
+				Log.addEntry(Level.INFO, "Successful user auth",authCredential);
 				return true;	
 			}else{
-				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials");
+				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials",authCredential);
 				sendErrorAuthCode(servletResponse,code); 	
 				return false;
 			}

@@ -66,7 +66,7 @@ public class VoteResource extends Resource  {
 		
 		User user = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(), authCredential.getSecret());
 		if(user==null || user.getUserID()!=element.getUserIDFK()){
-			Log.addEntry(Level.WARNING, "User tried to vote as somebody else. UserID:"+user.getUserID()+"  as "+element.getUserIDFK());
+			Log.addEntry(Level.WARNING, "User tried to vote as somebody else. UserID:"+user.getUserID()+"  as "+element.getUserIDFK(),element);
 			return Response.status(403).build();
 		}
 		Slider slider = (Slider) GenDaoLoader.instance.getSliderDao().getElement(element.getSliderIDFK());
@@ -83,7 +83,7 @@ public class VoteResource extends Resource  {
 				Log.addEntry(Level.INFO, "User voted successfully. UserID:"+user.getUserID());
 				return postResource(voteDao, element, false);			
 			}else{			
-				Log.addEntry(Level.WARNING, "User tried to vote twice. UserID:"+user.getUserID());
+				Log.addEntry(Level.WARNING, "User tried to vote twice. UserID:"+user.getUserID(),element);
 				return Response.status(423).build();
 			}			
 		}else{

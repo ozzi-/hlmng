@@ -42,6 +42,29 @@ public class ModelHelper {
 		return true;
 	}
 	
+	public static <T> String valuestoString(T obj){
+		StringBuilder strB = new StringBuilder();
+		Class<? extends Object> clsObj = obj.getClass();
+		strB.append("\nStart: ");
+		strB.append(clsObj.getName());
+		strB.append("\n");
+		Field[] methods = clsObj.getDeclaredFields();
+		for (Field field : methods) {
+			field.setAccessible(true);
+			try {
+				strB.append(field.getName());
+				strB.append("=");
+				strB.append(field.get(obj));
+				strB.append("\n");
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace(); 
+			}
+			strB.append("End");
+		}
+		return strB.toString();
+	}
+
+	
 	public static <T> int HashCode(T obj){
 		Class<? extends Object> clsObj = obj.getClass();
 		Field[] methods = clsObj.getDeclaredFields();
