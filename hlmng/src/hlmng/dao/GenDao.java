@@ -38,7 +38,6 @@ public class GenDao {
 	public <T> GenDao(Class<T> classTypeP){
 
 		className=classTypeP.getSimpleName();
-		System.out.println("GenDao creating for Class:"+className);
 		try {
 			classType = Class.forName("hlmng.model."+className);
 		} catch (ClassNotFoundException e) {

@@ -4,12 +4,14 @@ import hlmng.FileSettings;
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
+import hlmng.model.ModelHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -39,8 +41,10 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("/media")
 public class MediaResource extends Resource{
 
-	
-	
+	private static HashMap<String,ResponseBuilder> localJPGResponseCache = new HashMap<String,ResponseBuilder>();
+	private static HashMap<String,ResponseBuilder> localPNGResponseCache = new HashMap<String,ResponseBuilder>();
+
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> listMedia() {
@@ -88,9 +92,8 @@ public class MediaResource extends Resource{
 	@GET
 	@Path("jpg/{name}")
 	@Produces("image/jpeg")
-	public Response getJPG(@PathParam("name") String fileName, @Context HttpHeaders headers)
-			throws IOException {
-			return mediaResponse(FileSettings.mediaFileRootDir+fileName, "jpg", request);
+	public Response getJPG(@PathParam("name") String fileName) throws IOException {
+			return mediaResponse(FileSettings.mediaFileRootDir+fileName, "jpg", request,localJPGResponseCache);
 	}
 
 	@GET
@@ -98,7 +101,7 @@ public class MediaResource extends Resource{
 	@Produces("image/png")
 	public Response getPNG(@PathParam("name") String fileName)
 			throws IOException {
-		return mediaResponse(FileSettings.mediaFileRootDir+fileName, "png", request);
+		return mediaResponse(FileSettings.mediaFileRootDir+fileName, "png", request,localPNGResponseCache);
 	}
 
 	@POST
@@ -151,12 +154,25 @@ public class MediaResource extends Resource{
 			return false;
 		}
 	}
+	
+	public static ResponseBuilder getLocalCacheFile(File file, Request request, HashMap<String, ResponseBuilder> localCache){
+		if(localCache.containsKey(file.getName())){
+			return localCache.get(file.getName());
+		}else{
+			ResponseBuilder responseBuilder = ResourceHelper.cacheControl((File) file,request);
+			localCache.put(file.getName(), responseBuilder);
+			Log.addEntry(Level.FINE, "Created new Media Response since missing in local cache. Filename:"+file.getName());
+			return responseBuilder;
+		}
+		
+	}
 
-	public static Response mediaResponse(String filePath, String fileType, Request request) {
+	public static Response mediaResponse(String filePath, String fileType, Request request,HashMap<String,ResponseBuilder> localCache) {
 		ResponseBuilder response;
 		File file = new File(filePath);
 		if (file.canRead()) {
-			response = ResourceHelper.cacheControl((File) file,request);
+			response = getLocalCacheFile((File) file,request,localCache);
+			System.out.println(ModelHelper.valuestoString(request));
 			//response.header("Content-Disposition", "attachment; filename=hlmng." + fileType); 
 		} else {
 			response = Response.status(Response.Status.NOT_FOUND);
