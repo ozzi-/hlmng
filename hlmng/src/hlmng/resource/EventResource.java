@@ -27,7 +27,7 @@ public class EventResource extends Resource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEvent() {
-		return GenDaoLoader.instance.getEventDao().listElements();
+		return eventDao.listElements();
 	}
 	
 	@GET

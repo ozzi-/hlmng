@@ -1,7 +1,6 @@
-package hlmng.resource;
+package log;
 
 import hlmng.FileSettings;
-import hlmng.model.ModelHelper;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -13,7 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Example usage: Log.addEntry(Level.INFO, "USER RESSOURCE " + id + " GET"); 
+ * Example usage: 
+ * Log.addEntry(Level.INFO, "MESSAGE", causingObject); 
  */
 public class Log {
 
@@ -40,11 +40,13 @@ public class Log {
 	}
 
 	
-	public static void addEntry(Level level, String message, Object cause) {
-		if (logger == null && !FileSettings.logSysErr) {
-			startLogger();
-		}
-		message+=ModelHelper.valuestoString(cause);
+	public static void addEntry(Level level, String message) {
+		startLoggerIfNeeded();
+		logMessage(level, message);
+	}
+
+
+	private static void logMessage(Level level, String message) {
 		if (FileSettings.logSysErr) {
 			System.err.println(getTime() + " | " + level + " | " + message);
 		} else {
@@ -52,14 +54,9 @@ public class Log {
 		}
 	}
 	
-	public static void addEntry(Level level, String message) {
+	private static void startLoggerIfNeeded() {
 		if (logger == null && !FileSettings.logSysErr) {
 			startLogger();
-		}
-		if (FileSettings.logSysErr) {
-			System.err.println(getTime() + " | " + level + " | " + message);
-		} else {
-			logger.log(level, message);
 		}
 	}
 

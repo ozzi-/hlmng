@@ -26,6 +26,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import log.Log;
+
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -53,7 +55,7 @@ public class QrCodeResource extends Resource {
 	public Response getQrCodeRendered(@PathParam("id") int id) throws IOException{
 		QrCode qrCode = ((QrCode)getResource(qrCodeDao, id));
 		if(qrCode!=null){
-			try {
+			try { // TODO cache if loaded already
 				String filePath = generateQR(qrCode.getQrCodeID(),qrCode.getPayload());
 				return MediaResource.mediaResponse(filePath, "png", request);			
 			} catch (WriterException e) {

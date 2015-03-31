@@ -4,23 +4,24 @@ public class Push {
 	private int pushID;
 	private String title;
 	private String author;
-	private String sent;
+	private String date;
+	private String time;
 	private int receivedCounter;
+	private int failedCounter;
+	private String text;
 	public Push(){
 		
 	}
-	public Push(int pushID, String title, String text, String author, String sent, int receivedCounter ){
+	public Push(int pushID, String title, String text, String author ){
 		this.pushID=pushID;
 		this.title=title;
+		this.text=text;
 		this.author=author;
-		this.sent=sent;
-		this.receivedCounter=receivedCounter;
 	}
-	public Push(String title, String text, String author, String sent, int receivedCounter ){
+	public Push(String title, String text, String author ){
 		this.title=title;
+		this.text=text;
 		this.author=author;
-		this.sent=sent;
-		this.receivedCounter=receivedCounter;
 	}
 	public int getPushID() {
 		return pushID;
@@ -40,16 +41,35 @@ public class Push {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public String getSent() {
-		return sent;
-	}
-	public void setSent(String sent) {
-		this.sent = sent;
-	}
+
 	public int getReceivedCounter() {
 		return receivedCounter;
 	}
 	public void setReceivedCounter(int receivedCounter) {
 		this.receivedCounter = receivedCounter;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	public int getFailedCounter() {
+		return failedCounter;
+	}
+	public void setFailedCounter(int failedCounter) {
+		this.failedCounter = failedCounter;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
 	}
 }

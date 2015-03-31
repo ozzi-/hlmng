@@ -1,11 +1,11 @@
 package hlmng.dao;
 
-import hlmng.resource.Log;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
+
+import log.Log;
 
 /**
  * Extends the generic dao with a few specific vote functions

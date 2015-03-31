@@ -1,7 +1,6 @@
 package testing;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import hlmng.model.Event;
 import hlmng.model.ModelHelper;
 
@@ -44,4 +43,22 @@ public class ModelHelperTest {
 		assertFalse(ModelHelper.Compare(e1,e4));
 		assertFalse(ModelHelper.Compare(e4,e1));
 	}
+	@Test
+	public void HashSameObject(){
+		int h1 = ModelHelper.HashCode(e1);
+		int h1_2 = ModelHelper.HashCode(e1);
+		assertTrue(h1==h1_2);
+	}
+	@Test
+	public void HashSameContent(){
+		int h1 = ModelHelper.HashCode(e1);
+		int h2 = ModelHelper.HashCode(e2);
+		assertTrue(h1==h2);
+	}
+	@Test
+	public void HashDifferentContent(){
+		int h1 = ModelHelper.HashCode(e1);
+		int h3 = ModelHelper.HashCode(e3);
+		assertFalse(h1==h3);
+	}	
 }

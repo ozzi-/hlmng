@@ -1,7 +1,5 @@
 package db;
 
-import hlmng.resource.Log;
-
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -15,6 +13,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import log.Log;
 
 /**
  * This class handles the creation of a DB connection, allows building dynamic prepared statements.

@@ -5,6 +5,7 @@ import hlmng.auth.AuthCredential;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.dao.UserDao;
+import hlmng.model.ModelHelper;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
 
@@ -22,6 +23,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import log.Log;
 
 
 
@@ -77,11 +80,11 @@ public class  UserResource  extends Resource {
 				res = Response.accepted().build();
 				Log.addEntry(Level.INFO, "User ("+authCredential.getUsername()+") successfully changed his registration id");
 			}else{
-				Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to edit a non existant user",element);
+				Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to edit a non existant user. "+ModelHelper.valuestoString(element));
 				res = Response.status(404).build();
 			}
 		}else{
-			Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to PUT user with wrong credentials or wrong name",element);
+			Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to PUT user with wrong credentials or wrong name. "+ModelHelper.valuestoString(element));
 			res = Response.status(401).build();
 		}
 		return res;		

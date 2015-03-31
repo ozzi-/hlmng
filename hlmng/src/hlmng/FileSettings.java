@@ -12,4 +12,10 @@ public class FileSettings {
 	 */
 	public static final boolean logSysErr = false;
 	public static final String logFileRootDir = "/home/ozzi/logs/";
+	
+	
+	// - 
+	public static final String gcmURL = "https://android.googleapis.com/gcm/send"; 
+	public static final String apiKey = "AIzaSyD62VEqAESTccbNguLB5RI5OwfbbiOp4B8";
+
 }

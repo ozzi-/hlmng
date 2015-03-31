@@ -29,7 +29,7 @@ public class EventItemResource extends Resource{
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEventItems() {
-		return GenDaoLoader.instance.getEventItemDao().listElements();
+		return eventItemDao.listElements();
 	}
 	
 	@GET

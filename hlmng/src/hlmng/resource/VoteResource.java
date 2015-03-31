@@ -5,6 +5,7 @@ import hlmng.auth.AuthCredential;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.dao.VoteDao;
+import hlmng.model.ModelHelper;
 import hlmng.model.Slider;
 import hlmng.model.User;
 import hlmng.model.Vote;
@@ -23,6 +24,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import log.Log;
 
 
 
@@ -66,7 +69,9 @@ public class VoteResource extends Resource  {
 		
 		User user = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(), authCredential.getSecret());
 		if(user==null || user.getUserID()!=element.getUserIDFK()){
-			Log.addEntry(Level.WARNING, "User tried to vote as somebody else. UserID:"+user.getUserID()+"  as "+element.getUserIDFK(),element);
+			Log.addEntry(Level.WARNING, "User tried to vote as somebody else. UserID:"
+										+user.getUserID()+"  as "+element.getUserIDFK()
+										+". "+ModelHelper.valuestoString(element));
 			return Response.status(403).build();
 		}
 		Slider slider = (Slider) GenDaoLoader.instance.getSliderDao().getElement(element.getSliderIDFK());
@@ -83,7 +88,7 @@ public class VoteResource extends Resource  {
 				Log.addEntry(Level.INFO, "User voted successfully. UserID:"+user.getUserID());
 				return postResource(voteDao, element, false);			
 			}else{			
-				Log.addEntry(Level.WARNING, "User tried to vote twice. UserID:"+user.getUserID(),element);
+				Log.addEntry(Level.WARNING, "User tried to vote twice. UserID:"+user.getUserID()+". "+ModelHelper.valuestoString(element));
 				return Response.status(423).build();
 			}			
 		}else{

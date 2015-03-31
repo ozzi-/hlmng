@@ -1,6 +1,6 @@
 package hlmng.dao;
 
-import hlmng.resource.Log;
+import hlmng.model.ModelHelper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,6 +16,7 @@ import java.util.logging.Level;
 
 import javax.naming.NamingException;
 
+import log.Log;
 import db.DB;
 import db.QueryBuilder;
 
@@ -79,9 +80,9 @@ public class GenDao {
 			tryToClose(rs, ps, dbConnection);
 		}
 		if(insertedID!=-1){
-			Log.addEntry(Level.INFO,className+" Element add ("+tModel+") ID="+insertedID,model);			
+			Log.addEntry(Level.INFO,className+" Element add "+ModelHelper.valuestoString(model)+" inserted ID = "+insertedID);			
 		}else{
-			Log.addEntry(Level.WARNING,className+" Element wasn't added due to malformed input ("+tModel+") ID="+insertedID,model);			
+			Log.addEntry(Level.WARNING,className+" Element wasn't added due to malformed input "+ModelHelper.valuestoString(model)+" inserted ID = "+insertedID);			
 		}
 		return insertedID;
 	}
@@ -130,13 +131,13 @@ public class GenDao {
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel,id);
 			rs = ps.executeUpdate();
 		}catch (Exception e) {	
-			Log.addEntry(Level.WARNING,"Element couldn't be updated. "+e.getMessage(),model);
+			Log.addEntry(Level.WARNING,"Element couldn't be updated. "+e.getMessage()+". "+ModelHelper.valuestoString(model));
 			e.printStackTrace();
 		}
 		finally{
 			tryToClose( ps, dbConnection);
 		}
-		Log.addEntry(Level.INFO,className+" Element update ("+tModel+")="+rs,model);
+		Log.addEntry(Level.INFO,className+" Element update ("+tModel+")="+rs+". "+ModelHelper.valuestoString(model));
 		return (rs==1);
 	}
 	

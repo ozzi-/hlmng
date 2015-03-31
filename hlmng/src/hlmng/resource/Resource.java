@@ -54,7 +54,7 @@ public class Resource {
 	 */
 	protected Response postResource(GenDao dao, Object element, boolean backend){
 		if(AuthChecker.check(headers, servletResponse, backend)){
-			postResourceDo(dao, element);
+			return postResourceDo(dao, element);
 		} 
 		return null;		
 	}

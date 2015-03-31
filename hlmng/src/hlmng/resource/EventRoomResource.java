@@ -30,7 +30,7 @@ public class EventRoomResource extends Resource  {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEventRoom() {
-		return GenDaoLoader.instance.getEventRoomDao().listElements();
+		return eventRoomDao.listElements();
 	}
 
 	@GET

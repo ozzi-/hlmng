@@ -42,6 +42,11 @@ public class ModelHelper {
 		return true;
 	}
 	
+	/**
+	 * Get all fields and their values into a string to analyze the object
+	 * @param obj
+	 * @return A string
+	 */
 	public static <T> String valuestoString(T obj){
 		StringBuilder strB = new StringBuilder();
 		Class<? extends Object> clsObj = obj.getClass();
@@ -59,12 +64,18 @@ public class ModelHelper {
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace(); 
 			}
-			strB.append("End");
 		}
+		strB.append("End\n");
 		return strB.toString();
 	}
 
 	
+	/**
+	 * Create a better, generic hashcode method then the default one. 
+	 * This one always creates the same hash for a object with the same conent.
+	 * @param obj
+	 * @return
+	 */
 	public static <T> int HashCode(T obj){
 		Class<? extends Object> clsObj = obj.getClass();
 		Field[] methods = clsObj.getDeclaredFields();

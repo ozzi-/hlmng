@@ -1,4 +1,4 @@
-package hlmng.resource;
+package log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,7 +13,8 @@ public class FormatterS extends Formatter {
 		Date date = new Date(record.getMillis());
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 		
-        return "-----------------------\n"+formatter.format(date)+ "\n"
+        return "-----------------------\n"
+        		+formatter.format(date)+ "\n"
         		+ record.getLevel() + "  :  "
                 + record.getMessage() + "\n";
 	}

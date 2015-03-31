@@ -1,13 +1,13 @@
 package hlmng.dao;
 
 import hlmng.model.User;
-import hlmng.resource.Log;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 
+import log.Log;
 import db.DB;
 
 /**

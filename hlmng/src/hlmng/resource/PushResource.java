@@ -1,10 +1,18 @@
 package hlmng.resource;
 
+import gcm.GCM;
+import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Push;
+import hlmng.model.User;
+import hlmng.model.UserActionLimiter;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -17,6 +25,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 
@@ -52,8 +64,33 @@ public class PushResource  extends Resource{
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postPush(Push element) throws IOException {
-		return postResource(pushDao, element, true);
+	public Response postPush(Push element) throws IOException, ParseException {
+		if(AuthChecker.check(headers, servletResponse, true) && !UserActionLimiter.actionsExceeded("pushResource")){
+			List<Object> users = GenDaoLoader.instance.getUserDao().listElements();
+			List<String> regIds = new ArrayList<String>();
+			for (Object userobject : users) {
+				regIds.add(((User) userobject).getRegID());
+			}
+			
+			String gcmResponse = GCM.postGCM(element.getTitle(), element.getText(), regIds);
+			
+		    JSONParser parser = new JSONParser();
+		    JSONObject response  = (JSONObject) parser.parse(gcmResponse);
+
+			element.setReceivedCounter(Integer.parseInt(response.get("success").toString()));
+			element.setFailedCounter(Integer.parseInt(response.get("failure").toString()));
+			
+			Date date = new Date(System.currentTimeMillis());
+			DateFormat formatterTime = new SimpleDateFormat("HH:mm:ss");
+			DateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd");
+			element.setDate(formatterDate.format(date));
+			element.setTime(formatterTime.format(date));
+
+			Response ret = postResource(pushDao, element, true);
+			return ret;
+		}else{
+			return null;
+		}
 	}
 
 }

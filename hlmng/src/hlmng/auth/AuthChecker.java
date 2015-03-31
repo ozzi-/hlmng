@@ -1,9 +1,9 @@
 package hlmng.auth;
 
 import hlmng.dao.GenDaoLoader;
+import hlmng.model.ModelHelper;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
-import hlmng.resource.Log;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+
+import log.Log;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.simple.JSONArray;
@@ -81,7 +83,7 @@ public class AuthChecker {
 				return checkLoginInformation(servletResponse, backEnd, authCredential);
 			}
 		}
-		Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+")",headers);
+		Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+"). "+ModelHelper.valuestoString(headers));
 		return false;
 	}
 
@@ -90,20 +92,20 @@ public class AuthChecker {
 			AuthCredential authCredential) {
 		if(backEnd){
 			if(!checkLoginInformationBackend((authCredential))){
-				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials",authCredential);
+				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials."+ModelHelper.valuestoString(authCredential));
 				sendErrorAuthCode(servletResponse,HttpServletResponse.SC_UNAUTHORIZED);
 				return false;
 			}else{
-				Log.addEntry(Level.INFO, "Successful backend auth",authCredential);
+				Log.addEntry(Level.INFO, "Successful backend auth. "+ModelHelper.valuestoString(authCredential));
 				return true;
 			}
 		}else{
 			int code = checkLoginInformation(authCredential);
 			if(code==HttpServletResponse.SC_OK){
-				Log.addEntry(Level.INFO, "Successful user auth",authCredential);
+				Log.addEntry(Level.INFO, "Successful user auth. "+ModelHelper.valuestoString(authCredential));
 				return true;	
 			}else{
-				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials",authCredential);
+				Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+") due to wrong credentials. "+ModelHelper.valuestoString(authCredential));
 				sendErrorAuthCode(servletResponse,code); 	
 				return false;
 			}
@@ -174,9 +176,9 @@ public class AuthChecker {
 		if(!loginsLoaded){
 			loginsLoaded=loadLogins();
 			if(loginsLoaded){
-				hlmng.resource.Log.addEntry(Level.INFO, "Loaded backend logins");				
+				log.Log.addEntry(Level.INFO, "Loaded backend logins");				
 			}else{
-				hlmng.resource.Log.addEntry(Level.SEVERE, "Couldn't load backend logins");				
+				log.Log.addEntry(Level.SEVERE, "Couldn't load backend logins");				
 			}
 		}
 		for (AuthCredential authorizedCredentials  : logins) {
