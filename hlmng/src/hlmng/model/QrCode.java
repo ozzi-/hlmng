@@ -12,13 +12,6 @@ public class QrCode {
 	public QrCode(){
 		
 	}
-	public QrCode(int qrCodeID, String createdAt, String claimedAt, String payload, String role, int userIDFK, int eventIDFK){
-		this.qrcodeID=qrCodeID;
-		this.payload=payload;
-		this.role=role;
-		this.userIDFK=userIDFK;
-		this.eventIDFK=eventIDFK;
-	}
 	public QrCode(int qrCodeID, String payload, String role, int userIDFK, int eventIDFK){
 		this.qrcodeID=qrCodeID;
 		this.payload=payload;

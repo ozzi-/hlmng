@@ -104,7 +104,7 @@ public class QueryBuilder {
 		int i = 0;
 		String fieldsString = (set) ? "" : "( ";
 		for (Field field : methods) {
-			if (!classID.equals(field.getName())) {
+			if (!classID.equals(field.getName()) && !field.getName().equals("media")) {
 				if (i != 0) {
 					fieldsString += " , " + field.getName()
 							+ ((set) ? "=?" : "");
@@ -128,7 +128,13 @@ public class QueryBuilder {
 	private static String buildValuesString(Field[] methods) {
 		int i = 0;
 		String valuesString = " values (";
-		for (int j = 0; j < methods.length - 1; j++) {
+		int notmapable=1; // one is for the ID
+		for (Field field : methods) {
+			if(field.getName().equals("media")){
+				notmapable++;
+			}
+		}
+		for (int j = 0; j < methods.length - notmapable; j++) {
 			if (i != 0) {
 				valuesString += " , ?";
 			} else {

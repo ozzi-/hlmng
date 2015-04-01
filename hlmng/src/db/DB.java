@@ -99,11 +99,17 @@ public class DB {
 		String className= classType.getSimpleName();
 		String classID = className.toLowerCase()+"ID";		
 		for (Field field : classType.getDeclaredFields()) {
-			if(!classID.equals(field.getName())){ // ID is set by DB
+			if(!classID.equals(field.getName())&& !field.getName().equals("media")){ // ID is set by DB, media injected
 				try {
 					propertyDescriptor = new PropertyDescriptor(field.getName(), classType);
 					Method method = propertyDescriptor.getReadMethod();
 					value = method.invoke(tModel);
+					if(field.getName().contains("ID")){ // ID's that are 0 have to be turned into null, since we can't use Integer in the Models
+						int v = (int) value;
+						if (v==0){
+							value=null;
+						}
+					}
 					ps.setObject(++i, value);
 				} catch (Exception e) {
 					Log.addEntry(Level.SEVERE, "Couldn't build prepared statment! \r\n"+e.getMessage());
