@@ -83,7 +83,7 @@ public class AuthChecker {
 				return checkLoginInformation(servletResponse, backEnd, authCredential);
 			}
 		}
-		Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+"). "+ModelHelper.valuestoString(headers));
+		Log.addEntry(Level.INFO, "Failed auth (backend="+backEnd+")");
 		return false;
 	}
 

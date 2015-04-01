@@ -74,7 +74,7 @@ public class QrCodeResource extends Resource {
 			QrCode qrCode = ((QrCode)getResource(qrCodeDao, id));
 			if(qrCode!=null){
 				try {
-					String filePath = generateQR(qrCode.getQrCodeID(),qrCode.getPayload());
+					String filePath = generateQR(qrCode.getQrcodeID(),qrCode.getPayload());
 					return MediaResource.mediaResponse(filePath, "png", request,localQrResponseCache);			
 				} catch (WriterException e) {
 					response.sendError(500);
@@ -85,8 +85,6 @@ public class QrCodeResource extends Resource {
 	} 
 	
 
-
-
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -96,15 +94,30 @@ public class QrCodeResource extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postQrCode(QrCode element) throws IOException {
+	public Response postQrCode(QrCode element) throws IOException {		
+		element.setCreatedAt(ResourceHelper.getCurrentDateTime());
 		return postResource(qrCodeDao, element, true);
 	}
-	
-	
+
 	@DELETE
 	@Path("{id}")
 	public Response deleteQrCode(@PathParam("id") int id) throws IOException {
+		
+		QrCode qrcode = (QrCode)GenDaoLoader.instance.getQrCodeDao().getElement(id);
+		if(qrcode!=null){
+			deleteQRFromFSandCache(id);			
+		}
 		return deleteResource(qrCodeDao, id);
+	}
+
+	private void deleteQRFromFSandCache(int id) {
+		String qrPath= FileSettings.qrFileRootDir+Integer.toString(id)+".png";
+		String qrName= Integer.toString(id)+".png";
+		ResponseBuilder qrres = localQrResponseCache.remove(qrName);
+		Log.addEntry(Level.FINE, "Removed QR response from local cache :"+qrres);
+		File file = new File(qrPath);
+		boolean filedelres = file.delete();
+		Log.addEntry(Level.FINE, "Removed media from file system? "+filedelres);
 	}
 	
 	// parts of the following method are from: http://stackoverflow.com/a/7756956
@@ -122,19 +135,19 @@ public class QrCodeResource extends Resource {
 	   ByteBuffer bbuf = encoder.encode(CharBuffer.wrap(payload));
 	   b = bbuf.array();
 
-	    String data;
-	    data = new String(b, "UTF-8");
-	    BitMatrix matrix = null;
-	    int h = 500;
-	    int w = 500;
-	    com.google.zxing.Writer writer = new MultiFormatWriter();
-	    Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(2);
-	    hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-	    matrix = writer.encode(data,
-	    com.google.zxing.BarcodeFormat.QR_CODE, w, h, hints);
-	    MatrixToImageWriter.writeToPath(matrix, "PNG", filePath);
-	    Log.addEntry(Level.INFO, "Rendered QR Code with ID: "+id);
-	    return filePath.toString();
+	   String data;
+	   data = new String(b, "UTF-8");
+	   BitMatrix matrix = null;
+	   int h = 500;
+	   int w = 500;
+	   com.google.zxing.Writer writer = new MultiFormatWriter();
+	   Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(2);
+	   hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+	   matrix = writer.encode(data,
+	   com.google.zxing.BarcodeFormat.QR_CODE, w, h, hints);
+	   MatrixToImageWriter.writeToPath(matrix, "PNG", filePath);
+	   Log.addEntry(Level.INFO, "Rendered QR Code with ID: "+id);
+	   return filePath.toString();
 	}
 
 

@@ -1,3 +1,4 @@
+
 package hlmng.resource;
 
 import hlmng.dao.GenDao;

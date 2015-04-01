@@ -99,7 +99,7 @@ public class DB {
 		String className= classType.getSimpleName();
 		String classID = className.toLowerCase()+"ID";		
 		for (Field field : classType.getDeclaredFields()) {
-			if(!classID.equals(field.getName())){
+			if(!classID.equals(field.getName())){ // ID is set by DB
 				try {
 					propertyDescriptor = new PropertyDescriptor(field.getName(), classType);
 					Method method = propertyDescriptor.getReadMethod();

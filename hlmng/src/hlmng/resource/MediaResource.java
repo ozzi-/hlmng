@@ -4,7 +4,6 @@ import hlmng.FileSettings;
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
-import hlmng.model.ModelHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,6 +16,7 @@ import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -56,10 +56,40 @@ public class MediaResource extends Resource{
 
 	@GET
 	@Path("{id}")
-	public Response getMedia(@PathParam("id") int id,
-			@Context HttpHeaders headers,
-			@Context HttpServletResponse servletResponse) throws IOException {
+	public Response getMedia(@PathParam("id") int id) throws IOException {
 		return getMediaAsResponse(id, uri, request);
+	}
+	
+	@DELETE
+	@Path("{id}")
+	public Response deleteMedia(@PathParam("id") int id) throws IOException{
+		Media media = (Media)GenDaoLoader.instance.getMediaDao().getElement(id);
+		// ONLY deletes on filesystem and local cache,  since path's to that media still have to be there, see documentation
+		boolean deleted=false;
+		if(media !=null){ 
+			deleted = deleteMediaFromFSandCache(media.getLink(),media.getType());						
+		}
+		return ResourceHelper.returnOkOrNotFoundResponse(deleted);
+	}
+
+	private boolean deleteMediaFromFSandCache(String fileName, String type) {
+
+		String mediaPath= FileSettings.mediaFileRootDir+fileName;
+
+		Log.addEntry(Level.FINE, "Trying to del:"+fileName);
+		if(type.equals("image/jpg") || type.equals("image/jpeg")){ 
+			ResponseBuilder jpgres = localJPGResponseCache.remove(fileName);
+			Log.addEntry(Level.FINE, "Removed JPG response from local cache :"+jpgres);
+		}else if(type.equals("image/png")){ 
+			ResponseBuilder pngres = localPNGResponseCache.remove(fileName);
+			Log.addEntry(Level.FINE, "Removed PNG response from local cache :"+pngres);
+		}else{
+			throw new IllegalArgumentException("implement other types first..");
+		}
+		File file = new File(mediaPath);
+		boolean filedelres = file.delete();
+		Log.addEntry(Level.FINE, "Removed media from file system? "+filedelres);
+		return filedelres;
 	}
 	
 	public static Response getMediaStatic(int id, UriInfo uriS, Request requestS) throws IOException {
@@ -90,17 +120,17 @@ public class MediaResource extends Resource{
 	
 
 	@GET
-	@Path("jpg/{name}")
+	@Path("image/jpg/{name}")
 	@Produces("image/jpeg")
 	public Response getJPG(@PathParam("name") String fileName) throws IOException {
 			return mediaResponse(FileSettings.mediaFileRootDir+fileName, "jpg", request,localJPGResponseCache);
 	}
 
 	@GET
-	@Path("png/{name}")
+	@Path("image/png/{name}")
 	@Produces("image/png")
 	public Response getPNG(@PathParam("name") String fileName)
-			throws IOException {
+			throws IOException { 
 		return mediaResponse(FileSettings.mediaFileRootDir+fileName, "png", request,localPNGResponseCache);
 	}
 
@@ -114,15 +144,23 @@ public class MediaResource extends Resource{
 			@Context HttpHeaders headers, 
 			@Context HttpServletResponse servletResponse
 			) {
+
 		String mimeType=(body.getMediaType()==null)?"none provided" :body.getMediaType().toString() ;
+		
 		boolean authenticated = AuthChecker.check(headers, servletResponse, false);
 		Response response;
+		
 		if(authenticated && (mimeType.equals("image/png")||mimeType.equals("image/jpeg"))){
 			String filePath = FileSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
+			File f = new File(filePath);
+			if(f.exists()){
+				return  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
+			}
 			boolean savedOK=saveFile(fileInputStream, filePath);
 			if(savedOK){
 				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
-				response=Response.status(200).build();				
+				int insertedID = GenDaoLoader.instance.getMediaDao().addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
+				return getMediaAsResponse(insertedID, uri, request);
 			}else{
 				Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
 				response=Response.status(500).build();				
@@ -169,10 +207,10 @@ public class MediaResource extends Resource{
 
 	public static Response mediaResponse(String filePath, String fileType, Request request,HashMap<String,ResponseBuilder> localCache) {
 		ResponseBuilder response;
+		Log.addEntry(Level.INFO, "Building media response for file:"+filePath+" with type "+fileType);
 		File file = new File(filePath);
 		if (file.canRead()) {
 			response = getLocalCacheFile((File) file,request,localCache);
-			System.out.println(ModelHelper.valuestoString(request));
 			//response.header("Content-Disposition", "attachment; filename=hlmng." + fileType); 
 		} else {
 			response = Response.status(Response.Status.NOT_FOUND);

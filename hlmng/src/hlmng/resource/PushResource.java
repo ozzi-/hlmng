@@ -9,10 +9,7 @@ import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -80,11 +77,8 @@ public class PushResource  extends Resource{
 			element.setReceivedCounter(Integer.parseInt(response.get("success").toString()));
 			element.setFailedCounter(Integer.parseInt(response.get("failure").toString()));
 			
-			Date date = new Date(System.currentTimeMillis());
-			DateFormat formatterTime = new SimpleDateFormat("HH:mm:ss");
-			DateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd");
-			element.setDate(formatterDate.format(date));
-			element.setTime(formatterTime.format(date));
+			element.setDate(ResourceHelper.getCurrentDate());
+			element.setTime(ResourceHelper.getCurrentTime());
 
 			Response ret = postResource(pushDao, element, true);
 			return ret;

@@ -1,7 +1,7 @@
 package hlmng.model;
 
 public class QrCode {
-	private int qrCodeID;
+	private int qrcodeID;
 	private String createdAt;
 	private String claimedAt;
 	private String payload;
@@ -13,27 +13,30 @@ public class QrCode {
 		
 	}
 	public QrCode(int qrCodeID, String createdAt, String claimedAt, String payload, String role, int userIDFK, int eventIDFK){
-		this.qrCodeID=qrCodeID;
-		this.createdAt=createdAt;
-		this.claimedAt=claimedAt;
+		this.qrcodeID=qrCodeID;
 		this.payload=payload;
 		this.role=role;
 		this.userIDFK=userIDFK;
 		this.eventIDFK=eventIDFK;
 	}
-	public QrCode(String createdAt, String claimedAt, String payload, String role, int userIDFK, int eventIDFK){
-		this.createdAt=createdAt;
-		this.claimedAt=claimedAt;
+	public QrCode(int qrCodeID, String payload, String role, int userIDFK, int eventIDFK){
+		this.qrcodeID=qrCodeID;
 		this.payload=payload;
 		this.role=role;
 		this.userIDFK=userIDFK;
 		this.eventIDFK=eventIDFK;
 	}
-	public int getQrCodeID() {
-		return qrCodeID;
+	public QrCode(String payload, String role, int userIDFK, int eventIDFK){
+		this.payload=payload;
+		this.role=role;
+		this.userIDFK=userIDFK;
+		this.eventIDFK=eventIDFK;
 	}
-	public void setQrCodeID(int qrCodeID) {
-		this.qrCodeID = qrCodeID;
+	public int getQrcodeID() {
+		return qrcodeID;
+	}
+	public void setQrcodeID(int qrCodeID) {
+		this.qrcodeID = qrCodeID;
 	}
 	public String getCreatedAt() {
 		return createdAt;

@@ -19,7 +19,7 @@ public class FileSettings {
 	 * Set sysErr true to redirect log output to system.error.
 	 * Set sysErr to false to write log output into a (numbered) logfile.
 	 */
-	public static final boolean logSysErr = false;
+	public static final boolean logSysErr = true;
 	public static final String logFileRootDir = "/home/ozzi/logs/";
 	//public static final String logFileRootDir = "/home/student/logs/";
 	

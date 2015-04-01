@@ -54,7 +54,7 @@ public class UserDao extends GenDao {
         Connection dbConnection =null;
 		try {
 			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement("SELECT * FROM user WHERE name = ?");
+			ps = dbConnection.prepareStatement("SELECT * FROM qrcode WHERE name = ?");
 			ps.setString(1,userName);
 	        rs = ps.executeQuery();
 	        if (rs.isBeforeFirst() ) {     

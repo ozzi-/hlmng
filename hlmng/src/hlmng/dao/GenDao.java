@@ -67,6 +67,7 @@ public class GenDao {
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
 			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS);
+			System.out.println(addElement);
 			ps = DB.setAllFieldsOfPS(ps, classType, tModel ,null);
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
