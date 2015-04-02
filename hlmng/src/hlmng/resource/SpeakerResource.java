@@ -30,7 +30,6 @@ public class SpeakerResource extends Resource  {
 		List<Object> speakerObjects = GenDaoLoader.instance.getSpeakerDao().listElements();
 		for (Object object : speakerObjects) {
 			Speaker speaker = (Speaker) object;
-			System.out.println("MediaIDFK: "+speaker.getMediaIDFK());
 			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
 			speaker.setMedia(media);
 		}

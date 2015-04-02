@@ -104,7 +104,8 @@ public class DB {
 					propertyDescriptor = new PropertyDescriptor(field.getName(), classType);
 					Method method = propertyDescriptor.getReadMethod();
 					value = method.invoke(tModel);
-					if(field.getName().contains("ID")){ // ID's that are 0 have to be turned into null, since we can't use Integer in the Models
+					 // ID's that are 0 have to be turned into null, since we can't use Integer in the Models. There are fields such as deviceID which are string, we don't want those ..
+					if(field.getName().contains("ID") && !( value instanceof String)){
 						int v = (int) value;
 						if (v==0){
 							value=null;

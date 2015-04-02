@@ -8,7 +8,11 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
 import hlmng.model.Media;
+import hlmng.model.Presentation;
+import hlmng.model.Slider;
 import hlmng.model.User;
+import hlmng.model.Vote;
+import hlmng.model.Voting;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +22,11 @@ public class DaoTest {
 	GenDao userDao = GenDaoLoader.instance.getUserDao();
 	GenDao eventDao = GenDaoLoader.instance.getEventDao();
 	GenDao mediaDao = GenDaoLoader.instance.getMediaDao();
-	
+	GenDao votingDao = GenDaoLoader.instance.getVotingDao();
+	GenDao voteDao = GenDaoLoader.instance.getVoteDao();
+	GenDao sliderDao = GenDaoLoader.instance.getSliderDao();
+	GenDao presentationDao = GenDaoLoader.instance.getPresentationDao();
+
 	@Before
 	public void db(){	
 		Properties loginData= new Properties();
@@ -27,7 +35,32 @@ public class DaoTest {
 	    userDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
 		eventDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
 		mediaDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
+		votingDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
+		voteDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
+		sliderDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
+		presentationDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
+	}
+	@Test
+	public void testVoting(){
+		
+		Presentation presentation = new Presentation("TEST","TEST","TEST","00:10:10");
+		int presentationid = presentationDao.addElement(presentation);
+		
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, presentationid, 1);
+		int votingid = votingDao.addElement(voting);
+		
+		Slider slider = new Slider("TEST", 1, votingid);
+		int sliderid = sliderDao.addElement(slider);
 
+		Vote vote = new Vote(10, 1, sliderid, 1);
+		int voteid = voteDao.addElement(vote);
+		
+		assertTrue(voteDao.listByFK("sliderIDFK", sliderid).size()==1);
+		
+		assertTrue(voteDao.deleteElement(voteid));
+		assertTrue(sliderDao.deleteElement(sliderid));
+		assertTrue(votingDao.deleteElement(votingid));
+		assertTrue(presentationDao.deleteElement(presentationid));
 	}
 	
 	@Test
@@ -47,21 +80,26 @@ public class DaoTest {
 	}
 	
 	public boolean testDaoGeneric(Object element, GenDao dao){
-
-
 		int elementCountBeforeAdd=dao.listElements().size();
-		System.out.println("BEFORE:"+elementCountBeforeAdd);
 		int elementID=dao.addElement(element);
 		
 		int elementCountAfterAdd=dao.listElements().size();
-		System.out.println("AFTER:"+elementCountAfterAdd);
 		dao.deleteElement(elementID);
 		
 		int elementCountAfterRemove=dao.listElements().size();
-		System.out.println("AFTER AFTER"+elementCountAfterRemove);
+
 		return (elementCountAfterAdd==elementCountBeforeAdd+1 && elementCountBeforeAdd==elementCountAfterRemove);
 	}
-
+	@Test 
+	public void testPut(){
+		User user = new User("TESTUSER", "12345", "12345");
+		int userid = userDao.addElement(user);
+		user.setName("TESTUSERUPDATE");
+		assertTrue(userDao.updateElement(user, userid));
+		assertTrue(((User)userDao.getElement(userid)).getName().equals("TESTUSERUPDATE"));
+		assertTrue(userDao.deleteElement(userid));
+	}
+	
 	@Test
     public void testGetUsers(){
 		boolean isNotEmpty = ! userDao.listElements().isEmpty();

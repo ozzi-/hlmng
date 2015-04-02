@@ -2,11 +2,11 @@ package hlmng.resource;
 
 import hlmng.auth.AuthChecker;
 import hlmng.auth.AuthCredential;
+import hlmng.auth.QRAuthResult;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.dao.VoteDao;
 import hlmng.model.ModelHelper;
-import hlmng.model.QrCode;
 import hlmng.model.Slider;
 import hlmng.model.User;
 import hlmng.model.Vote;
@@ -92,40 +92,17 @@ public class VoteResource extends Resource  {
 		}
 		
 		boolean isJury = false;
+		
 		String qrHeader = headers.getHeaderString("X-QRCode"); 
 		if(qrHeader!=null){
-			QrCode qrcode = (QrCode) GenDaoLoader.instance.getQrCodeDao().getQrCodeByPayload(qrHeader);
-			if(qrcode!=null){
-				if(qrcode.getEventIDFK()!=voting.getEventIDFK()){
-					Log.addEntry(Level.WARNING, "User tried to vote with a qr code issued to another event. UserID:"+user.getUserID());
-					return Response.status(403).build();
-				}
-				if(qrcode.getRole().equals("jury")){
-					if(qrcode.getUserIDFK()!=0){
-						if(user.getUserID()==qrcode.getUserIDFK()){
-							// Claimed and same -> ok
-							isJury=true;
-						}else{
-							// Claimed but different -> nok
-							return Response.status(403).build();
-						}
-					}else{
-						// Unclaimed -> ok but claim it									
-						qrcode.setClaimedAt(ResourceHelper.getCurrentDateTime());
-						qrcode.setUserIDFK(user.getUserID()); 
-						GenDaoLoader.instance.getQrCodeDao().updateElement(qrcode, qrcode.getQrcodeID());
-						
-						isJury=true;
-					}
-				}else{
-					Log.addEntry(Level.WARNING, "User tried to vote with a qr code that has a wrong role. UserID:"+user.getUserID());
-					return Response.status(403).build();
-				}
+			QRAuthResult qrAuthRes = AuthChecker.checkQRCode(qrHeader,voting.getEventIDFK(),user,"jury");
+			if(qrAuthRes.isAuthorized()){
+				isJury=true;
 			}else{
-				Log.addEntry(Level.WARNING,"User sent a wrong qr code. UserID:"+user.getUserID());
-				return Response.status(403).build();
+				return qrAuthRes.getResponse();
 			}
 		}
+		
 		if(!isJury && element.isIsJury()){
 			Log.addEntry(Level.WARNING, "User tried to vote as jury but has no qr code or a invalid qr code. UserID:"+user.getUserID());
 			return Response.status(403).build();

@@ -2,8 +2,10 @@ package hlmng.auth;
 
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.ModelHelper;
+import hlmng.model.QrCode;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
+import hlmng.resource.ResourceHelper;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,6 +19,7 @@ import java.util.logging.Level;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 
 import log.Log;
 
@@ -59,6 +62,39 @@ public class AuthChecker {
 			logins.add(new AuthCredential(username, password));
 		}
 		return true;
+	}
+	
+	public static QRAuthResult checkQRCode(String qrHeader, int checkIDFK, User user, String role){
+		QrCode qrcode = (QrCode) GenDaoLoader.instance.getQrCodeDao().getQrCodeByPayload(qrHeader);
+		if(qrcode!=null){
+			if(qrcode.getEventIDFK()!=checkIDFK){
+				Log.addEntry(Level.WARNING, "User tried to auth with a qr code issued to another eventIDFK. UserID:"+user.getUserID());
+				return new QRAuthResult(false, Response.status(403).build());
+			}
+			if(qrcode.getRole().equals(role)){
+				if(qrcode.getUserIDFK()!=0){
+					if(user.getUserID()==qrcode.getUserIDFK()){
+						// Claimed and same -> ok
+						return new QRAuthResult(true, null);
+					}else{
+						Log.addEntry(Level.WARNING, "User tried to auth with a qr code claimed by somebody else before. UserID:"+user.getUserID());
+						return new QRAuthResult(false, Response.status(403).build());
+					}
+				}else{
+					// Unclaimed -> ok but claim it									
+					qrcode.setClaimedAt(ResourceHelper.getCurrentDateTime());
+					qrcode.setUserIDFK(user.getUserID()); 
+					GenDaoLoader.instance.getQrCodeDao().updateElement(qrcode, qrcode.getQrcodeID());
+					return new QRAuthResult(true, null);
+				}
+			}else{
+				Log.addEntry(Level.WARNING, "User tried to vote with a qr code that has a wrong role. UserID:"+user.getUserID());
+				return new QRAuthResult(false, Response.status(403).build());
+			}
+		}else{
+			Log.addEntry(Level.WARNING,"User sent a wrong qr code. UserID:"+user.getUserID());
+			return new QRAuthResult(false, Response.status(403).build());
+		}
 	}
 	
 	/**

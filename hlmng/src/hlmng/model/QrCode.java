@@ -25,6 +25,12 @@ public class QrCode {
 		this.userIDFK=userIDFK;
 		this.eventIDFK=eventIDFK;
 	}
+	public QrCode(String payload, String role, int eventIDFK){
+		this.payload=payload;
+		this.role=role;
+		this.userIDFK=0;
+		this.eventIDFK=eventIDFK;
+	}
 	public int getQrcodeID() {
 		return qrcodeID;
 	}
