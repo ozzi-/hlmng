@@ -66,7 +66,7 @@ public class VoteResource extends Resource  {
 		if(authorizationHeader==null){
 			return Response.status(401).build();
 		} 	
-		// TODO refactor..
+
 		AuthCredential authCredential = AuthChecker.decodeBasicAuthB64(authorizationHeader);
 		
 		User user = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(), authCredential.getSecret());
