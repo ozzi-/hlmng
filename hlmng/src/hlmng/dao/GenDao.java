@@ -202,24 +202,21 @@ public class GenDao {
 	 * @return A list of all elements from the specified class/model
 	 */
 	public <T> List<Object> listElements() {
-		PreparedStatement ps;
-		ResultSet rs;
-        Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
-		try {
-			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement(listElements);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				elemList.add(DB.getObjectFromRS(rs,classType));
+		try(Connection dbConnection = getDBConnection()){
+			try (PreparedStatement ps = dbConnection.prepareStatement(listElements);){
+				try(ResultSet rs = ps.executeQuery();){
+					while (rs.next()) {
+						elemList.add(DB.getObjectFromRS(rs,classType));
+					}
+				}
 			}
-			ps.close();
 		} catch (Exception e) {
 			Log.addEntry(Level.WARNING,"Elements couldn't be listed. "+e.getMessage());
 			e.printStackTrace();
-		}
-		finally{
-		}
+		} 
+		
+		
 		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
 		return elemList;
 	}
@@ -258,15 +255,18 @@ public class GenDao {
 		if(rs!=null){
 			try{rs.close();  }catch(Exception exception){Log.addEntry(Level.WARNING, "Resultset couldn't be closed ("+exception.getMessage());exception.printStackTrace();}			
 		}
+		rs=null;
 		tryToClose(ps, dbConnection);
 		
 	}
 	protected void tryToClose(PreparedStatement ps, Connection dbConnection) {
 		if(ps!=null){
-			try{ps.close();}catch(Exception exception){Log.addEntry(Level.WARNING, "Preparedstatement couldn't be closed ("+exception.getMessage());exception.printStackTrace();}			
+			try{ps.close();}catch(Exception exception){Log.addEntry(Level.WARNING, "Preparedstatement couldn't be closed ("+exception.getMessage());exception.printStackTrace();}
+			ps=null;
 		}
 		if(dbConnection!=null){
-			try{dbConnection.close();}catch(Exception exception){Log.addEntry(Level.SEVERE, "Connection couldn't be closed ("+exception.getMessage());exception.printStackTrace();}					
+			try{dbConnection.close();}catch(Exception exception){Log.addEntry(Level.SEVERE, "Connection couldn't be closed ("+exception.getMessage());exception.printStackTrace();}
+			dbConnection=null;
 		}
 	}
 }
