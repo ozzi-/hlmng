@@ -58,25 +58,21 @@ public class GenDao {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> int addElement(Object model) {
-		T tModel=null;
-		ResultSet rs=null;
-        PreparedStatement ps = null;
-        Connection dbConnection=null;
         int insertedID=-1;
-		try {
+        T tModel;
+		try(Connection dbConnection = getDBConnection()){
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
-			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS);
-			ps = DB.setAllFieldsOfPS(ps, classType, tModel ,null);
-			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();
-			rs.next();
-			insertedID = rs.getInt(1);
+			try(PreparedStatement ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS)){
+				try(PreparedStatement psF = DB.setAllFieldsOfPS(ps, classType, tModel ,null)){
+					psF.executeUpdate();
+					try(ResultSet rs = ps.getGeneratedKeys()){						
+						rs.next();
+						insertedID = rs.getInt(1);				
+					}
+				}
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally{
-			tryToClose(rs, ps, dbConnection);
 		}
 		if(insertedID!=-1){
 			Log.addEntry(Level.INFO,className+" Element add "+ModelHelper.valuestoString(model)+" inserted ID = "+insertedID);			
@@ -91,21 +87,16 @@ public class GenDao {
 	 * @return True if element was deleted, false if not
 	 */
 	public boolean deleteElement(int id) {
-        PreparedStatement ps = null;
         int rs=0;
-        Connection dbConnection=null;
-		try {
-			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement(removeElement);
-			ps=DB.setIdFieldOfPS(ps,id);
-	        rs = ps.executeUpdate();
-			ps.close();
+		try (Connection dbConnection = getDBConnection()){
+			try(PreparedStatement ps = dbConnection.prepareStatement(removeElement)){
+				try(PreparedStatement psF = DB.setIdFieldOfPS(ps,id)){
+					rs = psF.executeUpdate();									
+				}
+			}
 		} catch (Exception e) {
 			Log.addEntry(Level.WARNING,"Element couldn't be deleted. "+e.getMessage());
 			e.printStackTrace();
-		}
-		finally{
-			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element delete ("+id+")="+rs);
 		return (rs==1);		
@@ -119,22 +110,18 @@ public class GenDao {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> boolean updateElement(Object model, int id) {
-		T tModel=null;
-		PreparedStatement ps = null;
 		int rs=0;
-        Connection dbConnection=null;
-		try {
-			dbConnection = getDBConnection();
+		T tModel = null;
+		try (Connection dbConnection = getDBConnection()){
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
-			ps = dbConnection.prepareStatement(updateElement);
-			ps = DB.setAllFieldsOfPS(ps, classType, tModel,id);
-			rs = ps.executeUpdate();
+			try(PreparedStatement ps = dbConnection.prepareStatement(updateElement)){
+				try(PreparedStatement psF = DB.setAllFieldsOfPS(ps, classType, tModel,id)){
+					rs = psF.executeUpdate();							
+				}
+			}
 		}catch (Exception e) {	
 			Log.addEntry(Level.WARNING,"Element couldn't be updated. "+e.getMessage()+". "+ModelHelper.valuestoString(model));
 			e.printStackTrace();
-		}
-		finally{
-			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element update ("+tModel+")="+rs+". "+ModelHelper.valuestoString(model));
 		return (rs==1);
@@ -146,25 +133,21 @@ public class GenDao {
 	 * @return
 	 */
 	public <T> Object getElement(int id) {
-		PreparedStatement ps = null;
-        ResultSet rs;
-        Object element=null;
-        Connection dbConnection=null;
-		try {
-			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement(getElement);
-			ps=DB.setIdFieldOfPS(ps,id);
-	        rs = ps.executeQuery();
-	        if (rs.isBeforeFirst() ) {     
-	        	rs.next();
-				element=DB.getObjectFromRS(rs,classType);
-			} 
+		Object element = null;
+		try (Connection	dbConnection = getDBConnection();){
+			try(PreparedStatement ps = dbConnection.prepareStatement(getElement)){
+				try(PreparedStatement psF=DB.setIdFieldOfPS(ps,id)){
+					try(ResultSet rs = psF.executeQuery()){
+						if (rs.isBeforeFirst() ) {     
+							rs.next();
+							element=DB.getObjectFromRS(rs,classType);
+						} 															
+					}
+				}
+			}
 		} catch (Exception e) {
 			Log.addEntry(Level.WARNING,"Element couldn't be returned (GET). "+e.getMessage());
 			e.printStackTrace();
-		}
-		finally{
-			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element get ("+element+")");
 		return element;
@@ -173,24 +156,19 @@ public class GenDao {
 	
 	
 	public <T> List<Object> listByFK(String fkName, int idFK){
-        PreparedStatement ps = null;
-        ResultSet rs;
-        Connection dbConnection=null;
 		List<Object> elemList = new ArrayList<Object>();
-		try {
-			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement(fkElement.get(fkName).toString());
-			ps=DB.setIdFieldOfPS(ps,idFK);
-	        rs = ps.executeQuery();
-			while (rs.next()) {
-				elemList.add(DB.getObjectFromRS(rs,classType));
+		try (Connection dbConnection = getDBConnection()){
+			try(PreparedStatement ps = dbConnection.prepareStatement(fkElement.get(fkName).toString())){
+				PreparedStatement psF=DB.setIdFieldOfPS(ps,idFK);				
+				try(ResultSet rs = psF.executeQuery()){
+					while (rs.next()) {
+						elemList.add(DB.getObjectFromRS(rs,classType));
+					}					
+				}
 			}
 		} catch (Exception e) {
 			Log.addEntry(Level.WARNING,"Elements couldn't be listed by FK. "+e.getMessage());
 			e.printStackTrace();
-		}
-		finally{
-			tryToClose( ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
 		return elemList;
@@ -215,8 +193,6 @@ public class GenDao {
 			Log.addEntry(Level.WARNING,"Elements couldn't be listed. "+e.getMessage());
 			e.printStackTrace();
 		} 
-		
-		
 		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
 		return elemList;
 	}
@@ -249,24 +225,5 @@ public class GenDao {
 	
 	public boolean isTest() {
 		return isTest;
-	}
-	
-	protected void tryToClose(ResultSet rs, PreparedStatement ps, Connection dbConnection) {
-		if(rs!=null){
-			try{rs.close();  }catch(Exception exception){Log.addEntry(Level.WARNING, "Resultset couldn't be closed ("+exception.getMessage());exception.printStackTrace();}			
-		}
-		rs=null;
-		tryToClose(ps, dbConnection);
-		
-	}
-	protected void tryToClose(PreparedStatement ps, Connection dbConnection) {
-		if(ps!=null){
-			try{ps.close();}catch(Exception exception){Log.addEntry(Level.WARNING, "Preparedstatement couldn't be closed ("+exception.getMessage());exception.printStackTrace();}
-			ps=null;
-		}
-		if(dbConnection!=null){
-			try{dbConnection.close();}catch(Exception exception){Log.addEntry(Level.SEVERE, "Connection couldn't be closed ("+exception.getMessage());exception.printStackTrace();}
-			dbConnection=null;
-		}
 	}
 }

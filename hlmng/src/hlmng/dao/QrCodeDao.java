@@ -21,29 +21,23 @@ public class QrCodeDao extends GenDao {
 	
 	
 	public QrCode getQrCodeByPayload(String payload) {
-		PreparedStatement ps = null;
-        ResultSet rs = null;
-        Object element=null;
-        Connection dbConnection =null;
-		try {
-			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement("SELECT * FROM qrcode WHERE payload = ?");
-			ps.setString(1,payload);
-	        rs = ps.executeQuery();
-	        if (rs.isBeforeFirst() ) {     
-	        	rs.next();
-				element=DB.getObjectFromRS(rs,QrCode.class);
-			} 
-			ps.close();
+		QrCode element = null;
+		try (Connection dbConnection = getDBConnection()){
+			try(PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM qrcode WHERE payload = ?")){
+				ps.setString(1,payload);
+				try(ResultSet rs = ps.executeQuery()){
+					if (rs.isBeforeFirst() ) {     
+						rs.next();
+						element=DB.getObjectFromRS(rs,QrCode.class);
+					} 				
+				}
+			}
 		} catch (Exception e) {
 			Log.addEntry(Level.WARNING, "QR Code couldn't be returned by payload. "+e.getMessage());
 			e.printStackTrace();
 		}
-		finally{
-			tryToClose(rs, ps, dbConnection);
-		}
 		Log.addEntry(Level.INFO,"Qr Code get by payload ("+element+")");
-		return (QrCode) element;
+		return element;
 	}
 
 }

@@ -18,24 +18,18 @@ public class VoteDao extends GenDao {
 	
 	
 	public boolean userVotedSliderBefore(int userID, int sliderID) {
-		PreparedStatement ps = null;
-        ResultSet rs = null;
         boolean hasVoted = true ;
-        Connection dbConnection =null;
-		try {
-			dbConnection = getDBConnection();
-			ps = dbConnection.prepareStatement("SELECT * FROM vote WHERE userIDFK = ? AND sliderIDFK = ?");
-			ps.setInt(1,userID);
-			ps.setInt(2,sliderID);
-	        rs = ps.executeQuery();
-	        hasVoted=(rs.next());
-	        ps.close();
+		try (Connection dbConnection = getDBConnection()){
+			try(PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM vote WHERE userIDFK = ? AND sliderIDFK = ?")){
+				ps.setInt(1,userID);
+				ps.setInt(2,sliderID);
+				try(ResultSet rs = ps.executeQuery()){
+					hasVoted=(rs.next());
+				}
+			}
 		} catch (Exception e) {
 			Log.addEntry(Level.WARNING, "Slider couldn't be returned (by user id). "+e.getMessage());
 			e.printStackTrace();
-		}
-		finally{
-			tryToClose(rs, ps, dbConnection);
 		}
 		Log.addEntry(Level.INFO,"User has voted for slider ("+sliderID+") before?  ("+hasVoted+")");
 		return hasVoted;
