@@ -1,0 +1,5 @@
+<div ng-controller="SpeakerIdController as speakerIdCtrl">
+	<speaker-info speaker="speakerIdCtrl.speaker"></speaker-info><br>
+	<input type="text" ng-model="id">
+	<a href="#/speaker/{{id}}">Goto {{id}}</a>
+</div>

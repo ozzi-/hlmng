@@ -11,6 +11,10 @@ app.config(['$routeProvider', function($routeProvider){
 		templateUrl: "template/speaker/speaker-list.html",
 		controller: "SpeakerListController"
 	}).
+	when('/speaker/:speakerId', {
+		templateUrl: "template/speaker/speaker-detail.html",
+		controller: "SpeakerIdController"
+	}).
 	when('/eventlist', {
 		templateUrl: "template/event/event-list.html",
 		controller: "EventListController"
@@ -29,6 +33,18 @@ app.controller('SpeakerListController', ['$http', function($http){
 	hlmng.speakers = [];
 	$http.get(apiUrl+'speaker').success(function(data){
 		hlmng.speakers=data;
+	}).error(function(data){
+		// TODO better way?
+		alert("API Call failed"); 
+	});
+}]);
+
+
+app.controller('SpeakerIdController', ['$http','$routeParams', function($http, $routeParams){
+	var hlmng = this;
+	hlmng.speaker = {};
+	$http.get(apiUrl+'speaker/'+$routeParams.speakerId).success(function(data){
+		hlmng.speaker=data;
 	});
 }]);
 
