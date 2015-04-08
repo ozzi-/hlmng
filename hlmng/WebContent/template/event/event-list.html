@@ -1,5 +1,3 @@
-<div ng-controller="EventListController as eventCtrl">
-	<span ng-repeat="event in eventCtrl.events">
-		<event-info></event-info><br>
-	</span>
-</div>
+<span ng-repeat="event in eventListCtrl.events">
+	<event-info event="event"</event-info><br>
+</span>

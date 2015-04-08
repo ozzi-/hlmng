@@ -1,0 +1,12 @@
+<event-info event="eventIdCtrl.event"></event-info><br>
+<button ng-click="edit = !edit" ng-init="edit=false">
+	Edit?
+</button>
+
+<p ng-show="edit">
+	<event-info-edit event="eventIdCtrl.event"></event-info-edit>
+	<button ng-click="edit=!edit ;eventIdCtrl.putEvent(eventIdCtrl.event)">Submit</button>
+</p>
+
+<input type="text" ng-model="id">
+<a href="#/event/{{id}}">Goto {{id}}</a>

@@ -76,19 +76,19 @@ public class MediaResource extends Resource{
 
 		String mediaPath= FileSettings.mediaFileRootDir+fileName;
 
-		Log.addEntry(Level.FINE, "Trying to del:"+fileName);
+		Log.addEntry(Level.INFO, "Trying to del:"+fileName);
 		if(type.equals("image/jpg") || type.equals("image/jpeg")){ 
 			ResponseBuilder jpgres = localJPGResponseCache.remove(fileName);
-			Log.addEntry(Level.FINE, "Removed JPG response from local cache :"+jpgres);
+			Log.addEntry(Level.INFO, "Removed JPG response from local cache :"+jpgres);
 		}else if(type.equals("image/png")){ 
 			ResponseBuilder pngres = localPNGResponseCache.remove(fileName);
-			Log.addEntry(Level.FINE, "Removed PNG response from local cache :"+pngres);
+			Log.addEntry(Level.INFO, "Removed PNG response from local cache :"+pngres);
 		}else{
 			throw new IllegalArgumentException("implement other types first..");
 		}
 		File file = new File(mediaPath);
 		boolean filedelres = file.delete();
-		Log.addEntry(Level.FINE, "Removed media from file system? "+filedelres);
+		Log.addEntry(Level.INFO, "Removed media from file system? "+filedelres);
 		return filedelres;
 	}
 	
@@ -195,19 +195,19 @@ public class MediaResource extends Resource{
 	
 	public static ResponseBuilder getLocalCacheFile(File file, Request request, HashMap<String, ResponseBuilder> localCache){
 		if(localCache.containsKey(file.getName())){
+			Log.addEntry(Level.INFO, "Using cached Media Response. Filename:"+file.getName());
 			return localCache.get(file.getName());
+			
 		}else{
 			ResponseBuilder responseBuilder = ResourceHelper.cacheControl((File) file,request);
 			localCache.put(file.getName(), responseBuilder);
-			Log.addEntry(Level.FINE, "Created new Media Response since missing in local cache. Filename:"+file.getName());
+			Log.addEntry(Level.INFO, "Created new Media Response since missing in local cache. Filename:"+file.getName());
 			return responseBuilder;
 		}
-		
 	}
 
 	public static Response mediaResponse(String filePath, String fileType, Request request,HashMap<String,ResponseBuilder> localCache) {
 		ResponseBuilder response;
-		Log.addEntry(Level.INFO, "Building media response for file:"+filePath+" with type "+fileType);
 		File file = new File(filePath);
 		if (file.canRead()) {
 			response = getLocalCacheFile((File) file,request,localCache);
