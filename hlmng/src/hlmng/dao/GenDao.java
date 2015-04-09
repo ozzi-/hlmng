@@ -36,15 +36,18 @@ public class GenDao {
 	private Properties loginDataForTest;
 	private String jdbcUrlForTest;
 
-	public <T> GenDao(Class<T> classTypeP){
 
+	public <T> GenDao(Class<T> classTypeP){
+		
 		className=classTypeP.getSimpleName();
+		
 		try {
 			classType = Class.forName("hlmng.model."+className);
 		} catch (ClassNotFoundException e) {
 			Log.addEntry(Level.SEVERE, "Missing class for dao creation. Class name: "+className);
 			e.printStackTrace();
 		}
+		
 	    addElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.add);
 	    removeElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.delete);
 	    listElements = QueryBuilder.BuildQuery(className,QueryBuilder.opType.list);
@@ -206,7 +209,7 @@ public class GenDao {
 
 	protected Connection getDBConnection() throws SQLException, NamingException, ClassNotFoundException {
 		if(isTest()){
-			// This is used to connect in a JUnit Test as we don't have access to the context.xml etc.
+			// This is used to connect in a JUnit Test as we don't have access to the context.xml etc. from there
 			Class.forName("com.mysql.jdbc.Driver");
 			return DriverManager.getConnection(jdbcUrlForTest,loginDataForTest);
 		}else{

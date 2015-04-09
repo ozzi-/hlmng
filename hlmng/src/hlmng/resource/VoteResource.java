@@ -77,7 +77,6 @@ public class VoteResource extends Resource  {
 		if(user==null){
 			Log.addEntry(Level.WARNING, "User tried to vote with wrong credentials. "+ModelHelper.valuestoString(element));
 			return Response.status(403).build();
-
 		}
 		if( user.getUserID()!=element.getUserIDFK()){
 			Log.addEntry(Level.WARNING, "User tried to vote as somebody else . UserID: "+user.getUserID()+" as "

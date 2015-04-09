@@ -13,6 +13,10 @@ public class TimeResource extends Resource  {
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
+	/**
+	 * We need this to calculate the time delta between clients and server so voting can be more accurate
+	 * @return
+	 */
 	public String getServerTime() {
 		return ResourceHelper.getCurrentTimeMillisecs();
 	}

@@ -70,15 +70,11 @@ public class  UserResource  extends Resource {
 				
 		AuthCredential authCredential = AuthChecker.decodeBasicAuthB64(authorizationHeader);
 		
-		// only allow the user to his own object
+		// only allow the user to change his own object
 		if( authCredential.getUsername().equals(element.getName()) &&  (AuthChecker. check(headers, servletResponse, false))){
 			User dbUser = (User)userDao.getElement(id);
 			if (dbUser!=null){
-				// only allow changes to regID since this is the user himself wanting to change stuff, don't trust him
-				element.setName(dbUser.getName());
-				element.setDeviceID(dbUser.getDeviceID());
-				element.setUserID(dbUser.getUserID());
-				userDao.updateElement(element, id);
+				setDefaultUserFieldValues(element, id, dbUser);
 				res = Response.accepted().build();
 				Log.addEntry(Level.INFO, "User ("+authCredential.getUsername()+") successfully changed his registration id");
 			}else{
@@ -90,6 +86,14 @@ public class  UserResource  extends Resource {
 			res = Response.status(401).build();
 		}
 		return res;		
+	}
+
+	private void setDefaultUserFieldValues(User element, int id, User dbUser) {
+		// only allow changes to regID since this is the user himself wanting to change stuff, don't trust him
+		element.setName(dbUser.getName());
+		element.setDeviceID(dbUser.getDeviceID());
+		element.setUserID(dbUser.getUserID());
+		userDao.updateElement(element, id);
 	}
 	
 	@DELETE

@@ -134,13 +134,13 @@ public class QueryBuilder {
 	private static String buildValuesString(Field[] methods) {
 		int i = 0;
 		String valuesString = " values (";
-		int notmapable=1; // one is for the ID
+		int dontMap=1; // The first one is the ID and doesn't have to be mapped
 		for (Field field : methods) {
-			if(field.getName().equals("media")){
-				notmapable++;
+			if(field.getName().equals("media")){ // Is a injected field, don't map
+				dontMap++;
 			}
 		}
-		for (int j = 0; j < methods.length - notmapable; j++) {
+		for (int j = 0; j < methods.length - dontMap; j++) {
 			if (i != 0) {
 				valuesString += " , ?";
 			} else {

@@ -39,6 +39,7 @@ public class AuthChecker {
 
 	private static List<AuthCredential> logins=new ArrayList<AuthCredential>();
 	private static boolean loginsLoaded=false;
+	private static final int httpToManyRequests=429;
 	
 	/**
 	 * Load the logins from the backendlogis json file. This method is called  automatically if required
@@ -195,7 +196,7 @@ public class AuthChecker {
 		User userDB = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(),authCredential.getSecret());
 		if(!(authCredential==null) && !(userDB==null) && (userDB.getName().equals(authCredential.getUsername()) && (userDB.getDeviceID().equals(authCredential.getSecret())))){
 			if(UserActionLimiter.actionsExceeded(userDB.getName())){
-				return 429;
+				return httpToManyRequests;
 			}
 			return HttpServletResponse.SC_OK;
 		}else {

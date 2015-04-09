@@ -69,7 +69,7 @@ public class DB {
 					Object value = resultSet.getObject(field.getName());
 					PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), type);
 					Method method = propertyDescriptor.getWriteMethod(); 
-					if(value!=null){ // invoking with null throws exception, default is null anyways
+					if(value!=null){ // invoking with null throws exception, default will be null anyways
 						method.invoke(instance, value);											
 					}
 				}

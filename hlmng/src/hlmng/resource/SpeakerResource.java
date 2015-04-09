@@ -27,12 +27,17 @@ public class SpeakerResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSpeakers() throws IOException {
 		List<Object> speakerObjects = listResource(speakerDao, false);
+		enrichSpeakerWithMedia(speakerObjects);
+		return speakerObjects;
+	}
+
+
+	private void enrichSpeakerWithMedia(List<Object> speakerObjects) {
 		for (Object object : speakerObjects) {
 			Speaker speaker = (Speaker) object;
 			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
 			speaker.setMedia(media);
 		}
-		return speakerObjects;
 	}
 
 	

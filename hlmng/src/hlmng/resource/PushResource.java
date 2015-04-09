@@ -69,22 +69,24 @@ public class PushResource  extends Resource{
 				regIds.add(((User) userobject).getRegID());
 			}
 			
-			String gcmResponse = GCM.postGCM(element.getTitle(), element.getText(), regIds);
-			
-		    JSONParser parser = new JSONParser();
-		    JSONObject response  = (JSONObject) parser.parse(gcmResponse);
-
-			element.setReceivedCounter(Integer.parseInt(response.get("success").toString()));
-			element.setFailedCounter(Integer.parseInt(response.get("failure").toString()));
-			
-			element.setDate(ResourceHelper.getCurrentDate());
-			element.setTime(ResourceHelper.getCurrentTime());
-
+			String gcmResponse = GCM.postGCM(element.getTitle(), element.getText(), regIds);			
+		    setPushMetaData(element, gcmResponse);
 			Response ret = postResource(pushDao, element, true);
 			return ret;
 		}else{
 			return null;
 		}
+	}
+
+	private void setPushMetaData(Push element, String gcmResponse) throws ParseException {
+		JSONParser parser = new JSONParser();
+		JSONObject response  = (JSONObject) parser.parse(gcmResponse);
+
+		element.setReceivedCounter(Integer.parseInt(response.get("success").toString()));
+		element.setFailedCounter(Integer.parseInt(response.get("failure").toString()));
+		
+		element.setDate(ResourceHelper.getCurrentDate());
+		element.setTime(ResourceHelper.getCurrentTime());
 	}
 
 }

@@ -40,7 +40,6 @@ public class NewsResource extends Resource  {
 		}
 	}
 
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getNews() throws IOException {

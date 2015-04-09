@@ -46,7 +46,7 @@ public class MediaResource extends Resource{
 	private static final int bytesPerMB = 1048576;
 	private static HashMap<String,ResponseBuilder> localJPGResponseCache = new HashMap<String,ResponseBuilder>();
 	private static HashMap<String,ResponseBuilder> localPNGResponseCache = new HashMap<String,ResponseBuilder>();
-	private GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
+	private static GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
 
 
 	@GET
@@ -66,7 +66,7 @@ public class MediaResource extends Resource{
 	@DELETE
 	@Path("{id}")
 	public Response deleteMedia(@PathParam("id") int id) throws IOException{
-		Media media = (Media)GenDaoLoader.instance.getMediaDao().getElement(id);
+		Media media = (Media)mediaDao.getElement(id);
 		// ONLY deletes on filesystem and local cache,  since path's to that media still have to be there, see documentation
 		boolean deleted=false;
 		if(media !=null){ 
@@ -79,7 +79,8 @@ public class MediaResource extends Resource{
 
 		String mediaPath= FileSettings.mediaFileRootDir+fileName;
 
-		Log.addEntry(Level.INFO, "Trying to del:"+fileName);
+		Log.addEntry(Level.INFO, "Trying to delete:"+fileName);
+		
 		if(type.equals("image/jpg") || type.equals("image/jpeg")){ 
 			ResponseBuilder jpgres = localJPGResponseCache.remove(fileName);
 			Log.addEntry(Level.INFO, "Removed JPG response from local cache :"+jpgres);
@@ -87,8 +88,9 @@ public class MediaResource extends Resource{
 			ResponseBuilder pngres = localPNGResponseCache.remove(fileName);
 			Log.addEntry(Level.INFO, "Removed PNG response from local cache :"+pngres);
 		}else{
-			throw new IllegalArgumentException("implement other types first..");
+			throw new IllegalArgumentException("implement other media types first..");
 		}
+		
 		File file = new File(mediaPath);
 		boolean filedelres = file.delete();
 		Log.addEntry(Level.INFO, "Removed media from file system? "+filedelres);
@@ -101,7 +103,7 @@ public class MediaResource extends Resource{
 
 	private static Response getMediaAsResponse(int id, UriInfo uriS,Request requestS) {
 		ResponseBuilder builder;
-		Object obj = GenDaoLoader.instance.getMediaDao().getElement(id);
+		Object obj = mediaDao.getElement(id);
 		if(obj==null){
 			builder = Response.status(404);
 		}else{
@@ -160,21 +162,7 @@ public class MediaResource extends Resource{
 				if(f.exists()){
 					response=  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
 				}else{
-					boolean savedOK=false;
-					try {
-						savedOK = saveFile(fileInputStream, filePath,FileSettings.maxMediaImageSize);
-						if(savedOK){
-							Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
-							int insertedID = GenDaoLoader.instance.getMediaDao().addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
-							response= getMediaAsResponse(insertedID, uri, request);
-						}else{
-							Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
-							response=Response.status(500).build();				
-						}	
-					} catch (SizeLimitExceededException e) {
-			    		Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+FileSettings.maxMediaImageSize+" MB");
-			    		response=Response.status(413).build();
-					}
+					response = saveImage(fileInputStream, contentDispositionHeader, mimeType, filePath);
 				}
 			}else{
 				Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
@@ -186,28 +174,40 @@ public class MediaResource extends Resource{
 		return response;
 	}
 
-	// save uploaded file to a defined location on the server
-	private boolean saveFile(InputStream uploadedInputStream, String serverLocation, double maxMediaImageSize) throws SizeLimitExceededException {
+	private Response saveImage(InputStream fileInputStream,
+			FormDataContentDisposition contentDispositionHeader,
+			String mimeType, String filePath) {
+		Response response;
+		boolean savedOK=false;
+		try {
+			savedOK = saveInputStreamToFile(fileInputStream, filePath,FileSettings.maxMediaImageSize);
+			if(savedOK){
+				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
+				int insertedID = GenDaoLoader.instance.getMediaDao().addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
+				response= getMediaAsResponse(insertedID, uri, request);
+			}else{
+				Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
+				response=Response.status(500).build();				
+			}	
+		} catch (SizeLimitExceededException e) {
+			Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+FileSettings.maxMediaImageSize+" MB");
+			response=Response.status(413).build();
+		}
+		return response;
+	}
+
+
+	private boolean saveInputStreamToFile(InputStream uploadedInputStream, String serverLocation, double maxMediaImageSize) throws SizeLimitExceededException {
 		try {
 			OutputStream outputStream = new FileOutputStream(new File(serverLocation));
 			int read = 0;
 			byte[] bytes = new byte[1024];
 			long bytesWritten=0;
-			double mbWritten=0.0;
 			outputStream = new FileOutputStream(new File(serverLocation));
 			while ((read = uploadedInputStream.read(bytes)) != -1) {
-				bytesWritten+=bytes.length;
-				mbWritten=bytesWritten/bytesPerMB;
-				if(Double.compare(mbWritten,maxMediaImageSize)>0){
-					outputStream.flush();
-					outputStream.close();
-		    		File removeFile = new File(serverLocation);
-		    		removeFile.delete();
-					throw new SizeLimitExceededException();
-				}
+				bytesWritten = checkIfUploadToBig(serverLocation, maxMediaImageSize, outputStream, bytes, bytesWritten);
 				outputStream.write(bytes, 0, read);
 			}
-			System.out.println(mbWritten);
 			outputStream.flush();
 			outputStream.close();
 			return true;
@@ -217,17 +217,47 @@ public class MediaResource extends Resource{
 		}
 	}
 	
+	/**
+	 * Stop downloading if file is bigger than @param maxMediaSize, cleanup and throw exception
+	 * @param serverLocation
+	 * @param maxMediaSize
+	 * @param outputStream
+	 * @param bytes
+	 * @param bytesWritten
+	 * @return
+	 * @throws IOException
+	 * @throws SizeLimitExceededException
+	 */
+	private long checkIfUploadToBig(String serverLocation, double maxMediaSize,
+			OutputStream outputStream, byte[] bytes, long bytesWritten)
+			throws IOException, SizeLimitExceededException {
+		
+		double mbWritten;
+		
+		bytesWritten+=bytes.length;
+		mbWritten=bytesWritten/bytesPerMB;
+		
+		if(Double.compare(mbWritten,maxMediaSize)>0){
+			outputStream.flush();
+			outputStream.close();
+			File removeFile = new File(serverLocation);
+			removeFile.delete();
+			throw new SizeLimitExceededException();
+		}
+		return bytesWritten;
+	}
+	
 	public static ResponseBuilder getLocalCacheFile(File file, Request request, HashMap<String, ResponseBuilder> localCache){
+		ResponseBuilder response;
 		if(localCache.containsKey(file.getName())){
 			Log.addEntry(Level.INFO, "Using cached Media Response. Filename:"+file.getName());
-			return localCache.get(file.getName());
-			
+			response = localCache.get(file.getName());		
 		}else{
-			ResponseBuilder responseBuilder = ResourceHelper.cacheControl((File) file,request);
-			localCache.put(file.getName(), responseBuilder);
 			Log.addEntry(Level.INFO, "Created new Media Response since missing in local cache. Filename:"+file.getName());
-			return responseBuilder;
+			response = ResourceHelper.cacheControl((File) file,request);
+			localCache.put(file.getName(), response);
 		}
+		return response;
 	}
 
 	public static Response mediaResponse(String filePath, String fileType, Request request,HashMap<String,ResponseBuilder> localCache) {
@@ -235,7 +265,6 @@ public class MediaResource extends Resource{
 		File file = new File(filePath);
 		if (file.canRead()) {
 			response = getLocalCacheFile((File) file,request,localCache);
-			//response.header("Content-Disposition", "attachment; filename=hlmng." + fileType); 
 		} else {
 			response = Response.status(Response.Status.NOT_FOUND);
 		}

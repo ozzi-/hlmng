@@ -138,14 +138,14 @@ public class QrCodeResource extends Resource {
 	   String data;
 	   data = new String(b, "UTF-8");
 	   BitMatrix matrix = null;
-	   int h = 500;
-	   int w = 500;
+
 	   com.google.zxing.Writer writer = new MultiFormatWriter();
 	   Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(2);
 	   hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 	   matrix = writer.encode(data,
-	   com.google.zxing.BarcodeFormat.QR_CODE, w, h, hints);
+	   com.google.zxing.BarcodeFormat.QR_CODE, FileSettings.qrCodeWidth, FileSettings.qrCodeHeight, hints);
 	   MatrixToImageWriter.writeToPath(matrix, "PNG", filePath);
+	   
 	   Log.addEntry(Level.INFO, "Rendered QR Code with ID: "+id);
 	   return filePath.toString();
 	}
