@@ -27,5 +27,10 @@ public class FileSettings {
 	 */
 	public static final String gcmURL = "https://android.googleapis.com/gcm/send"; 
 	public static final String apiKey = "AIzaSyD62VEqAESTccbNguLB5RI5OwfbbiOp4B8";
+	
+	/**
+	 * Querybuilder
+	 */
+	public static final int selectLimit = 15;
 
 }

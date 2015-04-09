@@ -1,7 +1,6 @@
 package hlmng.resource;
 
 import hlmng.dao.GenDao;
-import hlmng.dao.GenDaoLoader;
 import hlmng.model.Speaker;
 
 import java.io.IOException;
@@ -26,8 +25,8 @@ public class SpeakerResource extends Resource  {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getSpeakers() {
-		List<Object> speakerObjects = GenDaoLoader.instance.getSpeakerDao().listElements();
+	public List<Object> getSpeakers() throws IOException {
+		List<Object> speakerObjects = listResource(speakerDao, false);
 		for (Object object : speakerObjects) {
 			Speaker speaker = (Speaker) object;
 			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());

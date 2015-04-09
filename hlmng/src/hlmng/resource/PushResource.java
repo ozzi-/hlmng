@@ -35,8 +35,8 @@ public class PushResource  extends Resource{
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getPush() {
-		return GenDaoLoader.instance.getPushDao().listElements();
+	public List<Object> getPush() throws IOException {
+		return listResource(pushDao, false);
 	}
 	
 	@GET
@@ -63,7 +63,7 @@ public class PushResource  extends Resource{
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response postPush(Push element) throws IOException, ParseException {
 		if(AuthChecker.check(headers, servletResponse, true) && !UserActionLimiter.actionsExceeded("pushResource")){
-			List<Object> users = GenDaoLoader.instance.getUserDao().listElements();
+			List<Object> users = listResource(GenDaoLoader.instance.getUserDao(), false);
 			List<String> regIds = new ArrayList<String>();
 			for (Object userobject : users) {
 				regIds.add(((User) userobject).getRegID());

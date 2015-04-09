@@ -50,9 +50,9 @@ public class QrCodeResource extends Resource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getQrCode() {
+	public List<Object> getQrCode() throws IOException {
 		if(AuthChecker.check(headers, servletResponse, true)){			
-			return qrCodeDao.listElements();
+			return listResource(qrCodeDao, false);
 		}
 		return null;
 	}

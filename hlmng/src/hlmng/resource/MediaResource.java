@@ -2,6 +2,7 @@ package hlmng.resource;
 
 import hlmng.FileSettings;
 import hlmng.auth.AuthChecker;
+import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
 
@@ -43,13 +44,13 @@ public class MediaResource extends Resource{
 
 	private static HashMap<String,ResponseBuilder> localJPGResponseCache = new HashMap<String,ResponseBuilder>();
 	private static HashMap<String,ResponseBuilder> localPNGResponseCache = new HashMap<String,ResponseBuilder>();
+	private GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
 
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> listMedia() {
-		List<Object> listMedia = GenDaoLoader.instance.getMediaDao()
-				.listElements();
+	public List<Object> listMedia() throws IOException {
+		List<Object> listMedia = listResource(mediaDao, false);
 		setURLPathList(listMedia);
 		return listMedia;
 	}

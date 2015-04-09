@@ -22,16 +22,30 @@ public class NewsResource extends Resource  {
 	private GenDao newsDao =GenDaoLoader.instance.getNewsDao();
 
 
-	
 	@GET
+	@Path("newest")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getNews() {
-		List<Object> newsObjects = GenDaoLoader.instance.getNewsDao().listElements();
+	public List<Object> getNewestNews() throws IOException {
+		List<Object> newsObjects = listResource(newsDao, true);
+		enrichNewsWithMedia(newsObjects);
+		return newsObjects;
+	}
+
+
+	private void enrichNewsWithMedia(List<Object> newsObjects) {
 		for (Object object : newsObjects) {
 			News news = (News) object;
 			String media = MediaResource.getMediaURL(uri, news.getMediaIDFK());
 			news.setMedia(media);
 		}
+	}
+
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> getNews() throws IOException {
+		List<Object> newsObjects = listResource(newsDao, false);
+		enrichNewsWithMedia(newsObjects);
 		return newsObjects;
 	}
 	

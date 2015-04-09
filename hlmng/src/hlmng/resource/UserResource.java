@@ -35,9 +35,11 @@ public class  UserResource  extends Resource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getUsers() {
-		AuthChecker.check(headers, servletResponse,true);
-		return GenDaoLoader.instance.getUserDao().listElements();
+	public List<Object> getUsers() throws IOException {
+		if(AuthChecker.check(headers, servletResponse,true)){ 
+			return listResource(userDao, false);
+		}
+		return null;
 	}
 	
 	@GET 

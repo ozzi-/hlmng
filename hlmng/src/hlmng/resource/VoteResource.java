@@ -38,17 +38,21 @@ public class VoteResource extends Resource  {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getVote() {
-		AuthChecker.check(headers, servletResponse, true);
-		return GenDaoLoader.instance.getVoteDao().listElements();
+	public List<Object> getVote() throws IOException {
+		if(AuthChecker.check(headers, servletResponse, true)){
+			return listResource(voteDao, false);			
+		}
+		return null;
 	}
 
 	
 	@GET
 	@Path("{id}")
 	public Vote getVote(@PathParam("id") int id) throws IOException{
-		AuthChecker.check(headers, servletResponse, true);
-		return (Vote) getResource(voteDao, id);
+		if(AuthChecker.check(headers, servletResponse, true)){
+			return (Vote) getResource(voteDao, id);			
+		}
+		return null;
 	}
 
 	@PUT

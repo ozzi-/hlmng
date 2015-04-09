@@ -27,8 +27,8 @@ public class PresentationResource extends Resource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getPresentation() {
-		return GenDaoLoader.instance.getPresentationDao().listElements();
+	public List<Object> getPresentation() throws IOException {
+		return listResource(presentationDao, false);
 	}
 
 

@@ -28,8 +28,8 @@ public class VotingResource extends Resource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getVoting() {
-		return GenDaoLoader.instance.getVotingDao().listElements();
+	public List<Object> getVoting() throws IOException {
+		return listResource(votingDao, false);
 	}
 
 		

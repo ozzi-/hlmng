@@ -4,6 +4,7 @@ import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
@@ -43,6 +44,16 @@ public class Resource {
 			return ResourceHelper.returnOkOrNotFoundResponse(deleted);			
 		} 
 		return null;
+	}
+	/**
+	 * List all resources.
+	 * @param dao
+	 * @param limit Limits the output to the newest entries.
+	 * @return
+	 * @throws IOException
+	 */
+	protected List<Object> listResource(GenDao dao,boolean limit) throws IOException{
+		return dao.listElements(limit);	
 	}
 	
 	/**

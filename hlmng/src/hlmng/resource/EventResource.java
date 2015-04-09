@@ -26,8 +26,8 @@ public class EventResource extends Resource {
 	 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getEvent() {
-		return eventDao.listElements();
+	public List<Object> getEvent() throws IOException {
+		return listResource(eventDao, false);
 	}
 	
 	@GET

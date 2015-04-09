@@ -29,8 +29,8 @@ public class EventRoomResource extends Resource  {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getEventRoom() {
-		return eventRoomDao.listElements();
+	public List<Object> getEventRoom() throws IOException {
+		return listResource(eventRoomDao, false);
 	}
 
 	@GET

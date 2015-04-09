@@ -80,13 +80,13 @@ public class DaoTest {
 	}
 	
 	public boolean testDaoGeneric(Object element, GenDao dao){
-		int elementCountBeforeAdd=dao.listElements().size();
+		int elementCountBeforeAdd=dao.listElements(false).size();
 		int elementID=dao.addElement(element);
 		
-		int elementCountAfterAdd=dao.listElements().size();
+		int elementCountAfterAdd=dao.listElements(false).size();
 		dao.deleteElement(elementID);
 		
-		int elementCountAfterRemove=dao.listElements().size();
+		int elementCountAfterRemove=dao.listElements(false).size();
 
 		return (elementCountAfterAdd==elementCountBeforeAdd+1 && elementCountBeforeAdd==elementCountAfterRemove);
 	}
@@ -102,17 +102,17 @@ public class DaoTest {
 	
 	@Test
     public void testGetUsers(){
-		boolean isNotEmpty = ! userDao.listElements().isEmpty();
+		boolean isNotEmpty = ! userDao.listElements(false).isEmpty();
 		assertTrue(isNotEmpty);
     }	
 	@Test
     public void testGetMedias(){
-		boolean isNotEmpty = ! mediaDao.listElements().isEmpty();
+		boolean isNotEmpty = ! mediaDao.listElements(false).isEmpty();
 		assertTrue(isNotEmpty);
     }
 	@Test
     public void testGetEvents(){
-		boolean isNotEmpty = ! eventDao.listElements().isEmpty();
+		boolean isNotEmpty = ! eventDao.listElements(false).isEmpty();
 		assertTrue(isNotEmpty);
     }
 

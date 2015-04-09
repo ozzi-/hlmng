@@ -26,6 +26,7 @@ public class GenDao {
     private String addElement; 
     private String removeElement;
     private String listElements;
+    private String listElementsLimit;
     protected String getElement; 
     private String updateElement;
     private String className;
@@ -47,6 +48,7 @@ public class GenDao {
 	    addElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.add);
 	    removeElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.delete);
 	    listElements = QueryBuilder.BuildQuery(className,QueryBuilder.opType.list);
+	    listElementsLimit = QueryBuilder.BuildQuery(className,QueryBuilder.opType.listLimit);
 	    getElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.get);
 	    updateElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.update);
 	    fkElement = QueryBuilder.buildFKQuery(className);
@@ -179,10 +181,14 @@ public class GenDao {
 	 * 
 	 * @return A list of all elements from the specified class/model
 	 */
-	public <T> List<Object> listElements() {
+	public <T> List<Object> listElements(boolean limit) {
+		return doListElements((limit)?listElementsLimit:listElements);
+	}
+
+	private <T> List<Object> doListElements(String listElementsQuery){
 		List<Object> elemList = new ArrayList<Object>();
 		try(Connection dbConnection = getDBConnection()){
-			try (PreparedStatement ps = dbConnection.prepareStatement(listElements);){
+			try (PreparedStatement ps = dbConnection.prepareStatement(listElementsQuery);){
 				try(ResultSet rs = ps.executeQuery();){
 					while (rs.next()) {
 						elemList.add(DB.getObjectFromRS(rs,classType));
@@ -193,7 +199,7 @@ public class GenDao {
 			Log.addEntry(Level.WARNING,"Elements couldn't be listed. "+e.getMessage());
 			e.printStackTrace();
 		} 
-		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
+		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+". limited="+(listElementsQuery.equals(listElementsLimit))+" ["+elemList.size()+"]) ");
 		return elemList;
 	}
 

@@ -28,8 +28,8 @@ public class SliderResource extends Resource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getSlider() {
-		return GenDaoLoader.instance.getSliderDao().listElements();
+	public List<Object> getSlider() throws IOException {
+		return listResource(sliderDao, false);
 	}
 	
 	@GET
