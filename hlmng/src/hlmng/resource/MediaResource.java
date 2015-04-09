@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
+import javax.naming.SizeLimitExceededException;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -42,6 +43,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("/media")
 public class MediaResource extends Resource{
 
+	private static final int bytesPerMB = 1048576;
 	private static HashMap<String,ResponseBuilder> localJPGResponseCache = new HashMap<String,ResponseBuilder>();
 	private static HashMap<String,ResponseBuilder> localPNGResponseCache = new HashMap<String,ResponseBuilder>();
 	private GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
@@ -147,46 +149,67 @@ public class MediaResource extends Resource{
 			) {
 
 		String mimeType=(body.getMediaType()==null)?"none provided" :body.getMediaType().toString() ;
-		
+
 		boolean authenticated = AuthChecker.check(headers, servletResponse, false);
 		Response response;
 		
-		if(authenticated && (mimeType.equals("image/png")||mimeType.equals("image/jpeg"))){
-			String filePath = FileSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
-			File f = new File(filePath);
-			if(f.exists()){
-				return  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
-			}
-			boolean savedOK=saveFile(fileInputStream, filePath);
-			if(savedOK){
-				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
-				int insertedID = GenDaoLoader.instance.getMediaDao().addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
-				return getMediaAsResponse(insertedID, uri, request);
+		if(authenticated){
+			if(mimeType.equals("image/png")||mimeType.equals("image/jpeg")){
+				String filePath = FileSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
+				File f = new File(filePath);
+				if(f.exists()){
+					response=  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
+				}else{
+					boolean savedOK=false;
+					try {
+						savedOK = saveFile(fileInputStream, filePath,FileSettings.maxMediaImageSize);
+						if(savedOK){
+							Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
+							int insertedID = GenDaoLoader.instance.getMediaDao().addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
+							response= getMediaAsResponse(insertedID, uri, request);
+						}else{
+							Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
+							response=Response.status(500).build();				
+						}	
+					} catch (SizeLimitExceededException e) {
+			    		Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+FileSettings.maxMediaImageSize+" MB");
+			    		response=Response.status(413).build();
+					}
+				}
 			}else{
-				Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
-				response=Response.status(500).build();				
+				Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
+				response=Response.status(415).build();
 			}
 		}else{
-			Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType+" or too many requests" );
-			response=Response.status(415).build();
+			response=Response.status(401).build();
 		}
 		return response;
 	}
 
 	// save uploaded file to a defined location on the server
-	private boolean saveFile(InputStream uploadedInputStream, String serverLocation) {
+	private boolean saveFile(InputStream uploadedInputStream, String serverLocation, double maxMediaImageSize) throws SizeLimitExceededException {
 		try {
-			OutputStream outpuStream = new FileOutputStream(new File(
-					serverLocation));
+			OutputStream outputStream = new FileOutputStream(new File(serverLocation));
 			int read = 0;
 			byte[] bytes = new byte[1024];
-
-			outpuStream = new FileOutputStream(new File(serverLocation));
+			long bytesWritten=0;
+			double mbWritten=0.0;
+			outputStream = new FileOutputStream(new File(serverLocation));
 			while ((read = uploadedInputStream.read(bytes)) != -1) {
-				outpuStream.write(bytes, 0, read);
+				bytesWritten+=bytes.length;
+				mbWritten=bytesWritten/bytesPerMB;
+				if(Double.compare(mbWritten,maxMediaImageSize)>0){
+					outputStream.flush();
+					outputStream.close();
+		    		File removeFile = new File(serverLocation);
+		    		removeFile.delete();
+					throw new SizeLimitExceededException();
+				}
+				outputStream.write(bytes, 0, read);
 			}
-			outpuStream.flush();
-			outpuStream.close();
+			System.out.println(mbWritten);
+			outputStream.flush();
+			outputStream.close();
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();

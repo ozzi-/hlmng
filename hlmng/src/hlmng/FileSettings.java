@@ -12,7 +12,7 @@ public class FileSettings {
 	 * Media 
 	 */
 	public static final String mediaFileRootDir = (production?"/home/student/media/":"/home/ozzi/media/");
-	
+	public static final double maxMediaImageSize = 3.0;
 
 	/**
 	 * Logging

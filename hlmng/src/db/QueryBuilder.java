@@ -1,5 +1,7 @@
 package db;
 
+import hlmng.FileSettings;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +14,7 @@ import log.Log;
  * are several types of statements available, see the enum opType
  */
 public class QueryBuilder {
+
 
 	/**
 	 * Builds a map for every "FK" (foreign key) containing field.
@@ -60,6 +63,9 @@ public class QueryBuilder {
 			switch (type) {
 			case list:
 				query = "SELECT * FROM " + tableName + ";";
+				break;
+			case listLimit:
+				query = "SELECT * FROM " + tableName + " ORDER BY "+tableID+" DESC LIMIT "+FileSettings.selectLimit+";";
 				break;
 			case add:
 				query = "INSERT INTO " + tableName + " ";
@@ -147,7 +153,8 @@ public class QueryBuilder {
 	}
 
 	/**
-	 * list		= select * from table 
+	 * list		= select * from table
+	 * listLimit= select * from table limit {x} 
 	 * get		= select * from table where tableID = ?
 	 * delete	= delete * from table where tableID = ? 
 	 * add		= insert into table (fieldName1, fieldName2 ...) values ( ? , ? , ...) 
@@ -156,7 +163,7 @@ public class QueryBuilder {
 	 * 
 	 */
 	public enum opType {
-		list, get, delete, add, update, listByID
+		list,listLimit , get, delete, add, update, listByID
 	}
 
 }
