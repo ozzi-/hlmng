@@ -54,6 +54,7 @@ public class Log {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private static void startLoggerIfNeeded() {
 		if (logger == null && !HLMNGSettings.logSysErr) {
 			startLogger();
