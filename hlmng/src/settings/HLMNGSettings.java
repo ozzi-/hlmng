@@ -1,6 +1,8 @@
-package hlmng;
+package settings;
 
-public class FileSettings {
+
+
+public class HLMNGSettings {
 	
 	static boolean production=false;
 	/**

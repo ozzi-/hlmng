@@ -4,9 +4,6 @@ import hlmng.model.Media;
 import hlmng.model.ModelHelper;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,11 +18,7 @@ import log.Log;
 
 public class ResourceHelper {
 
-	private static final DateFormat formatterDate = new SimpleDateFormat("yyyy-MM-dd");
-	private static final DateFormat formatterDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private static final DateFormat formatterTime = new SimpleDateFormat("HH:mm:ss");
-	private static final DateFormat formatterTimeMillisecs = new SimpleDateFormat("HH:mm:ss.SSS");
-	
+
 	static int cacheTime=1800;
 	/**
 	 * @param ok
@@ -79,36 +72,7 @@ public class ResourceHelper {
 		return builder;
 	}
 	
-	/**
-	 * @return yyyy-MM-dd
-	 */
-	public static String getCurrentDate(){
-		Date dateTime = new Date(System.currentTimeMillis()); 
-		return formatterDate.format(dateTime);
-	}
-	/**
-	 * @return yyyy-MM-dd HH-mm-ss
-	 */
-	public static String getCurrentDateTime(){
-		Date dateTime = new Date(System.currentTimeMillis()); 
-		return formatterDateTime.format(dateTime);
-	}
-	/**
-	 * @return HH-mm-ss
-	 */
-	public static String getCurrentTime(){
-		Date dateTime = new Date(System.currentTimeMillis()); 
-		return formatterTime.format(dateTime);
-	}
-	
-	/**
-	 * @return HH-mm-ss.sss
-	 */
-	public static String getCurrentTimeMillisecs(){
-		Date dateTime = new Date(System.currentTimeMillis()); 
-		return formatterTimeMillisecs.format(dateTime);
-	}
-	
+
 	
 	static void setMediaURLPath(UriInfo uri, Media media) {
 		media.setLink(uri.getBaseUri().toString() + "media/"

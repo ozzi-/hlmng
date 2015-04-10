@@ -1,12 +1,11 @@
 package db;
 
-import hlmng.FileSettings;
-
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import settings.HLMNGSettings;
 import log.Log;
 
 /**
@@ -65,7 +64,7 @@ public class QueryBuilder {
 				query = "SELECT * FROM " + tableName + ";";
 				break;
 			case listLimit:
-				query = "SELECT * FROM " + tableName + " ORDER BY "+tableID+" DESC LIMIT "+FileSettings.selectLimit+";";
+				query = "SELECT * FROM " + tableName + " ORDER BY "+tableID+" DESC LIMIT "+HLMNGSettings.selectLimit+";";
 				break;
 			case add:
 				query = "INSERT INTO " + tableName + " ";

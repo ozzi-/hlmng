@@ -1,7 +1,5 @@
 package gcm;
 
-import hlmng.FileSettings;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,6 +10,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 
+import settings.HLMNGSettings;
 import log.Log;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -27,13 +26,13 @@ public class GCM {
 			content.addRegId(regId);
 		}
 		content.createData(title,message);
-		return sendGCM(FileSettings.apiKey, content);
+		return sendGCM(HLMNGSettings.apiKey, content);
 	}
 	
 	private static String sendGCM(String apiKey, GCMContent content) throws ProtocolException, IOException {
 
-			Log.addEntry(Level.INFO, "GCM - POST request to URL : " + FileSettings.gcmURL);
-			URL url = new URL(FileSettings.gcmURL);
+			Log.addEntry(Level.INFO, "GCM - POST request to URL : " + HLMNGSettings.gcmURL);
+			URL url = new URL(HLMNGSettings.gcmURL);
 			HttpURLConnection conn = setUpCon(apiKey, url);
 
 			ObjectMapper mapper = new ObjectMapper();

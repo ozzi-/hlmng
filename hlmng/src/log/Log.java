@@ -1,7 +1,5 @@
 package log;
 
-import hlmng.FileSettings;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,6 +8,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import settings.HLMNGSettings;
 
 /**
  * Example usage: 
@@ -23,7 +23,7 @@ public class Log {
 		logger = Logger.getLogger("hlmng");
 		FileHandler fh = null;
 		try {  
-			fh = new FileHandler(FileSettings.logFileRootDir+"/hlmng%u.log", false);
+			fh = new FileHandler(HLMNGSettings.logFileRootDir+"/hlmng%u.log", false);
 			logger.addHandler(fh);
 			logger.setLevel(Level.ALL);
 			Formatter formatter = new FormatterS();
@@ -47,7 +47,7 @@ public class Log {
 
 
 	private static void logMessage(Level level, String message) {
-		if (FileSettings.logSysErr) {
+		if (HLMNGSettings.logSysErr) {
 			System.err.println(getTime() + " | " + level + " | " + message);
 		} else {
 			logger.log(level, message);
@@ -55,7 +55,7 @@ public class Log {
 	}
 	
 	private static void startLoggerIfNeeded() {
-		if (logger == null && !FileSettings.logSysErr) {
+		if (logger == null && !HLMNGSettings.logSysErr) {
 			startLogger();
 		}
 	}

@@ -27,7 +27,7 @@ public class GenDao {
     private String removeElement;
     private String listElements;
     private String listElementsLimit;
-    protected String getElement; 
+    private String getElement; 
     private String updateElement;
     private String className;
     private Map<?, ?> fkElement;

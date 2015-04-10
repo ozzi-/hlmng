@@ -18,7 +18,7 @@ public class TimeResource extends Resource  {
 	 * @return
 	 */
 	public String getServerTime() {
-		return ResourceHelper.getCurrentTimeMillisecs();
+		return TimeHelper.getCurrentTimeMillisecs();
 	}
 }
 

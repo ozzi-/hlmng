@@ -98,7 +98,7 @@ public class VoteResource extends Resource  {
 		
 		String qrHeader = headers.getHeaderString("X-QRCode"); 
 		if(qrHeader!=null){
-			QRAuthResult qrAuthRes = AuthChecker.checkQRCode(qrHeader,voting.getEventIDFK(),user,"jury");
+			QRAuthResult qrAuthRes = AuthChecker.checkQRCode(qrHeader,voting.getEventIDFK(),user,"jury",TimeHelper.getCurrentDateTime());
 			if(qrAuthRes.isAuthorized()){
 				isJury=true;
 			}else{

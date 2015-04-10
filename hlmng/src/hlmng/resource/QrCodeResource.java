@@ -1,6 +1,5 @@
 package hlmng.resource;
 
-import hlmng.FileSettings;
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
@@ -30,6 +29,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import settings.HLMNGSettings;
 import log.Log;
 
 import com.google.zxing.EncodeHintType;
@@ -95,7 +95,7 @@ public class QrCodeResource extends Resource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response postQrCode(QrCode element) throws IOException {		
-		element.setCreatedAt(ResourceHelper.getCurrentDateTime());
+		element.setCreatedAt(TimeHelper.getCurrentDateTime());
 		return postResource(qrCodeDao, element, true);
 	}
 
@@ -111,7 +111,7 @@ public class QrCodeResource extends Resource {
 	}
 
 	private void deleteQRFromFSandCache(int id) {
-		String qrPath= FileSettings.qrFileRootDir+Integer.toString(id)+".png";
+		String qrPath= HLMNGSettings.qrFileRootDir+Integer.toString(id)+".png";
 		String qrName= Integer.toString(id)+".png";
 		ResponseBuilder qrres = localQrResponseCache.remove(qrName);
 		Log.addEntry(Level.FINE, "Removed QR response from local cache :"+qrres);
@@ -124,7 +124,7 @@ public class QrCodeResource extends Resource {
 	public String generateQR(int id,String payload) throws WriterException, IOException{
 	    Charset charset = Charset.forName("UTF-8");
 	    CharsetEncoder encoder = charset.newEncoder();
-        java.nio.file.Path filePath= Paths.get(FileSettings.qrFileRootDir+Integer.toString(id)+".png");
+        java.nio.file.Path filePath= Paths.get(HLMNGSettings.qrFileRootDir+Integer.toString(id)+".png");
         
         File f = new File(filePath.toString());
         if(f.exists() && !f.isDirectory()) { Log.addEntry(Level.INFO, "Already rendered QR Code with ID: "+id);  return filePath.toString(); }
@@ -143,7 +143,7 @@ public class QrCodeResource extends Resource {
 	   Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>(2);
 	   hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 	   matrix = writer.encode(data,
-	   com.google.zxing.BarcodeFormat.QR_CODE, FileSettings.qrCodeWidth, FileSettings.qrCodeHeight, hints);
+	   com.google.zxing.BarcodeFormat.QR_CODE, HLMNGSettings.qrCodeWidth, HLMNGSettings.qrCodeHeight, hints);
 	   MatrixToImageWriter.writeToPath(matrix, "PNG", filePath);
 	   
 	   Log.addEntry(Level.INFO, "Rendered QR Code with ID: "+id);

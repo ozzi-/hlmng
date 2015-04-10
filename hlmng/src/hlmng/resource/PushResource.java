@@ -85,8 +85,8 @@ public class PushResource  extends Resource{
 		element.setReceivedCounter(Integer.parseInt(response.get("success").toString()));
 		element.setFailedCounter(Integer.parseInt(response.get("failure").toString()));
 		
-		element.setDate(ResourceHelper.getCurrentDate());
-		element.setTime(ResourceHelper.getCurrentTime());
+		element.setDate(TimeHelper.getCurrentDate());
+		element.setTime(TimeHelper.getCurrentTime());
 	}
 
 }

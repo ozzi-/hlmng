@@ -1,6 +1,5 @@
 package hlmng.resource;
 
-import hlmng.FileSettings;
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
@@ -37,6 +36,8 @@ import log.Log;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+
+import settings.HLMNGSettings;
 
 
 
@@ -77,7 +78,7 @@ public class MediaResource extends Resource{
 
 	private boolean deleteMediaFromFSandCache(String fileName, String type) {
 
-		String mediaPath= FileSettings.mediaFileRootDir+fileName;
+		String mediaPath= HLMNGSettings.mediaFileRootDir+fileName;
 
 		Log.addEntry(Level.INFO, "Trying to delete:"+fileName);
 		
@@ -128,7 +129,7 @@ public class MediaResource extends Resource{
 	@Path("image/jpg/{name}")
 	@Produces("image/jpeg")
 	public Response getJPG(@PathParam("name") String fileName) throws IOException {
-			return mediaResponse(FileSettings.mediaFileRootDir+fileName, "jpg", request,localJPGResponseCache);
+			return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "jpg", request,localJPGResponseCache);
 	}
 
 	@GET
@@ -136,7 +137,7 @@ public class MediaResource extends Resource{
 	@Produces("image/png")
 	public Response getPNG(@PathParam("name") String fileName)
 			throws IOException { 
-		return mediaResponse(FileSettings.mediaFileRootDir+fileName, "png", request,localPNGResponseCache);
+		return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "png", request,localPNGResponseCache);
 	}
 
 	@POST
@@ -157,7 +158,7 @@ public class MediaResource extends Resource{
 		
 		if(authenticated){
 			if(mimeType.equals("image/png")||mimeType.equals("image/jpeg")){
-				String filePath = FileSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
+				String filePath = HLMNGSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
 				File f = new File(filePath);
 				if(f.exists()){
 					response=  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
@@ -180,7 +181,7 @@ public class MediaResource extends Resource{
 		Response response;
 		boolean savedOK=false;
 		try {
-			savedOK = saveInputStreamToFile(fileInputStream, filePath,FileSettings.maxMediaImageSize);
+			savedOK = saveInputStreamToFile(fileInputStream, filePath,HLMNGSettings.maxMediaImageSize);
 			if(savedOK){
 				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
 				int insertedID = GenDaoLoader.instance.getMediaDao().addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
@@ -190,7 +191,7 @@ public class MediaResource extends Resource{
 				response=Response.status(500).build();				
 			}	
 		} catch (SizeLimitExceededException e) {
-			Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+FileSettings.maxMediaImageSize+" MB");
+			Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+HLMNGSettings.maxMediaImageSize+" MB");
 			response=Response.status(413).build();
 		}
 		return response;

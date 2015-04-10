@@ -1,6 +1,7 @@
 package testing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import hlmng.auth.AuthChecker;
 import hlmng.auth.QRAuthResult;
 import hlmng.dao.GenDao;
@@ -9,7 +10,7 @@ import hlmng.model.Event;
 import hlmng.model.ModelHelper;
 import hlmng.model.QrCode;
 import hlmng.model.User;
-import hlmng.resource.ResourceHelper;
+import hlmng.resource.TimeHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,12 +45,12 @@ public class RestTest {
     public void testQrRestAllOK() throws IOException{
 		int eventIDFK=1;
 		QrCode qrcode = new QrCode("TESTPAYLOAD","jury", eventIDFK);
-		qrcode.setCreatedAt(ResourceHelper.getCurrentDateTime());
+		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
 		User user = new User("TEST", "112233","112233");
 		int userid= userDao.addElement(user);
 		int qrcodeid= qrDao.addElement(qrcode);
 		user.setUserID(userid);
-		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),eventIDFK,user,"jury");
+		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),eventIDFK,user,"jury",TimeHelper.getCurrentDateTime());
 		qrDao.deleteElement(qrcodeid);
 		userDao.deleteElement(userid);
 		assertTrue(authQrCheck.isAuthorized());
@@ -59,11 +60,11 @@ public class RestTest {
     public void testQrRestWrongUnkownQrCode() throws IOException{
 		int eventIDFK=1;
 		QrCode qrcode = new QrCode("TESTPAYLOAD","jury", eventIDFK);
-		qrcode.setCreatedAt(ResourceHelper.getCurrentDateTime());
+		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
 		User user = new User("TEST", "112233","112233");
 		int userid= userDao.addElement(user);
 		user.setUserID(userid);
-		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),eventIDFK,user,"jury");
+		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),eventIDFK,user,"jury",TimeHelper.getCurrentDateTime());
 		userDao.deleteElement(userid);
 		assertFalse(authQrCheck.isAuthorized());
 		assertTrue(authQrCheck.getResponse().getStatus()==403);
@@ -74,12 +75,12 @@ public class RestTest {
 		int eventIDFK=1;
 		QrCode qrcode = new QrCode("TESTPAYLOAD","jury", eventIDFK);
 		qrcode.setUserIDFK(1); // <--
-		qrcode.setCreatedAt(ResourceHelper.getCurrentDateTime());
+		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
 		User user = new User("TEST", "112233","112233");
 		int userid= userDao.addElement(user);
 		int qrcodeid= qrDao.addElement(qrcode);
 		user.setUserID(userid);
-		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),eventIDFK,user,"jury");
+		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),eventIDFK,user,"jury",TimeHelper.getCurrentDateTime());
 		qrDao.deleteElement(qrcodeid);
 		userDao.deleteElement(userid);
 		assertFalse(authQrCheck.isAuthorized());
@@ -91,12 +92,12 @@ public class RestTest {
     public void testQrRestWrongRole() throws IOException{
 		int eventIDFK=1;
 		QrCode qrcode = new QrCode("TESTPAYLOAD","moderator", eventIDFK);
-		qrcode.setCreatedAt(ResourceHelper.getCurrentDateTime());
+		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
 		User user = new User("TEST", "112233","112233");
 		int userid= userDao.addElement(user);
 		int qrcodeid= qrDao.addElement(qrcode);
 		user.setUserID(userid);
-		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),eventIDFK,user,"jury");
+		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),eventIDFK,user,"jury",TimeHelper.getCurrentDateTime());
 		qrDao.deleteElement(qrcodeid);
 		userDao.deleteElement(userid);
 		assertFalse(authQrCheck.isAuthorized());

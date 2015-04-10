@@ -5,7 +5,7 @@ import hlmng.model.ModelHelper;
 import hlmng.model.QrCode;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
-import hlmng.resource.ResourceHelper;
+import hlmng.resource.TimeHelper;
 
 import java.io.File;
 import java.io.FileReader;
@@ -65,7 +65,7 @@ public class AuthChecker {
 		return true;
 	}
 	
-	public static QRAuthResult checkQRCode(String qrHeader, int checkIDFK, User user, String role){
+	public static QRAuthResult checkQRCode(String qrHeader, int checkIDFK, User user, String role,String currentDateTime){
 		QrCode qrcode = (QrCode) GenDaoLoader.instance.getQrCodeDao().getQrCodeByPayload(qrHeader);
 		if(qrcode!=null){
 			if(qrcode.getEventIDFK()!=checkIDFK){
@@ -83,7 +83,7 @@ public class AuthChecker {
 					}
 				}else{
 					// Unclaimed -> ok but claim it									
-					qrcode.setClaimedAt(ResourceHelper.getCurrentDateTime());
+					qrcode.setClaimedAt(currentDateTime);
 					qrcode.setUserIDFK(user.getUserID()); 
 					GenDaoLoader.instance.getQrCodeDao().updateElement(qrcode, qrcode.getQrcodeID());
 					return new QRAuthResult(true, null);
