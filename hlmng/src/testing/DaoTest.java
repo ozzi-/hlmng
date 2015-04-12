@@ -1,6 +1,6 @@
 package testing;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.Properties;
 
@@ -40,6 +40,30 @@ public class DaoTest {
 		sliderDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
 		presentationDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
 	}
+	
+	@Test
+	public void testLastUpdateTimeNoChange(){
+		long t1= presentationDao.getLastUpdateTime();
+		
+		assertTrue(System.currentTimeMillis()-t1<10000);
+		presentationDao.listElements(true);
+		
+		long t2= presentationDao.getLastUpdateTime();
+		
+		assertTrue(t1==t2);
+	}
+	
+	@Test
+	public void testLastUpdateTimeChange(){
+		long t1= presentationDao.getLastUpdateTime();
+		Presentation presentation = new Presentation("TEST","TEST","TEST","00:10:10");
+		int presentationid = presentationDao.addElement(presentation);
+		presentationDao.deleteElement(presentationid);
+		
+		long t2= presentationDao.getLastUpdateTime();
+		assertFalse(t1==t2);
+	}
+	
 	@Test
 	public void testVoting(){
 		
