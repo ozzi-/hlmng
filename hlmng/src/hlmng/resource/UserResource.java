@@ -42,6 +42,14 @@ public class  UserResource  extends Resource {
 		return null;
 	}
 	
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return userDao.getLastUpdateTime();
+	}
+	
 	@GET 
 	@Path("{id}")
 	public User getUser(@PathParam("id") int id) throws IOException{

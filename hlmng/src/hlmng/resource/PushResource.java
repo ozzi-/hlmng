@@ -39,6 +39,14 @@ public class PushResource  extends Resource{
 		return listResource(pushDao, false);
 	}
 	
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return pushDao.getLastUpdateTime();
+	}
+	
 	@GET
 	@Path("{id}")
 	public Push getPush(@PathParam("id") int id) throws IOException{

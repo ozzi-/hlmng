@@ -31,6 +31,13 @@ public class NewsResource extends Resource  {
 		return newsObjects;
 	}
 
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return newsDao.getLastUpdateTime();
+	}
 
 	private void enrichNewsWithMedia(List<Object> newsObjects) {
 		for (Object object : newsObjects) {

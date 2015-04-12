@@ -47,6 +47,13 @@ public class VoteResource extends Resource  {
 
 	
 	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return voteDao.getLastUpdateTime();
+	}
+	
+	@GET
 	@Path("{id}")
 	public Vote getVote(@PathParam("id") int id) throws IOException{
 		if(AuthChecker.check(headers, servletResponse, true)){

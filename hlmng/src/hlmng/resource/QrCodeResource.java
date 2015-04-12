@@ -45,8 +45,6 @@ public class QrCodeResource extends Resource {
 	
 	private GenDao qrCodeDao =GenDaoLoader.instance.getQrCodeDao();
 	private static HashMap<String,ResponseBuilder> localQrResponseCache = new HashMap<String,ResponseBuilder>();
-
-
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -55,6 +53,14 @@ public class QrCodeResource extends Resource {
 			return listResource(qrCodeDao, false);
 		}
 		return null;
+	}
+	
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return qrCodeDao.getLastUpdateTime();
 	}
 	
 	@GET

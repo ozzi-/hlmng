@@ -35,10 +35,12 @@ public class GenDao {
 	private boolean isTest=false;
 	private Properties loginDataForTest;
 	private String jdbcUrlForTest;
+	private long lastUpdateTime=System.currentTimeMillis();
+
 
 
 	public <T> GenDao(Class<T> classTypeP){
-		
+
 		className=classTypeP.getSimpleName();
 		
 		try {
@@ -84,6 +86,9 @@ public class GenDao {
 		}else{
 			Log.addEntry(Level.WARNING,className+" Element wasn't added due to malformed input "+ModelHelper.valuestoString(model)+" inserted ID = "+insertedID);			
 		}
+
+		setLastUpdatedTime(insertedID!=-1);
+
 		return insertedID;
 	}
 	
@@ -104,6 +109,9 @@ public class GenDao {
 			e.printStackTrace();
 		}
 		Log.addEntry(Level.INFO,className+" Element delete ("+id+")="+rs);
+		
+		setLastUpdatedTime(rs==1);
+		
 		return (rs==1);		
 	}
 	
@@ -129,6 +137,9 @@ public class GenDao {
 			e.printStackTrace();
 		}
 		Log.addEntry(Level.INFO,className+" Element update ("+tModel+")="+rs+". "+ModelHelper.valuestoString(model));
+	
+		setLastUpdatedTime(rs==1);
+	
 		return (rs==1);
 	}
 	
@@ -217,7 +228,20 @@ public class GenDao {
 		}
 	}
 
-
+	/**
+	 * This is used to enable the client the ability to determine if he has to reload the json data or not.
+	 * I wish i could have asked the DB directly, but InnoDB has a bug getting update_time ( https://bugs.mysql.com/bug.php?id=14374 ) and calculating a checksum is way to costly..
+	 */
+	public long getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+	
+	private void setLastUpdatedTime(boolean changedSomething){
+		if(changedSomething){
+			this.lastUpdateTime=System.currentTimeMillis();
+		}
+	}
+	
 	/**
 	 * If this is is called with isTest = True then then all Dao's will connect directly via provided login information
 	 * to the DB instead of using connection pooling and the context.xml in web/inf.

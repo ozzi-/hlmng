@@ -31,6 +31,13 @@ public class PresentationResource extends Resource {
 		return listResource(presentationDao, false);
 	}
 
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return presentationDao.getLastUpdateTime();
+	}
 
 	@GET
 	@Path("{id}")

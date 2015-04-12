@@ -58,10 +58,18 @@ public class MediaResource extends Resource{
 		return listMedia;
 	}
 
+
 	@GET
 	@Path("{id}")
 	public Response getMedia(@PathParam("id") int id) throws IOException {
 		return getMediaAsResponse(id, uri, request);
+	}
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return mediaDao.getLastUpdateTime();
 	}
 	
 	@DELETE

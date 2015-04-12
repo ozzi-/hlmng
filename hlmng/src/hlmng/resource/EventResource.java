@@ -30,6 +30,14 @@ public class EventResource extends Resource {
 		return listResource(eventDao, false);
 	}
 	
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return eventDao.getLastUpdateTime();
+	}
+	
 	@GET
 	@Path("{id}")
 	public Event getEvent(@PathParam("id") int id) throws IOException{

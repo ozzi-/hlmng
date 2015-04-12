@@ -31,7 +31,13 @@ public class VotingResource extends Resource {
 	public List<Object> getVoting() throws IOException {
 		return listResource(votingDao, false);
 	}
-
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return votingDao.getLastUpdateTime();
+	}
 		
 	@GET
 	@Path("{id}")

@@ -32,6 +32,14 @@ public class SliderResource extends Resource {
 		return listResource(sliderDao, false);
 	}
 	
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return sliderDao.getLastUpdateTime();
+	}
+	
 	@GET
 	@Path("{id}")
 	public Slider getSlider(@PathParam("id") int id) throws IOException{

@@ -33,6 +33,14 @@ public class EventRoomResource extends Resource  {
 		return listResource(eventRoomDao, false);
 	}
 
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return eventRoomDao.getLastUpdateTime();
+	}
+	
 	@GET
 	@Path("{id}")
 	public EventRoom getEventRoom(@PathParam("id") int id) throws IOException{

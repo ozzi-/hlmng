@@ -36,6 +36,14 @@ public class SocialResource extends Resource  {
 	}
 	
 	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return socialDao.getLastUpdateTime();
+	}
+	
+	
 		
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

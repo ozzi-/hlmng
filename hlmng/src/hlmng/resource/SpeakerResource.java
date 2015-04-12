@@ -31,6 +31,13 @@ public class SpeakerResource extends Resource  {
 		return speakerObjects;
 	}
 
+	
+	@GET
+	@Path("/lastupdate")
+	@Produces(MediaType.TEXT_PLAIN)
+	public long getLastUpdateTime() throws IOException {
+		return speakerDao.getLastUpdateTime();
+	}
 
 	private void enrichSpeakerWithMedia(List<Object> speakerObjects) {
 		for (Object object : speakerObjects) {
