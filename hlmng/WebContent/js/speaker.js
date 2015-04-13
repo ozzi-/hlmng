@@ -9,3 +9,13 @@ app.directive('speakerInfo', function(){
 		}
 	};
 });
+
+app.directive('speakerInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/speaker/speaker-info-edit.html',
+		scope: {
+			speaker: '=speaker'
+		}
+	};
+});

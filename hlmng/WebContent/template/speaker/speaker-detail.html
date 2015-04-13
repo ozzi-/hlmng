@@ -1,3 +1,16 @@
-<speaker-info speaker="speakerIdCtrl.speaker"></speaker-info><br>
+<p ng-show="!edit">
+	<speaker-info speaker="speakerIdCtrl.speaker"></speaker-info><br>
+</p>
+<p ng-show="edit">
+	<speaker-info-edit speaker="speakerIdCtrl.speaker"></speaker-info-edit>
+	<button ng-click="speakerIdCtrl.deleteSpeaker(speakerIdCtrl.speaker.speakerID,'speaker'); speakerIdCtrl.redir('/speakerlist');">Delete this Speaker</button>
+	<br>
+	<button ng-click="edit=!edit ;speakerIdCtrl.putSpeaker(speakerIdCtrl.speaker,speakerIdCtrl.speaker.speakerID,'speaker');">Submit</button>
+</p>
+<button ng-click="edit = !edit" ng-init="edit=false">
+	Edit?
+</button>
+<br><br>
 <input type="text" ng-model="id">
 <a href="#/speaker/{{id}}">Goto {{id}}</a>
+
