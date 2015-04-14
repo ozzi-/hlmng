@@ -100,7 +100,7 @@ public class QrCodeResource extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postQrCode(QrCode element) throws IOException {		
+	public Object postQrCode(QrCode element) throws IOException {		
 		element.setCreatedAt(TimeHelper.getCurrentDateTime());
 		return postResource(qrCodeDao, element, true);
 	}

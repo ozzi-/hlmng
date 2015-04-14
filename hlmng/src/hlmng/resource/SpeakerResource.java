@@ -75,7 +75,7 @@ public class SpeakerResource extends Resource  {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postSpeaker(Speaker element) throws IOException {
+	public Object postSpeaker(Speaker element) throws IOException {
 		return postResource(speakerDao, element, true);
 	}
 }

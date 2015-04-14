@@ -75,7 +75,7 @@ public class NewsResource extends Resource  {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postNews(News element) throws IOException {
+	public Object postNews(News element) throws IOException {
 		return postResource(newsDao, element, true);
 	}
 	

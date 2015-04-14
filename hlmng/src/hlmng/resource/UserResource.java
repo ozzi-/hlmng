@@ -112,8 +112,9 @@ public class  UserResource  extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postUser(User element) throws IOException {	
+	public Object postUser(User element) throws IOException {	
 		User userNameExists = ((UserDao) userDao).getUserByName(element.getName());
+		// TODO check for double device id's???
 		if(userNameExists == null){ 
 			if(!UserActionLimiter.actionsExceeded("userCreation")){ // we don't want people spamming the profile creation
 				return postResourceDo(userDao, element);			

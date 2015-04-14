@@ -5,6 +5,19 @@ package settings;
 public class HLMNGSettings {
 	
 	static boolean production=false;
+	
+
+	/**
+	 * Lifetime of a action in millisecs
+	 */
+	public static final int actionGraceTime=5000;
+	/**
+	 * How many actions are allowed in the grace time
+	 */
+	public static final int maxActionsAllowed=5;
+	//TODO add to documentation ^ ^ 
+
+	
 	/**
 	 * QR Codes
 	 */

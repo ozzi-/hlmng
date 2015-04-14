@@ -57,13 +57,13 @@ public class Resource {
 	}
 	
 	/**
-	 * Create a new resource. If its a social entry set backend to false. 
+	 * Create a new resource. If its a social (=normal users can post) entry set backend to false. 
 	 * @param dao
 	 * @param element
 	 * @param backend
 	 * @return 202, 401
 	 */
-	protected Response postResource(GenDao dao, Object element, boolean backend){
+	protected Object postResource(GenDao dao, Object element, boolean backend){
 		if(AuthChecker.check(headers, servletResponse, backend)){
 			return postResourceDo(dao, element);
 		} 
@@ -75,9 +75,10 @@ public class Resource {
 	 * @param element
 	 * @return
 	 */
-	protected Response postResourceDo(GenDao dao, Object element){
+	protected Object postResourceDo(GenDao dao, Object element){
 			int insertedID = dao.addElement(element);
-			return ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));			
+			return dao.getElement(insertedID);			
+			//return ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));			
 	}
 	
 	/**

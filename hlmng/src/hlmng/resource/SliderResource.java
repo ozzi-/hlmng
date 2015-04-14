@@ -62,7 +62,7 @@ public class SliderResource extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postSlider(Slider element) throws IOException {
+	public Object postSlider(Slider element) throws IOException {
 		return postResource(sliderDao, element, true);
 	}
 

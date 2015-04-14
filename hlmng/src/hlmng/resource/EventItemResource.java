@@ -55,7 +55,7 @@ public class EventItemResource extends Resource{
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postEventItem(EventItem element) throws IOException {
+	public Object postEventItem(EventItem element) throws IOException {
 		return postResource(eventItemDao, element,true);
 	}
 	

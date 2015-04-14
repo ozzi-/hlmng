@@ -56,7 +56,7 @@ public class EventRoomResource extends Resource  {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postEventRoom(EventRoom element) throws IOException {
+	public Object postEventRoom(EventRoom element) throws IOException {
 		return postResource(eventRoomDao, element, true);
 	}
 	

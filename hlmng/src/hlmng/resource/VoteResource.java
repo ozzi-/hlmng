@@ -71,7 +71,7 @@ public class VoteResource extends Resource  {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postVote(Vote element) throws IOException {
+	public Object postVote(Vote element) throws IOException {
 		
 		String authorizationHeader = headers.getHeaderString("Authorization");
 		if(authorizationHeader==null){

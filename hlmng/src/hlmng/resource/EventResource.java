@@ -70,7 +70,7 @@ public class EventResource extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postEvent(Event element) throws IOException {
+	public Object postEvent(Event element) throws IOException {
 		return postResource(eventDao, element,true);
 	}
 	

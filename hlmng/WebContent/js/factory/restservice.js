@@ -1,11 +1,16 @@
 app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
     return {
         post: function (obj,className) {
-    		$http.post(apiUrl+className,obj).success(function(data) {
+        	var deferred = $q.defer();
+            $http({ method: "POST", url: apiUrl+className, data: obj })
+            .success(function (data) {
     			$log.log('post '+className+' successfully');
-    		}).error(function(data){
+                deferred.resolve(data);
+            }).error(function (data) {
     			$log.log('couldn\'t post '+className);
-    		});
+                deferred.reject(data);
+            });
+            return deferred.promise;
         },
         put: function (obj,objId,className) {
     		$http.put(apiUrl+className+'/'+objId, obj).success(function(data) {

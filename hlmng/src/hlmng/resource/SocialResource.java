@@ -88,7 +88,7 @@ public class SocialResource extends Resource  {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postSocial(Social element) throws IOException {
+	public Object postSocial(Social element) throws IOException {
 		return postResource(socialDao, element, false);
 	}
 

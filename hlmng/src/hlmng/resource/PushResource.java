@@ -69,7 +69,7 @@ public class PushResource  extends Resource{
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postPush(Push element) throws IOException, ParseException {
+	public Object postPush(Push element) throws IOException, ParseException {
 		if(AuthChecker.check(headers, servletResponse, true) && !UserActionLimiter.actionsExceeded("pushResource")){
 			List<Object> users = listResource(GenDaoLoader.instance.getUserDao(), false);
 			List<String> regIds = new ArrayList<String>();
@@ -79,8 +79,7 @@ public class PushResource  extends Resource{
 			
 			String gcmResponse = GCM.postGCM(element.getTitle(), element.getText(), regIds);			
 		    setPushMetaData(element, gcmResponse);
-			Response ret = postResource(pushDao, element, true);
-			return ret;
+			return postResource(pushDao, element, true);
 		}else{
 			return null;
 		}

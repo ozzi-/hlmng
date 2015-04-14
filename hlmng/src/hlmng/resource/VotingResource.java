@@ -54,8 +54,8 @@ public class VotingResource extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postVoting(Voting element) throws IOException {
-		return postResourceDo(votingDao, element);
+	public Object postVoting(Voting element) throws IOException {
+		return postResource(votingDao, element,true);
 	}
 
 }

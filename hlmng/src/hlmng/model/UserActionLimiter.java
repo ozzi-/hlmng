@@ -4,20 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import settings.HLMNGSettings;
+
 /**
  * User actions are used to limit actions on the API such as POST of images or other content.
  * This allows us to hinder excessive spamming.
  */
 public class UserActionLimiter {
 	private static HashMap<String,ArrayList<Long>> userActionList=new HashMap<String,ArrayList<Long>>();
-	/**
-	 * Lifetime of a action in millisecs
-	 */
-	private static int actionGraceTime=5000;
-	/**
-	 * How many actions are allowed in the grace time
-	 */
-	private static int maxActionsAllowed=5;
 
 	
 	private static ArrayList<Long> addAction(String username){
@@ -39,7 +33,8 @@ public class UserActionLimiter {
 	 */
 	public static boolean actionsExceeded(String username){
 		ArrayList<Long> actionList = addAction(username);
-		return (getActionsOnRecord(actionList)>maxActionsAllowed);
+		System.out.println(getActionsOnRecord(actionList)); 
+		return (getActionsOnRecord(actionList)>HLMNGSettings.maxActionsAllowed);
 	}
 	/**
 	 * Returns the number of actions found in the list. Does a cleanup first so only the active ones are counted.
@@ -59,7 +54,7 @@ public class UserActionLimiter {
 		long curMil=System.currentTimeMillis();
 		for (Iterator<Long> actionIterator = actionList.iterator(); actionIterator.hasNext();) {
 		    Long action = actionIterator.next();
-		    if(action+actionGraceTime<curMil){
+		    if(action+HLMNGSettings.actionGraceTime<curMil){
 		    	actionIterator.remove();		    	
 		    }
 		}

@@ -61,7 +61,7 @@ public class PresentationResource extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postPresentation(Presentation element) throws IOException {
+	public Object postPresentation(Presentation element) throws IOException {
 		return postResource(presentationDao, element, true);
 	}
 

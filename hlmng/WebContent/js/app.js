@@ -14,10 +14,17 @@ app.controller('IndexController', ['$http', function($http){
 }]);
  	
 
-app.controller('SpeakerNewController', ['$http','RestService', function($http,RestService){
+app.controller('SpeakerNewController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
 	var hlmng = this;
 	hlmng.speaker={};
-	hlmng.postSpeaker = RestService.post;	
+	hlmng.postSpeaker = RestService.post;
+	hlmng.redir=ToolService.redir;
+	hlmng.postAndRedir = function(fSpeaker) {  
+		hlmng.postSpeaker(fSpeaker,'speaker').then(function(data){
+			hlmng.speaker=data;
+			hlmng.redir('/speaker/'+hlmng.speaker.speakerID);
+		});
+	}
 }]);
 
 app.controller('SpeakerListController', ['$http','RestService', function($http,RestService){

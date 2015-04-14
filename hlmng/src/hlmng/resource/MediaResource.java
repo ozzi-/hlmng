@@ -124,7 +124,7 @@ public class MediaResource extends Resource{
 	}
 	
 	public static String getMediaURL(UriInfo uri, int id){
-		Media media = (Media) GenDaoLoader.instance.getMediaDao().getElement(id);
+		Media media = (Media) mediaDao.getElement(id);
 		if(media!=null){
 			ResourceHelper.setMediaURLPath(uri,media);
 			return media.getLink();			
@@ -192,7 +192,7 @@ public class MediaResource extends Resource{
 			savedOK = saveInputStreamToFile(fileInputStream, filePath,HLMNGSettings.maxMediaImageSizeMB);
 			if(savedOK){
 				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
-				int insertedID = GenDaoLoader.instance.getMediaDao().addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
+				int insertedID = mediaDao.addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
 				response= getMediaAsResponse(insertedID, uri, request);
 			}else{
 				Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
