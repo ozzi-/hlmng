@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="15" columns="4">
+<lyxtabular version="3" rows="16" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -780,7 +780,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -789,7 +789,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -798,11 +798,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Lastupdatetime
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Informationen / Konventionen gruppiert und erweitert
 \end_layout
 
 \end_inset
@@ -863,19 +901,14 @@ Calls
 API
 \end_layout
 
-\begin_layout Standard
-Folgende Hinweise sind zu beachten:
+\begin_layout Subsection
+Informationen und Konventionen
 \end_layout
 
-\begin_layout Itemize
-Alle Pfade werden relativ angegeben
+\begin_layout Subsubsection
+Legende 
 \end_layout
 
-\begin_layout Itemize
-Legende: 
-\end_layout
-
-\begin_deeper
 \begin_layout Itemize
 
 \series bold
@@ -902,58 +935,6 @@ Kann 401 zurückliefern
 B 
 \series default
 = Backend (Backend Login benötigt) 
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Zeit Felder
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Datum Felder sind in MySQL als String gespeichert, dies da Jersey Probleme
- mit MySQL 
-\begin_inset Quotes ald
-\end_inset
-
-Dates
-\begin_inset Quotes ard
-\end_inset
-
- hat und ein eigener Serialisierer zu umständlich wäre.
- Das Format ist wie folgt 
-\series bold
-YYYY-MM-DD
-\series default
-.
-\end_layout
-
-\begin_layout Itemize
-Time Felder werden durch 
-\series bold
-HH:MM
-\series default
- repräsentiert
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Eine fixe Reihenfolge der Properties ist bei JSON (standardmässig) nicht
- gewährleistet 
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-4.3.3 Object - http://goo.gl/eAjLb
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Variablen werden in dieser Dokumentation wie folgt gekennzeichnet : {varname}.
 \end_layout
 
 \begin_layout Itemize
@@ -992,6 +973,82 @@ kennzeichnet Felder welche Einzigartig sein müssen, falls etwas hinzugefügt
  Request zurückgeliefert.
 \end_layout
 
+\begin_layout Itemize
+
+\series bold
+{varname} 
+\series default
+Variablen werden in dieser Dokumentation mit geschweiften Klammern gekennzeichne
+t
+\end_layout
+
+\begin_layout Subsubsection
+Zeit und Daten
+\end_layout
+
+\begin_layout Standard
+Datum Felder sind in MySQL als String gespeichert, dies da Jersey Probleme
+ mit MySQL 
+\begin_inset Quotes ald
+\end_inset
+
+Dates
+\begin_inset Quotes ard
+\end_inset
+
+ hat und ein eigener Serialisierer zu umständlich wäre.
+ Das Format ist wie folgt 
+\series bold
+YYYY-MM-DD
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+Time Felder werden durch 
+\series bold
+HH:MM
+\series default
+ repräsentiert
+\end_layout
+
+\begin_layout Subsubsection
+Diverses
+\end_layout
+
+\begin_layout Itemize
+Eine fixe Reihenfolge der Properties ist bei JSON (standardmässig) nicht
+ gewährleistet 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+4.3.3 Object - http://goo.gl/eAjLb
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Der Befehl 
+\begin_inset Quotes ald
+\end_inset
+
+POST
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Liefert (falls erfolgreich) das eingefügt Element als JSON zurück
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 Der Befehl 
 \begin_inset Quotes ald
@@ -1109,6 +1166,10 @@ https://de.wikipedia.org/wiki/Unixzeit
 ) angibt, an welchem irgend ein Element geändert wurde.
  So kann der Client erfahren (durch vergleichen des letzten Zeitpunktes)
  ob sein Datenbestand noch aktuell ist.
+\end_layout
+
+\begin_layout Itemize
+Alle Pfade werden relativ angegeben
 \end_layout
 
 \begin_layout Subsection
