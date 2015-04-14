@@ -131,7 +131,7 @@ status open
 \backslash
 includegraphics[width=0.20
 \backslash
-textwidth]{../../2_Grafiken/logo.png}
+textwidth]{../logo.png}
 \end_layout
 
 \end_inset
