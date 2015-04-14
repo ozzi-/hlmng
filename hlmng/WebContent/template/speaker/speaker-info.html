@@ -1,8 +1,7 @@
 <div>
 	Name: {{speaker.name}}<br>
 	Title: {{speaker.title}}<br>
-	Nationality: {{speaker.nationality}}<br> 
-	 {{apiUrl}}
+	Nationality: {{speaker.nationality}} <img  ng-src="{{ './img/flags/flag_'+(speaker.nationality | lowercase)+'.png'}}" err-src="{{'./img/flags/flag_invalid.png'}}"/><br> 
 	Img: <img class="speaker-image" ng-src="{{speaker.media || './img/speaker_default.png'}}"/><br>
 	Description: {{speaker.description}}
 </div>

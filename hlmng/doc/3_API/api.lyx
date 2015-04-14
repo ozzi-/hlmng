@@ -2985,7 +2985,12 @@ media
 \series bold
 nationality -
 \series default
- Das Kürzel zu dem Heimastland des Speaker
+ Das Kürzel zu dem Heimastland des Speaker.
+ 
+\series bold
+Achtung:
+\series default
+ Die Nationality wird immer in toUpperCase umgewandelt.
 \begin_inset Newline newline
 \end_inset
 

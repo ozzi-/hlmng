@@ -1,6 +1,7 @@
- <form>
-	<b>Name:</b>  <input type="text" name="speaker-name" ng-model="speaker.name"><br>
-	<b>Title:</b>  <input type="text" name="speaker-title" ng-model="speaker.title" ><br>
-	<b>Nationality:</b>  <input type="text" name="speaker-nationality" ng-model="speaker.nationality" ><br>
-	<b>Description:</b>  <input type="text" name="speaker-description" ng-model="speaker.description" ><br>
-</form> 
+<b>Name:</b>  <input type="text" name="speaker-name" ng-model="speaker.name" required><br>
+<b>Title:</b>  <input type="text" name="speaker-title" ng-model="speaker.title" required><br>
+<b>Nationality:</b>  
+<speaker-countries-option nationality="speaker.nationality"></speaker-countries-option>
+<img class="speaker-image" ng-src="{{'./img/flags/flag_'+(speaker.nationality | lowercase ) +'.png'}}"/><br>
+<br>
+<b>Description:</b>  <input type="text" name="speaker-description" ng-model="speaker.description" required><br>

@@ -3,8 +3,8 @@ angular.module('hlmngApp').config(['$routeProvider', function($routeProvider){
 	when('/', {
 		templateUrl: "template/index.html",
 		controller: "IndexController",
-		controllerAs: 'indexCtrl'
-	}).
+		controllerAs: 'indexCtrl',
+	}).	
 	when('/speakerlist', {
 		templateUrl: "template/speaker/speaker-list.html",
 		controller: "SpeakerListController",

@@ -44,7 +44,17 @@ speakerModule.directive('speakerInfo', function(){
 		restrict: 'E',
 		templateUrl: 'template/speaker/speaker-info.html',
 		scope: {
-			speaker: '=speaker'
+			speaker: "=speaker"
+		}
+	};
+});
+
+speakerModule.directive('speakerCountriesOption', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/speaker/speaker-countries-option.html',
+		scope: {
+			nationality: "=nationality"
 		}
 	};
 });
@@ -54,7 +64,7 @@ speakerModule.directive('speakerInfoEdit', function(){
 		restrict: 'E',
 		templateUrl: 'template/speaker/speaker-info-edit.html',
 		scope: {
-			speaker: '=speaker'
+			speaker: "=speaker"
 		}
 	};
 });

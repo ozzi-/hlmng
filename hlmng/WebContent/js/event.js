@@ -2,8 +2,8 @@ var eventModule = angular.module('event', []);
 
 app.controller('EventIdController', ['$http','$routeParams','RestService', function($http, $routeParams,RestService){
 	var hlmng = this;
-
-	hlmng.event = {};
+	hlmng.form = {};
+	
 	RestService.get($routeParams.eventId,'event').then(function(data){
 		hlmng.event=data;
 	});
@@ -26,7 +26,7 @@ eventModule.directive('eventInfo', function(){
 		restrict: 'E',
 		templateUrl: 'template/event/event-info.html',
 		scope: {
-			event: '=event'
+			event: "=event"
 		}
 	};
 });
@@ -36,7 +36,7 @@ eventModule.directive('eventInfoEdit', function(){
 		restrict: 'E',
 		templateUrl: 'template/event/event-info-edit.html',
 		scope: {
-			event: '=event'
+			event: "=event"
 		}
 	};
 });
