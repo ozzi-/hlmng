@@ -64,6 +64,7 @@ public class SpeakerResource extends Resource  {
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response putSpeaker(Speaker element,@PathParam("id") int id) throws IOException {
+		element.setNationality(element.getNationality().toUpperCase());
 		return putResource(speakerDao, element, id);
 	}
 	
@@ -76,6 +77,7 @@ public class SpeakerResource extends Resource  {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postSpeaker(Speaker element) throws IOException {
+		element.setNationality(element.getNationality().toUpperCase());
 		return postResource(speakerDao, element, true);
 	}
 }

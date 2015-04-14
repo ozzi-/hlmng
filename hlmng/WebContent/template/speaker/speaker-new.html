@@ -1,3 +1,5 @@
-New Speaker:<br>
-<speaker-info-edit speaker="speakerNewCtrl.speaker"></speaker-info-edit>
-<button ng-click="speakerNewCtrl.postAndRedir(speakerNewCtrl.speaker);">Submit</button>
+<form name="speakerInfoNewForm" novalidate>
+	<speaker-info-edit speaker="speakerNewCtrl.speaker"></speaker-info-edit>
+</form>
+<button ng-disabled="!speakerInfoNewForm.$valid" ng-click="speakerNewCtrl.postAndRedir(speakerNewCtrl.speaker);">Submit</button>
+
