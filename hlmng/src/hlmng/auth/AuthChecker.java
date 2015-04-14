@@ -53,6 +53,7 @@ public class AuthChecker {
 			jArray = (JSONArray) parser.parse(new FileReader(file));
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.addEntry(Level.SEVERE,"Error parsing/reading backendlogins.json. "+e.getMessage());
 			return false;
 		}
 		for (int j = 0; j < jArray.size(); j++) {

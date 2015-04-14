@@ -1,5 +1,5 @@
 var app = angular.module('hlmngApp',['ngRoute','speaker','event']);
-var apiUrl = 'http://localhost:8080/hlmng/rest/';
+var apiUrl = 'https://localhost:8443/hlmng/rest/';
 
 
 app.controller('IndexController', ['$http', function($http){

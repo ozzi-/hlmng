@@ -17,7 +17,7 @@ public class HLMNGSettings {
 	 * Media 
 	 */
 	public static final String mediaFileRootDir = (production?"/home/student/media/":"/home/ozzi/media/");
-	public static final double maxMediaImageSize = 3.0;
+	public static final double maxMediaImageSizeMB = 3.0;
 
 	/**
 	 * Logging

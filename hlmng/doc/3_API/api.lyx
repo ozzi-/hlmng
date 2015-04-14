@@ -1,0 +1,3639 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{tocloft}
+\usepackage{graphicx} 
+\usepackage{hyperref} 
+\usepackage{fancyhdr}
+
+
+%% Footnotes-Listing %%
+\newcommand{\listfootnotesname}{}% 'List of Footnotes' title 
+\newlistof[chapter]{footnotes}{fnt}{\listfootnotesname}% New 'List of...' for footnotes 
+\let\oldfootnote\footnote % Save the old \footnote{...} command 
+\renewcommand\footnote[1]{% Redefine the new footnote to also add 'List of Footnote' entries. 
+    \refstepcounter{footnotes}% Add and step a reference to the footnote/counter. 
+    \oldfootnote{#1}% Make a regular footnote. 
+    \addcontentsline{fnt}{footnotes}{\protect 
+\numberline{\thefootnotes}#1}% Add the 'List of...' entry. 
+}
+
+\definecolor{dkgreen}{RGB}{0,142,0}
+\definecolor{orange}{RGB}{217,108,0}
+\definecolor{dkred}{RGB}{179,0,0}
+\definecolor{lgrey}{RGB}{240,240,240}
+
+% Keine einzelnen Zeilen beim Anfang eines Abschnitts (Schusterjungen)
+\clubpenalty=10000
+% Keine einzelnen Zeilen am Ende eines Abschnitts (Hurenkinder)
+\widowpenalty= 10000 \displaywidowpenalty = 10000 
+
+\fancyhead[RE,LO]{\leftmark}
+\fancyhead[LE,RO]{HLM-NG}
+%%\fancyfoot[CE,CO]{\leftmark}%%
+%%\fancyfoot[LE,RO]{\thepage}%%
+
+\usepackage{parskip}
+\end_preamble
+\use_default_options true
+\begin_modules
+customHeadersFooters
+\end_modules
+\maintain_unincluded_children false
+\language german-ch
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language danish
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\small\ttfamily},commentstyle={\color{dkgreen}},keywordstyle={\color{dkred}},language=Java,stringstyle={\color{dkred}},backgroundcolor={\color{lgrey}},framexleftmargin={0.3 cm}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+HLM-NG | API
+\end_layout
+
+\begin_layout Author
+Oussama Zgheb & Tobias Zahner
+\end_layout
+
+\begin_layout LyX-Code
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=0.20
+\backslash
+textwidth]{../../2_Grafiken/logo.png}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Address
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="15" columns="4">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Datum
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Version
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Änderung
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Autor
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Intial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Events + Speaker
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Media
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Weitere Items
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+JSON Beispiele
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Delete Operations / Formatierung
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+27.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vote Vorgang UML
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Erneuerungen bei Push
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Code Formatierung, Qr Code
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Qr Code Überprüfung / File Upload
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.03.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Null Kennzeichnungen
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+01.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Unique Kennzeichnung / Voting Duration
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+09.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+'Newest' Calls + Spam Schutz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.91
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lastupdatetime
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Einleitung
+\end_layout
+
+\begin_layout Standard
+Dieses Dokument soll eine ausführliche Übersicht über die Rest API des Backend
+ geben.
+ Dabei sollen alle möglichen 
+\begin_inset Quotes ald
+\end_inset
+
+Calls
+\begin_inset Quotes ard
+\end_inset
+
+ sowie die zu erwartenden Antworten aufgeführt werden.
+ 
+\end_layout
+
+\begin_layout Section
+API
+\end_layout
+
+\begin_layout Standard
+Folgende Hinweise sind zu beachten:
+\end_layout
+
+\begin_layout Itemize
+Alle Pfade werden relativ angegeben
+\end_layout
+
+\begin_layout Itemize
+Legende: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+P
+\series default
+ = Public (kein Login benötigt)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+S
+\series default
+ = Secure (User Login benötigt)
+\begin_inset Newline newline
+\end_inset
+
+Kann 401 zurückliefern
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+B 
+\series default
+= Backend (Backend Login benötigt) 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Zeit Felder
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Datum Felder sind in MySQL als String gespeichert, dies da Jersey Probleme
+ mit MySQL 
+\begin_inset Quotes ald
+\end_inset
+
+Dates
+\begin_inset Quotes ard
+\end_inset
+
+ hat und ein eigener Serialisierer zu umständlich wäre.
+ Das Format ist wie folgt 
+\series bold
+YYYY-MM-DD
+\series default
+.
+\end_layout
+
+\begin_layout Itemize
+Time Felder werden durch 
+\series bold
+HH:MM
+\series default
+ repräsentiert
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Eine fixe Reihenfolge der Properties ist bei JSON (standardmässig) nicht
+ gewährleistet 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+4.3.3 Object - http://goo.gl/eAjLb
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Variablen werden in dieser Dokumentation wie folgt gekennzeichnet : {varname}.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+[Null] 
+\series default
+kennzeichnet Felder die 
+\begin_inset Quotes ald
+\end_inset
+
+null
+\begin_inset Quotes ard
+\end_inset
+
+ sein dürfen
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+[!]
+\series default
+ kennzeichnet Felder die automatisch gesetzt werden.
+ D.h bei einem POST / PUT müssen diese nicht mitgeliefert werden, falls diese
+ trotzdem mit gegeben werden, werden diese schlichtweg ignoriert.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+[Unique] 
+\series default
+kennzeichnet Felder welche Einzigartig sein müssen, falls etwas hinzugefügt
+ / geändert wird und einen nicht Einzigartigen Wert enthält wird ein Bad
+ Request zurückgeliefert.
+\end_layout
+
+\begin_layout Itemize
+Der Befehl 
+\begin_inset Quotes ald
+\end_inset
+
+PUT 
+\begin_inset Quotes ald
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Updatet lediglich - Es wird kein neues Element erstellt falls unter die
+ definierte ID nicht exisitert
+\end_layout
+
+\begin_layout Itemize
+Ignoriert eine abweichende ID
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Login
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Bei den als 
+\series bold
+B/S
+\series default
+ gekennzeichneten Calls wird ein Basic HTTP-Auth erwartet
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://de.wikipedia.org/wiki/HTTP-Authentifizierung#Basic_Authentication
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Bei erfolgreicher Authentifizierung wird die eigentliche Aktion durchgeführt
+\end_layout
+
+\begin_layout Itemize
+Bei fehlgeschlagener Authentifizierung wegen falschen Anmeldedaten wird
+ erneut ein HTTP-Auth geschickt
+\end_layout
+
+\begin_layout Itemize
+Bei einem Fehler bei dem Anmeldedaten Parser wird ein Bad Request geschickt
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Spam Schutz
+\begin_inset Newline newline
+\end_inset
+
+Bei folgenden Aktionen wird beim überschreiten einer Threshold für eine
+ gewisse Zeit zu jeder Anfrage ein 429 zurückgeliefert (too many requests).
+\begin_inset Newline newline
+\end_inset
+
+Die genauen Einstellungen sind 
+\begin_inset Quotes ald
+\end_inset
+
+FileSettings
+\begin_inset Quotes ard
+\end_inset
+
+ zu entnehmen.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Bei allen Anfragen die eine Benutzerauthentisierung fordern
+\end_layout
+
+\begin_layout Itemize
+Erstellung oder Update eines Benutzerprofils
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Last Update Time
+\begin_inset Newline newline
+\end_inset
+
+Bei jeder Resource gibt es einen call Namens 
+\begin_inset Quotes ald
+\end_inset
+
+/lastupdateimte
+\begin_inset Quotes ard
+\end_inset
+
+ welcher den Zeitpunkt (in Unixzeit 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://de.wikipedia.org/wiki/Unixzeit
+\end_layout
+
+\end_inset
+
+) angibt, an welchem irgend ein Element geändert wurde.
+ So kann der Client erfahren (durch vergleichen des letzten Zeitpunktes)
+ ob sein Datenbestand noch aktuell ist.
+\end_layout
+
+\begin_layout Subsection
+Event
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+eventID - 
+\series default
+Die eindeutige ID des Events
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+name
+\series default
+ 
+\series bold
+- 
+\series default
+Der Name des Events
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+description - 
+\series default
+Ein kurzer Info Text zum Event
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+startDate - 
+\series default
+Datum beginn des Events
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+endDate - 
+\series default
+Datum letzter Tag des Events (kann gleich wie 
+\begin_inset Quotes ald
+\end_inset
+
+from
+\begin_inset Quotes ard
+\end_inset
+
+ Feld sein)
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout LyX-Code
+
+{
+\end_layout
+
+\begin_layout LyX-Code
+
+	"eventID": 1,
+\end_layout
+
+\begin_layout LyX-Code
+
+	"name": "test", 
+\end_layout
+
+\begin_layout LyX-Code
+
+	"description": "desc",
+\end_layout
+
+\begin_layout LyX-Code
+
+	"from": "2015-06-10", 	
+\end_layout
+
+\begin_layout LyX-Code
+
+	"to": "2015-06-11"
+\end_layout
+
+\begin_layout LyX-Code
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/event
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Events 
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Erstellt neuen Event
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/event/count
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - P - Liefert die Anzahl Events
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/event/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den besagten Event
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet den besagten Event
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten Event
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/event/{id}/eventrooms
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Event Rooms welche zu Event {id} gehören
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+event/{id}/eventitems
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P  - Liefert alle Event Items welche zu Event {id} gehören
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+EventItem
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+eventItemID - 
+\series default
+Die eindeutige ID des Event Item 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+name - 
+\series default
+Der Name des Item
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+description - 
+\series default
+Die Beschreibung des Item
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+date - 
+\series default
+Das Datum an welchem das Item stattfindet 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+startTime - 
+\series default
+Der Beginn des Item
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+endTime - 
+\series default
+Das Ende des Item
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+roomIDFK - 
+\series default
+Ein FK zu dem Raum in welchem das Item stattfindet
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+eventIDFK - 
+\series default
+Ein FK zu dem Event in welchem das Item stattfindet 
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"eventItemID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"name": "Advanced Cryptography",		
+\end_layout
+
+\begin_layout Plain Layout
+
+	"description": "description of item..",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"date": "2015-06-15",     
+\end_layout
+
+\begin_layout Plain Layout
+
+	"startTime": "13:00",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"endTime": "14:15",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"roomIDFK": 1,		
+\end_layout
+
+\begin_layout Plain Layout
+
+	"eventIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/eventitem
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Event Items
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Erstellt neues Event Item
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/eventitem/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert besagtes Event Item
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet besagtes Event Item
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht besagtes 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/eventitem/eventroom
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den Raum in welchem das Event Item stattfindet
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+EventRoom
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+eventRoomID -
+\series default
+ Die eindeutige ID des Raumes
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+name - 
+\series default
+Die Raumbezeichnung
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+location - [Null]
+\series default
+ Eine genauere Bezeichnung zum Raum
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+eventIDFK - 
+\series default
+Ein FK zu dem Event in welchem der Raum verwendet wird 
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"eventRoomID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"name": "1.206",	
+\end_layout
+
+\begin_layout Plain Layout
+
+	"location": "1",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"eventIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/eventroom
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Event Rooms
+\begin_inset Newline newline
+\end_inset
+
+POST - B - 401 - Erstellt neuen Event Room
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+/eventroom/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den besagten Event Room
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet den besagten Event Room
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten Event Room
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Media
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+mediaID - 
+\series default
+Die eindeutige ID jedes Medien Objektes
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+type - 
+\series default
+Der Kennzeichner des Medien Objektes.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+jpeg
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+png
+\begin_inset Quotes ard
+\end_inset
+
+ (TODO weitere Typen wie Video etc.)
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+link - 
+\series default
+Ein absoluter Link zur Ressource 
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"mediaID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"type": "jpg",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"link": "http://localhost:8080/hlmng/rest/media/jpg/1.jpg",
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/media
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Medien
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/media/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert das besagte Medien Objekt
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht die verlinkte Medien Datei, der Eintrag in der Datenbank
+ wird 
+\series bold
+nicht gelöscht.
+
+\series default
+ 
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+Dies da auf das Medien Objekt verlinkende Objekte weiterhin den Link benutzen
+ können und dieser dann ein 404 zurückliefert.
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/media/{typ}/{filename}
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - P - Liefert die gewünschte Medien Ressource
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ http://.../rest/media/image/png/image.png"
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/media/upload
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+POST - P - Ermöglicht einen Upload von Media Dateien mittels Multipart-Data
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://stackoverflow.com/questions/913626
+\end_layout
+
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Die möglichen Return Codes sind (nebst den üblichen Authorization needed
+ / Bad Request).
+\end_layout
+
+\begin_layout Itemize
+500 - Server konnte das File nicht speichern
+\end_layout
+
+\begin_layout Itemize
+415 - Falscher / fehlender / unbekannter Mimetype
+\end_layout
+
+\begin_layout Itemize
+422 - Datei mit gleichem Namen existiert bereits
+\end_layout
+
+\begin_layout Itemize
+413- Datei zu gross 
+\end_layout
+
+\begin_layout Itemize
+200 - Hochgeladen, Objekt wird als JSON geliefert, sodass sich der Client
+ die ID speichern kann
+\end_layout
+
+\begin_layout Subsection
+News
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+newsID -
+\series default
+ Die eindeutige ID zu dem News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+title - 
+\series default
+Der Titel des News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+text -
+\series default
+ Der Text des News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+media
+\series default
+ - Der direkte Link zur angehängten Medien Datei
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+author -
+\series default
+ Der Autor (frei wählbarer String)
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+mediaIDFK - [Null]
+\series default
+ Ein FK zu der angehängten Medien Datei 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+eventIDFK -
+\series default
+ Ein FK zu dem Event zu welchem die News gehören
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout LyX-Code
+
+{
+\end_layout
+
+\begin_layout LyX-Code
+
+	"newsID": 1,
+\end_layout
+
+\begin_layout LyX-Code
+
+	"title": "Breaking news!"  
+\end_layout
+
+\begin_layout LyX-Code
+
+	"text": "Team Switzerland takes the lead!",
+\end_layout
+
+\begin_layout LyX-Code
+
+	"media": "http://localhost:8080/hlmng/rest/media/jpg/1.jpg",
+\end_layout
+
+\begin_layout LyX-Code
+
+	"author": "Max Muster",    
+\end_layout
+
+\begin_layout LyX-Code
+
+	"mediaIDFK": 1,     
+\end_layout
+
+\begin_layout LyX-Code
+
+	"eventIDFK": 1		
+\end_layout
+
+\begin_layout LyX-Code
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/news
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle News Einträge
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Erstellt neuen News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/news/newest
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - P - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert)
+ Einträge.
+ Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
+ alle Einträge.
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+/news/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den besagten News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet den besagten News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten News Eintrag
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/news/{id}/media
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert das Medien Objekt zu besagten News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Presentation
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+presentationID -
+\series default
+ Die eindeutige ID zu der Präsentation
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+name - 
+\series default
+Der durch das Team gewählte Name der Präsentation
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+teamName - 
+\series default
+Der Teamname
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+date - 
+\series default
+Das Datum an welchem die Präsentation durchgeführt wurde
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+duration - [!] [Null]
+\series default
+ Die Dauer der Präsentation
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout LyX-Code
+
+{
+\end_layout
+
+\begin_layout LyX-Code
+
+	"presentationID": 1,    
+\end_layout
+
+\begin_layout LyX-Code
+
+	"name": "presentation 1",
+\end_layout
+
+\begin_layout LyX-Code
+
+	"teamName": "1336+1",
+\end_layout
+
+\begin_layout LyX-Code
+
+	"date": "2015-05-10", 
+\end_layout
+
+\begin_layout LyX-Code
+
+	"duration": "00:12:35"
+\end_layout
+
+\begin_layout LyX-Code
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/presentation
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Präsentationen
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Erstellt neue Präsentation
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+/presentation/{id}
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - P - Liefert die besagte Präsentation
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet die besagte Präsentation
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht die besagte Präsentation
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Push
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+pushID - 
+\series default
+Die eindeutige ID des Push
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+title - 
+\series default
+Der Titel der Push Nachricht
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+author - 
+\series default
+Der Autor (frei wählbarer String)
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+date - 
+\series default
+Das Datum an dem die Nachricht gesendet wurde
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+time - 
+\series default
+Der Zeitpunkt an dem die Nachricht gesendet wurde
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+receivedCounter - 
+\series default
+Die Anzahl Mobile Apps welche die Nachricht erhalten haben 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+failedCounter
+\series default
+ 
+\series bold
+- 
+\series default
+Die Anzahl Mobile Apps an welche die Nachricht nicht gesendet werden konnte
+ (Details siehe Log)
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"pushID": 1,	
+\end_layout
+
+\begin_layout Plain Layout
+
+	"title": "push title",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"author": "mmuster", 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"date": "2015-05-20",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"time": "14:15",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"receivedCounter": 10,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"failedCounter" : 2
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/push
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Push Einträge
+\begin_inset Newline newline
+\end_inset
+
+POST - B Erstellt neuen Push Eintrag
+\begin_inset Newline newline
+\end_inset
+
+Der Post sollte etwa wie folgt aussehen:
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{     
+\end_layout
+
+\begin_layout Plain Layout
+
+	"author": "mmuster",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"text": "it works",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"title": "unbelievable" 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+/push/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert besagten Push Eintrag
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet besagten Push Eintrag 
+\series bold
+*
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten Push Eintrag 
+\series bold
+*
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+*
+\series default
+ Die Push Notifaction auf dem Mobile App kann logischerweise nicht nachträglich
+ geändert / gelöscht werden.
+\end_layout
+
+\begin_layout Subsection
+QrCode
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+qrCodeID -
+\series default
+ Die eindeutige ID des QR Code
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+createdAt -
+\series default
+ 
+\series bold
+[!]
+\series default
+ Der Erstellungszeitpunkt des QR Code
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+claimedAt - [!] [Null] 
+\series default
+Der Zeitpunkt an dem der QR Code eingelöst wurde
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+payload - [Unique]
+\series default
+ Die Payload des QR Code.
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+role - 
+\series default
+Die Rolle welche der QR Code legitmiert [jury,author]
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+userIDFK - [Null]
+\series default
+ Ein FK zu dem User welcher den QR Code 
+\begin_inset Quotes ald
+\end_inset
+
+geclaimt
+\begin_inset Quotes ard
+\end_inset
+
+ hat
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+eventIDFK - 
+\series default
+Ein FK zu dem Event in welchem der QR Code gültig ist
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"qrCodeID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"createdAt": "2015-06-21 22:59:59",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"claimedAt": "2015-06-21 23:09:13",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"payload": "jdi7.di-n23i*msdgz?db*p",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"role": "jury",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"userIDFK": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"eventIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/qrcode
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - B - Liefert alle QR Codes
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Erstellt neuen QR Code
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+/qrcode/{id}
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - B - Liefert den besagten QR Code
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet den besagten QR Code
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten QR Code
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+/qrcode/{id}/render
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - B - Liefert den QR Code als Bild zurück
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+QrCode Überprüfung
+\end_layout
+
+\begin_layout Standard
+\align center
+Folgendes Diagramm soll den Ablauf und die möglichen Return Codes aufzeigen,
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename img/Qr Proc.png
+	width 90page%
+	height 80pheight%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Slider
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+sliderID - 
+\series default
+Die eindeutige ID des Slider
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+name - 
+\series default
+Die Bezeichnung des Slider
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+weigth - 
+\series default
+Die Gewichtung des Sliders
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+votingIDFK - 
+\series default
+Ein FK zu dem dazugehörigen Voting
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"sliderID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"name": "Language",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"weigth": 2,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"votingIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/slider
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Slider
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Erstellt neuen Slider
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+/slider/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Updatet den besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten Slider
+\end_layout
+
+\begin_layout Subsection
+Social
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+socialID - 
+\series default
+Die eindeutige ID des Social Eintrages
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+text - 
+\series default
+Der Text des Eintrages
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+status - 
+\series default
+Der Moderationsstatus [pending,accepted,rejected]
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+media
+\series default
+ 
+\series bold
+- [Null] 
+\series default
+Der direkte Link zu der angehängten Medien Datei (falls vorhanden) 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+userIDFK - 
+\series default
+Ein FK
+\series bold
+ 
+\series default
+zu dem User der den Social Eintrag erstellt hat
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+mediaIDFK - [Null] 
+\series default
+Ein FK zu dem Medien Objekt welches angehängt sein kann
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+eventIDFK - 
+\series default
+Ein FK zu dem Event in welchem der Social Eintrag erstellt wurde
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"socialID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"text": "Nice presentation!",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"status": "pending",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"media": "http://localhost:8080/hlmng/rest/media/jpg/1.jpg",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"userIDFK": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"mediaIDFK": 1,   
+\end_layout
+
+\begin_layout Plain Layout
+
+	"eventIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/social
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Social Einträge
+\begin_inset Newline newline
+\end_inset
+
+POST - S - Erstellt neuen Social Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/social/newest
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - P - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert)
+ Einträge.
+ Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
+ alle Einträge.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/slider/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Updatet den besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten Slider
+\end_layout
+
+\begin_layout Subsection
+Speaker
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+speakerID - 
+\series default
+Die eindeutige ID des Speaker
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+name
+\series default
+ 
+\series bold
+- 
+\series default
+Der Vor- und Nachname des Speaker
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+description - 
+\series default
+Ein kurzer Info Text zum Speaker
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+media
+\series default
+ 
+\series bold
+- [Null]
+\series default
+ Der direkte Link zu der angehängten Medien Datei (falls vorhanden) 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+nationality -
+\series default
+ Das Kürzel zu dem Heimastland des Speaker
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+title - [Null] 
+\series default
+Der akademische Titel des Speaker, falls vorhanden
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+mediaIDFK - 
+\series default
+Ein FK zu dem Speaker Bild
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"speakerID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"name": "Richard Stallman", 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"title": "PhD MIT",	
+\end_layout
+
+\begin_layout Plain Layout
+
+	"media": "http://localhost:8080/hlmng/rest/media/jpg/1.jpg",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"description": "..
+ freedom activist and computer programmer ..", 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"nationality": "USA"
+\end_layout
+
+\begin_layout Plain Layout
+
+	"mediaIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/speaker
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Speaker
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Erstellt neuen Speaker
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/speaker/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den besagten Speaker
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Updatet den besagten Speaker
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten Speaker
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+User
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+userID - 
+\series default
+Die eindeutige ID welche den Benutzer identifiziert
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+name - 
+\series default
+Der Benutzername
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+deviceID - 
+\series default
+Die eindeutige ID jedes Android Gerätes
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+regID -
+\series default
+ Die Registrations ID bei dem Google Cloud Messaging Dienst
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout LyX-Code
+
+{
+\end_layout
+
+\begin_layout LyX-Code
+
+	"userID": 3,
+\end_layout
+
+\begin_layout LyX-Code
+
+	"name": "hmuster", 
+\end_layout
+
+\begin_layout LyX-Code
+
+	"deviceID": "1234567890987654321",
+\end_layout
+
+\begin_layout LyX-Code
+
+	"regID": "1aa23cd45ef6789fg098hk765432ff1..."
+\end_layout
+
+\begin_layout LyX-Code
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/user
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle user 
+\begin_inset Newline newline
+\end_inset
+
+POST - P - Erstellt neuen user.
+ Falls der Username bereits existiert wird 422 (unprocessable entity / exists)
+ zurückgeliefert.
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/user/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den besagten User
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updaten den besagten User 
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten 
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+{id}/changeregid
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+PUT - S - Updatet die 
+\begin_inset Quotes ald
+\end_inset
+
+regID
+\begin_inset Quotes ard
+\end_inset
+
+ des Users welcher sich anmeldet.
+ Ein im JSON abweichender Username wird zurückgewiesen.
+ Alle Variablen ausser 
+\begin_inset Quotes ald
+\end_inset
+
+regID
+\begin_inset Quotes ard
+\end_inset
+
+ werden 
+\series bold
+nicht
+\series default
+ geändert.
+\end_layout
+
+\begin_layout Subsection
+Vote
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+voteID - 
+\series default
+Die eindeutige ID des Vote (= eine Stimme)
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+score - 
+\series default
+Die abgebende Bewertung, beginnend bei 0 bis zu sliderMaxValue von Voting
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+isJury - 
+\series default
+Sagt aus ob die Vote von einem Jury Mitglied gemacht wurde oder nicht
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+sliderIDFK - 
+\series default
+Ein FK zu dem Slider über den die Bewertung abgeben wurde
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+userIDFK - 
+\series default
+Ein FK zu dem Benutzer welcher 
+\begin_inset Quotes ald
+\end_inset
+
+gevotet
+\begin_inset Quotes ard
+\end_inset
+
+ hat
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"voteID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"score": 7, 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"isJury": true,	
+\end_layout
+
+\begin_layout Plain Layout
+
+	"sliderIDFK": 1, 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"userIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/vote
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - B - Liefert alle Votes
+\begin_inset Newline newline
+\end_inset
+
+POST - S - Erstellt neuen Vote
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/vote/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - B - Liefert den besagten Vote
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/vote/slider/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - B - Liefert alle Votes zu dem Slider {id}
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Vote Ablauf
+\end_layout
+
+\begin_layout Standard
+\align center
+Folgendes Diagramm soll den Ablauf und die möglichen Return Codes aufzeigen,
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename img/Client Vote.png
+	width 90page%
+	height 80pheight%
+	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Voting
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+votingID - 
+\series default
+Die eindeutige ID des Votings
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+name - 
+\series default
+Der Name des Votings
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+juryCount - 
+\series default
+Die Anzahl anwesender Jury Mitglieder
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+status - 
+\series default
+Der Status des Voting (pre_presentation,presentation,presentation_end,voting,vot
+ing_end)
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+sliderMaxValue - 
+\series default
+Der maximale Wert der Slider
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+votingStarted - [Null] 
+\series default
+Der Zeitpunkt an welchem das Voting gestartet wurde (also status=voting)
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+votingDuration
+\series default
+ 
+\series bold
+- 
+\series default
+Die Zeit in der, nach dem erhaltenen Push, abgestimmt werden darf
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+arethmeticMode - 
+\series default
+Die Auswahl der mathematischen Funktion zur Auswertung (median,todo)
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+round - 
+\series default
+Die Runde 
+\series bold
+TODO
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+presentationIDFK - 
+\series default
+Ein FK zu der Präsentation über welche abgestimmt wird
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"votingID": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"name": "Voting 1",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"juryCount": 15, 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"status": "running",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"votingStarted": "14:04:27",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"votingDuration": "00:00:50",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"sliderMaxValue": 10,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"arethmeticMode": "median",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"round": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"presentationIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+/voting
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Votings
+\begin_inset Newline newline
+\end_inset
+
+POST - B - Erstellt neues Voting
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+/voting/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert besagtes Votings
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet besagtes 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+/voting/{id}/slider
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - P - Liefert alle Slider des besagten Voting
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Time
+\end_layout
+
+\begin_layout Standard
+Liefert die aktuelle Serverzeit im Format HH-mm-ss.SSS.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fussnoten Index
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+listoffootnotes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

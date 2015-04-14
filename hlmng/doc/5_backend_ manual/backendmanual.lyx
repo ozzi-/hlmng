@@ -1,0 +1,809 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{tocloft}
+\usepackage{graphicx} 
+\usepackage{hyperref} 
+\usepackage{fancyhdr}
+
+
+%% Footnotes-Listing %%
+\newcommand{\listfootnotesname}{}% 'List of Footnotes' title 
+\newlistof[chapter]{footnotes}{fnt}{\listfootnotesname}% New 'List of...' for footnotes 
+\let\oldfootnote\footnote % Save the old \footnote{...} command 
+\renewcommand\footnote[1]{% Redefine the new footnote to also add 'List of Footnote' entries. 
+    \refstepcounter{footnotes}% Add and step a reference to the footnote/counter. 
+    \oldfootnote{#1}% Make a regular footnote. 
+    \addcontentsline{fnt}{footnotes}{\protect 
+\numberline{\thefootnotes}#1}% Add the 'List of...' entry. 
+}
+
+\definecolor{dkgreen}{RGB}{0,142,0}
+\definecolor{orange}{RGB}{217,108,0}
+\definecolor{dkred}{RGB}{179,0,0}
+\definecolor{lgrey}{RGB}{240,240,240}
+
+% Keine einzelnen Zeilen beim Anfang eines Abschnitts (Schusterjungen)
+\clubpenalty=10000
+% Keine einzelnen Zeilen am Ende eines Abschnitts (Hurenkinder)
+\widowpenalty= 10000 \displaywidowpenalty = 10000 
+
+\fancyhead[RE,LO]{\leftmark}
+\fancyhead[LE,RO]{HLM-NG}
+%%\fancyfoot[CE,CO]{\leftmark}%%
+%%\fancyfoot[LE,RO]{\thepage}%%
+
+\usepackage{parskip}
+\end_preamble
+\use_default_options true
+\begin_modules
+customHeadersFooters
+\end_modules
+\maintain_unincluded_children false
+\language german-ch
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language danish
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\small\ttfamily},commentstyle={\color{dkgreen}},keywordstyle={\color{dkred}},language=Java,stringstyle={\color{dkred}},backgroundcolor={\color{lgrey}},framexleftmargin={0.3 cm}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+HLM-NG | User Manual (Backend)
+\end_layout
+
+\begin_layout Author
+Oussama Zgheb & Tobias Zahner
+\end_layout
+
+\begin_layout LyX-Code
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=0.20
+\backslash
+textwidth]{../../2_Grafiken/logo.png}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Address
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="4">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Datum
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Version
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Änderung
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Autor
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Intial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Einleitung
+\end_layout
+
+\begin_layout Standard
+Dieses Dokument soll einer mit der Materie vertrauten Person eine Hilfestellung
+ zur Konfiguration, Installation und Unterhalt des HLMNG Backend geben.
+\end_layout
+
+\begin_layout Section
+Voraussetzungen
+\end_layout
+
+\begin_layout Standard
+Die Software wurde auf unter Ubuntu 12.04 LTS sowie Lubuntu 14.10 entwickelt
+ und getestet, weitere Betriebssysteme sind höchst wahrscheinlich auch möglich
+ einzusetzen.
+\end_layout
+
+\begin_layout Standard
+Folgende Software muss auf dem Zielgerät installiert sein:
+\end_layout
+
+\begin_layout Itemize
+Tomcat 7
+\end_layout
+
+\begin_layout Itemize
+MySQL 5.6
+\end_layout
+
+\begin_layout Itemize
+Eclipse EE (Kepler oder neuer)
+\end_layout
+
+\begin_layout Standard
+Um den Google Cloud Messaging Dienst zu benutzen, braucht man ein Google
+ Konto sowie einen ApiKey.
+\end_layout
+
+\begin_layout Standard
+https://console.developers.google.com/project , weitere Details zur Accout
+ erstellung hier https://developer.android.com/google/gcm/gs.html
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Section
+Konfiguration
+\end_layout
+
+\begin_layout Subsection
+HLMNGSettings
+\end_layout
+
+\begin_layout Standard
+Unter 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+src/settings/HLMNGSettings.java
+\begin_inset Quotes ard
+\end_inset
+
+ 
+\series default
+können jegliche Einstellungen vorgenommen werden.
+\end_layout
+
+\begin_layout Itemize
+qrFileRootDir (String) = Der Pfad unter welchem alle die gerenderten Qr
+ Codes abgelegt werden
+\end_layout
+
+\begin_layout Itemize
+qrCodeWidth , qrCodeHeight (int)= Die Dimension der gerenderten Qr Codes
+ in Pixel
+\end_layout
+
+\begin_layout Itemize
+mediaFileRootDir (String)= Der Pfad unter welchem alle 'upgeloadeten' Dateien
+ abgelegt werden
+\end_layout
+
+\begin_layout Itemize
+maxMediaImageSizeMB (Double) = Die maximale Dateigrösse für die Datei uploads
+ in Megabyte
+\end_layout
+
+\begin_layout Itemize
+logSysErr (boolean) = Falls Wahr wird jeglicher Log Output auf System.Error
+ umgeleitet anstatt direkt in das Logfile geschrieben zu werden
+\end_layout
+
+\begin_layout Itemize
+logFileRootDir (String) = Der Pfad unter welchem die Logfiles abgelegt werden
+\end_layout
+
+\begin_layout Itemize
+gcmURL (String) = Die URL der Google Cloud Messaging API um Nachrichten
+ zu senden (normalerweise ist dies: 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://android.googleapis.com/gcm/send
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+apiKey (String) = Der vom Google erhaltene Key für ihre API's
+\end_layout
+
+\begin_layout Itemize
+selectLimit (int) = Die Anzahl von Elementen die bei limitieren Queries
+ geladen werden sollen (z.B.
+ bei /newest calls)
+\end_layout
+
+\begin_layout Subsection
+MySQL Verbindungsdaten
+\end_layout
+
+\begin_layout Standard
+Unter 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+hlmmng/WebContent/META-INF/context.xml
+\begin_inset Quotes ard
+\end_inset
+
+ 
+\series default
+werden die Informationen für die MySQL Verbindung festgelegt, siehe 
+\begin_inset Quotes ald
+\end_inset
+
+url
+\begin_inset Quotes ard
+\end_inset
+
+ sowie 
+\begin_inset Quotes ald
+\end_inset
+
+username
+\begin_inset Quotes ard
+\end_inset
+
+ und 
+\begin_inset Quotes ald
+\end_inset
+
+password
+\begin_inset Quotes ard
+\end_inset
+
+.
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<Resource name="jdbc/hlmng" auth="Container" type="javax.sql.DataSource" driverCla
+ssName="com.mysql.jdbc.Driver"
+\end_layout
+
+\begin_layout Plain Layout
+
+url="jdbc:mysql://localhost:3306/hlmng?autoReconnect=true" username="user"
+ password="password" />
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Backend User
+\end_layout
+
+\begin_layout Standard
+Unter 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+hlmng/src/backendlogins.json
+\begin_inset Quotes ard
+\end_inset
+
+ 
+\series default
+werden die Backendlogins festgelegt.
+ Dies sieht etwa wie folgt aus und kann nach belieben abgeändert und erweitert
+ werden.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+[         
+\end_layout
+
+\begin_layout Plain Layout
+
+	{"username": "usr1", "password": "pw1"},         
+\end_layout
+
+\begin_layout Plain Layout
+
+	{"username": "usr2", "password": "pw2"} 
+\end_layout
+
+\begin_layout Plain Layout
+
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Tomcat SSL
+\end_layout
+
+\begin_layout Standard
+Das Zertifikat für Tomcat wir in einem Java Keystore abgelegt.
+ Nun kann man entweder ein Self Signed Cert erstellen oder ein bestehendes
+ importieren.
+\end_layout
+
+\begin_layout Standard
+Selbst eines Erzeugen:
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+keytool -genkey -alias [youralias] -keyalg RSA -keystore [/preferred/keystore/pa
+th]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Bestehendes Importieren: 
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+keytool -import -alias [youralias] -file [/preferred/certificate.cer] -keystore
+ [/preferred/keystore/path]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Unter 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/tomcat7/conf/server.xml
+\begin_inset Quotes ard
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Falls das ganze mit dem integrierten Eclipse Tomcat läuft wird der Pfad
+ etwa so aussehen: 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+/home/ozzi/ide/workspace_ee/Servers/Tomcat v7.0 Server at localhost-config/server.
+xml
+\begin_inset Quotes ard
+\end_inset
+
+
+\series default
+ 
+\end_layout
+
+\begin_layout Standard
+Sollten alle Connectors auskommentiert und dieser eingefügt werden:
+\end_layout
+
+\begin_layout LyX-Code
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
+\end_layout
+
+\begin_layout Plain Layout
+
+maxThreads="150" SSLEnabled="true" scheme="https" secure="true" 
+\end_layout
+
+\begin_layout Plain Layout
+
+clientAuth="false" sslProtocol="TLS" />
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Backend Oberfläche
+\end_layout
+
+\begin_layout Standard
+Dem AngularJS Backend muss auch noch den Pfad zu der REST API mitgeteilt
+ werden, dies geschieht unter 
+\begin_inset Quotes ald
+\end_inset
+
+hlmng/WebContent/js/app.js
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+var apiUrl = 'https://localhost:8443/hlmng/rest/'; 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Standard
+Die neuste Version kann per GitHub 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/ozzi-/hlmng-app
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ bezogen werden.
+\end_layout
+
+\begin_layout Standard
+War Deploy
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fussnoten Index
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+listoffootnotes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

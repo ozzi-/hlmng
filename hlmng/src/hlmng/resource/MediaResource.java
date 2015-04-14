@@ -189,7 +189,7 @@ public class MediaResource extends Resource{
 		Response response;
 		boolean savedOK=false;
 		try {
-			savedOK = saveInputStreamToFile(fileInputStream, filePath,HLMNGSettings.maxMediaImageSize);
+			savedOK = saveInputStreamToFile(fileInputStream, filePath,HLMNGSettings.maxMediaImageSizeMB);
 			if(savedOK){
 				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
 				int insertedID = GenDaoLoader.instance.getMediaDao().addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
@@ -199,7 +199,7 @@ public class MediaResource extends Resource{
 				response=Response.status(500).build();				
 			}	
 		} catch (SizeLimitExceededException e) {
-			Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+HLMNGSettings.maxMediaImageSize+" MB");
+			Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+HLMNGSettings.maxMediaImageSizeMB+" MB");
 			response=Response.status(413).build();
 		}
 		return response;
