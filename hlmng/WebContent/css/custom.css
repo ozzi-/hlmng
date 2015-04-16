@@ -4,6 +4,12 @@
     height: auto;
 }
 
+.upload-image{
+    max-width: 140px;
+    width: 100%;
+    height: auto;
+}
+
 .ng-invalid.ng-dirty {
 	border-color: #FA787E;
 	border-width: 3px;

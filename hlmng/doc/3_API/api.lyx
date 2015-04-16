@@ -1878,6 +1878,26 @@ Die möglichen Return Codes sind (nebst den üblichen Authorization needed
  die ID speichern kann
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+/media/uploadbackend
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+POST - B - Für Backendlogins, ansonsten gleich wie 
+\begin_inset Quotes ald
+\end_inset
+
+/upload
+\begin_inset Quotes ard
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
 News
 \end_layout

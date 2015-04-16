@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="4">
+<lyxtabular version="3" rows="3" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -286,7 +286,7 @@ status open
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -295,7 +295,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -304,11 +304,49 @@ status open
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Initial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-Intial
+16.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Weitere Settings erfasst
 \end_layout
 
 \end_inset
@@ -317,7 +355,7 @@ Intial
 \begin_inset Text
 
 \begin_layout Plain Layout
-Oussama Zgheb 
+Oussama Zgheb
 \end_layout
 
 \end_inset
@@ -478,6 +516,23 @@ selectLimit (int) = Die Anzahl von Elementen die bei limitieren Queries
  bei /newest calls)
 \end_layout
 
+\begin_layout Itemize
+maxActionsAllowed (int) = Die Anzahl Aktionen (siehe API Dokumentation ->
+ Spam Schutz) welche in 
+\begin_inset Quotes ald
+\end_inset
+
+actionGraceTime
+\begin_inset Quotes ard
+\end_inset
+
+ durchgeführt werden dürfen
+\end_layout
+
+\begin_layout Itemize
+actionGraceTime (int) = Die Aktionen Zeitfenster (in ms)
+\end_layout
+
 \begin_layout Subsection
 MySQL Verbindungsdaten
 \end_layout
@@ -527,14 +582,22 @@ status open
 
 \begin_layout Plain Layout
 
-<Resource name="jdbc/hlmng" auth="Container" type="javax.sql.DataSource" driverCla
-ssName="com.mysql.jdbc.Driver"
+<Resource name="jdbc/hlmng" auth="Container" type="javax.sql.DataSource"
 \end_layout
 
 \begin_layout Plain Layout
 
-url="jdbc:mysql://localhost:3306/hlmng?autoReconnect=true" username="user"
- password="password" />
+driverClassName="com.mysql.jdbc.Driver" 
+\end_layout
+
+\begin_layout Plain Layout
+
+url="jdbc:mysql://localhost:3306/hlmng?autoReconnect=true" 
+\end_layout
+
+\begin_layout Plain Layout
+
+username="user" password="password" />
 \end_layout
 
 \end_inset
@@ -609,7 +672,7 @@ Das Zertifikat für Tomcat wir in einem Java Keystore abgelegt.
 Selbst eines Erzeugen:
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
 \begin_inset listings
 lstparams "showstringspaces=false"
 inline false
@@ -617,8 +680,12 @@ status open
 
 \begin_layout Plain Layout
 
-keytool -genkey -alias [youralias] -keyalg RSA -keystore [/preferred/keystore/pa
-th]
+keytool -genkey -alias [youralias] -keyalg RSA
+\end_layout
+
+\begin_layout Plain Layout
+
+        -keystore [/preferred/keystore/path]
 \end_layout
 
 \end_inset
@@ -630,7 +697,7 @@ th]
 Bestehendes Importieren: 
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
 \begin_inset listings
 lstparams "showstringspaces=false"
 inline false
@@ -638,12 +705,20 @@ status open
 
 \begin_layout Plain Layout
 
-keytool -import -alias [youralias] -file [/preferred/certificate.cer] -keystore
- [/preferred/keystore/path]
+keytool -import -alias [youralias] -file [/preferred/certificate.cer] 
+\end_layout
+
+\begin_layout Plain Layout
+
+        -keystore [/preferred/keystore/path]
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout LyX-Code
 
 \end_layout
 
@@ -687,7 +762,7 @@ xml
 Sollten alle Connectors auskommentiert und dieser eingefügt werden:
 \end_layout
 
-\begin_layout LyX-Code
+\begin_layout Standard
 \begin_inset listings
 lstparams "showstringspaces=false"
 inline false
@@ -705,7 +780,7 @@ maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
 
 \begin_layout Plain Layout
 
-clientAuth="false" sslProtocol="TLS" />
+clientAuth="false" sslProtocol="TLS" /> 
 \end_layout
 
 \end_inset

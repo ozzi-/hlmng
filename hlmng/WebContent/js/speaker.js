@@ -3,6 +3,7 @@ var speakerModule = angular.module('speaker', []);
 app.controller('SpeakerNewController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
 	var hlmng = this;
 	hlmng.speaker={};
+	hlmng.media={};
 	hlmng.postSpeaker = RestService.post;
 	hlmng.redir=ToolService.redir;
 	hlmng.postAndRedir = function(fSpeaker) {  
@@ -19,11 +20,8 @@ app.controller('SpeakerListController', ['$http','RestService', function($http,R
 	
 	RestService.list('speaker').then(function(data){
 		hlmng.speakers=data;
-	});
-	
+	});	
 }]);
-
-
 
 
 app.controller('SpeakerIdController', ['$http','$routeParams','RestService','ToolService', function($http, $routeParams,RestService,ToolService){

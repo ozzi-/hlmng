@@ -149,6 +149,21 @@ public class MediaResource extends Resource{
 	}
 
 	@POST
+	@Path("/uploadbackend")
+	@Consumes("multipart/form-data")
+	public Response uploadFileBackend(
+			@FormDataParam("file") InputStream fileInputStream,
+			@FormDataParam("file") FormDataBodyPart body,
+			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
+			@Context HttpHeaders headers, 
+			@Context HttpServletResponse servletResponse
+			) {
+
+		return upload(fileInputStream, body, contentDispositionHeader, headers,
+				servletResponse,true);
+	}
+	
+	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
 	public Response uploadFile(
@@ -159,9 +174,17 @@ public class MediaResource extends Resource{
 			@Context HttpServletResponse servletResponse
 			) {
 
+		return upload(fileInputStream, body, contentDispositionHeader, headers,
+				servletResponse,false);
+	}
+
+
+	private Response upload(InputStream fileInputStream, FormDataBodyPart body,
+			FormDataContentDisposition contentDispositionHeader,
+			HttpHeaders headers, HttpServletResponse servletResponse, boolean backend) {
 		String mimeType=(body.getMediaType()==null)?"none provided" :body.getMediaType().toString() ;
 
-		boolean authenticated = AuthChecker.check(headers, servletResponse, false);
+		boolean authenticated = AuthChecker.check(headers, servletResponse, backend);
 		Response response;
 		
 		if(authenticated){

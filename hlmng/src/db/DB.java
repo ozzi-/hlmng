@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 import javax.naming.Context;
@@ -22,6 +23,19 @@ import log.Log;
  */
 public class DB {
 
+	/**
+	 * Here we list field names, which we don't want to be used in the queries, those
+	 * fields are injected by the code and don't really belong to the model.
+	 * Example: Instead of only sending the client a userIDFK, we send the name of said IDFK too.
+	 * That way the client has to perform one call less
+	 */
+	@SuppressWarnings("serial")
+	private static ArrayList<String> dontMapFields = new ArrayList<String>() {
+	{
+	    add("media");
+	    add("authorName");
+	}};
+	
 	/**
 	 * See WEB-INF/web.xml and WEB-INF/context.xml for DB context settings
 	 * DO NOT use this directly, use the class dao, since it contains the logic for testing.
@@ -65,7 +79,7 @@ public class DB {
 		try {
 			instance = type.newInstance();
 			for (Field field : type.getDeclaredFields()) {
-				if(!(field.getName().equals("media"))){ // will be injected with URL afterwards
+				if(!(dontMapFields.contains(field.getName()))){ // will be injected later
 					Object value = resultSet.getObject(field.getName());
 					PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), type);
 					Method method = propertyDescriptor.getWriteMethod(); 

@@ -30,7 +30,7 @@ import log.Log;
 
 @Path("/user")
 public class  UserResource  extends Resource {
-	private GenDao userDao = GenDaoLoader.instance.getUserDao();
+	private static GenDao userDao = GenDaoLoader.instance.getUserDao();
 
 
 	@GET
@@ -61,6 +61,16 @@ public class  UserResource  extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response putUser(User element,@PathParam("id") int id) throws IOException {
 		return putResource(userDao, element, id);
+	}
+	
+	
+	public static String getUsername(int id){
+		System.out.println();
+		User user = (User) userDao.getElement(id);
+		if(user!=null){
+			return user.getName();
+		}
+		return "unknown";
 	}
 	
 	@PUT
@@ -114,7 +124,6 @@ public class  UserResource  extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postUser(User element) throws IOException {	
 		User userNameExists = ((UserDao) userDao).getUserByName(element.getName());
-		// TODO check for double device id's???
 		if(userNameExists == null){ 
 			if(!UserActionLimiter.actionsExceeded("userCreation")){ // we don't want people spamming the profile creation
 				return postResourceDo(userDao, element);			

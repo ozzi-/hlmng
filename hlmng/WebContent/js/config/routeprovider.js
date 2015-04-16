@@ -5,6 +5,16 @@ angular.module('hlmngApp').config(['$routeProvider', function($routeProvider){
 		controller: "IndexController",
 		controllerAs: 'indexCtrl',
 	}).	
+	when('/uploadmedia', {
+		templateUrl: "template/media/upload.html",
+		controller: "MediaController",
+		controllerAs: 'mediaCtrl',
+	}).
+	when('/medialist/', {
+		templateUrl: "template/media/media-list.html",
+		controller: "MediaController",
+		controllerAs: 'mediaCtrl',
+	}).	
 	when('/speakerlist', {
 		templateUrl: "template/speaker/speaker-list.html",
 		controller: "SpeakerListController",

@@ -24,14 +24,13 @@ import javax.ws.rs.core.Response;
 public class SocialResource extends Resource  {
 	private GenDao socialDao = GenDaoLoader.instance.getSocialDao();
 
-	
-
 	@GET
 	@Path("newest")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getNewestSocials() throws IOException {
 		List<Object> socialObjects = listResource(socialDao, true);
 		enrichSocialWithMedia(socialObjects);
+		enrichSocialWithUsername(socialObjects);
 		return socialObjects;
 	}
 	
@@ -43,17 +42,24 @@ public class SocialResource extends Resource  {
 		return socialDao.getLastUpdateTime();
 	}
 	
-	
 		
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSocials() throws IOException {
 		List<Object> socialObjects = listResource(socialDao, false);
 		enrichSocialWithMedia(socialObjects);
+		enrichSocialWithUsername(socialObjects);
 		return socialObjects;
 	}
 
 
+	private void enrichSocialWithUsername(List<Object> socialObjects) {
+		for (Object object : socialObjects) {
+			Social social = (Social) object;
+			String authorName = UserResource.getUsername(social.getUserIDFK());
+			social.setAuthorName(authorName);
+		}
+	}
 	private void enrichSocialWithMedia(List<Object> socialObjects) {
 		for (Object object : socialObjects) {
 			Social social = (Social) object;

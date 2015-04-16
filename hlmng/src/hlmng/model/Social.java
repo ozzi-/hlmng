@@ -5,6 +5,7 @@ public class Social {
 	private String text;
 	private String status;
 	private String media;
+	private String authorName;
 	private int userIDFK;
 	private int mediaIDFK;
 	private int eventIDFK;
@@ -18,7 +19,7 @@ public class Social {
 		this.socialID = socialID;
 		this.text = text;
 		this.status = status;
-		this.setMedia(media);
+		this.media=media;
 		this.userIDFK = userIDFK;
 		this.mediaIDFK = mediaIDFK;
 		this.eventIDFK = eventIDFK;
@@ -28,7 +29,7 @@ public class Social {
 			int eventIDFK) {
 		this.text = text;
 		this.status = status;
-		this.setMedia(media);
+		this.media=media;
 		this.userIDFK = userIDFK;
 		this.mediaIDFK = mediaIDFK;
 		this.eventIDFK = eventIDFK;
@@ -89,4 +90,14 @@ public class Social {
 	public void setMedia(String media) {
 		this.media = media;
 	}
+
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+
+
 }

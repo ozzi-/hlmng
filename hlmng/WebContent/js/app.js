@@ -1,4 +1,4 @@
-var app = angular.module('hlmngApp',['ngRoute','speaker','event']);
+var app = angular.module('hlmngApp',['ngRoute','speaker','event','media']);
 var apiUrl = 'https://localhost:8443/hlmng/rest/';
 
 app.controller('IndexController', ['$http', function($http){
@@ -11,6 +11,7 @@ app.controller('IndexController', ['$http', function($http){
 		}
 	});
 }]);
+
 
 app.directive('errSrc', function() {
 	  return {

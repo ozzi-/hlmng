@@ -15,7 +15,6 @@ public class HLMNGSettings {
 	 * How many actions are allowed in the grace time
 	 */
 	public static final int maxActionsAllowed=5;
-	//TODO add to documentation ^ ^ 
 
 	
 	/**
