@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="16" columns="4">
+<lyxtabular version="3" rows="17" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -818,7 +818,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -827,7 +827,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -836,11 +836,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Informationen / Konventionen gruppiert und erweitert
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Social Items haben AuthorName Feld
 \end_layout
 
 \end_inset
@@ -1082,7 +1120,11 @@ Bei den als
 \series bold
 B/S
 \series default
- gekennzeichneten Calls wird ein Basic HTTP-Auth erwartet
+ gekennzeichneten Calls wird ein Basic 
+\series bold
+HTTP-Auth
+\series default
+ erwartet
 \begin_inset Foot
 status open
 
@@ -1093,6 +1135,10 @@ https://de.wikipedia.org/wiki/HTTP-Authentifizierung#Basic_Authentication
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+Das Passwort bei den S Logins ist dabei die DeviceID.
 \end_layout
 
 \begin_layout Itemize
@@ -2804,6 +2850,23 @@ Der Moderationsstatus [pending,accepted,rejected]
 
 
 \series bold
+authorName - 
+\series default
+Der Username des Social Items, falls der User nicht gefunden wird ist das
+ Feld 
+\begin_inset Quotes ald
+\end_inset
+
+unknown
+\begin_inset Quotes ard
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 media
 \series default
  
@@ -2865,6 +2928,11 @@ status open
 \begin_layout Plain Layout
 
 	"status": "pending",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"authorName": "Harrison Ford",
 \end_layout
 
 \begin_layout Plain Layout

@@ -1,1 +1,15 @@
 Index..
+
+						<li class="dropdown">							
+								<div class="btn-group" dropdown>
+									<button type="button" class="btn btn-danger">Speaker</button>
+										<button type="button" class="btn btn-danger dropdown-toggle" dropdown-toggle>
+										<span class="caret"></span>
+										<span class="sr-only">Speaker</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li ng-class="{ active: isActive('/speakerlist') }"><a href="#/speakerlist">Speaker List</a><br></li>
+										<li ng-class="{ active: isActive('/newspeaker') }"><a href="#/newspeaker">New Speaker</a><br></li>
+									</ul>
+								</div>
+							</li>

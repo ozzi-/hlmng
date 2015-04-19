@@ -15,4 +15,4 @@ describe("app module", function () {
             expect(scope.message).toBe("Hello World");
         });
     });
-}); 
+});  

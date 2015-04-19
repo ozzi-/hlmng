@@ -1,7 +1,17 @@
-<b>Name:</b>  <input type="text" name="speaker-name" ng-model="speaker.name" required><br>
-<b>Title:</b>  <input type="text" name="speaker-title" ng-model="speaker.title" required><br>
-<b>Nationality:</b>  
-<speaker-countries-option nationality="speaker.nationality"></speaker-countries-option>
-<img class="speaker-image" ng-src="{{'./img/flags/flag_'+(speaker.nationality | lowercase ) +'.png' }}" err-src="{{'./img/flags/flag_invalid.png'}}"/><br>
-<br>
-<b>Description:</b>  <input type="text" name="speaker-description" ng-model="speaker.description" required><br>
+<div class="form-group">
+	<label for="speaker-name">Name</label><br>
+	<input type="text" size="40" name="speaker-name" placeholder="Name, Sirname" ng-model="speaker.name" required><br>
+</div>
+<div class="form-group">
+	<label for="speaker-title">Title</label><br>
+	<input type="text" size="40" name="speaker-name" placeholder="Title" ng-model="speaker.title" required><br>
+</div>
+<div class="form-group">
+	<label for="speaker-nationality">Nationality</label><br>
+	<speaker-countries-option nationality="speaker.nationality"></speaker-countries-option>
+	<img class="speaker-image" ng-src="{{'./img/flags/flag_'+(speaker.nationality | lowercase ) +'.png' }}" err-src="{{'./img/flags/flag_invalid.png'}}"/><br>
+</div>
+<div class="form-group">
+	<label for="speaker-title">Biography</label><br>
+	<textarea type="text" cols="40" rows="5" name="speaker-description" placeholder="Biography" ng-model="speaker.description" required></textarea>
+</div>

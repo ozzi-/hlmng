@@ -2,6 +2,13 @@
 // Generated on Fri Apr 10 2015 15:43:00 GMT+0200 (CEST)
 
 module.exports = function(config) {
+
+
+    client: {
+      captureConsole: true
+    }
+
+
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -18,6 +25,8 @@ module.exports = function(config) {
       'lib/angular.js',
       'lib/angular-mocks.js',
       '../*.js',
+      '../factory/*.js',
+      '../config/*.js',
       '*.js'
     ],
 

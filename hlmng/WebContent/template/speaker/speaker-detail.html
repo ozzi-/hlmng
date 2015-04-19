@@ -9,10 +9,8 @@
 	<br>
 	<button ng-disabled="!speakerInfoEditForm.$valid" ng-click="edit=!edit ;speakerIdCtrl.putSpeaker(speakerIdCtrl.speaker,speakerIdCtrl.speaker.speakerID,'speaker');">Submit</button>
 </div>
-<button ng-click="edit = !edit" ng-init="edit=false">
-	Edit?
-</button>
-<br><br>
-<input type="text" ng-model="id">
-<a href="#/speaker/{{id}}">Goto {{id}}</a>
+
+
+<edit-button edit="edit"></edit-button>
+
 

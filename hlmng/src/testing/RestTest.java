@@ -132,6 +132,7 @@ public class RestTest {
 		Event excpected = genson.deserialize(response, Event.class);
 		assertTrue(eventDao.deleteElement(elementID));
 		assertTrue(ModelHelper.Compare(excpected, orig));
+		// ^ Note to self: If this fails, make sure the server is started...
 	}
 
 	private String doURL(String url, String method) throws Exception {

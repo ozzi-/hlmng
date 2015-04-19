@@ -63,10 +63,10 @@ public class ResourceHelper {
         // cached resource did change -> serve updated content
         if(builder == null){
                 builder = Response.ok(object);
-                Log.addEntry(Level.FINE,"Cache control needs to create new entry"); 
+                Log.addEntry(Level.INFO,"Cache control needs to create new entry"); 
                 builder.tag(etag);
         }else{
-            Log.addEntry(Level.FINE,"Cache control can use cached entry"); 
+            Log.addEntry(Level.INFO,"Cache control can use cached entry"); 
         }
         builder.cacheControl(cc);
 		return builder;

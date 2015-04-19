@@ -9,38 +9,58 @@
 		<script src="js/lib/angular.js"></script>
 		<script src="js/lib/angular-route.js"></script>
 		<script src="js/lib/jquery.min.js"></script>
-		<script src="js/lib/bootstrap.min.js"></script>
+		<script src="js/lib/ui-bootstrap-tpls.js"></script>
 		
 		<!--  PRODUCTION  -->
 		<!-- 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script> -->
 		
 		<link href="css/custom.css" rel="stylesheet">
 		<script src="js/app.js"></script>
+		<script src="js/directive.js"></script>
 		<script src="js/config/routeprovider.js"></script>
 		<script src="js/factory/restservice.js"></script>
 		<script src="js/factory/toolservice.js"></script>
-		<script src="js/speaker.js"></script>
-		<script src="js/media.js"></script>
-		<script src="js/event.js"></script>
+		<script src="js/controller/speaker.js"></script>
+		<script src="js/controller/media.js"></script>
+		<script src="js/controller/event.js"></script>
+		<script src="js/controller/helper.js"></script>
 	</head>
 	
 	<body ng-app="hlmngApp">
-		<header>
-			<h2 class="text-center">HLMNG Backend</h2>
-			<a href="#/">Index</a><br>
-			<a href="#/speakerlist">Speaker List</a><br>
-			<a href="#/eventlist">Event List</a><br>
-			<a href="#/speaker/1">Speaker Detail ID=1</a><br>
-			<a href="#/newspeaker">New Speaker</a><br>
-			<a href="#/event/1">Event Detail ID=1</a><br>
-			<a href="#/uploadmedia">Upload Media</a><br>
-			
-		</header>
-		<hr>
+		<div ng-controller="NavBarController">
+			<div role="navigation" class="navbar navbar-default navbar-fixed-top" style="background:#000;">
+				<div class="container">
+					<div class="navbar-header">
+						<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a href="#/" class="navbar-brand">
+							<img src="img/logo.png" alt="Hacking-Lab Logo" class="navbar-logo" />
+						</a>
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li ng-class="{ active: isActive('/eventlist') }"><a href="#/eventlist">Event List</a><br></li>
+							<li ng-class="{ active: isActive('/newevent') }"><a href="#/newevent">New Event</a><br></li>
+							<li ng-class="{ active: isActive('/speakerlist') }"><a href="#/speakerlist">Speaker List</a><br></li>
+							<li ng-class="{ active: isActive('/newspeaker') }"><a href="#/newspeaker">New Speaker</a><br></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+						</ul>						
+					</div>
+			</div>
+		</div>	
+	</div>
+
+		<br><br><br><br><br><br>
+
 		<div class="container">
 			<div ng-view></div>
 		</div>

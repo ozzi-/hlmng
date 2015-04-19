@@ -1,5 +1,19 @@
 var eventModule = angular.module('event', []);
 
+
+app.controller('EventNewController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
+	var hlmng = this;
+	hlmng.event={};
+	hlmng.postEvent = RestService.post;
+	hlmng.redir=ToolService.redir;
+	hlmng.postAndRedir = function(fEvent) {  
+		hlmng.postEvent(fEvent,'event').then(function(data){
+			hlmng.event=data;
+			hlmng.redir('/event/'+hlmng.event.eventID);
+		});
+	};
+}]);
+
 app.controller('EventIdController', ['$http','$routeParams','RestService', function($http, $routeParams,RestService){
 	var hlmng = this;
 	hlmng.form = {};
@@ -18,25 +32,3 @@ app.controller('EventListController', ['$http','RestService', function($http,Res
 		hlmng.events=data;
 	});
 }]);
-
-
-
-eventModule.directive('eventInfo', function(){
-	return {
-		restrict: 'E',
-		templateUrl: 'template/event/event-info.html',
-		scope: {
-			event: "=event"
-		}
-	};
-});
-
-eventModule.directive('eventInfoEdit', function(){
-	return {
-		restrict: 'E',
-		templateUrl: 'template/event/event-info-edit.html',
-		scope: {
-			event: "=event"
-		}
-	};
-});

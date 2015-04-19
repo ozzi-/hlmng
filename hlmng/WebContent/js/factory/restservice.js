@@ -1,7 +1,7 @@
 app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
     return {
         post: function (obj,className) {
-        	var deferred = $q.defer();
+        	var deferred = $q.defer();        
             $http({ method: "POST", url: apiUrl+className, data: obj })
             .success(function (data) {
     			$log.log('post '+className+' successfully');

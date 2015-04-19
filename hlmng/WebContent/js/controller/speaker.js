@@ -37,32 +37,3 @@ app.controller('SpeakerIdController', ['$http','$routeParams','RestService','Too
 	hlmng.redir=ToolService.redir;
 }]);
 
-speakerModule.directive('speakerInfo', function(){
-	return {
-		restrict: 'E',
-		templateUrl: 'template/speaker/speaker-info.html',
-		scope: {
-			speaker: "=speaker"
-		}
-	};
-});
-
-speakerModule.directive('speakerCountriesOption', function(){
-	return {
-		restrict: 'E',
-		templateUrl: 'template/speaker/speaker-countries-option.html',
-		scope: {
-			nationality: "=nationality"
-		}
-	};
-});
-
-speakerModule.directive('speakerInfoEdit', function(){
-	return {
-		restrict: 'E',
-		templateUrl: 'template/speaker/speaker-info-edit.html',
-		scope: {
-			speaker: "=speaker"
-		}
-	};
-});

@@ -20,7 +20,7 @@ public class HLMNGSettings {
 	/**
 	 * QR Codes
 	 */
-	public static final String qrFileRootDir = (production?"/home/student/qr/":"/home/student/qr/");
+	public static final String qrFileRootDir = (production?"/home/student/qr/":"/home/ozzi/qr/");
 	public static final int qrCodeWidth=500;
 	public static final int qrCodeHeight=500;
 	

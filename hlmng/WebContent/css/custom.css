@@ -4,6 +4,11 @@
     height: auto;
 }
 
+.navbar-logo{
+	margin-top: -10px;
+	max-height: 50px;
+}
+
 .upload-image{
     max-width: 140px;
     width: 100%;

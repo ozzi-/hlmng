@@ -33,7 +33,6 @@ public class UserActionLimiter {
 	 */
 	public static boolean actionsExceeded(String username){
 		ArrayList<Long> actionList = addAction(username);
-		System.out.println(getActionsOnRecord(actionList)); 
 		return (getActionsOnRecord(actionList)>HLMNGSettings.maxActionsAllowed);
 	}
 	/**

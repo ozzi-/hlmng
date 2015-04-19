@@ -1,17 +1,16 @@
- 
-describe("SimpleService", function(){
-
-    beforeEach(module("app"));
-
-    var service;
-
-    beforeEach(inject(function(SimpleService){
-       service = SimpleService;
-    }));
-
-    describe("getData", function(){
-        it("should return an array of items", function(){
-            expect(service.getData()).toBeDefined();
-        });
-    });
+describe('app: hlmngApp', function() {
+	
+	beforeEach(module('hlmngApp'));
+	  
+	
+	describe('factory: RestService', function() {
+	var factory = null;
+		beforeEach(inject(function(MyFactory) {
+			factory = MyFactory;
+		}));
+	
+		it('Should define methods', function() {
+			expect(factory.list("speaker")).not.toBeNull();
+		});
+	});
 });
