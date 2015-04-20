@@ -36,6 +36,10 @@ public class DB {
 	    add("authorName");
 	}};
 	
+	public static ArrayList<String> getDontMapFields() {
+		return dontMapFields;
+	}
+
 	/**
 	 * See WEB-INF/web.xml and WEB-INF/context.xml for DB context settings
 	 * DO NOT use this directly, use the class dao, since it contains the logic for testing.
@@ -111,9 +115,9 @@ public class DB {
 		PropertyDescriptor propertyDescriptor;
 
 		String className= classType.getSimpleName();
-		String classID = className.toLowerCase()+"ID";		
+		String classID = className.toLowerCase()+"ID";	
 		for (Field field : classType.getDeclaredFields()) {
-			if(!classID.equals(field.getName())&& !field.getName().equals("media")){ // ID is set by DB, media injected
+			if(!classID.toLowerCase().equals(field.getName().toLowerCase())&& !(dontMapFields.contains(field.getName()))){ // ID is set by DB, others injected
 				try {
 					propertyDescriptor = new PropertyDescriptor(field.getName(), classType);
 					Method method = propertyDescriptor.getReadMethod();

@@ -46,6 +46,11 @@ angular.module('hlmngApp').config(['$routeProvider', function($routeProvider){
 	when('/eventactive/:eventId/newnews', {
 		// ..
 	}).
+	when('/eventactive/:eventId/neweventroom', {
+		templateUrl: "template/eventroom/eventroom-new.html",
+		controller: "EventRoomNewController",
+		controllerAs: 'eventRoomNewCtrl'
+	}). 
 	when('/eventactive/:eventId/social', {
 		// ..
 	}).

@@ -1,4 +1,4 @@
-var app = angular.module('hlmngApp',['ngRoute','speaker','event','media','helper','directive','ui.bootstrap']);
+var app = angular.module('hlmngApp',['ngRoute','speaker','event','eventroom','media','helper','directive','ui.bootstrap']);
 var apiUrl = 'https://localhost:8443/hlmng/rest/';
 
 

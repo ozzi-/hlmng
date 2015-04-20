@@ -7,23 +7,26 @@ public class Event {
 	private String description;
 	private String startDate;
 	private String endDate;
+	private boolean active;
 
 	public Event(){
 		
 	}
-	public Event(int eventID, String name, String description, String startDate, String endDate){
+	public Event(int eventID, String name, String description, String startDate, String endDate,boolean active){
 		this.eventID=eventID;
 		this.name=name;
 		this.description=description;
 		this.startDate=startDate;
 		this.endDate=endDate;
+		this.active=active;
 	}
 	
-	public Event(String name, String description, String startDate, String endDate){
+	public Event(String name, String description, String startDate, String endDate,boolean active){
 		this.name=name;
 		this.description=description;
 		this.startDate=startDate;
 		this.endDate=endDate;
+		this.active=active;
 	}
 	
 	
@@ -56,6 +59,12 @@ public class Event {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

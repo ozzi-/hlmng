@@ -50,6 +50,18 @@ directiveModule.directive('eventInfoEdit', function(){
 	};
 });
 
+directiveModule.directive('eventRoomInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/eventroom/eventroom-info-edit.html',
+		scope: {
+			event: "=event",
+			eventroom: "=eventroom"
+		}
+	};
+});
+
+
 
 directiveModule.directive('mediaUpload', function(){
 	return {

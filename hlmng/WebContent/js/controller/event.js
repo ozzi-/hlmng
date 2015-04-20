@@ -30,7 +30,7 @@ app.controller('EventListController', ['$http','RestService', function($http,Res
 	hlmng.eventsUpcoming = [];
 	hlmng.eventsRunning = [];
 	hlmng.eventsFinished = [];
-	
+	hlmng.events = []; // contains all
 	
 	RestService.list('event').then(function(data){
 		var curDate = new Date().setHours(0,0,0,0);
@@ -38,17 +38,15 @@ app.controller('EventListController', ['$http','RestService', function($http,Res
         	var itemStartDate = new Date(item.startDate).setHours(0,0,0,0);
         	var itemEndDate = new Date(item.endDate).setHours(0,0,0,0);
         	if(itemStartDate<=curDate && itemEndDate>=curDate){
-        		//alert("RUNNING: "+itemStartDate+" - "+itemEndDate+" CURR: "+curDate);
         		hlmng.eventsRunning.push(item);
         	}
         	if(itemEndDate<curDate && itemStartDate<curDate){
-        		//alert("FINISHED: "+itemStartDate+" - "+itemEndDate+" CURR: "+curDate);
         		hlmng.eventsFinished.push(item);
         	}
         	if(itemStartDate>curDate && itemEndDate>curDate){
-        		//alert("UPCOMING: "+itemStartDate+" - "+itemEndDate+" CURR: "+curDate);
         		hlmng.eventsUpcoming.push(item);
         	}
+        	hlmng.events.push(item);
         });	
 	});
 }]);

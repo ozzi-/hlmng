@@ -94,7 +94,7 @@ public class DaoTest {
     }
 	@Test
 	 public void testEvent(){
-		boolean ok =testDaoGeneric(new Event("event","description","2014-01-01","2014-01-01"), eventDao);
+		boolean ok =testDaoGeneric(new Event("event","description","2014-01-01","2014-01-01",true), eventDao);
 		assertTrue(ok);
 	}
 	@Test

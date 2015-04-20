@@ -17,7 +17,7 @@ public class QueryBuilder {
 
 	/**
 	 * Builds a map for every "FK" (foreign key) containing field.
-	 * The map contains a simple select * from query with a where clause for saif FK.
+	 * The map contains a simple select * from query with a where clause for said FK.
 	 * Map<FKName,Query>
 	 * 
 	 * @param className
@@ -99,8 +99,7 @@ public class QueryBuilder {
 	 * is true >fieldname1=?, fieldName2=?, ...<
 	 * 
 	 * @param methods
-	 * @param the
-	 *            Name of the ID field of the DB / ID field in the model
+	 * @param the Name of the ID field of the DB / ID field in the model
 	 * @param true for update statement, false for insert
 	 * @return the desired partial query string
 	 */
@@ -109,7 +108,7 @@ public class QueryBuilder {
 		int i = 0;
 		String fieldsString = (set) ? "" : "( ";
 		for (Field field : methods) {
-			if (!classID.equals(field.getName()) && !field.getName().equals("media")) {
+			if (!classID.toLowerCase().equals(field.getName().toLowerCase()) && !(DB.getDontMapFields().contains(field.getName()))) {
 				if (i != 0) {
 					fieldsString += " , " + field.getName()
 							+ ((set) ? "=?" : "");
@@ -135,7 +134,7 @@ public class QueryBuilder {
 		String valuesString = " values (";
 		int dontMap=1; // The first one is the ID and doesn't have to be mapped
 		for (Field field : methods) {
-			if(field.getName().equals("media")){ // Is a injected field, don't map
+			if(DB.getDontMapFields().contains(field.getName())){ // will be injected later
 				dontMap++;
 			}
 		}

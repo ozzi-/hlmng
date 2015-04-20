@@ -117,7 +117,7 @@ public class RestTest {
 	@Test
 	public void testEventRest() throws IOException {
 		Event orig = new Event("eventname", "description", "2015-01-01",
-				"2015-01-01");
+				"2015-01-01",true);
 		int elementID = eventDao.addElement(orig);
 		String response = "";
 		try {
