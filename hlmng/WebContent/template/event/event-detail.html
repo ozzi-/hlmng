@@ -4,7 +4,7 @@
 
 <div ng-show="edit">
 	<form name="eventInfoEditForm" novalidate>
-	<event-info-edit event="eventIdCtrl.event"></event-info-edit>
+		<event-info-edit event="eventIdCtrl.event"></event-info-edit>
 	</form>
 	<button ng-disabled="!eventInfoEditForm.$valid" ng-click="edit=!edit ;eventIdCtrl.putEvent(eventIdCtrl.event,eventIdCtrl.event.eventID,'event');">Submit</button>
 </div>

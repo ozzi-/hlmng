@@ -60,13 +60,19 @@ angular.module('hlmngApp').config(function($stateProvider, $urlRouterProvider) {
 	state('/eventactive/:eventId/news-new', {
 		// ..
 	}).
-	state('/eventactive/:eventId/neweventroom', {
+	state('/eventactive/neweventroom', {
 		url: "/eventactive/:eventId/neweventroom",
 		templateUrl: "template/eventroom/eventroom-new.html",
 		controller: "EventRoomNewController",
 		controllerAs: 'eventRoomNewCtrl'
+	}).
+	state('/eventactive/eventroom', {
+		url: "/eventactive/:eventId/eventroom/:eventRoomId",
+		templateUrl: "template/eventroom/eventroom-detail.html",
+		controller: "EventRoomIdController",
+		controllerAs: 'eventRoomIdCtrl'
 	}). 
-	state('/eventactive/:eventId/eventroomlist', {
+	state('/eventactive/eventroomlist', {
 		url: "/eventactive/:eventId/eventroomlist",
 		templateUrl: "template/eventroom/eventroom-list.html",
 		controller: "EventRoomListController",

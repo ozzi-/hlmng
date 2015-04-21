@@ -1,0 +1,14 @@
+<div ng-hide="edit">
+	<event-room-info eventroom="eventRoomIdCtrl.eventroom"></event-room-info><br>
+</div>
+
+<div ng-show="edit">
+	<form name="eventRoomInfoEditForm" novalidate>
+		<event-room-info-edit eventroom="eventRoomIdCtrl.eventroom"></event-room-info-edit>
+	</form>
+	<button ng-disabled="!eventRoomInfoEditForm.$valid" ng-click="edit=!edit ;eventRoomIdCtrl.putEvent(eventRoomIdCtrl.eventroom,eventRoomIdCtrl.eventroom.eventRoomID,'eventroom');">Submit</button>
+</div>
+
+
+<edit-button edit="edit"></edit-button>
+
