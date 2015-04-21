@@ -134,7 +134,7 @@ public class MediaResource extends Resource{
 	
 
 	@GET
-	@Path("image/jpg/{name}")
+	@Path("image/jpeg/{name}")
 	@Produces("image/jpeg")
 	public Response getJPG(@PathParam("name") String fileName) throws IOException {
 			return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "jpg", request,localJPGResponseCache);

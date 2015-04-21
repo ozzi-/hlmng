@@ -55,11 +55,21 @@ directiveModule.directive('eventRoomInfoEdit', function(){
 		restrict: 'E',
 		templateUrl: 'template/eventroom/eventroom-info-edit.html',
 		scope: {
-			event: "=event",
 			eventroom: "=eventroom"
 		}
 	};
 });
+
+directiveModule.directive('eventRoomInfo', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/eventroom/eventroom-info.html',
+		scope: {
+			eventroom: "=eventroom"
+		}
+	};
+});
+
 
 
 

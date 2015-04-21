@@ -14,11 +14,11 @@ app.controller('EventNewController', ['$http','RestService','ToolService', funct
 	};
 }]);
 
-app.controller('EventIdController', ['$http','$routeParams','RestService', function($http, $routeParams,RestService){
+app.controller('EventIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
 	var hlmng = this;
 	hlmng.form = {};
 	
-	RestService.get($routeParams.eventId,'event').then(function(data){
+	RestService.get($stateParams.eventId,'event').then(function(data){
 		hlmng.event=data;
 	});
 

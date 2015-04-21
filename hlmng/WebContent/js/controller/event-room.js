@@ -12,3 +12,16 @@ app.controller('EventRoomNewController', ['$http','RestService','ToolService', f
 		});
 	};
 }]);
+
+app.controller('EventRoomListController', ['$http','RestService','$routeParams', function($http,RestService,$routeParams){
+	var hlmng = this;
+	hlmng.eventrooms = [];
+	
+	RestService.list('eventroom').then(function(data){
+	    $.each(data, function(i, item){
+	    	if(item.eventIDFK==$routeParams.eventId){
+	    		hlmng.eventrooms.push(item);	  
+	    	}
+	    });
+	});
+}]);

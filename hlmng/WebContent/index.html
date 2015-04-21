@@ -32,7 +32,7 @@
 	</head>
 	
 	<body ng-app="hlmngApp">
-		<div ng-controller="NavBarController">
+	<div ng-controller="NavBarController as navBarCtrl">
 			<div role="navigation" class="navbar navbar-default navbar-fixed-top" style="background:#000;">
 				<div class="container">
 					<div class="navbar-header">
@@ -47,23 +47,26 @@
 						</a>
 					</div>
 					<div class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
-							<li ng-class="{ active: isActive('/eventlist') }"><a href="#/eventlist">Event List</a><br></li>
-							<li ng-class="{ active: isActive('/newevent') }"><a href="#/newevent">New Event</a><br></li>
-							<li ng-class="{ active: isActive('/speakerlist') }"><a href="#/speakerlist">Speaker List</a><br></li>
-							<li ng-class="{ active: isActive('/newspeaker') }"><a href="#/newspeaker">New Speaker</a><br></li>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-						</ul>						
+						<ul ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
+					      	<li ui-sref-active="active"><a ui-sref="/eventlist">Event List</a><br></li>
+							<li ui-sref-active="active"><a ui-sref="/newevent">New Event</a><br></li>
+							<li ui-sref-active="active"><a ui-sref="/speakerlist">Speaker List</a><br></li>
+							<li ui-sref-active="active"><a ui-sref="/newspeaker">New Speaker</a><br></li>
+				      	</ul>
+				      	<ul ng-show="navBarCtrl.checkEventActive()" class="nav navbar-nav">
+					      	<li ui-sref-active="active"><a ui-sref="/eventroomlist">EventRoom List</a><br></li>
+							<li ui-sref-active="active"><a ui-sref="/neweventroom">EventRoom New</a><br></li>
+				      	</ul>
+				      	<ul class="nav navbar-nav navbar-right">
+						</ul>								
 					</div>
-			</div>
-		</div>	
-	</div>
-
-		<br><br><br><br><br><br>
-
+				</div>
+			</div>	
+		</div>
+  		<br><br><br><br><br><br>
 		<div class="container">
-			<div ng-view></div>
+			<div ui-view>	
+			</div>
 		</div>
 	</body>
 </html>

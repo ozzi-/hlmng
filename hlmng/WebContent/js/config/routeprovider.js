@@ -1,84 +1,102 @@
-angular.module('hlmngApp').config(['$routeProvider', function($routeProvider){	
-	$routeProvider.
-	when('/', {
+	
+angular.module('hlmngApp').config(function($stateProvider, $urlRouterProvider) {
+
+	$urlRouterProvider.otherwise("/");
+
+
+	$stateProvider.
+	state('/', {
+		url: "/",
 		templateUrl: "template/index.html",
 	}).	
-	when('/uploadmedia', {
+	state('/uploadmedia', {
+		url: "/uploadmedia",
 		templateUrl: "template/media/upload.html",
 		controller: "MediaController",
 		controllerAs: 'mediaCtrl',
 	}).
-	when('/medialist/', {
+	state('/medialist/', {
+		url: "/medialist",
 		templateUrl: "template/media/media-list.html",
 		controller: "MediaController",
 		controllerAs: 'mediaCtrl',
 	}).	
-	when('/speakerlist', {
+	state('/speakerlist', {
+		url: "/speakerlist",
 		templateUrl: "template/speaker/speaker-list.html",
 		controller: "SpeakerListController",
 		controllerAs: 'speakerListCtrl'
 	}).
-	when('/newspeaker', {
+	state('/newspeaker', {
+		url: "/newspeaker",
 		templateUrl: "template/speaker/speaker-new.html",
 		controller: "SpeakerNewController",
 		controllerAs: 'speakerNewCtrl'
 	}).
-	when('/speaker/:speakerId', {
+	state('/speaker/:speakerId', {
+		url: "/speaker/:speakerId",
 		templateUrl: "template/speaker/speaker-detail.html",
 		controller: "SpeakerIdController",
 		controllerAs: 'speakerIdCtrl'
 	}).
-	when('/eventlist', {
+	state('/eventlist', {
+		url: "/eventlist",
 		templateUrl: "template/event/event-list.html",
 		controller: "EventListController",
 		controllerAs: 'eventListCtrl'
 	}).
-	when('/newevent', {
+	state('/newevent', {
+		url: "/newevent",
 		templateUrl: "template/event/event-new.html",
 		controller: "EventNewController",
 		controllerAs: 'eventNewCtrl'
 	}).
-	when('/event/:eventId', {
+	state('/event/:eventId', {
+		url: "/event/:eventId",
 		templateUrl: "template/event/event-detail.html",
 		controller: "EventIdController",
 		controllerAs: 'eventIdCtrl'
 	}).
-	when('/eventactive/:eventId/newnews', {
+	state('/eventactive/:eventId/news-new', {
 		// ..
 	}).
-	when('/eventactive/:eventId/neweventroom', {
+	state('/eventactive/:eventId/neweventroom', {
+		url: "/eventactive/:eventId/neweventroom",
 		templateUrl: "template/eventroom/eventroom-new.html",
 		controller: "EventRoomNewController",
 		controllerAs: 'eventRoomNewCtrl'
 	}). 
-	when('/eventactive/:eventId/social', {
+	state('/eventactive/:eventId/eventroomlist', {
+		url: "/eventactive/:eventId/eventroomlist",
+		templateUrl: "template/eventroom/eventroom-list.html",
+		controller: "EventRoomListController",
+		controllerAs: 'eventRoomListCtrl'
+	}). 
+	state('/eventactive/:eventId/social', {
 		// ..
 	}).
-	when('/eventactive/:eventId/newpush', {
+	state('/eventactive/:eventId/newpush', {
 		// ..
 	}).
-	when('/eventactive/:eventId/pushlist', {
+	state('/eventactive/:eventId/pushlist', {
 		// ..
 	}).
-	when('/eventactive/:eventId/newvote', {
+	state('/eventactive/:eventId/newvote', {
 		// ..
 	}).
-	when('/eventactive/:eventId/votelist', {
+	state('/eventactive/:eventId/votelist', {
 		// ..
 	}).
-	when('/eventactive/:eventId/vote/:voteId', {
+	state('/eventactive/:eventId/vote/:voteId', {
 		// ..
 	}).
-	when('/eventactive/:eventId/vote/:voteId/statistics', {
+	state('/eventactive/:eventId/vote/:voteId/statistics', {
 		// ..
 	}).
-	when('/eventactive/:eventId/newqrcode', {
+	state('/eventactive/:eventId/newqrcode', {
 		// ..
 	}).
-	when('/eventactive/:eventId/qrcodelist', {
+	state('/eventactive/:eventId/qrcodelist', {
 		// ..
-	}).
-	otherwise({
-		redirectTo: '/'
 	});
-}]);
+});

@@ -1,5 +1,6 @@
 var speakerModule = angular.module('speaker', []);
 
+
 app.controller('SpeakerNewController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
 	var hlmng = this;
 	hlmng.speaker={};
@@ -24,11 +25,11 @@ app.controller('SpeakerListController', ['$http','RestService', function($http,R
 }]);
 
 
-app.controller('SpeakerIdController', ['$http','$routeParams','RestService','ToolService', function($http, $routeParams,RestService,ToolService){
+app.controller('SpeakerIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
 	var hlmng = this;
 	
 	hlmng.speaker = {};	
-	RestService.get($routeParams.speakerId,'speaker').then(function(data){
+	RestService.get($stateParams.speakerId,'speaker').then(function(data){
 		hlmng.speaker=data;
 	});
 
