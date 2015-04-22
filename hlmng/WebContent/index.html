@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="hlmngApp">
 	<head>
 		<meta charset="utf-8">
 		<title>HLMNG Backend</title>
@@ -31,43 +31,12 @@
 		<script src="js/controller/helper.js"></script>
 	</head>
 	
-	<body ng-app="hlmngApp">
-	<div ng-controller="NavBarController as navBarCtrl">
-			<div role="navigation" class="navbar navbar-default navbar-fixed-top" style="background:#000;">
-				<div class="container">
-					<div class="navbar-header">
-						<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-						<a href="#/" class="navbar-brand">
-							<img src="img/logo.png" alt="Hacking-Lab Logo" class="navbar-logo" />
-						</a>
-					</div>
-					<div class="navbar-collapse collapse">
-						<ul ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
-					      	<li ui-sref-active="active"><a ui-sref="/eventlist">Event List</a><br></li>
-							<li ui-sref-active="active"><a ui-sref="/newevent">New Event</a><br></li>
-							<li ui-sref-active="active"><a ui-sref="/speakerlist">Speaker List</a><br></li>
-							<li ui-sref-active="active"><a ui-sref="/newspeaker">New Speaker</a><br></li>
-				      	</ul>
-				      	<ul ng-show="navBarCtrl.checkEventActive()" class="nav navbar-nav">
-							<li ui-sref-active="active"><a ui-sref="/eventactive/eventroomlist({ eventId: navBarCtrl.getEventActive()})">EventRoom List</a></li>
-							<li ui-sref-active="active"><a ui-sref="/eventactive/neweventroom({ eventId: navBarCtrl.getEventActive()})">EventRoom New</a></li>
-				      	</ul>
-				      	<ul class="nav navbar-nav navbar-right">
-						</ul>								
-					</div>
-				</div>
-			</div>	
-		</div>
-  		<br><br><br><br><br><br>
+	<body>
+		<div ui-view="nav"></div>
+		<br><br><br><br><br><br>
 		<div class="container">
-			<div ui-view>	
-			</div>
-		</div>
+			<div ui-view="content"></div>
+		</div>		
 	</body>
 </html>
 

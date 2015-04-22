@@ -1,82 +1,196 @@
-	
-angular.module('hlmngApp').config(function($stateProvider, $urlRouterProvider) {
+var myapp = angular.module('stateprovider', ["ui.router"]); 
+myapp.config(function($stateProvider, $urlRouterProvider){
 
 	$urlRouterProvider.otherwise("/");
-
-
+	
 	$stateProvider.
-	state('/', {
-		url: "/",
-		templateUrl: "template/index.html",
-	}).	
+    state('/', {
+        url: "/",
+        views: { 
+        	"content": {
+        		templateUrl: "template/index.html"
+        	},
+            "nav": {
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+            }
+        }
+    }).
 	state('/uploadmedia', {
 		url: "/uploadmedia",
-		templateUrl: "template/media/upload.html",
-		controller: "MediaController",
-		controllerAs: 'mediaCtrl',
+		views: {
+			"content":{
+				controller: "MediaController",
+				controllerAs: 'mediaCtrl',
+				templateUrl: "template/media/upload.html"
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}).
 	state('/medialist/', {
 		url: "/medialist",
-		templateUrl: "template/media/media-list.html",
-		controller: "MediaController",
-		controllerAs: 'mediaCtrl',
+		views: {
+			"content":{
+				controller: "MediaController",
+				controllerAs: 'mediaCtrl',
+				templateUrl: "template/media/media-list.html"
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}).	
 	state('/speakerlist', {
 		url: "/speakerlist",
-		templateUrl: "template/speaker/speaker-list.html",
-		controller: "SpeakerListController",
-		controllerAs: 'speakerListCtrl'
+		views: {
+			"content":{
+				templateUrl: "template/speaker/speaker-list.html",
+				controller: "SpeakerListController",
+				controllerAs: 'speakerListCtrl'							
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}).
 	state('/newspeaker', {
 		url: "/newspeaker",
-		templateUrl: "template/speaker/speaker-new.html",
-		controller: "SpeakerNewController",
-		controllerAs: 'speakerNewCtrl'
+		views: {
+			"content":{
+				templateUrl: "template/speaker/speaker-new.html",
+				controller: "SpeakerNewController",
+				controllerAs: 'speakerNewCtrl'				
+			},
+			"nav":{
+				templateUrl: "template/nav.html"
+			}
+		}
 	}).
 	state('/speaker/:speakerId', {
 		url: "/speaker/:speakerId",
-		templateUrl: "template/speaker/speaker-detail.html",
-		controller: "SpeakerIdController",
-		controllerAs: 'speakerIdCtrl'
+		views:{
+			"content":{
+				templateUrl: "template/speaker/speaker-detail.html",
+				controller: "SpeakerIdController",
+				controllerAs: 'speakerIdCtrl'				
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}).
 	state('/eventlist', {
 		url: "/eventlist",
-		templateUrl: "template/event/event-list.html",
-		controller: "EventListController",
-		controllerAs: 'eventListCtrl'
+		views:{
+			"content":{
+				templateUrl: "template/event/event-list.html",
+				controller: "EventListController",
+				controllerAs: 'eventListCtrl'
+			},
+			"nav":{
+				templateUrl: "template/nav.html"
+			}
+		}
 	}).
 	state('/newevent', {
 		url: "/newevent",
-		templateUrl: "template/event/event-new.html",
-		controller: "EventNewController",
-		controllerAs: 'eventNewCtrl'
+		views:{
+			"content":{
+				templateUrl: "template/event/event-new.html",
+				controller: "EventNewController",
+				controllerAs: 'eventNewCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}).
 	state('/event/:eventId', {
 		url: "/event/:eventId",
-		templateUrl: "template/event/event-detail.html",
-		controller: "EventIdController",
-		controllerAs: 'eventIdCtrl'
+		views:{
+			"content":{
+				templateUrl: "template/event/event-detail.html",
+				controller: "EventIdController",
+				controllerAs: 'eventIdCtrl'
+			},
+			"nav":{
+				templateUrl: "template/nav.html"
+			}
+		}
+	}).
+	state('/eventactive/', {
+		url: "/eventactive/:eventId/",
+		views:{
+			"content":{
+				template: "TODO"
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}).
 	state('/eventactive/:eventId/news-new', {
 		// ..
 	}).
 	state('/eventactive/neweventroom', {
 		url: "/eventactive/:eventId/neweventroom",
-		templateUrl: "template/eventroom/eventroom-new.html",
-		controller: "EventRoomNewController",
-		controllerAs: 'eventRoomNewCtrl'
+		views:{
+			"content":{
+				templateUrl: "template/eventroom/eventroom-new.html",
+				controller: "EventRoomNewController",
+				controllerAs: 'eventRoomNewCtrl'
+			},
+			"nav":{
+				templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}).
 	state('/eventactive/eventroom', {
 		url: "/eventactive/:eventId/eventroom/:eventRoomId",
-		templateUrl: "template/eventroom/eventroom-detail.html",
-		controller: "EventRoomIdController",
-		controllerAs: 'eventRoomIdCtrl'
+		views:{
+			"content":{
+				templateUrl: "template/eventroom/eventroom-detail.html",
+				controller: "EventRoomIdController",
+				controllerAs: 'eventRoomIdCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}). 
 	state('/eventactive/eventroomlist', {
 		url: "/eventactive/:eventId/eventroomlist",
-		templateUrl: "template/eventroom/eventroom-list.html",
-		controller: "EventRoomListController",
-		controllerAs: 'eventRoomListCtrl'
+		views:{
+			"content":{
+				templateUrl: "template/eventroom/eventroom-list.html",
+				controller: "EventRoomListController",
+				controllerAs: 'eventRoomListCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	}). 
 	state('/eventactive/:eventId/social', {
 		// ..

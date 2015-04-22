@@ -1,0 +1,32 @@
+<div role="navigation" class="navbar navbar-default navbar-fixed-top" style="background:#FFF;">
+	<div class="container">
+		<div class="navbar-header">
+			<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="#/" class="navbar-brand">
+				<img src="img/logo.png" alt="Hacking-Lab Logo" class="navbar-logo" />
+			</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
+		      	<li ui-sref-active="active"><a ui-sref="/eventlist">Event List</a><br></li>
+				<li ui-sref-active="active"><a ui-sref="/newevent">New Event</a><br></li>
+				<li ui-sref-active="active"><a ui-sref="/speakerlist">Speaker List</a><br></li>
+				<li ui-sref-active="active"><a ui-sref="/newspeaker">New Speaker</a><br></li>
+	      	</ul>
+	      	<ul ng-show="navBarCtrl.checkEventActive()" class="nav navbar-nav">
+				<li ui-sref-active="active"><a ui-sref="/eventactive/eventroomlist({ eventId: navBarCtrl.getEventActive()})">EventRoom List</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/neweventroom({ eventId: navBarCtrl.getEventActive()})">EventRoom New</a></li>
+	      	</ul>
+	      	<ul class="nav navbar-nav navbar-right">
+	      		<li ng-show="navBarCtrl.checkEventActive()">
+	      			<h3>{{navBarCtrl.eventName}}</h3>
+	      		</li>
+			</ul>								
+		</div>
+	</div>
+</div>	
