@@ -17,7 +17,7 @@ import settings.HLMNGSettings;
  */
 public class Log {
 
-	private static Logger logger = null;
+	private static Logger logger;
 
 	protected static void startLogger() { 
 		logger = Logger.getLogger("hlmng");

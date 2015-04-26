@@ -1,16 +1,10 @@
 package testing;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import hlmng.auth.AuthChecker;
-import hlmng.auth.QRAuthResult;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
 import hlmng.model.ModelHelper;
-import hlmng.model.QrCode;
-import hlmng.model.User;
-import hlmng.resource.TimeHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +24,8 @@ import javax.net.ssl.X509TrustManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import settings.HLMNGSettings;
+
 import com.owlike.genson.Genson;
 
 public class RestTest {
@@ -41,78 +37,14 @@ public class RestTest {
 	@Before
 	public void init() {
 		Properties loginData = new Properties();
-		loginData.put("user", "user");
-		loginData.put("password", "pw12");
-		qrDao.setTest(true, loginData, "jdbc:mysql://127.0.0.1/hlmng");
-		userDao.setTest(true, loginData, "jdbc:mysql://127.0.0.1/hlmng");
-		eventDao.setTest(true, loginData, "jdbc:mysql://127.0.0.1/hlmng");
+		loginData.put("user", HLMNGSettings.jdbcUser);
+		loginData.put("password", HLMNGSettings.jdbcPassword);
+		qrDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
+		userDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
+		eventDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 	}
 
-	@Test
-	public void testQrRestAllOK() throws IOException {
-		int eventIDFK = 1;
-		QrCode qrcode = new QrCode("TESTPAYLOAD", "jury", eventIDFK);
-		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
-		User user = new User("TEST", "112233", "112233");
-		int userid = userDao.addElement(user);
-		int qrcodeid = qrDao.addElement(qrcode);
-		user.setUserID(userid);
-		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),
-				eventIDFK, user, "jury", TimeHelper.getCurrentDateTime());
-		qrDao.deleteElement(qrcodeid);
-		userDao.deleteElement(userid);
-		assertTrue(authQrCheck.isAuthorized());
-	}
 
-	@Test
-	public void testQrRestWrongUnkownQrCode() throws IOException {
-		int eventIDFK = 1;
-		QrCode qrcode = new QrCode("TESTPAYLOAD", "jury", eventIDFK);
-		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
-		User user = new User("TEST", "112233", "112233");
-		int userid = userDao.addElement(user);
-		user.setUserID(userid);
-		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),
-				eventIDFK, user, "jury", TimeHelper.getCurrentDateTime());
-		userDao.deleteElement(userid);
-		assertFalse(authQrCheck.isAuthorized());
-		assertTrue(authQrCheck.getResponse().getStatus() == 403);
-	}
-
-	@Test
-	public void testQrRestWrongUser() throws IOException {
-		int eventIDFK = 1;
-		QrCode qrcode = new QrCode("TESTPAYLOAD", "jury", eventIDFK);
-		qrcode.setUserIDFK(1); // <--
-		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
-		User user = new User("TEST", "112233", "112233");
-		int userid = userDao.addElement(user);
-		int qrcodeid = qrDao.addElement(qrcode);
-		user.setUserID(userid);
-		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),
-				eventIDFK, user, "jury", TimeHelper.getCurrentDateTime());
-		qrDao.deleteElement(qrcodeid);
-		userDao.deleteElement(userid);
-		assertFalse(authQrCheck.isAuthorized());
-		assertTrue(authQrCheck.getResponse().getStatus() == 403);
-	}
-
-	@Test
-	public void testQrRestWrongRole() throws IOException {
-		int eventIDFK = 1;
-		QrCode qrcode = new QrCode("TESTPAYLOAD", "moderator", eventIDFK);
-		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
-		User user = new User("TEST", "112233", "112233");
-		int userid = userDao.addElement(user);
-		int qrcodeid = qrDao.addElement(qrcode);
-		user.setUserID(userid);
-		QRAuthResult authQrCheck = AuthChecker.checkQRCode(qrcode.getPayload(),
-				eventIDFK, user, "jury", TimeHelper.getCurrentDateTime());
-		qrDao.deleteElement(qrcodeid);
-		userDao.deleteElement(userid);
-		assertFalse(authQrCheck.isAuthorized());
-		assertTrue(authQrCheck.getResponse().getStatus() == 403);
-	}
 
 	@Test
 	public void testEventRest() throws IOException {
@@ -122,7 +54,7 @@ public class RestTest {
 		String response = "";
 		try {
 			turnOffSslChecking();
-			response = doURL("https://localhost:8443/hlmng/rest/event/"
+			response = doURL(HLMNGSettings.appPath+"/rest"+HLMNGSettings.admURL+"/event/"
 					+ elementID, "GET");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -131,7 +63,8 @@ public class RestTest {
 		Genson genson = new Genson();
 		Event excpected = genson.deserialize(response, Event.class);
 		assertTrue(eventDao.deleteElement(elementID));
-		assertTrue(ModelHelper.Compare(excpected, orig));
+		System.out.println(orig+" "+excpected);
+		assertTrue(ModelHelper.compare(excpected, orig));
 		// ^ Note to self: If this fails, make sure the server is started...
 	}
 
@@ -139,11 +72,10 @@ public class RestTest {
 
 		javax.net.ssl.HttpsURLConnection
 				.setDefaultHostnameVerifier(new javax.net.ssl.HostnameVerifier() {
-
 					public boolean verify(String hostname,
 							javax.net.ssl.SSLSession sslSession) {
 						if (hostname.equals("localhost")) {
-							return true;
+							return true; // this is ok for a junit test
 						}
 						return false;
 					}

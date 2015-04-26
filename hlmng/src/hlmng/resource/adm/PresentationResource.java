@@ -1,8 +1,9 @@
-package hlmng.resource;
+package hlmng.resource.adm;
 
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Presentation;
+import hlmng.resource.Resource;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,9 +19,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import settings.HLMNGSettings;
 
 
-@Path("/presentation")
+
+@Path(HLMNGSettings.admURL+"/presentation")
 public class PresentationResource extends Resource {
 	private GenDao presentationDao =GenDaoLoader.instance.getPresentationDao();
 
@@ -62,7 +65,7 @@ public class PresentationResource extends Resource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postPresentation(Presentation element) throws IOException {
-		return postResource(presentationDao, element, true);
+		return postResource(presentationDao, element);
 	}
 
 }

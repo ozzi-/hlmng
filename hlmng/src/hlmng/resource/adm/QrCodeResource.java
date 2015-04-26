@@ -1,9 +1,11 @@
-package hlmng.resource;
+package hlmng.resource.adm;
 
-import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.QrCode;
+import hlmng.model.User;
+import hlmng.resource.Resource;
+import hlmng.resource.TimeHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +31,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-import settings.HLMNGSettings;
 import log.Log;
+import settings.HLMNGSettings;
 
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -40,19 +42,16 @@ import com.google.zxing.common.BitMatrix;
 
 
 
-@Path("/qrcode")
+@Path(HLMNGSettings.admURL+"/qrcode")
 public class QrCodeResource extends Resource {
 	
-	private GenDao qrCodeDao =GenDaoLoader.instance.getQrCodeDao();
+	private static GenDao qrCodeDao =GenDaoLoader.instance.getQrCodeDao();
 	private static HashMap<String,ResponseBuilder> localQrResponseCache = new HashMap<String,ResponseBuilder>();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getQrCode() throws IOException {
-		if(AuthChecker.check(headers, servletResponse, true)){			
-			return listResource(qrCodeDao, false);
-		}
-		return null;
+		return listResource(qrCodeDao, false);
 	}
 	
 	
@@ -66,28 +65,23 @@ public class QrCodeResource extends Resource {
 	@GET
 	@Path("{id}")
 	public QrCode getQrCode(@PathParam("id") int id) throws IOException{
-		if(AuthChecker.check(headers, servletResponse, true)){			
-			return (QrCode)getResource(qrCodeDao, id);
-		}
-		return null;
+		return (QrCode)getResource(qrCodeDao, id);
 	}
 
 	@GET
 	@Path("{id}/render")
 	@Produces("image/png")
 	public Response getQrCodeRendered(@PathParam("id") int id) throws IOException{
-		if(AuthChecker.check(headers, servletResponse, true)){			
-			QrCode qrCode = ((QrCode)getResource(qrCodeDao, id));
-			if(qrCode!=null){
-				try {
-					String filePath = generateQR(qrCode.getQrcodeID(),qrCode.getPayload());
-					return MediaResource.mediaResponse(filePath, "png", request,localQrResponseCache);			
-				} catch (WriterException e) {
-					response.sendError(500);
-				} 			
-			}
+		QrCode qrCode = ((QrCode)getResource(qrCodeDao, id));
+		if(qrCode!=null){
+			try {
+				String filePath = generateQR(qrCode.getQrcodeID(),qrCode.getPayload());
+				return MediaResource.mediaResponse(filePath, "png", request,localQrResponseCache);			
+			} catch (WriterException e) {
+				response.sendError(500);
+			} 			
 		}
-		return null; 
+		return null;
 	} 
 	
 
@@ -102,20 +96,28 @@ public class QrCodeResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postQrCode(QrCode element) throws IOException {		
 		element.setCreatedAt(TimeHelper.getCurrentDateTime());
-		return postResource(qrCodeDao, element, true);
+		return postResource(qrCodeDao, element);
 	}
 
 	@DELETE
 	@Path("{id}")
 	public Response deleteQrCode(@PathParam("id") int id) throws IOException {
 		
-		QrCode qrcode = (QrCode)GenDaoLoader.instance.getQrCodeDao().getElement(id);
+		QrCode qrcode = (QrCode)qrCodeDao.getElement(id);
 		if(qrcode!=null){
 			deleteQRFromFSandCache(id);			
 		}
 		return deleteResource(qrCodeDao, id);
 	}
 
+	
+	public static void claimQrCode(User user, String currentDateTime, QrCode qrcode) {
+		qrcode.setClaimedAt(currentDateTime);
+		qrcode.setUserIDFK(user.getUserID()); 
+		qrCodeDao.updateElement(qrcode, qrcode.getQrcodeID());
+	}
+	
+	
 	private void deleteQRFromFSandCache(int id) {
 		String qrPath= HLMNGSettings.qrFileRootDir+Integer.toString(id)+".png";
 		String qrName= Integer.toString(id)+".png";

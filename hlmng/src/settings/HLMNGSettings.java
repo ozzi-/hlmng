@@ -6,6 +6,16 @@ public class HLMNGSettings {
 	
 	static boolean production=false;
 	
+	public static final String appPath="https://localhost:8443/hlmng";
+	public static final String jdbcPath="jdbc:mysql://127.0.0.1/hlmng";
+	public static final String jdbcUser="user";
+	public static final String jdbcPassword="pw12";
+	
+	public static final String pubURL="/pub";
+	public static final String admURL="/adm";
+	
+	public static final int cacheTime=1800;
+
 
 	/**
 	 * Lifetime of a action in millisecs

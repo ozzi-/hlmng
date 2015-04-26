@@ -12,7 +12,6 @@ public class FormatterS extends Formatter {
 	@Override
 	public String format(LogRecord record) {
 		Date date = new Date(record.getMillis());
-		
         return "-----------------------\n"
         		+formatter.format(date)+ " | "
         		+ record.getLevel() + "  |  "

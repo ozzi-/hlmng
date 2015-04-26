@@ -1,7 +1,11 @@
 package hlmng.resource;
 
-import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
+import hlmng.model.News;
+import hlmng.model.Social;
+import hlmng.model.Speaker;
+import hlmng.resource.adm.MediaResource;
+import hlmng.resource.adm.UserResource;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,11 +29,11 @@ public class Resource {
 	@Context
 	protected HttpServletResponse response;
 	@Context
-	UriInfo uri;
+	protected UriInfo uri;
 	@Context
-	HttpHeaders headers;
-	@Context 
-	HttpServletResponse servletResponse;
+	protected HttpHeaders headers;
+	@Context
+	protected HttpServletResponse servletResponse;
 	
 	/**
 	 * Tries to delete a object with the provided ID.
@@ -39,12 +43,10 @@ public class Resource {
 	 * @return 202 or 404 if not found
 	 */
 	protected Response deleteResource(GenDao dao, int id) throws IOException{
-		if(AuthChecker.check(headers, servletResponse, true)){
 			boolean deleted = dao.deleteElement(id);
 			return ResourceHelper.returnOkOrNotFoundResponse(deleted);			
-		} 
-		return null;
 	}
+	
 	/**
 	 * List all resources.
 	 * @param dao
@@ -57,29 +59,17 @@ public class Resource {
 	}
 	
 	/**
-	 * Create a new resource. If its a social (=normal users can post) entry set backend to false. 
+	 * Create a new resource. 
 	 * @param dao
 	 * @param element
 	 * @param backend
 	 * @return 202, 401
 	 */
-	protected Object postResource(GenDao dao, Object element, boolean backend){
-		if(AuthChecker.check(headers, servletResponse, backend)){
-			return postResourceDo(dao, element);
-		} 
-		return null;		
+	protected Object postResource(GenDao dao, Object element){
+		int insertedID = dao.addElement(element); // todo auth check for users. . . . 
+		return dao.getElement(insertedID);			
 	}
-	/**
-	 * Create a new resource without auth checking.
-	 * @param dao
-	 * @param element
-	 * @return
-	 */
-	protected Object postResourceDo(GenDao dao, Object element){
-			int insertedID = dao.addElement(element);
-			return dao.getElement(insertedID);			
-			//return ResourceHelper.returnOkOrBadReqResponse(!(insertedID==-1));			
-	}
+
 	
 	/**
 	 * Gets a resource with the ID provided
@@ -106,16 +96,38 @@ public class Resource {
 	 */
 	protected Response putResource(GenDao dao ,Object element, int id) throws IOException{
 		Response res;
-		if(AuthChecker. check(headers, servletResponse, true)){
-			if (dao.getElement(id)!=null){
-				dao.updateElement(element, id);
-				res = Response.accepted().build();
-			}else{
-				res = Response.status(404).build();
-			}
-			return res;				
+		if (dao.getElement(id)!=null){
+			dao.updateElement(element, id);
+			res = Response.accepted().build();
+		}else{
+			res = Response.status(404).build();
 		}
-		return null;
+		return res;				
+	}
+	
+	protected void enrichSpeakerWithMedia(List<Object> speakerObjects) {
+		for (Object object : speakerObjects) {
+			Speaker speaker = (Speaker) object;
+			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
+			speaker.setMedia(media);
+		}
+	}
+	protected void enrichSocialWithUsernameAndMedia(List<Object> socialObjects) {
+		for (Object object : socialObjects) {
+			Social social = (Social) object;
+			String authorName = UserResource.getUsername(social.getUserIDFK());
+			social.setAuthorName(authorName);
+			String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+			social.setMedia(media);
+
+		}
+	}	
+	protected void enrichNewsWithMedia(List<Object> newsObjects) {
+		for (Object object : newsObjects) {
+			News news = (News) object;
+			String media = MediaResource.getMediaURL(uri, news.getMediaIDFK());
+			news.setMedia(media);
+		}
 	}
 }
 

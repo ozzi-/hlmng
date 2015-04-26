@@ -1,7 +1,8 @@
-package hlmng.resource;
+package hlmng.resource.adm;
 
 import hlmng.dao.GenDao;
 import hlmng.model.Speaker;
+import hlmng.resource.Resource;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,9 +18,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import settings.HLMNGSettings;
 
 
-@Path("/speaker")
+
+@Path(HLMNGSettings.admURL+"/speaker")
 public class SpeakerResource extends Resource  {
 	private GenDao speakerDao = new GenDao(Speaker.class);
 
@@ -39,13 +42,6 @@ public class SpeakerResource extends Resource  {
 		return speakerDao.getLastUpdateTime();
 	}
 
-	private void enrichSpeakerWithMedia(List<Object> speakerObjects) {
-		for (Object object : speakerObjects) {
-			Speaker speaker = (Speaker) object;
-			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
-			speaker.setMedia(media);
-		}
-	}
 
 	
 	@GET
@@ -78,7 +74,12 @@ public class SpeakerResource extends Resource  {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postSpeaker(Speaker element) throws IOException {
 		element.setNationality(element.getNationality().toUpperCase());
-		return postResource(speakerDao, element, true);
+		Speaker speaker = (Speaker) postResource(speakerDao, element);
+		if(speaker!=null){
+			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
+			speaker.setMedia(media);
+		}
+		return speaker;
 	}
 }
 

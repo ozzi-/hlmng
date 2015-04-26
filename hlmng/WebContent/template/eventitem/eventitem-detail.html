@@ -1,0 +1,14 @@
+<div ng-hide="edit">
+	<event-item-info eventitem="eventItemIdCtrl.eventitem"></event-item-info><br>
+</div>
+
+<div ng-show="edit">
+	<form name="eventItemInfoEditForm" novalidate>
+		<event-item-info-edit eventitem="eventItemIdCtrl.eventitem"></event-item-info-edit>
+	</form>
+	<button ng-disabled="!eventItemInfoEditForm.$valid" ng-click="edit=!edit ;eventItemIdCtrl.putEvent(eventItemIdCtrl.eventitem,eventItemIdCtrl.eventitem.eventItemID,'eventitem');">Submit</button>
+</div>
+
+
+<edit-button edit="edit"></edit-button>
+

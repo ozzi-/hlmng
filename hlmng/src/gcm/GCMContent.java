@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * POD - Message Format for GCM Messages
+ */
 public class GCMContent implements Serializable {
 
 	private static final long serialVersionUID = 1L;

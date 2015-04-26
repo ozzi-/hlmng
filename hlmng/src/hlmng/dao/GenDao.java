@@ -50,13 +50,14 @@ public class GenDao {
 			e.printStackTrace();
 		}
 		
-	    addElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.add);
-	    removeElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.delete);
-	    listElements = QueryBuilder.BuildQuery(className,QueryBuilder.opType.list);
-	    listElementsLimit = QueryBuilder.BuildQuery(className,QueryBuilder.opType.listLimit);
-	    getElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.get);
-	    updateElement = QueryBuilder.BuildQuery(className,QueryBuilder.opType.update);
-	    fkElement = QueryBuilder.buildFKQuery(className);
+		String classPath = "hlmng.model";
+	    addElement = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.add);
+	    removeElement = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.delete);
+	    listElements = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.list);
+	    listElementsLimit = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.listLimit);
+	    getElement = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.get);
+	    updateElement = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.update);
+	    fkElement = QueryBuilder.buildFKQuery(className,classPath);
 	}
 	
 	/**

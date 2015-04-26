@@ -1,9 +1,11 @@
-package hlmng.resource;
+package hlmng.resource.adm;
 
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
+import hlmng.resource.Resource;
+import hlmng.resource.ResourceHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,10 +40,11 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import settings.HLMNGSettings;
+import settings.HTTPCodes;
 
 
 
-@Path("/media")
+@Path(HLMNGSettings.admURL+"/media")
 public class MediaResource extends Resource{
 
 	private static final int bytesPerMB = 1048576;
@@ -159,8 +162,10 @@ public class MediaResource extends Resource{
 			@Context HttpServletResponse servletResponse
 			) {
 
-		return upload(fileInputStream, body, contentDispositionHeader, headers,
-				servletResponse,true);
+		String mimeType=(body.getMediaType()==null)?"none provided" :body.getMediaType().toString() ;
+		Response response =  doUpload(fileInputStream, contentDispositionHeader, mimeType);
+		return response;
+
 	}
 	
 	@POST
@@ -174,34 +179,38 @@ public class MediaResource extends Resource{
 			@Context HttpServletResponse servletResponse
 			) {
 
-		return upload(fileInputStream, body, contentDispositionHeader, headers,
-				servletResponse,false);
-	}
-
-
-	private Response upload(InputStream fileInputStream, FormDataBodyPart body,
-			FormDataContentDisposition contentDispositionHeader,
-			HttpHeaders headers, HttpServletResponse servletResponse, boolean backend) {
 		String mimeType=(body.getMediaType()==null)?"none provided" :body.getMediaType().toString() ;
 
-		boolean authenticated = AuthChecker.check(headers, servletResponse, backend);
+		boolean authenticated = AuthChecker.checkAuthorization(headers, servletResponse);
 		Response response;
 		
 		if(authenticated){
-			if(mimeType.equals("image/png")||mimeType.equals("image/jpeg")){
-				String filePath = HLMNGSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
-				File f = new File(filePath);
-				if(f.exists()){
-					response=  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
-				}else{
-					response = saveImage(fileInputStream, contentDispositionHeader, mimeType, filePath);
-				}
+			response = doUpload(fileInputStream, contentDispositionHeader, mimeType);
+		}else{
+			response=Response.status(HTTPCodes.unauthorized).build();
+		}
+		return response;
+
+	}
+
+
+
+
+
+	private Response doUpload(InputStream fileInputStream,
+			FormDataContentDisposition contentDispositionHeader, String mimeType) {
+		Response response;
+		if(mimeType.equals("image/png")||mimeType.equals("image/jpeg")){
+			String filePath = HLMNGSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
+			File f = new File(filePath);
+			if(f.exists()){
+				response=  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
 			}else{
-				Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
-				response=Response.status(415).build();
+				response = saveImage(fileInputStream, contentDispositionHeader, mimeType, filePath);
 			}
 		}else{
-			response=Response.status(401).build();
+			Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
+			response=Response.status(415).build();
 		}
 		return response;
 	}

@@ -50,6 +50,27 @@ directiveModule.directive('eventInfoEdit', function(){
 	};
 });
 
+directiveModule.directive('eventItemInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/eventitem/eventitem-info-edit.html',
+		scope: {
+			eventitem: "=eventitem"
+		}
+	};
+});
+
+directiveModule.directive('eventItemInfo', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/eventitem/eventitem-info.html',
+		scope: {
+			eventitem: "=eventitem"
+		}
+	};
+});
+
+
 directiveModule.directive('eventRoomInfoEdit', function(){
 	return {
 		restrict: 'E',

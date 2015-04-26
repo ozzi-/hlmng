@@ -14,12 +14,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import settings.HLMNGSettings;
 import log.Log;
 
 public class ResourceHelper {
 
 
-	static int cacheTime=1800;
 	/**
 	 * @param ok
 	 * @return If @param is true returns a HTTP 200 (OK) Response, else 400 (bad request)
@@ -32,7 +32,7 @@ public class ResourceHelper {
 		}
 	}
 	
-	static Response returnOkOrNotFoundResponse(boolean ok) {
+	public static Response returnOkOrNotFoundResponse(boolean ok) {
 		if(ok){
 			return Response.ok().build();			
 		}else{
@@ -54,11 +54,11 @@ public class ResourceHelper {
 	 * @param request
 	 * @return
 	 */
-	static ResponseBuilder cacheControl(Object object,Request request) {
+	public static ResponseBuilder cacheControl(Object object,Request request) {
 		CacheControl cc = new CacheControl();
-        cc.setMaxAge(cacheTime);
+        cc.setMaxAge(HLMNGSettings.cacheTime);
         cc.setPrivate(true);
-        EntityTag etag = new EntityTag(Integer.toString(ModelHelper.HashCode(object)));
+        EntityTag etag = new EntityTag(Integer.toString(ModelHelper.hashCode(object)));
         ResponseBuilder builder = request.evaluatePreconditions(etag);
         // cached resource did change -> serve updated content
         if(builder == null){
@@ -74,7 +74,7 @@ public class ResourceHelper {
 	
 
 	
-	static void setMediaURLPath(UriInfo uri, Media media) {
+	public static void setMediaURLPath(UriInfo uri, Media media) {
 		media.setLink(uri.getBaseUri().toString() + "media/"
 				+ media.getType() + "/" + media.getLink());
 	}

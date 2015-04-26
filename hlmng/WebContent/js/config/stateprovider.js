@@ -192,6 +192,54 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}). 
+	// eventItem
+	state('/eventactive/neweventitem', {
+		url: "/eventactive/:eventId/neweventitem",
+		views:{
+			"content":{
+				templateUrl: "template/eventitem/eventitem-new.html",
+				controller: "EventItemNewController",
+				controllerAs: 'eventItemNewCtrl'
+			},
+			"nav":{
+				templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
+	state('/eventactive/eventitem', {
+		url: "/eventactive/:eventId/eventitem/:eventItemId",
+		views:{
+			"content":{
+				templateUrl: "template/eventitem/eventitem-detail.html",
+				controller: "EventItemIdController",
+				controllerAs: 'eventItemIdCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}). 
+	state('/eventactive/eventitemlist', {
+		url: "/eventactive/:eventId/eventitemlist",
+		views:{
+			"content":{
+				templateUrl: "template/eventitem/eventitem-list.html",
+				controller: "EventItemListController",
+				controllerAs: 'eventItemListCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}). 
+	
+	
 	state('/eventactive/:eventId/social', {
 		// ..
 	}).

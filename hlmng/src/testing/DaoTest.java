@@ -7,6 +7,8 @@ import java.util.Properties;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
+import hlmng.model.EventItem;
+import hlmng.model.EventRoom;
 import hlmng.model.Media;
 import hlmng.model.Presentation;
 import hlmng.model.Slider;
@@ -17,10 +19,14 @@ import hlmng.model.Voting;
 import org.junit.Before;
 import org.junit.Test;
 
+import settings.HLMNGSettings;
+
 public class DaoTest {
 	
 	GenDao userDao = GenDaoLoader.instance.getUserDao();
 	GenDao eventDao = GenDaoLoader.instance.getEventDao();
+	GenDao eventRoomDao = GenDaoLoader.instance.getEventRoomDao();
+	GenDao eventItemDao = GenDaoLoader.instance.getEventItemDao();
 	GenDao mediaDao = GenDaoLoader.instance.getMediaDao();
 	GenDao votingDao = GenDaoLoader.instance.getVotingDao();
 	GenDao voteDao = GenDaoLoader.instance.getVoteDao();
@@ -30,15 +36,17 @@ public class DaoTest {
 	@Before
 	public void db(){	
 		Properties loginData= new Properties();
-	    loginData.put("user","user");
-	    loginData.put("password","pw12");
-	    userDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
-		eventDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
-		mediaDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
-		votingDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
-		voteDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
-		sliderDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
-		presentationDao.setTest(true,loginData,"jdbc:mysql://127.0.0.1/hlmng");
+	    loginData.put("user",HLMNGSettings.jdbcUser);
+	    loginData.put("password",HLMNGSettings.jdbcPassword);
+	    userDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		eventDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		eventRoomDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		eventItemDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		mediaDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		votingDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		voteDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		sliderDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		presentationDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 	}
 	
 	@Test
@@ -65,7 +73,7 @@ public class DaoTest {
 	}
 	
 	@Test
-	public void testVoting(){
+	public void testVotingRelations(){
 		
 		Presentation presentation = new Presentation("TEST","TEST","TEST","00:10:10");
 		int presentationid = presentationDao.addElement(presentation);
@@ -79,8 +87,7 @@ public class DaoTest {
 		Vote vote = new Vote(10, 1, sliderid, 1);
 		int voteid = voteDao.addElement(vote);
 		
-		assertTrue(voteDao.listByFK("sliderIDFK", sliderid).size()==1);
-		
+		assertTrue(voteDao.listByFK("sliderIDFK", sliderid).size()==1);	
 		assertTrue(voteDao.deleteElement(voteid));
 		assertTrue(sliderDao.deleteElement(sliderid));
 		assertTrue(votingDao.deleteElement(votingid));
@@ -88,30 +95,57 @@ public class DaoTest {
 	}
 	
 	@Test
-	 public void testUser(){
-		boolean ok =testDaoGeneric(new User("name","deviceid","regid"), userDao);
-		assertTrue(ok);
+	 public void testNewUser(){
+		boolean userCreate =testDaoGenericAdd(new User("name","deviceid","regid"), userDao);
+		assertTrue(userCreate);
     }
 	@Test
-	 public void testEvent(){
-		boolean ok =testDaoGeneric(new Event("event","description","2014-01-01","2014-01-01",true), eventDao);
-		assertTrue(ok);
+	 public void testNewEvent(){
+		boolean eventCreate =testDaoGenericAdd(new Event("event","description","2014-01-01","2014-01-01",true), eventDao);
+		assertTrue(eventCreate);
 	}
 	@Test
-	 public void testMedia(){
-		boolean ok =testDaoGeneric(new Media("testtype","testlink"), mediaDao);
-		assertTrue(ok);
+	 public void testNewMedia(){
+		boolean mediaCreate =testDaoGenericAdd(new Media("testtype","testlink"), mediaDao);
+		assertTrue(mediaCreate);
 	}
+	@Test
+	 public void testNewEventRoom(){
+		boolean eventRoomCreate =testDaoGenericAdd(new EventRoom(1, "name", "loc"), eventRoomDao);
+		assertTrue(eventRoomCreate);
+	}
+	@Test
+	 public void testNewEventItem(){
+		boolean eventItemCreate =testDaoGenericAdd(new EventItem("name", "desc", "2015-05-05", "13:00", "14:00", 1, 1), eventItemDao);
+		assertTrue(eventItemCreate);
+	}
+	@Test
+	 public void testNewVote(){
+		boolean voteCreate =testDaoGenericAdd(new Vote(10, 1, 1, 1), voteDao);
+		assertTrue(voteCreate);
+	}	
+	@Test
+	 public void testNewVoting(){
+		boolean votingCreate =testDaoGenericAdd(new Voting("name", 10, "undef", 10, "00:05:00", "undef", 1, 1, 1), votingDao);
+		assertTrue(votingCreate);
+	}	
+	@Test
+	 public void testNewSlider(){
+		boolean sliderCreate =testDaoGenericAdd(new Slider("name", 10, 1), sliderDao);
+		assertTrue(sliderCreate);
+	}	
+	@Test
+	 public void testNewPresentation(){
+		boolean presentationCreate =testDaoGenericAdd(new Presentation("name", "name", "2015-05-05", "00:05:03"), presentationDao);
+		assertTrue(presentationCreate);
+	}	
 	
-	public boolean testDaoGeneric(Object element, GenDao dao){
+	public boolean testDaoGenericAdd(Object element, GenDao dao){
 		int elementCountBeforeAdd=dao.listElements(false).size();
 		int elementID=dao.addElement(element);
-		
 		int elementCountAfterAdd=dao.listElements(false).size();
 		dao.deleteElement(elementID);
-		
 		int elementCountAfterRemove=dao.listElements(false).size();
-
 		return (elementCountAfterAdd==elementCountBeforeAdd+1 && elementCountBeforeAdd==elementCountAfterRemove);
 	}
 	@Test 

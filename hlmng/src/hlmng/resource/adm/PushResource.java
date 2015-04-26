@@ -1,12 +1,13 @@
-package hlmng.resource;
+package hlmng.resource.adm;
 
 import gcm.GCM;
-import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Push;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
+import hlmng.resource.Resource;
+import hlmng.resource.TimeHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,9 +28,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import settings.HLMNGSettings;
 
 
-@Path("/push")
+
+@Path(HLMNGSettings.admURL+"/push")
 public class PushResource  extends Resource{
 	private GenDao pushDao = GenDaoLoader.instance.getPushDao();
 	
@@ -70,16 +73,16 @@ public class PushResource  extends Resource{
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postPush(Push element) throws IOException, ParseException {
-		if(AuthChecker.check(headers, servletResponse, true) && !UserActionLimiter.actionsExceeded("pushResource")){
+		if(!UserActionLimiter.actionsExceeded("pushResource")){
 			List<Object> users = listResource(GenDaoLoader.instance.getUserDao(), false);
 			List<String> regIds = new ArrayList<String>();
 			for (Object userobject : users) {
 				regIds.add(((User) userobject).getRegID());
 			}
 			
-			String gcmResponse = GCM.postGCM(element.getTitle(), element.getText(), regIds);			
+			String gcmResponse = GCM.sendGcm(element.getTitle(), element.getText(), regIds);			
 		    setPushMetaData(element, gcmResponse);
-			return postResource(pushDao, element, true);
+			return postResource(pushDao, element);
 		}else{
 			return null;
 		}

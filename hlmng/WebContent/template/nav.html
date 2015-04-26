@@ -21,6 +21,9 @@
 	      	<ul ng-show="navBarCtrl.checkEventActive()" class="nav navbar-nav">
 				<li ui-sref-active="active"><a ui-sref="/eventactive/eventroomlist({ eventId: navBarCtrl.getEventActive()})">EventRoom List</a></li>
 				<li ui-sref-active="active"><a ui-sref="/eventactive/neweventroom({ eventId: navBarCtrl.getEventActive()})">EventRoom New</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/eventitemlist({ eventId: navBarCtrl.getEventActive()})">EventItem List</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/neweventitem({ eventId: navBarCtrl.getEventActive()})">EventItem New</a></li>
+				
 	      	</ul>
 	      	<ul class="nav navbar-nav navbar-right">
 	      		<li ng-show="navBarCtrl.checkEventActive()">

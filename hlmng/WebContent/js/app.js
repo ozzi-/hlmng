@@ -1,4 +1,4 @@
-var app = angular.module('hlmngApp',['stateprovider','speaker','event','eventroom','media','helper','directive','ui.bootstrap']);
+var app = angular.module('hlmngApp',['stateprovider','speaker','event','eventroom','eventitem','media','helper','directive','ui.bootstrap']);
 var apiUrl = 'https://localhost:8443/hlmng/rest/';
 
 app.controller('NavBarController', ['$http','$location','RestService','$stateParams', function($http,$location,RestService,$stateParams){	

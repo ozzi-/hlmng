@@ -1,5 +1,6 @@
 package hlmng.model;
 
+
 public class QrCode {
 	private int qrcodeID;
 	private String createdAt;
@@ -31,6 +32,7 @@ public class QrCode {
 		this.userIDFK=0;
 		this.eventIDFK=eventIDFK;
 	}
+	
 	public int getQrcodeID() {
 		return qrcodeID;
 	}

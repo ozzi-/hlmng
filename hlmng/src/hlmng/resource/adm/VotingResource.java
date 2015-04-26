@@ -1,9 +1,10 @@
 
-package hlmng.resource;
+package hlmng.resource.adm;
 
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Voting;
+import hlmng.resource.Resource;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,9 +19,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import settings.HLMNGSettings;
 
 
-@Path("/voting")
+
+@Path(HLMNGSettings.admURL+"/voting")
 public class VotingResource extends Resource {
 
 	private GenDao votingDao = GenDaoLoader.instance.getVotingDao();
@@ -55,7 +58,7 @@ public class VotingResource extends Resource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postVoting(Voting element) throws IOException {
-		return postResource(votingDao, element,true);
+		return postResource(votingDao, element);
 	}
 
 }

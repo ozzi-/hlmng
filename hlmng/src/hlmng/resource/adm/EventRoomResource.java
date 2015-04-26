@@ -1,9 +1,10 @@
-package hlmng.resource;
+package hlmng.resource.adm;
 
 
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.EventRoom;
+import hlmng.resource.Resource;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,9 +20,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import settings.HLMNGSettings;
 
 
-@Path("/eventroom")
+
+@Path(HLMNGSettings.admURL+"/eventroom")
 public class EventRoomResource extends Resource  {
 
 	private GenDao eventRoomDao =GenDaoLoader.instance.getEventRoomDao();
@@ -57,7 +60,7 @@ public class EventRoomResource extends Resource  {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postEventRoom(EventRoom element) throws IOException {
-		return postResource(eventRoomDao, element, true);
+		return postResource(eventRoomDao, element);
 	}
 	
 	@DELETE

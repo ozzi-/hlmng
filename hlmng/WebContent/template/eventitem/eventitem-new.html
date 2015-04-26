@@ -1,0 +1,5 @@
+<form name="eventItemInfoNewForm" novalidate>
+	<event-item-info-edit eventitem="eventItemNewCtrl.eventitem"></event-item-info-edit>
+	<br><br><br>
+</form>
+<button ng-disabled="!eventItemInfoNewForm.$valid" ng-click="eventItemNewCtrl.postAndRedir(eventItemNewCtrl.eventitem);">Submit</button>

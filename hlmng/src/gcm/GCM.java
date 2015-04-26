@@ -17,19 +17,27 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-// parts of the following code from: http://hmkcode.com/send-http-post-request-from-java-application-to-google-messaging-service/
+/**
+ * GCM stands for Google Cloud Messaging. We are using GCM to inform the Mobile Apps about new changes.
+ *  * @see <a href="https://developer.android.com/google/gcm/index.html">https://developer.android.com/google/gcm/index.html</a>
+ *  Disclaimer: Parts of the following class (in edited form) is from the following url: http://hmkcode.com/send-http-post-request-from-java-application-to-google-messaging-service/
+ */
 public class GCM {
 
-	public static String postGCM(String title, String message,List<String> recipients) throws ProtocolException, IOException {
+	public static String sendGcm(String title, String message,List<String> recipients) throws ProtocolException, IOException {
 		GCMContent content = new GCMContent();
+		content.createData(title,message);
+		addRecipients(recipients, content);
+		return sendGcmContent(HLMNGSettings.apiKey, content);
+	}
+
+	private static void addRecipients(List<String> recipients, GCMContent content) {
 		for (String regId : recipients) {
 			content.addRegId(regId);
 		}
-		content.createData(title,message);
-		return sendGCM(HLMNGSettings.apiKey, content);
 	}
 	
-	private static String sendGCM(String apiKey, GCMContent content) throws ProtocolException, IOException {
+	private static String sendGcmContent(String apiKey, GCMContent content) throws ProtocolException, IOException {
 
 			Log.addEntry(Level.INFO, "GCM - POST request to URL : " + HLMNGSettings.gcmURL);
 			URL url = new URL(HLMNGSettings.gcmURL);
@@ -45,13 +53,12 @@ public class GCM {
 			int responseCode = conn.getResponseCode();
 			Log.addEntry(Level.INFO, "GCM - Returned response Code : " + responseCode);
 
-			String response = getResult(conn);
+			String response = getHttpConResult(conn);
 			Log.addEntry(Level.INFO, "GCM - response:"+response);
 			return response;
 	}
 
-	private static String getResult(HttpURLConnection conn)
-			throws IOException {
+	private static String getHttpConResult(HttpURLConnection conn) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();

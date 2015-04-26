@@ -1,14 +1,19 @@
-package hlmng.resource;
+package hlmng.resource.pub;
 
+
+import hlmng.resource.Resource;
+import hlmng.resource.TimeHelper;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import settings.HLMNGSettings;
 
 
-@Path("/time")
+
+@Path(HLMNGSettings.pubURL+"/time")
 public class TimeResource extends Resource  {	
 	
 	@GET

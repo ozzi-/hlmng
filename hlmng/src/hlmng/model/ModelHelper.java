@@ -7,7 +7,7 @@ public class ModelHelper {
 	 * Checks if two objects are from the same class and have the same field values.
 	 * If anything is different false is returned.
 	 */
-	public static <T> boolean Compare(T a, T b){
+	public static <T> boolean compare(T a, T b){
 		if(a==null || b==null){
 			return false;
 		}
@@ -76,7 +76,7 @@ public class ModelHelper {
 	 * @param obj
 	 * @return
 	 */
-	public static <T> int HashCode(T obj){
+	public static <T> int hashCode(T obj){
 		Class<? extends Object> clsObj = obj.getClass();
 		Field[] methods = clsObj.getDeclaredFields();
 		int hash=0;

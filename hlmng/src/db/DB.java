@@ -18,8 +18,7 @@ import javax.sql.DataSource;
 import log.Log;
 
 /**
- * This class handles the creation of a DB connection, allows building dynamic prepared statements.
- * This only works if you are using the same class name and field names as in the SQL Database (automatic mapping by names)!
+ * This class handles the creation of a DB connection and allows building 'dynamic' prepared statements.
  */
 public class DB {
 
@@ -27,7 +26,7 @@ public class DB {
 	 * Here we list field names, which we don't want to be used in the queries, those
 	 * fields are injected by the code and don't really belong to the model.
 	 * Example: Instead of only sending the client a userIDFK, we send the name of said IDFK too.
-	 * That way the client has to perform one call less
+	 * That way the client has to perform one call less!
 	 */
 	@SuppressWarnings("serial")
 	private static ArrayList<String> dontMapFields = new ArrayList<String>() {
@@ -36,14 +35,10 @@ public class DB {
 	    add("authorName");
 	}};
 	
-	public static ArrayList<String> getDontMapFields() {
-		return dontMapFields;
-	}
-
 	/**
 	 * See WEB-INF/web.xml and WEB-INF/context.xml for DB context settings
-	 * DO NOT use this directly, use the class dao, since it contains the logic for testing.
-	 * @return A connection from the connection pool, close properly!
+	 * DO NOT use this directly, use the class dao, since it contains the logic for testing and more.
+	 * @return A connection from the connection pool, the caller has to handle the closure of it properly!
 	 * @throws SQLException
 	 * @throws NamingException
 	 */
@@ -56,7 +51,7 @@ public class DB {
 	}
 	
 	/**
-	 * Use this to build a prepared statement where you only have to set an ID.	
+	 * Use this to build a prepared statement where you only have to set an ID (= parameter)
 	 * Example: Select Element or Delete Element
 	 * @param PreparedStatement which you want to set the fields
 	 * @param The ID value which will be set as first field in the prepared statement
@@ -73,10 +68,9 @@ public class DB {
 
 
 	/**
-	 * Returns (the first) object from the result set
-	 * @param resultSet of the query returning (hopefully only one) object
-	 * @param Add the type class of the desired object so it can be dynamically built
-	 * @return
+	 * @param Result Set of the query returning (hopefully only one) object
+	 * @param Add the type class (Name.class) of the desired object so it can be dynamically built
+	 * @return The first object from the result set
 	 */
 	public static <T> T getObjectFromRS(ResultSet resultSet, Class<T> type) {
 		T instance=null;
@@ -146,4 +140,9 @@ public class DB {
 		}
 		return ps;
 	}
+	
+	public static ArrayList<String> getDontMapFields() {
+		return dontMapFields;
+	}
+
 }

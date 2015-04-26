@@ -1,7 +1,7 @@
 describe("app module", function () {
-    beforeEach(module("app"));
+    beforeEach(module("hlmngApp"));
 
-    describe("SimpleCtrl", function () {
+    describe("EventListController", function () {
         var scope,
             controller;
 
@@ -10,9 +10,9 @@ describe("app module", function () {
             controller = $controller;
         }));
 
-        it("should assign message to hello world", function () {
-            controller("SimpleCtrl", {$scope: scope});
-            expect(scope.message).toBe("Hello World");
+        it("should load events", function () {
+            controller("EventListController", {$scope: scope});
+            expect(scope.events).not.toBeNull();
         });
     });
 });  

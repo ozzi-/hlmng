@@ -38,6 +38,6 @@ public class AuthCredential{
 	 * @return true if same or false if something is different
 	 */
 	public boolean equals(AuthCredential other){
-		return ModelHelper.Compare(this, other);
+		return ModelHelper.compare(this, other);
 	}
 }
