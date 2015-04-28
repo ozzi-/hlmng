@@ -1,5 +1,10 @@
 <form name="eventItemInfoNewForm" novalidate>
 	<event-item-info-edit eventitem="eventItemNewCtrl.eventitem"></event-item-info-edit>
-	<br><br><br>
+	<div class="form-group" ng-controller="EventRoomListController as eventRoomListCtrl">
+		<label for="event-room-eventIDFK">EventRoom</label><br>
+		<select  style="width: 340px" ng-model="eventItemNewCtrl.eventitem.roomIDFK" ng-options="eventroom.eventRoomID as eventroom.name for eventroom in eventRoomListCtrl.eventrooms">
+		</select>
+	</div>
 </form>
+<br><br><br>	
 <button ng-disabled="!eventItemInfoNewForm.$valid" ng-click="eventItemNewCtrl.postAndRedir(eventItemNewCtrl.eventitem);">Submit</button>

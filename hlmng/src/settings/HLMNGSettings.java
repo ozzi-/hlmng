@@ -6,10 +6,11 @@ public class HLMNGSettings {
 	
 	static boolean production=false;
 	
+	public static final String appPath="https://localhost:8443/hlmng";
+
 	/**
 	 * Data base config
 	 */
-	public static final String appPath="https://localhost:8443/hlmng";
 	public static final String jdbcPath="jdbc:mysql://127.0.0.1/hlmng";
 	public static final String jdbcUser="user";
 	public static final String jdbcPassword="pw12";

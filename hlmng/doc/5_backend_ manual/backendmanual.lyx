@@ -425,16 +425,33 @@ Um den Google Cloud Messaging Dienst zu benutzen, braucht man ein Google
 \end_layout
 
 \begin_layout Standard
-https://console.developers.google.com/project , weitere Details zur Accout
- erstellung hier https://developer.android.com/google/gcm/gs.html
+Details zur Eröffnung eines Accounts finden sich hier 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://developer.android.com/google/gcm/gs.html
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
+Sobald dies erledigt ist kann man unter 
+\begin_inset Flex URL
+status open
 
+\begin_layout Plain Layout
+
+https://console.developers.google.com/project
 \end_layout
 
-\begin_layout Standard
+\end_inset
 
+ den Api ansehen.
 \end_layout
 
 \begin_layout Section
@@ -459,6 +476,26 @@ src/settings/HLMNGSettings.java
  
 \series default
 können jegliche Einstellungen vorgenommen werden.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Pfade
+\end_layout
+
+\begin_layout Itemize
+jdbcPath (String) = Der JDBC Pfad zur Datenbank
+\end_layout
+
+\begin_layout Itemize
+pubURL = Der Pfad unter welchem der Public Rest API Teil sein soll
+\end_layout
+
+\begin_layout Itemize
+admURL = Der Pfad unter welchem der Admin Rest API Teil sein soll
 \end_layout
 
 \begin_layout Itemize
@@ -467,27 +504,17 @@ qrFileRootDir (String) = Der Pfad unter welchem alle die gerenderten Qr
 \end_layout
 
 \begin_layout Itemize
-qrCodeWidth , qrCodeHeight (int)= Die Dimension der gerenderten Qr Codes
- in Pixel
-\end_layout
-
-\begin_layout Itemize
 mediaFileRootDir (String)= Der Pfad unter welchem alle 'upgeloadeten' Dateien
  abgelegt werden
 \end_layout
 
 \begin_layout Itemize
-maxMediaImageSizeMB (Double) = Die maximale Dateigrösse für die Datei uploads
- in Megabyte
+logFileRootDir (String) = Der Pfad unter welchem die Logfiles abgelegt 
 \end_layout
 
 \begin_layout Itemize
-logSysErr (boolean) = Falls Wahr wird jeglicher Log Output auf System.Error
- umgeleitet anstatt direkt in das Logfile geschrieben zu werden
-\end_layout
-
-\begin_layout Itemize
-logFileRootDir (String) = Der Pfad unter welchem die Logfiles abgelegt werden
+appPath (String) = Der Pfad unter welchem die Schnittstelle erreichbar sein
+ soll
 \end_layout
 
 \begin_layout Itemize
@@ -507,7 +534,106 @@ https://android.googleapis.com/gcm/send
 \end_layout
 
 \begin_layout Itemize
+Den Subpfad zur Rest API wird im File 
+\begin_inset Quotes ald
+\end_inset
+
+WebContent/web.xml
+\begin_inset Quotes ard
+\end_inset
+
+ festgelegt:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<servlet-mapping>
+\end_layout
+
+\begin_layout Plain Layout
+
+	<servlet-name>
+\end_layout
+
+\begin_layout Plain Layout
+
+		Jersey REST Service
+\end_layout
+
+\begin_layout Plain Layout
+
+	</servlet-name>
+\end_layout
+
+\begin_layout Plain Layout
+
+	<url-pattern>
+\end_layout
+
+\begin_layout Plain Layout
+
+		/rest/*
+\end_layout
+
+\begin_layout Plain Layout
+
+	</url-pattern>
+\end_layout
+
+\begin_layout Plain Layout
+
+</servlet-mapping>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Login Daten
+\end_layout
+
+\begin_layout Itemize
+jdbcUser (String) = Der JDBC User für die Datenbank
+\end_layout
+
+\begin_layout Itemize
+jdbcPassword (String) = Das JDBC Passwort für den User
+\end_layout
+
+\begin_layout Itemize
 apiKey (String) = Der vom Google erhaltene Key für ihre API's
+\end_layout
+
+\begin_layout Subsubsection
+Weiteres
+\end_layout
+
+\begin_layout Itemize
+cacheTime (int) = Cache Max-Age in Sekunden
+\end_layout
+
+\begin_layout Itemize
+qrCodeWidth , qrCodeHeight (int)= Die Dimension der gerenderten Qr Codes
+ in Pixel
+\end_layout
+
+\begin_layout Itemize
+maxMediaImageSizeMB (Double) = Die maximale Dateigrösse für die Datei uploads
+ in Megabyte
+\end_layout
+
+\begin_layout Itemize
+logSysErr (boolean) = Falls Wahr wird jeglicher Log Output auf System.Error
+ umgeleitet anstatt direkt in das Logfile geschrieben zu werden
 \end_layout
 
 \begin_layout Itemize
@@ -598,59 +724,6 @@ url="jdbc:mysql://localhost:3306/hlmng?autoReconnect=true"
 \begin_layout Plain Layout
 
 username="user" password="password" />
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Backend User
-\end_layout
-
-\begin_layout Standard
-Unter 
-\series bold
-
-\begin_inset Quotes ald
-\end_inset
-
-hlmng/src/backendlogins.json
-\begin_inset Quotes ard
-\end_inset
-
- 
-\series default
-werden die Backendlogins festgelegt.
- Dies sieht etwa wie folgt aus und kann nach belieben abgeändert und erweitert
- werden.
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "showstringspaces=false"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-[         
-\end_layout
-
-\begin_layout Plain Layout
-
-	{"username": "usr1", "password": "pw1"},         
-\end_layout
-
-\begin_layout Plain Layout
-
-	{"username": "usr2", "password": "pw2"} 
-\end_layout
-
-\begin_layout Plain Layout
-
-]
 \end_layout
 
 \end_inset
@@ -813,7 +886,7 @@ status open
 
 \begin_layout Plain Layout
 
-var apiUrl = 'https://localhost:8443/hlmng/rest/'; 
+var apiUrl = 'https://localhost:8443/hlmng/rest/adm'; 
 \end_layout
 
 \end_inset
@@ -850,7 +923,49 @@ https://github.com/ozzi-/hlmng-app
 \end_layout
 
 \begin_layout Standard
-War Deploy
+Unter Eclipse kann man das Projekt exportieren:
+\end_layout
+
+\begin_layout Standard
+Project Explorer -> Rechtsklick -> Export -> War File
+\end_layout
+
+\begin_layout Standard
+Oder per Commandline
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+cd /path/to/project
+\end_layout
+
+\begin_layout Plain Layout
+
+jar cvf hlmng.war *
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nun kann man das WAR File in den 
+\begin_inset Quotes ald
+\end_inset
+
+WebApps
+\begin_inset Quotes ard
+\end_inset
+
+ Ordner kopieren und die Anwendung sollte nun gestartet werden.
 \end_layout
 
 \begin_layout Standard
