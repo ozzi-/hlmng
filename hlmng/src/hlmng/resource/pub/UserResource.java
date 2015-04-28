@@ -4,8 +4,10 @@ import hlmng.auth.AuthChecker;
 import hlmng.auth.AuthCredential;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
+import hlmng.dao.UserDao;
 import hlmng.model.ModelHelper;
 import hlmng.model.User;
+import hlmng.model.UserActionLimiter;
 import hlmng.resource.Resource;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.util.logging.Level;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -58,6 +61,20 @@ public class  UserResource  extends Resource {
 			return user.getName();
 		}
 		return "unknown";
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Object postUser(User element) throws IOException {	
+		User userNameExists = ((UserDao) userDao).getUserByName(element.getName());
+		if(userNameExists == null){ 
+			if(!UserActionLimiter.actionsExceeded("userCreation")){ // we don't want people spamming the profile creation
+				return postResource(userDao, element);			
+			}
+			return Response.status(429).build();  // Too Many Requests			
+		}else{
+			return Response.status(422).build();  // Unprocessable Entity (exists)
+		}
 	}
 	
 	@PUT

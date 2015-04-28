@@ -22,7 +22,7 @@ import settings.HLMNGSettings;
 @Path(HLMNGSettings.pubURL+"/eventitem")
 public class EventItemResource extends Resource{
 	
-	private GenDao eventItemDao =GenDaoLoader.instance.getEventItemDao();
+	private GenDao eventItemDao = GenDaoLoader.instance.getEventItemDao();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

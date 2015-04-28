@@ -1,6 +1,5 @@
 package hlmng.resource.adm;
 
-import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
@@ -40,7 +39,6 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import settings.HLMNGSettings;
-import settings.HTTPCodes;
 
 
 
@@ -152,7 +150,7 @@ public class MediaResource extends Resource{
 	}
 
 	@POST
-	@Path("/uploadbackend")
+	@Path("/upload")
 	@Consumes("multipart/form-data")
 	public Response uploadFileBackend(
 			@FormDataParam("file") InputStream fileInputStream,
@@ -168,34 +166,6 @@ public class MediaResource extends Resource{
 
 	}
 	
-	@POST
-	@Path("/upload")
-	@Consumes("multipart/form-data")
-	public Response uploadFile(
-			@FormDataParam("file") InputStream fileInputStream,
-			@FormDataParam("file") FormDataBodyPart body,
-			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
-			@Context HttpHeaders headers, 
-			@Context HttpServletResponse servletResponse
-			) {
-
-		String mimeType=(body.getMediaType()==null)?"none provided" :body.getMediaType().toString() ;
-
-		boolean authenticated = AuthChecker.checkAuthorization(headers, servletResponse);
-		Response response;
-		
-		if(authenticated){
-			response = doUpload(fileInputStream, contentDispositionHeader, mimeType);
-		}else{
-			response=Response.status(HTTPCodes.unauthorized).build();
-		}
-		return response;
-
-	}
-
-
-
-
 
 	private Response doUpload(InputStream fileInputStream,
 			FormDataContentDisposition contentDispositionHeader, String mimeType) {

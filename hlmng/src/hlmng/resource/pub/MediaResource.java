@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import javax.naming.SizeLimitExceededException;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -75,39 +74,6 @@ public class MediaResource extends Resource{
 		return mediaDao.getLastUpdateTime();
 	}
 	
-	@DELETE
-	@Path("{id}")
-	public Response deleteMedia(@PathParam("id") int id) throws IOException{
-		Media media = (Media)mediaDao.getElement(id);
-		// ONLY deletes on filesystem and local cache,  since path's to that media still have to be there, see documentation
-		boolean deleted=false;
-		if(media !=null){ 
-			deleted = deleteMediaFromFSandCache(media.getLink(),media.getType());						
-		}
-		return ResourceHelper.returnOkOrNotFoundResponse(deleted);
-	}
-
-	private boolean deleteMediaFromFSandCache(String fileName, String type) {
-
-		String mediaPath= HLMNGSettings.mediaFileRootDir+fileName;
-
-		Log.addEntry(Level.INFO, "Trying to delete:"+fileName);
-		
-		if(type.equals("image/jpg") || type.equals("image/jpeg")){ 
-			ResponseBuilder jpgres = localJPGResponseCache.remove(fileName);
-			Log.addEntry(Level.INFO, "Removed JPG response from local cache :"+jpgres);
-		}else if(type.equals("image/png")){ 
-			ResponseBuilder pngres = localPNGResponseCache.remove(fileName);
-			Log.addEntry(Level.INFO, "Removed PNG response from local cache :"+pngres);
-		}else{
-			throw new IllegalArgumentException("implement other media types first..");
-		}
-		
-		File file = new File(mediaPath);
-		boolean filedelres = file.delete();
-		Log.addEntry(Level.INFO, "Removed media from file system? "+filedelres);
-		return filedelres;
-	}
 	
 	public static Response getMediaStatic(int id, UriInfo uriS, Request requestS) throws IOException {
 		return getMediaAsResponse(id, uriS, requestS);

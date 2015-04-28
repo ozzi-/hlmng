@@ -5,8 +5,14 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
 import hlmng.model.ModelHelper;
+import hlmng.model.Presentation;
+import hlmng.model.Slider;
+import hlmng.model.User;
+import hlmng.model.Vote;
+import hlmng.model.Voting;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -33,6 +39,11 @@ public class RestTest {
 	GenDao qrDao = GenDaoLoader.instance.getQrCodeDao();
 	GenDao userDao = GenDaoLoader.instance.getUserDao();
 	GenDao eventDao = GenDaoLoader.instance.getEventDao();
+	GenDao voteDao = GenDaoLoader.instance.getVoteDao();
+	GenDao votingDao = GenDaoLoader.instance.getVotingDao();
+	GenDao sliderDao = GenDaoLoader.instance.getSliderDao();
+	GenDao presentationDao = GenDaoLoader.instance.getPresentationDao();
+	
 
 	@Before
 	public void init() {
@@ -42,9 +53,85 @@ public class RestTest {
 		qrDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		userDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		eventDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
+		voteDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
+		votingDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
+		sliderDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
+		presentationDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 	}
 
+	
+	@Test
+	public void checkVoteCorrectAuth(){
+	
+		User user = new User("testusername", "1234test1234", "4321test");
+		int userid  = userDao.addElement(user);
+		
+		Presentation presentation = new Presentation("presentation", "teamname", "2015-05-05", "00:30:00");
+		int presentationid = presentationDao.addElement(presentation);
+		
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, presentationid, 1);
+		int votingid = votingDao.addElement(voting);
+		
+		Slider slider = new Slider("TEST", 1, votingid);
+		int sliderid = sliderDao.addElement(slider);
 
+		String postData= "{\"isJury\": false,\"score\": 7,\"sliderIDFK\": "+sliderid+",\"userIDFK\": "+userid+"},";
+		String response="";
+		try {
+			try {
+				turnOffSslChecking();
+			} catch (KeyManagementException e) {
+			} catch (NoSuchAlgorithmException e) {
+			}
+			response = doURL(HLMNGSettings.appPath+"/rest"+HLMNGSettings.pubURL+"/vote/", "POST",postData,"Basic dGVzdHVzZXJuYW1lOjEyMzR0ZXN0MTIzNA==");
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		assertTrue(response.contains("voteID"));
+		Genson genson = new Genson();
+		Vote vote = genson.deserialize(response,Vote.class);
+		assertTrue(voteDao.deleteElement(vote.getVoteID()));
+		assertTrue(sliderDao.deleteElement(sliderid));
+		assertTrue(votingDao.deleteElement(votingid));
+		assertTrue(presentationDao.deleteElement(presentationid));
+		assertTrue(userDao.deleteElement(userid));
+	}
+	
+	
+	
+	@Test
+	public void checkVoteMissingAuth(){
+		
+		User user = new User("name", "1234", "4321");
+		int userid  = userDao.addElement(user);
+	
+		Presentation presentation = new Presentation("presentation", "teamname", "2015-05-05", "00:30:00");
+		int presentationid = presentationDao.addElement(presentation);
+		
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, presentationid, 1);
+		int votingid = votingDao.addElement(voting);
+		
+		Slider slider = new Slider("TEST", 1, votingid);
+		int sliderid = sliderDao.addElement(slider);
+
+		String postData= "{\"isJury\": false,\"score\": 7,\"sliderIDFK\": "+sliderid+",\"userIDFK\": "+userid+"},";
+		
+		try {
+			try {
+				turnOffSslChecking();
+			} catch (KeyManagementException e) {
+			} catch (NoSuchAlgorithmException e) {
+			}
+			doURL(HLMNGSettings.appPath+"/rest"+HLMNGSettings.pubURL+"/vote/", "POST",postData,null);
+		} catch (IOException e){
+			assertTrue(e.getLocalizedMessage().contains("Server returned HTTP response code: 401"));
+		}
+		
+		assertTrue(sliderDao.deleteElement(sliderid));
+		assertTrue(votingDao.deleteElement(votingid));
+		assertTrue(presentationDao.deleteElement(presentationid));
+		assertTrue(userDao.deleteElement(userid));
+	}
 
 	@Test
 	public void testEventRest() throws IOException {
@@ -55,7 +142,7 @@ public class RestTest {
 		try {
 			turnOffSslChecking();
 			response = doURL(HLMNGSettings.appPath+"/rest"+HLMNGSettings.admURL+"/event/"
-					+ elementID, "GET");
+					+ elementID, "GET",null,null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,12 +150,11 @@ public class RestTest {
 		Genson genson = new Genson();
 		Event excpected = genson.deserialize(response, Event.class);
 		assertTrue(eventDao.deleteElement(elementID));
-		System.out.println(orig+" "+excpected);
 		assertTrue(ModelHelper.compare(excpected, orig));
-		// ^ Note to self: If this fails, make sure the server is started...
+		// ^ Note to self: If this fails, make sure the server is actually started...
 	}
 
-	private String doURL(String url, String method) throws Exception {
+	private String doURL(String url, String method,String contentBody,String auth) throws IOException {
 
 		javax.net.ssl.HttpsURLConnection
 				.setDefaultHostnameVerifier(new javax.net.ssl.HostnameVerifier() {
@@ -81,10 +167,23 @@ public class RestTest {
 					}
 				});
 
+	      
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod(method);
 		con.setRequestProperty("User-Agent", "Mozilla/5.0");
+		if(contentBody!=null){
+			con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+			con.setDoOutput(true);
+			if(auth!=null){
+				con.setRequestProperty("Authorization", auth);
+			}
+			con.setRequestProperty("Content-Length", "" +  Integer.toString(contentBody.getBytes().length));
+			DataOutputStream wr = new DataOutputStream (con.getOutputStream ());
+			wr.writeBytes (contentBody);
+			wr.flush ();
+			wr.close ();			
+		}
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(
 				con.getInputStream()));

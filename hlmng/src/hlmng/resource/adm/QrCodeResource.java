@@ -3,7 +3,6 @@ package hlmng.resource.adm;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.QrCode;
-import hlmng.model.User;
 import hlmng.resource.Resource;
 import hlmng.resource.TimeHelper;
 
@@ -111,12 +110,7 @@ public class QrCodeResource extends Resource {
 	}
 
 	
-	public static void claimQrCode(User user, String currentDateTime, QrCode qrcode) {
-		qrcode.setClaimedAt(currentDateTime);
-		qrcode.setUserIDFK(user.getUserID()); 
-		qrCodeDao.updateElement(qrcode, qrcode.getQrcodeID());
-	}
-	
+
 	
 	private void deleteQRFromFSandCache(int id) {
 		String qrPath= HLMNGSettings.qrFileRootDir+Integer.toString(id)+".png";

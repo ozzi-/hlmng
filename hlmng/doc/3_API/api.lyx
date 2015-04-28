@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="18" columns="4">
+<lyxtabular version="3" rows="19" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -894,7 +894,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -903,7 +903,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -912,11 +912,50 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Event Active Felder
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+27.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Adm / Pub URL's (Änderungen v.
+ Sitzung 23.04.15)
 \end_layout
 
 \end_inset
@@ -990,7 +1029,7 @@ Legende
 \series bold
 P
 \series default
- = Public (kein Login benötigt)
+ = Public (keine Authentisierung benötigt)
 \end_layout
 
 \begin_layout Itemize
@@ -998,19 +1037,11 @@ P
 \series bold
 S
 \series default
- = Secure (User Login benötigt)
+ = Secure (User Authentisierung benötigt)
 \begin_inset Newline newline
 \end_inset
 
 Kann 401 zurückliefern
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-B 
-\series default
-= Backend (Backend Login benötigt) 
 \end_layout
 
 \begin_layout Itemize
@@ -1156,7 +1187,7 @@ Login
 \begin_layout Itemize
 Bei den als 
 \series bold
-B/S
+S
 \series default
  gekennzeichneten Calls wird ein Basic 
 \series bold
@@ -1176,7 +1207,7 @@ https://de.wikipedia.org/wiki/HTTP-Authentifizierung#Basic_Authentication
 \begin_inset Newline newline
 \end_inset
 
-Das Passwort bei den S Logins ist dabei die DeviceID.
+Das Passwort ist dabei gleich der DeviceID.
 \end_layout
 
 \begin_layout Itemize
@@ -1375,17 +1406,13 @@ status open
 \begin_layout Standard
 
 \series bold
-/event
+pub/event
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Events 
-\begin_inset Newline newline
-\end_inset
-
-POST - B - Erstellt neuen Event
+GET - Liefert alle Events 
 \begin_inset Newline newline
 \end_inset
 
@@ -1395,37 +1422,29 @@ POST - B - Erstellt neuen Event
 
 
 \series bold
-/event/count
-\begin_inset Newline newline
-\end_inset
-
-
+pub/event/{id}
 \series default
-GET - P - Liefert die Anzahl Events
+
 \begin_inset Newline newline
 \end_inset
 
-
+GET - Liefert den besagten Event
 \begin_inset Newline newline
 \end_inset
 
 
 \series bold
-/event/{id}
+
+\begin_inset Newline newline
+\end_inset
+
+pub/event/{id}/eventrooms
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert den besagten Event
-\begin_inset Newline newline
-\end_inset
-
-PUT - B - Updatet den besagten Event
-\begin_inset Newline newline
-\end_inset
-
-DELETE - B - Löscht den besagten Event
+GET - Liefert alle Event Rooms welche zu Event {id} gehören
 \series bold
 
 \begin_inset Newline newline
@@ -1435,13 +1454,73 @@ DELETE - B - Löscht den besagten Event
 \begin_inset Newline newline
 \end_inset
 
-/event/{id}/eventrooms
+pub/event/{id}/eventitems
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Event Rooms welche zu Event {id} gehören
+GET - Liefert alle Event Items welche zu Event {id} gehören
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/event
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Events 
+\begin_inset Newline newline
+\end_inset
+
+POST - Erstellt neuen Event
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/event/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den besagten Event
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet den besagten Event
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht den besagten Event
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/event/{id}/eventrooms
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Event Rooms welche zu Event {id} gehören
 \series bold
 
 \begin_inset Newline newline
@@ -1451,17 +1530,13 @@ GET - P - Liefert alle Event Rooms welche zu Event {id} gehören
 \begin_inset Newline newline
 \end_inset
 
-event/{id}/eventitems
+adm/event/{id}/eventitems
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P  - Liefert alle Event Items welche zu Event {id} gehören
-\begin_inset Newline newline
-\end_inset
-
-
+GET - Liefert alle Event Items welche zu Event {id} gehören
 \end_layout
 
 \begin_layout Subsection
@@ -1596,17 +1671,13 @@ status open
 \begin_layout Standard
 
 \series bold
-/eventitem
+pub/eventitem
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Event Items
-\begin_inset Newline newline
-\end_inset
-
-POST - B - Erstellt neues Event Item
+GET - Liefert alle Event Items
 \series bold
 
 \begin_inset Newline newline
@@ -1616,21 +1687,13 @@ POST - B - Erstellt neues Event Item
 \begin_inset Newline newline
 \end_inset
 
-/eventitem/{id}
+pub/eventitem/{id}
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert besagtes Event Item
-\begin_inset Newline newline
-\end_inset
-
-PUT - B - Updatet besagtes Event Item
-\begin_inset Newline newline
-\end_inset
-
-DELETE - B - Löscht besagtes 
+GET - Liefert besagtes Event Item
 \begin_inset Newline newline
 \end_inset
 
@@ -1640,13 +1703,53 @@ DELETE - B - Löscht besagtes
 
 
 \series bold
-/eventitem/eventroom
+adm/eventitem
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert den Raum in welchem das Event Item stattfindet
+GET - Liefert alle Event Items
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+POST - Erstellt
+\series bold
+ 
+\series default
+neues Event Item
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+adm/eventitem/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert besagtes Event Item
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet besagtes Event Item
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht besagtes Event Item
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -1733,17 +1836,13 @@ status open
 \begin_layout Standard
 
 \series bold
-/eventroom
+pub/eventroom
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Event Rooms
-\begin_inset Newline newline
-\end_inset
-
-POST - B - 401 - Erstellt neuen Event Room
+GET - Liefert alle Event Rooms
 \begin_inset Newline newline
 \end_inset
 
@@ -1753,25 +1852,57 @@ POST - B - 401 - Erstellt neuen Event Room
 \begin_inset Newline newline
 \end_inset
 
-/eventroom/{id}
+pub/eventroom/{id}
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert den besagten Event Room
-\begin_inset Newline newline
-\end_inset
-
-PUT - B - Updatet den besagten Event Room
-\begin_inset Newline newline
-\end_inset
-
-DELETE - B - Löscht den besagten Event Room
+GET - Liefert den besagten Event Room
 \begin_inset Newline newline
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/eventroom
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Event Rooms
+\begin_inset Newline newline
+\end_inset
+
+POST - Erstellt neuen Event Room
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/eventroom/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den besagten Event Room
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet den besagten Event Room
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht den besagten Event Room
 \end_layout
 
 \begin_layout Subsection
@@ -1858,7 +1989,7 @@ status open
 \begin_layout Standard
 
 \series bold
-/media
+pub/media
 \series default
 
 \begin_inset Newline newline
@@ -1874,32 +2005,13 @@ GET - P - Liefert alle Medien
 \begin_inset Newline newline
 \end_inset
 
-/media/{id}
+pub/media/{id}
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
 GET - P - Liefert das besagte Medien Objekt
-\begin_inset Newline newline
-\end_inset
-
-DELETE - B - Löscht die verlinkte Medien Datei, der Eintrag in der Datenbank
- wird 
-\series bold
-nicht gelöscht.
-
-\series default
- 
-\series bold
-
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-Dies da auf das Medien Objekt verlinkende Objekte weiterhin den Link benutzen
- können und dieser dann ein 404 zurückliefert.
 \series bold
 
 \begin_inset Newline newline
@@ -1909,7 +2021,7 @@ Dies da auf das Medien Objekt verlinkende Objekte weiterhin den Link benutzen
 \begin_inset Newline newline
 \end_inset
 
-/media/{typ}/{filename}
+pub/media/{typ}/{filename}
 \begin_inset Newline newline
 \end_inset
 
@@ -1930,13 +2042,13 @@ z.B.
 
 
 \series bold
-/media/upload
+pub/media/upload
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-POST - P - Ermöglicht einen Upload von Media Dateien mittels Multipart-Data
+POST - S - Ermöglicht einen Upload von Media Dateien mittels Multipart-Data
  
 \begin_inset Foot
 status open
@@ -1977,23 +2089,95 @@ Die möglichen Return Codes sind (nebst den üblichen Authorization needed
 \end_layout
 
 \begin_layout Standard
+.
+\end_layout
 
+\begin_layout Standard
+.
 \series bold
-/media/uploadbackend
+
+\begin_inset Newline newline
+\end_inset
+
+adm/media
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert alle Medien
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+adm/media/{typ}/{filename}
 \begin_inset Newline newline
 \end_inset
 
 
 \series default
-POST - B - Für Backendlogins, ansonsten gleich wie 
-\begin_inset Quotes ald
+GET - P - Liefert die gewünschte Medien Ressource
+\begin_inset Newline newline
 \end_inset
 
-/upload
-\begin_inset Quotes ard
+z.B.
+ http://.../rest/media/image/png/image.png"
+\series bold
+
+\begin_inset Newline newline
 \end_inset
 
-.
+
+\begin_inset Newline newline
+\end_inset
+
+adm/media/upload
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+Gleich wie /pub/media/upload, ohne Authentisierung
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+adm/media/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert das besagte Medien Objekt
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht die verlinkte Medien Datei, der Eintrag in der Datenbank
+ wird 
+\series bold
+nicht gelöscht.
+
+\series default
+ 
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+Dies da auf das Medien Objekt verlinkende Objekte weiterhin den Link benutzen
+ können und dieser dann ein 404 zurückliefert.
 \end_layout
 
 \begin_layout Subsection
@@ -2115,7 +2299,7 @@ status open
 \begin_layout Standard
 
 \series bold
-/news
+pub/news
 \series default
 
 \begin_inset Newline newline
@@ -2125,17 +2309,13 @@ GET - P - Liefert alle News Einträge
 \begin_inset Newline newline
 \end_inset
 
-POST - B - Erstellt neuen News Eintrag
-\begin_inset Newline newline
-\end_inset
-
 
 \begin_inset Newline newline
 \end_inset
 
 
 \series bold
-/news/newest
+pub/news/newest
 \begin_inset Newline newline
 \end_inset
 
@@ -2154,7 +2334,7 @@ GET - P - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert)
 \begin_inset Newline newline
 \end_inset
 
-/news/{id}
+pub/news/{id}
 \series default
 
 \begin_inset Newline newline
@@ -2164,35 +2344,23 @@ GET - P - Liefert den besagten News Eintrag
 \begin_inset Newline newline
 \end_inset
 
+
+\begin_inset Newline newline
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
 PUT - B - Updatet den besagten News Eintrag
 \begin_inset Newline newline
 \end_inset
 
 DELETE - B - Löscht den besagten News Eintrag
-\series bold
-
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-/news/{id}/media
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-GET - P - Liefert das Medien Objekt zu besagten News Eintrag
-\begin_inset Newline newline
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -2288,7 +2456,7 @@ status open
 \begin_layout Standard
 
 \series bold
-/presentation
+pub/presentation
 \series default
 
 \begin_inset Newline newline
@@ -2298,23 +2466,27 @@ GET - P - Liefert alle Präsentationen
 \begin_inset Newline newline
 \end_inset
 
-POST - B - Erstellt neue Präsentation
-\begin_inset Newline newline
-\end_inset
-
 
 \series bold
 
 \begin_inset Newline newline
 \end_inset
 
-/presentation/{id}
+pub/presentation/{id}
 \begin_inset Newline newline
 \end_inset
 
 
 \series default
 GET - P - Liefert die besagte Präsentation
+\begin_inset Newline newline
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+.
 \begin_inset Newline newline
 \end_inset
 
@@ -2453,13 +2625,71 @@ status open
 \begin_layout Standard
 
 \series bold
-/push
+pub/push
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
 GET - P - Liefert alle Push Einträge
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+/push/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert besagten Push Eintrag
+\begin_inset Newline newline
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\SpecialChar \@.
+
+\begin_inset Newline newline
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updatet besagten Push Eintrag 
+\series bold
+*
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten Push Eintrag 
+\series bold
+*
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+*
+\series default
+ Die Push Notifaction auf dem Mobile App kann logischerweise nicht nachträglich
+ geändert / gelöscht werden.
+\begin_inset Newline newline
+\end_inset
+
+.
 \begin_inset Newline newline
 \end_inset
 
@@ -2501,43 +2731,6 @@ status open
 \end_inset
 
 
-\series bold
-
-\begin_inset Newline newline
-\end_inset
-
-/push/{id}
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-GET - P - Liefert besagten Push Eintrag
-\begin_inset Newline newline
-\end_inset
-
-PUT - B - Updatet besagten Push Eintrag 
-\series bold
-*
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-DELETE - B - Löscht den besagten Push Eintrag 
-\series bold
-*
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-*
-\series default
- Die Push Notifaction auf dem Mobile App kann logischerweise nicht nachträglich
- geändert / gelöscht werden.
 \end_layout
 
 \begin_layout Subsection
@@ -2671,7 +2864,7 @@ status open
 \begin_layout Standard
 
 \series bold
-/qrcode
+adm TODO/qrcode
 \series default
 
 \begin_inset Newline newline
@@ -2834,7 +3027,7 @@ status open
 \begin_layout Standard
 
 \series bold
-/slider
+pub/slider
 \series default
 
 \begin_inset Newline newline
@@ -2844,17 +3037,13 @@ GET - P - Liefert alle Slider
 \begin_inset Newline newline
 \end_inset
 
-POST - B - Erstellt neuen Slider
-\begin_inset Newline newline
-\end_inset
-
 
 \series bold
 
 \begin_inset Newline newline
 \end_inset
 
-/slider/{id}
+pub/slider/{id}
 \series default
 
 \begin_inset Newline newline
@@ -2864,7 +3053,23 @@ GET - P - Liefert den besagten Slider
 \begin_inset Newline newline
 \end_inset
 
-POST - B - Updatet den besagten Slider
+
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+.
+\end_layout
+
+\begin_layout Standard
+POST - B - Erstellt neuen Slider
+\end_layout
+
+\begin_layout Standard
+PUT - B - Updatet den besagten Slider
 \begin_inset Newline newline
 \end_inset
 
@@ -3020,7 +3225,7 @@ status open
 \begin_layout Standard
 
 \series bold
-/social
+pub/social
 \series default
 
 \begin_inset Newline newline
@@ -3035,12 +3240,28 @@ POST - S - Erstellt neuen Social Eintrag
 \end_inset
 
 
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+pub/social/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - P - Liefert den besagten Social Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
 
 \series bold
-/social/newest
+pub/social/newest
 \begin_inset Newline newline
 \end_inset
 
@@ -3058,22 +3279,6 @@ GET - P - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert)
 \end_inset
 
 
-\series bold
-/slider/{id}
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-GET - P - Liefert den besagten Slider
-\begin_inset Newline newline
-\end_inset
-
-POST - B - Updatet den besagten Slider
-\begin_inset Newline newline
-\end_inset
-
-DELETE - B - Löscht den besagten Slider
 \end_layout
 
 \begin_layout Subsection
@@ -3209,7 +3414,7 @@ status open
 \begin_layout Standard
 
 \series bold
-/speaker
+pub/speaker
 \series default
 
 \begin_inset Newline newline
@@ -3219,7 +3424,7 @@ GET - P - Liefert alle Speaker
 \begin_inset Newline newline
 \end_inset
 
-POST - B - Erstellt neuen Speaker
+
 \series bold
 
 \begin_inset Newline newline
@@ -3229,7 +3434,7 @@ POST - B - Erstellt neuen Speaker
 \begin_inset Newline newline
 \end_inset
 
-/speaker/{id}
+pub/speaker/{id}
 \series default
 
 \begin_inset Newline newline
@@ -3239,19 +3444,19 @@ GET - P - Liefert den besagten Speaker
 \begin_inset Newline newline
 \end_inset
 
+
+\begin_inset Newline newline
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
 POST - B - Updatet den besagten Speaker
 \begin_inset Newline newline
 \end_inset
 
 DELETE - B - Löscht den besagten Speaker
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -3334,7 +3539,7 @@ status open
 \begin_layout Standard
 
 \series bold
-/user
+pub/user
 \series default
 
 \begin_inset Newline newline
@@ -3356,7 +3561,7 @@ POST - P - Erstellt neuen user.
 \begin_inset Newline newline
 \end_inset
 
-/user/{id}
+pub/user/{id}
 \series default
 
 \begin_inset Newline newline
@@ -3366,21 +3571,13 @@ GET - P - Liefert den besagten User
 \begin_inset Newline newline
 \end_inset
 
-PUT - B - Updaten den besagten User 
-\begin_inset Newline newline
-\end_inset
 
-DELETE - B - Löscht den besagten 
 \series bold
 
 \begin_inset Newline newline
 \end_inset
 
-
-\begin_inset Newline newline
-\end_inset
-
-{id}/changeregid
+pub/user/{id}/changeregid
 \begin_inset Newline newline
 \end_inset
 
@@ -3409,6 +3606,23 @@ regID
 nicht
 \series default
  geändert.
+\end_layout
+
+\begin_layout Standard
+.
+\begin_inset Newline newline
+\end_inset
+
+\SpecialChar \@.
+
+\begin_inset Newline newline
+\end_inset
+
+PUT - B - Updaten den besagten User 
+\begin_inset Newline newline
+\end_inset
+
+DELETE - B - Löscht den besagten 
 \end_layout
 
 \begin_layout Subsection
@@ -3512,17 +3726,17 @@ status open
 \begin_layout Standard
 
 \series bold
-/vote
+pub/vote
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - B - Liefert alle Votes
-\begin_inset Newline newline
-\end_inset
-
 POST - S - Erstellt neuen Vote
+\series bold
+ 
+\series default
+(1x pro Benutzer)
 \series bold
 
 \begin_inset Newline newline
@@ -3532,7 +3746,7 @@ POST - S - Erstellt neuen Vote
 \begin_inset Newline newline
 \end_inset
 
-/vote/{id}
+adm/vote/{id}
 \series default
 
 \begin_inset Newline newline
@@ -3548,7 +3762,7 @@ GET - B - Liefert den besagten Vote
 \begin_inset Newline newline
 \end_inset
 
-/vote/slider/{id}
+adm/vote/slider/{id}
 \series default
 
 \begin_inset Newline newline
@@ -3753,17 +3967,13 @@ status open
 \begin_layout Standard
 
 \series bold
-/voting
+pub/voting
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
 GET - P - Liefert alle Votings
-\begin_inset Newline newline
-\end_inset
-
-POST - B - Erstellt neues Voting
 \series bold
 
 \begin_inset Newline newline
@@ -3773,7 +3983,7 @@ POST - B - Erstellt neues Voting
 \begin_inset Newline newline
 \end_inset
 
-/voting/{id}
+pub/voting/{id}
 \series default
 
 \begin_inset Newline newline
@@ -3783,23 +3993,7 @@ GET - P - Liefert besagtes Votings
 \begin_inset Newline newline
 \end_inset
 
-PUT - B - Updatet besagtes 
-\begin_inset Newline newline
-\end_inset
 
-
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-/voting/{id}/slider
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-GET - P - Liefert alle Slider des besagten Voting
 \begin_inset Newline newline
 \end_inset
 
@@ -3811,6 +4005,14 @@ Time
 \end_layout
 
 \begin_layout Standard
+
+\series bold
+/pub/time
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
 Liefert die aktuelle Serverzeit im Format HH-mm-ss.SSS.
 \end_layout
 

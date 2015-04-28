@@ -1,11 +1,12 @@
 package hlmng.auth;
 
 import hlmng.dao.GenDaoLoader;
+import hlmng.dao.QrCodeDao;
+import hlmng.dao.UserDao;
 import hlmng.model.ModelHelper;
 import hlmng.model.QrCode;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
-import hlmng.resource.adm.QrCodeResource;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -26,9 +27,11 @@ import settings.HTTPCodes;
  * and makes a lookup if a auth was provided and if it was correct.
  */
 public class AuthChecker {
+	private static QrCodeDao qrDao = GenDaoLoader.instance.getQrCodeDao();
+	private static UserDao userDao = GenDaoLoader.instance.getUserDao();
 
 	public static AuthResult checkQRCodeAuthorization(String qrHeader, int checkIDFK, User user, String role,String currentDateTime){
-		QrCode qrcode = (QrCode) GenDaoLoader.instance.getQrCodeDao().getQrCodeByPayload(qrHeader);
+		QrCode qrcode = (QrCode) qrDao.getQrCodeByPayload(qrHeader);
 		if(qrcode!=null){
 			if(qrcode.getEventIDFK()!=checkIDFK){
 				Log.addEntry(Level.WARNING, "User tried to auth with a qr code issued to another eventIDFK. UserID:"+user.getUserID());
@@ -43,7 +46,7 @@ public class AuthChecker {
 						return new AuthResult(false,HTTPCodes.forbidden);
 					}
 				}else{				
-					QrCodeResource.claimQrCode(user, currentDateTime, qrcode);
+					claimQrCode(user, currentDateTime, qrcode);
 					return new AuthResult(true, HTTPCodes.ok);
 				}
 			}else{
@@ -56,7 +59,12 @@ public class AuthChecker {
 		}
 	}
 
-
+	public static void claimQrCode(User user, String currentDateTime, QrCode qrcode) {
+		qrcode.setClaimedAt(currentDateTime);
+		qrcode.setUserIDFK(user.getUserID()); 
+		qrDao.updateElement(qrcode, qrcode.getQrcodeID());
+	}
+	
 	/**
 	 * Checks if a Authorization header is sent and if it contains an authorized Base64 encoded login
 	 * Notice: This method sends according error codes if the user provided no, wrong or ill-formed authentication data!
@@ -89,7 +97,7 @@ public class AuthChecker {
 	}
 
 	private static AuthResult checkLoginInformation( HttpServletResponse servletResponse, AuthCredential authCredential) {
-		User userDB = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(),authCredential.getSecret());
+		User userDB = userDao.getUserByNameAndDeviceID(authCredential.getUsername(),authCredential.getSecret());
 		if(credentialMatchesUser(authCredential, userDB)){
 			if(UserActionLimiter.actionsExceeded(userDB.getName())){
 				Log.addEntry(Level.WARNING, "Successful user auth but action limit exceeded. "+ModelHelper.valuestoString(authCredential));

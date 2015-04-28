@@ -52,6 +52,7 @@ public class VoteResource extends Resource  {
 			return Response.status(HTTPCodes.forbidden).build();
 		}
 		if( user.getUserID()!=element.getUserIDFK()){
+			
 			Log.addEntry(Level.WARNING, "User tried to vote as somebody else . UserID: "+user.getUserID()+" as "
 										+element.getUserIDFK()
 										+". "+ModelHelper.valuestoString(element));
@@ -81,7 +82,7 @@ public class VoteResource extends Resource  {
 		
 		if(!isJury && element.isIsJury()){
 			Log.addEntry(Level.WARNING, "User tried to vote as jury but has no qr code or a invalid qr code. UserID:"+user.getUserID());
-			return Response.status(403).build();
+			return Response.status(HTTPCodes.forbidden).build();
 		}
 		element.setIsJury(isJury);
 		
@@ -92,11 +93,11 @@ public class VoteResource extends Resource  {
 				return postResource(voteDao, element); 			
 			}else{			
 				Log.addEntry(Level.WARNING, "User tried to vote twice. UserID:"+user.getUserID()+". "+ModelHelper.valuestoString(element));
-				return Response.status(423).build();
+				return Response.status(HTTPCodes.locked).build();
 			}			
 		}else{
 			Log.addEntry(Level.INFO, "User treid to vote while voting status wasn't 'voting'. "+ModelHelper.valuestoString(element));
-			return Response.status(424).build();
+			return Response.status(HTTPCodes.failedDependency).build();
 		}
 	}
 }
