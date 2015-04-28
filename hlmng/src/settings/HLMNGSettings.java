@@ -6,14 +6,25 @@ public class HLMNGSettings {
 	
 	static boolean production=false;
 	
+	/**
+	 * Data base config
+	 */
 	public static final String appPath="https://localhost:8443/hlmng";
 	public static final String jdbcPath="jdbc:mysql://127.0.0.1/hlmng";
 	public static final String jdbcUser="user";
 	public static final String jdbcPassword="pw12";
 	
+	/**
+	 * Rest API URL config
+	 * Example: hostname:port/rest/pub
+	 */
 	public static final String pubURL="/pub";
 	public static final String admURL="/adm";
 	
+	
+	/**
+	 * Cache Control max-age in Sekunden
+	 */
 	public static final int cacheTime=1800;
 
 

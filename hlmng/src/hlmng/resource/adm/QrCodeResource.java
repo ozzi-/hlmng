@@ -13,7 +13,6 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,7 +27,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import log.Log;
 import settings.HLMNGSettings;
@@ -45,8 +43,7 @@ import com.google.zxing.common.BitMatrix;
 public class QrCodeResource extends Resource {
 	
 	private static GenDao qrCodeDao =GenDaoLoader.instance.getQrCodeDao();
-	private static HashMap<String,ResponseBuilder> localQrResponseCache = new HashMap<String,ResponseBuilder>();
-	
+		
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getQrCode() throws IOException {
@@ -75,7 +72,7 @@ public class QrCodeResource extends Resource {
 		if(qrCode!=null){
 			try {
 				String filePath = generateQR(qrCode.getQrcodeID(),qrCode.getPayload());
-				return MediaResource.mediaResponse(filePath, "png", request,localQrResponseCache);			
+				return MediaResource.mediaResponse(filePath, "png", request);			
 			} catch (WriterException e) {
 				response.sendError(500);
 			} 			
@@ -104,19 +101,14 @@ public class QrCodeResource extends Resource {
 		
 		QrCode qrcode = (QrCode)qrCodeDao.getElement(id);
 		if(qrcode!=null){
-			deleteQRFromFSandCache(id);			
+			deleteQRFromFS(id);			
 		}
 		return deleteResource(qrCodeDao, id);
 	}
 
 	
-
-	
-	private void deleteQRFromFSandCache(int id) {
+	private void deleteQRFromFS(int id) {
 		String qrPath= HLMNGSettings.qrFileRootDir+Integer.toString(id)+".png";
-		String qrName= Integer.toString(id)+".png";
-		ResponseBuilder qrres = localQrResponseCache.remove(qrName);
-		Log.addEntry(Level.FINE, "Removed QR response from local cache :"+qrres);
 		File file = new File(qrPath);
 		boolean filedelres = file.delete();
 		Log.addEntry(Level.FINE, "Removed media from file system? "+filedelres);

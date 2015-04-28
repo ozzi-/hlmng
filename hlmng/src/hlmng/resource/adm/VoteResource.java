@@ -25,7 +25,6 @@ import settings.HLMNGSettings;
 public class VoteResource extends Resource  {
 		
 	private GenDao voteDao = GenDaoLoader.instance.getVoteDao();
-
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -46,7 +45,7 @@ public class VoteResource extends Resource  {
 	public Vote getVote(@PathParam("id") int id) throws IOException{
 			return (Vote) getResource(voteDao, id);			
 	}
-
+		
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)

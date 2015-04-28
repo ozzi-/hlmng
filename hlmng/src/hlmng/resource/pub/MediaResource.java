@@ -12,7 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -47,8 +46,6 @@ import settings.HTTPCodes;
 public class MediaResource extends Resource{
 
 	private static final int bytesPerMB = 1048576;
-	private static HashMap<String,ResponseBuilder> localJPGResponseCache = new HashMap<String,ResponseBuilder>();
-	private static HashMap<String,ResponseBuilder> localPNGResponseCache = new HashMap<String,ResponseBuilder>();
 	private static GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
 
 
@@ -106,7 +103,7 @@ public class MediaResource extends Resource{
 	@Path("image/jpeg/{name}")
 	@Produces("image/jpeg")
 	public Response getJPG(@PathParam("name") String fileName) throws IOException {
-			return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "jpg", request,localJPGResponseCache);
+			return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "jpg", request);
 	}
 
 	@GET
@@ -114,7 +111,7 @@ public class MediaResource extends Resource{
 	@Produces("image/png")
 	public Response getPNG(@PathParam("name") String fileName)
 			throws IOException { 
-		return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "png", request,localPNGResponseCache);
+		return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "png", request);
 	}
 	
 	@POST
@@ -234,27 +231,17 @@ public class MediaResource extends Resource{
 		return bytesWritten;
 	}
 	
-	public static ResponseBuilder getLocalCacheFile(File file, Request request, HashMap<String, ResponseBuilder> localCache){
-		ResponseBuilder response;
-		if(localCache.containsKey(file.getName())){
-			Log.addEntry(Level.INFO, "Using cached Media Response. Filename:"+file.getName());
-			response = localCache.get(file.getName());		
-		}else{
-			Log.addEntry(Level.INFO, "Created new Media Response since missing in local cache. Filename:"+file.getName());
-			response = ResourceHelper.cacheControl((File) file,request);
-			localCache.put(file.getName(), response);
-		}
-		return response;
-	}
 
-	public static Response mediaResponse(String filePath, String fileType, Request request,HashMap<String,ResponseBuilder> localCache) {
+
+	public static Response mediaResponse(String filePath, String fileType, Request request) {
 		ResponseBuilder response;
 		File file = new File(filePath);
 		if (file.canRead()) {
-			response = getLocalCacheFile((File) file,request,localCache);
+			response = ResourceHelper.cacheControl((File) file,request);
 		} else {
 			response = Response.status(Response.Status.NOT_FOUND);
 		}
+		response.expires(null);
 		return response.build();
 	}
 

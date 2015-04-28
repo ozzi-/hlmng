@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -39,6 +38,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import settings.HLMNGSettings;
+import settings.HTTPCodes;
 
 
 
@@ -46,8 +46,6 @@ import settings.HLMNGSettings;
 public class MediaResource extends Resource{
 
 	private static final int bytesPerMB = 1048576;
-	private static HashMap<String,ResponseBuilder> localJPGResponseCache = new HashMap<String,ResponseBuilder>();
-	private static HashMap<String,ResponseBuilder> localPNGResponseCache = new HashMap<String,ResponseBuilder>();
 	private static GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
 
 
@@ -77,30 +75,17 @@ public class MediaResource extends Resource{
 	@Path("{id}")
 	public Response deleteMedia(@PathParam("id") int id) throws IOException{
 		Media media = (Media)mediaDao.getElement(id);
-		// ONLY deletes on filesystem and local cache,  since path's to that media still have to be there, see documentation
+		// ONLY deletes on filesystem -  since path's to that media still have to be there, see documentation
 		boolean deleted=false;
 		if(media !=null){ 
-			deleted = deleteMediaFromFSandCache(media.getLink(),media.getType());						
+			deleted = deleteMediaFromFS(media.getLink(),media.getType());						
 		}
 		return ResourceHelper.returnOkOrNotFoundResponse(deleted);
 	}
 
-	private boolean deleteMediaFromFSandCache(String fileName, String type) {
-
+	private boolean deleteMediaFromFS(String fileName, String type) {
 		String mediaPath= HLMNGSettings.mediaFileRootDir+fileName;
-
-		Log.addEntry(Level.INFO, "Trying to delete:"+fileName);
-		
-		if(type.equals("image/jpg") || type.equals("image/jpeg")){ 
-			ResponseBuilder jpgres = localJPGResponseCache.remove(fileName);
-			Log.addEntry(Level.INFO, "Removed JPG response from local cache :"+jpgres);
-		}else if(type.equals("image/png")){ 
-			ResponseBuilder pngres = localPNGResponseCache.remove(fileName);
-			Log.addEntry(Level.INFO, "Removed PNG response from local cache :"+pngres);
-		}else{
-			throw new IllegalArgumentException("implement other media types first..");
-		}
-		
+		Log.addEntry(Level.INFO, "Trying to delete:"+fileName);			
 		File file = new File(mediaPath);
 		boolean filedelres = file.delete();
 		Log.addEntry(Level.INFO, "Removed media from file system? "+filedelres);
@@ -115,7 +100,7 @@ public class MediaResource extends Resource{
 		ResponseBuilder builder;
 		Object obj = mediaDao.getElement(id);
 		if(obj==null){
-			builder = Response.status(404);
+			builder = Response.status(HTTPCodes.notFound);
 		}else{
 			Media media = (Media) obj;
 			ResourceHelper.setMediaURLPath(uriS,media);
@@ -138,7 +123,7 @@ public class MediaResource extends Resource{
 	@Path("image/jpeg/{name}")
 	@Produces("image/jpeg")
 	public Response getJPG(@PathParam("name") String fileName) throws IOException {
-			return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "jpg", request,localJPGResponseCache);
+			return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "jpg", request);
 	}
 
 	@GET
@@ -146,7 +131,7 @@ public class MediaResource extends Resource{
 	@Produces("image/png")
 	public Response getPNG(@PathParam("name") String fileName)
 			throws IOException { 
-		return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "png", request,localPNGResponseCache);
+		return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "png", request);
 	}
 
 	@POST
@@ -257,27 +242,15 @@ public class MediaResource extends Resource{
 		}
 		return bytesWritten;
 	}
-	
-	public static ResponseBuilder getLocalCacheFile(File file, Request request, HashMap<String, ResponseBuilder> localCache){
-		ResponseBuilder response;
-		if(localCache.containsKey(file.getName())){
-			Log.addEntry(Level.INFO, "Using cached Media Response. Filename:"+file.getName());
-			response = localCache.get(file.getName());		
-		}else{
-			Log.addEntry(Level.INFO, "Created new Media Response since missing in local cache. Filename:"+file.getName());
-			response = ResourceHelper.cacheControl((File) file,request);
-			localCache.put(file.getName(), response);
-		}
-		return response;
-	}
 
-	public static Response mediaResponse(String filePath, String fileType, Request request,HashMap<String,ResponseBuilder> localCache) {
+
+	public static Response mediaResponse(String filePath, String fileType, Request request) {
 		ResponseBuilder response;
 		File file = new File(filePath);
 		if (file.canRead()) {
-			response = getLocalCacheFile((File) file,request,localCache);
+			response = ResourceHelper.cacheControl((File) file,request);
 		} else {
-			response = Response.status(Response.Status.NOT_FOUND);
+			response = Response.status(HTTPCodes.notFound);
 		}
 		return response.build();
 	}

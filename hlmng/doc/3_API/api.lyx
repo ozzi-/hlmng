@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="19" columns="4">
+<lyxtabular version="3" rows="20" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -932,7 +932,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -941,7 +941,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -950,12 +950,50 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Adm / Pub URL's (Änderungen v.
  Sitzung 23.04.15)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+28.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.0.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fertigstellung Adm/Pub + Voting /sliders & /votes
 \end_layout
 
 \end_inset
@@ -1008,12 +1046,12 @@ Calls
 \begin_inset Quotes ard
 \end_inset
 
- sowie die zu erwartenden Antworten aufgeführt werden.
- 
+, die zu erwartenden Antworten sowie Konventionen und Benutzungsinformationen
+ aufgeführt werden.
 \end_layout
 
 \begin_layout Section
-API
+API 
 \end_layout
 
 \begin_layout Subsection
@@ -1027,21 +1065,25 @@ Legende
 \begin_layout Itemize
 
 \series bold
-P
-\series default
- = Public (keine Authentisierung benötigt)
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
 S
 \series default
  = Secure (User Authentisierung benötigt)
 \begin_inset Newline newline
 \end_inset
 
-Kann 401 zurückliefern
+Siehe 
+\begin_inset Quotes ald
+\end_inset
+
+Login
+\begin_inset Quotes ard
+\end_inset
+
+ unter 
+\begin_inset Quotes ald
+\end_inset
+
+Diverses.
 \end_layout
 
 \begin_layout Itemize
@@ -1208,6 +1250,7 @@ https://de.wikipedia.org/wiki/HTTP-Authentifizierung#Basic_Authentication
 \end_inset
 
 Das Passwort ist dabei gleich der DeviceID.
+ Kann 401, 403 zurückliefern.
 \end_layout
 
 \begin_layout Itemize
@@ -1285,6 +1328,235 @@ https://de.wikipedia.org/wiki/Unixzeit
 
 \begin_layout Itemize
 Alle Pfade werden relativ angegeben
+\end_layout
+
+\begin_layout Itemize
+Caching
+\begin_inset Newline newline
+\end_inset
+
+Sämtliche Medien Ressourcen offerieren Client Caching durch ETag 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Hier zu sehen ist die erste Anfrage für 
+\begin_inset Quotes ald
+\end_inset
+
+shot0008.png
+\begin_inset Quotes ard
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Der Server sendet dem Client ein Etag mit welcher sich der Client speichern
+ soll.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+GET /hlmng/rest/pub/media/image/png/shot0008.png HTTP/1.1
+\end_layout
+
+\begin_layout Plain Layout
+
+Host: localhost:8443 
+\end_layout
+
+\begin_layout Plain Layout
+
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:37.0) Firefox/37.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+Accept: text/html,application/xhtml+xml,application/xml;
+\end_layout
+
+\begin_layout Plain Layout
+
+Accept-Language: en-US,en;q=0.5 
+\end_layout
+
+\begin_layout Plain Layout
+
+Accept-Encoding: gzip, deflate 
+\end_layout
+
+\begin_layout Plain Layout
+
+Connection: keep-alive
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+HTTP/1.1 200 OK 
+\end_layout
+
+\begin_layout Plain Layout
+
+Server: Apache-Coyote/1.1 
+\end_layout
+
+\begin_layout Plain Layout
+
+Cache-Control: private, no-transform, max-age=1800 
+\end_layout
+
+\begin_layout Plain Layout
+
+Expires: Thu, 01 Jan 1970 01:00:00 CET 
+\end_layout
+
+\begin_layout Plain Layout
+
+Etag: "1712108524" 
+\end_layout
+
+\begin_layout Plain Layout
+
+Content-Type: image/png Transfer-Encoding: chunked 
+\end_layout
+
+\begin_layout Plain Layout
+
+Date: Tue, 28 Apr 2015 11:23:34 GMT
+\end_layout
+
+\end_inset
+
+Hier zu sehen ist die erneute Anfrage für 
+\begin_inset Quotes ald
+\end_inset
+
+shot0008.png
+\begin_inset Quotes ard
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+Der Client sendet 
+\begin_inset Quotes ald
+\end_inset
+
+If-None-Match
+\begin_inset Quotes ard
+\end_inset
+
+ mit, anhand diesem Wert entscheidet der Server ob das Bild 304 (not modified)
+ oder 200 (nochmals neu senden) ist.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+GET /hlmng/rest/pub/media/image/png/shot0008.png 
+\end_layout
+
+\begin_layout Plain Layout
+
+HTTP/1.1 Host: localhost:8443 
+\end_layout
+
+\begin_layout Plain Layout
+
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:37.0) Firefox/37.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+Accept: text/html,application/xhtml+xml,application/xml;
+\end_layout
+
+\begin_layout Plain Layout
+
+Accept-Language: en-US,en;q=0.5 Accept-Encoding: gzip, deflate 
+\end_layout
+
+\begin_layout Plain Layout
+
+Connection: keep-alive 
+\end_layout
+
+\begin_layout Plain Layout
+
+If-None-Match: "1712108524" 
+\end_layout
+
+\begin_layout Plain Layout
+
+Cache-Control: max-age=0
+\end_layout
+
+\begin_layout Plain Layout
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+HTTP/1.1 304 Not Modified 
+\end_layout
+
+\begin_layout Plain Layout
+
+Server: Apache-Coyote/1.1 
+\end_layout
+
+\begin_layout Plain Layout
+
+Cache-Control: private, no-transform, max-age=1800 
+\end_layout
+
+\begin_layout Plain Layout
+
+Expires: Thu, 01 Jan 1970 01:00:00 CET 
+\end_layout
+
+\begin_layout Plain Layout
+
+Etag: "1712108524" 
+\end_layout
+
+\begin_layout Plain Layout
+
+Date: Tue, 28 Apr 2015 11:23:37 GMT
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1746,14 +2018,6 @@ PUT - Updatet besagtes Event Item
 \end_inset
 
 DELETE - Löscht besagtes Event Item
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -1995,7 +2259,7 @@ pub/media
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Medien
+GET - Liefert alle Medien
 \series bold
 
 \begin_inset Newline newline
@@ -2011,7 +2275,7 @@ pub/media/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert das besagte Medien Objekt
+GET - Liefert das besagte Medien Objekt
 \series bold
 
 \begin_inset Newline newline
@@ -2027,7 +2291,7 @@ pub/media/{typ}/{filename}
 
 
 \series default
-GET - P - Liefert die gewünschte Medien Ressource
+GET - Liefert die gewünschte Medien Ressource
 \begin_inset Newline newline
 \end_inset
 
@@ -2048,8 +2312,11 @@ pub/media/upload
 \begin_inset Newline newline
 \end_inset
 
-POST - S - Ermöglicht einen Upload von Media Dateien mittels Multipart-Data
- 
+POST - 
+\series bold
+S
+\series default
+ - Ermöglicht einen Upload von Media Dateien mittels Multipart-Data 
 \begin_inset Foot
 status open
 
@@ -2086,26 +2353,26 @@ Die möglichen Return Codes sind (nebst den üblichen Authorization needed
 \begin_layout Itemize
 200 - Hochgeladen, Objekt wird als JSON geliefert, sodass sich der Client
  die ID speichern kann
-\end_layout
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-.
-\end_layout
-
-\begin_layout Standard
-.
-\series bold
 
 \begin_inset Newline newline
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
 adm/media
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Medien
+GET - Liefert alle Medien
 \series bold
 
 \begin_inset Newline newline
@@ -2121,7 +2388,7 @@ adm/media/{typ}/{filename}
 
 
 \series default
-GET - P - Liefert die gewünschte Medien Ressource
+GET - Liefert die gewünschte Medien Ressource
 \begin_inset Newline newline
 \end_inset
 
@@ -2158,7 +2425,7 @@ adm/media/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert das besagte Medien Objekt
+GET - Liefert das besagte Medien Objekt
 \begin_inset Newline newline
 \end_inset
 
@@ -2305,7 +2572,7 @@ pub/news
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle News Einträge
+GET - Liefert alle News Einträge
 \begin_inset Newline newline
 \end_inset
 
@@ -2321,8 +2588,7 @@ pub/news/newest
 
 
 \series default
-GET - P - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert)
- Einträge.
+GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
  Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
  alle Einträge.
 \begin_inset Newline newline
@@ -2340,7 +2606,7 @@ pub/news/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert den besagten News Eintrag
+GET - Liefert den besagten News Eintrag
 \begin_inset Newline newline
 \end_inset
 
@@ -2348,19 +2614,61 @@ GET - P - Liefert den besagten News Eintrag
 \begin_inset Newline newline
 \end_inset
 
-.
+
+\series bold
+adm/news
+\series default
+
 \begin_inset Newline newline
 \end_inset
 
-.
+GET - Liefert alle News Einträge
 \begin_inset Newline newline
 \end_inset
 
-PUT - B - Updatet den besagten News Eintrag
+POST - Erstellt neuen News Eintrag
 \begin_inset Newline newline
 \end_inset
 
-DELETE - B - Löscht den besagten News Eintrag
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/news/newest
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
+ Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
+ alle Einträge.
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/news/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den besagten News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet den besagten News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+DELETE -  Löscht den besagten News Eintrag
 \end_layout
 
 \begin_layout Subsection
@@ -2462,7 +2770,7 @@ pub/presentation
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Präsentationen
+GET - Liefert alle Präsentationen
 \begin_inset Newline newline
 \end_inset
 
@@ -2478,27 +2786,51 @@ pub/presentation/{id}
 
 
 \series default
-GET - P - Liefert die besagte Präsentation
-\begin_inset Newline newline
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-.
-\begin_inset Newline newline
-\end_inset
-
-PUT - B - Updatet die besagte Präsentation
-\begin_inset Newline newline
-\end_inset
-
-DELETE - B - Löscht die besagte Präsentation
+GET - Liefert die besagte Präsentation
 \begin_inset Newline newline
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/presentation
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Präsentationen
+\begin_inset Newline newline
+\end_inset
+
+POST - Erstellt neue Präsentation
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/presentation/{id}
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert die besagte Präsentation
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet die besagte Präsentation
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht die besagte Präsentation
 \end_layout
 
 \begin_layout Subsection
@@ -2631,7 +2963,7 @@ pub/push
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Push Einträge
+GET - Liefert alle Push Einträge
 \begin_inset Newline newline
 \end_inset
 
@@ -2647,53 +2979,27 @@ GET - P - Liefert alle Push Einträge
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert besagten Push Eintrag
+GET - Liefert besagten Push Eintrag
 \begin_inset Newline newline
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Standard
-\SpecialChar \@.
-
-\begin_inset Newline newline
-\end_inset
-
-.
-\begin_inset Newline newline
-\end_inset
-
-PUT - B - Updatet besagten Push Eintrag 
-\series bold
-*
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-DELETE - B - Löscht den besagten Push Eintrag 
-\series bold
-*
-\series default
 
 \begin_inset Newline newline
 \end_inset
 
 
 \series bold
-*
+adm/push
 \series default
- Die Push Notifaction auf dem Mobile App kann logischerweise nicht nachträglich
- geändert / gelöscht werden.
+
 \begin_inset Newline newline
 \end_inset
 
-.
+GET - Liefert alle Push Einträge
 \begin_inset Newline newline
 \end_inset
 
-POST - B Erstellt neuen Push Eintrag
+POST - Erstellt neuen Push Eintrag
 \begin_inset Newline newline
 \end_inset
 
@@ -2731,6 +3037,43 @@ status open
 \end_inset
 
 
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/push/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert besagten Push Eintrag
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet besagten Push Eintrag 
+\series bold
+*
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht den besagten Push Eintrag 
+\series bold
+*
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+*
+\series default
+ Die Push Notifaction auf dem Mobile App kann logischerweise nicht nachträglich
+ geändert / gelöscht werden.
 \end_layout
 
 \begin_layout Subsection
@@ -2864,17 +3207,17 @@ status open
 \begin_layout Standard
 
 \series bold
-adm TODO/qrcode
+adm/qrcode
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
-GET - B - Liefert alle QR Codes
+GET - Liefert alle QR Codes
 \begin_inset Newline newline
 \end_inset
 
-POST - B - Erstellt neuen QR Code
+POST - Erstellt neuen QR Code
 \begin_inset Newline newline
 \end_inset
 
@@ -2884,21 +3227,21 @@ POST - B - Erstellt neuen QR Code
 \begin_inset Newline newline
 \end_inset
 
-/qrcode/{id}
+adm/qrcode/{id}
 \begin_inset Newline newline
 \end_inset
 
 
 \series default
-GET - B - Liefert den besagten QR Code
+GET - Liefert den besagten QR Code
 \begin_inset Newline newline
 \end_inset
 
-PUT - B - Updatet den besagten QR Code
+PUT - Updatet den besagten QR Code
 \begin_inset Newline newline
 \end_inset
 
-DELETE - B - Löscht den besagten QR Code
+DELETE - Löscht den besagten QR Code
 \begin_inset Newline newline
 \end_inset
 
@@ -2908,13 +3251,13 @@ DELETE - B - Löscht den besagten QR Code
 \begin_inset Newline newline
 \end_inset
 
-/qrcode/{id}/render
+adm/qrcode/{id}/render
 \begin_inset Newline newline
 \end_inset
 
 
 \series default
-GET - B - Liefert den QR Code als Bild zurück
+GET - Liefert den QR Code als Bild zurück
 \begin_inset Newline newline
 \end_inset
 
@@ -3033,7 +3376,7 @@ pub/slider
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Slider
+GET - Liefert alle Slider
 \begin_inset Newline newline
 \end_inset
 
@@ -3049,31 +3392,71 @@ pub/slider/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert den besagten Slider
+GET - Liefert dem besagten Slider
 \begin_inset Newline newline
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-.
-\end_layout
-
-\begin_layout Standard
-.
-\end_layout
-
-\begin_layout Standard
-POST - B - Erstellt neuen Slider
-\end_layout
-
-\begin_layout Standard
-PUT - B - Updatet den besagten Slider
 \begin_inset Newline newline
 \end_inset
 
-DELETE - B - Löscht den besagten Slider
+
+\series bold
+adm/slider
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Slider
+\begin_inset Newline newline
+\end_inset
+
+POST - Erstellt neuen Slider
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+adm/slider/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert dem besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet dem besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht dem besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/slider{id}/votes
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert alle Votes zu dem besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3231,11 +3614,15 @@ pub/social
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Social Einträge
+GET - Liefert alle Social Einträge
 \begin_inset Newline newline
 \end_inset
 
-POST - S - Erstellt neuen Social Eintrag
+POST - 
+\series bold
+S
+\series default
+ - Erstellt neuen Social Eintrag
 \begin_inset Newline newline
 \end_inset
 
@@ -3251,7 +3638,7 @@ pub/social/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert den besagten Social Eintrag
+GET - Liefert den besagten Social Eintrag
 \begin_inset Newline newline
 \end_inset
 
@@ -3267,14 +3654,71 @@ pub/social/newest
 
 
 \series default
-GET - P - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert)
- Einträge.
+GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
  Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
  alle Einträge.
 \begin_inset Newline newline
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/social
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Social Einträge
+\begin_inset Newline newline
+\end_inset
+
+POST - Erstellt neuen Social Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/social/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den besagten Social Eintrag
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet den besagten Social Eintrag
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht den besagten Social Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/social/newest
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
+ Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
+ alle Einträge.
 \begin_inset Newline newline
 \end_inset
 
@@ -3420,16 +3864,12 @@ pub/speaker
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Speaker
+GET - Liefert alle Speaker
 \begin_inset Newline newline
 \end_inset
 
 
 \series bold
-
-\begin_inset Newline newline
-\end_inset
-
 
 \begin_inset Newline newline
 \end_inset
@@ -3440,7 +3880,7 @@ pub/speaker/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert den besagten Speaker
+GET - Liefert den besagten Speaker
 \begin_inset Newline newline
 \end_inset
 
@@ -3448,15 +3888,43 @@ GET - P - Liefert den besagten Speaker
 \begin_inset Newline newline
 \end_inset
 
-.
+
+\series bold
+adm/speaker
+\series default
+
 \begin_inset Newline newline
 \end_inset
 
-POST - B - Updatet den besagten Speaker
+GET - Liefert alle Speaker
 \begin_inset Newline newline
 \end_inset
 
-DELETE - B - Löscht den besagten Speaker
+POST - Erstellt einen neuen Speaker
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+adm/speaker/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den besagten Speaker
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet den besagten Speaker
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht den besagten Speaker
 \end_layout
 
 \begin_layout Subsection
@@ -3545,11 +4013,11 @@ pub/user
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle user 
+GET - Liefert alle user 
 \begin_inset Newline newline
 \end_inset
 
-POST - P - Erstellt neuen user.
+POST - Erstellt neuen user.
  Falls der Username bereits existiert wird 422 (unprocessable entity / exists)
  zurückgeliefert.
 \series bold
@@ -3567,7 +4035,7 @@ pub/user/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert den besagten User
+GET - Liefert den besagten User
 \begin_inset Newline newline
 \end_inset
 
@@ -3583,7 +4051,11 @@ pub/user/{id}/changeregid
 
 
 \series default
-PUT - S - Updatet die 
+PUT - 
+\series bold
+S
+\series default
+ - Updatet die 
 \begin_inset Quotes ald
 \end_inset
 
@@ -3606,23 +4078,58 @@ regID
 nicht
 \series default
  geändert.
-\end_layout
-
-\begin_layout Standard
-.
 \begin_inset Newline newline
 \end_inset
 
-\SpecialChar \@.
 
 \begin_inset Newline newline
 \end_inset
 
-PUT - B - Updaten den besagten User 
+
+\series bold
+adm/user
+\series default
+
 \begin_inset Newline newline
 \end_inset
 
-DELETE - B - Löscht den besagten 
+GET - Liefert alle user 
+\begin_inset Newline newline
+\end_inset
+
+POST - Erstellt neuen user.
+ Falls der Username bereits existiert wird 422 (unprocessable entity / exists)
+ zurückgeliefert.
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+adm/user/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den besagten User
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updaten den besagten User 
+\begin_inset Newline newline
+\end_inset
+
+DELETE - Löscht den besagten 
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3732,7 +4239,11 @@ pub/vote
 \begin_inset Newline newline
 \end_inset
 
-POST - S - Erstellt neuen Vote
+POST - 
+\series bold
+S
+\series default
+ - Erstellt neuen Vote
 \series bold
  
 \series default
@@ -3752,7 +4263,15 @@ adm/vote/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - B - Liefert den besagten Vote
+GET - Liefert den besagten Vote
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+PUT - Updatet den besagten Vote
 \series bold
 
 \begin_inset Newline newline
@@ -3762,13 +4281,7 @@ GET - B - Liefert den besagten Vote
 \begin_inset Newline newline
 \end_inset
 
-adm/vote/slider/{id}
-\series default
 
-\begin_inset Newline newline
-\end_inset
-
-GET - B - Liefert alle Votes zu dem Slider {id}
 \end_layout
 
 \begin_layout Standard
@@ -3973,7 +4486,7 @@ pub/voting
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert alle Votings
+GET - Liefert alle Votings
 \series bold
 
 \begin_inset Newline newline
@@ -3989,11 +4502,83 @@ pub/voting/{id}
 \begin_inset Newline newline
 \end_inset
 
-GET - P - Liefert besagtes Votings
+GET - Liefert besagtes Votings
 \begin_inset Newline newline
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Votings
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+POST - Erstellt neues Voting
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+adm/voting/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert besagtes Voting
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet besagtes Voting
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/sliders
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert alle Slider des besagten Voting
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/votes
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert alle Votings aller Slider des Voting
 \begin_inset Newline newline
 \end_inset
 

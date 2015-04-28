@@ -27,12 +27,20 @@ import settings.HLMNGSettings;
 public class SliderResource extends Resource {
 		
 	private GenDao sliderDao = GenDaoLoader.instance.getSliderDao();
-
+	private GenDao voteDao = GenDaoLoader.instance.getVoteDao();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSlider() throws IOException {
 		return listResource(sliderDao, false);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("{id}/votes")
+	public List<Object> getVotesOfSlider(@PathParam("id") int id) throws IOException{
+		Object obj= voteDao.listByFK("sliderIDFK", id);
+		return (List<Object>) obj;			
 	}
 	
 	

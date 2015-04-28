@@ -14,8 +14,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import settings.HLMNGSettings;
 import log.Log;
+import settings.HLMNGSettings;
 
 public class ResourceHelper {
 
@@ -60,22 +60,23 @@ public class ResourceHelper {
         cc.setPrivate(true);
         EntityTag etag = new EntityTag(Integer.toString(ModelHelper.hashCode(object)));
         ResponseBuilder builder = request.evaluatePreconditions(etag);
-        // cached resource did change -> serve updated content
         if(builder == null){
-                builder = Response.ok(object);
-                Log.addEntry(Level.INFO,"Cache control needs to create new entry"); 
-                builder.tag(etag);
+        	Log.addEntry(Level.INFO,"Cache control needs to create new entry"); 
+        	builder = Response.ok(object); 
+        	builder.cacheControl(cc);
+        	builder.tag(etag);
         }else{
+        	builder.cacheControl(cc);
             Log.addEntry(Level.INFO,"Cache control can use cached entry"); 
         }
-        builder.cacheControl(cc);
 		return builder;
 	}
+	
 	
 
 	
 	public static void setMediaURLPath(UriInfo uri, Media media) {
-		media.setLink(uri.getBaseUri().toString() + "media/"
+		media.setLink(uri.getBaseUri().toString() +HLMNGSettings.pubURL.substring(1) +"/media/"
 				+ media.getType() + "/" + media.getLink());
 	}
 }
