@@ -135,7 +135,9 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		url: "/eventactive/:eventId/",
 		views:{
 			"content":{
-				template: "TODO"
+				templateUrl: "template/event/event-overview.html",
+				controller: "EventOverviewController",
+				controllerAs: "eventOverviewCtrl"
 			},
 			"nav":{
             	templateUrl: "template/nav.html",

@@ -9,9 +9,35 @@ app.controller('EventNewController', ['$http','RestService','ToolService', funct
 	hlmng.postAndRedir = function(fEvent) {  
 		hlmng.postEvent(fEvent,'event').then(function(data){
 			hlmng.event=data;
-			hlmng.redir('/event/'+hlmng.event.eventID);
+			hlmng.redir('/eventactive/'+hlmng.event.eventID+"/");
 		});
 	};
+}]);
+
+
+
+app.controller('EventOverviewController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
+	var hlmng = this;
+	hlmng.eventroomsCount = 0;
+	hlmng.eventitemsCount = 0;
+	
+	RestService.list('eventroom').then(function(data){
+	    $.each(data, function(i, item){
+	    	if(item.eventIDFK==$stateParams.eventId){
+	    		hlmng.eventroomsCount++;
+	    	}
+	    });
+	});
+	
+	RestService.list('eventitem').then(function(data){
+	    $.each(data, function(i, item){
+    		hlmng.eventitemsCount++;
+	    	if(item.eventIDFK==$stateParams.eventId){
+	    		hlmng.eventitemsCount++;
+	    	}
+	    });
+	});
+
 }]);
 
 app.controller('EventIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
