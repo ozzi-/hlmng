@@ -4,6 +4,12 @@
     height: auto;
 }
 
+.qrcode-image{
+    max-width: 50px;
+    width: 100%;
+    height: auto;
+}
+
 .navbar-logo{
 	margin-top: -10px;
 	max-height: 50px;

@@ -30,6 +30,27 @@ directiveModule.directive('speakerInfoEdit', function(){
 	};
 });
 
+directiveModule.directive('qrcodeInfo', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/qrcode/qrcode-info.html',
+		scope: {
+			qrcode: "=qrcode"
+		}
+	};
+});
+
+
+directiveModule.directive('qrcodeInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/qrcode/qrcode-info-edit.html',
+		scope: {
+			qrcode: "=qrcode"
+		}
+	};
+});
+
 directiveModule.directive('eventInfo', function(){
 	return {
 		restrict: 'E',
