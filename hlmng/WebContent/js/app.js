@@ -1,22 +1,11 @@
-var app = angular.module('hlmngApp',['stateprovider','speaker','event','eventroom','qrcode','eventitem','media','helper','directive','ui.bootstrap']);
+var app = angular.module('hlmngApp',['stateprovider','speaker','event','navbar','eventroom','qrcode','eventitem','media','helper','directive','ui.bootstrap']);
 var apiUrl = 'https://localhost:8443/hlmng/rest/adm/';
 
-app.controller('NavBarController', ['$http','$location','RestService','$stateParams', function($http,$location,RestService,$stateParams){	
-	var hlmng = this;
-	hlmng.checkEventActive = function(){
-		return ($stateParams.eventId!==undefined);
-    };
-	hlmng.getEventActive = function(){
-		return ($stateParams.eventId);
-    };
-    hlmng.eventName={};
-    
-	hlmng.eventName=RestService.get(hlmng.getEventActive(),'event').then(function(data){
-		hlmng.eventName=data.name;
-	});
 
-}]);
-
+app.service('dataService', function() {
+  var _dataObj = {};
+  this.dataObj = _dataObj;
+});
 
 
 app.directive('errSrc', function() {

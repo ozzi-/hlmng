@@ -1,5 +1,8 @@
-{{qrcode.qrcodeID}}<br>
-{{qrcode.payload}}<br>
-{{qrcode.createdAt}}<br>
-{{qrcode.claimedAt}}<br>
-<a ng-href="{{qrcode.qrCodeRenderURL}}"><img class="qrcode-image" ng-src="{{qrcode.qrCodeRenderURL}}"/></a>
+<div>
+	<a ng-href="#/eventactive/{{eventitem.eventIDFK}}/qrcode/{{qrcode.qrcodeID}}">ID: {{qrcode.qrcodeID}}</a><br>
+	Payload: {{qrcode.payload}}<br>
+	Role: {{qrcode.role}}<br>
+	Created At: {{qrcode.createdAt}}<br>
+	Claimed At: {{qrcode.claimedAt || "unclaimed"}} for User: {{qrcode.userIDFK}}<br>
+	<a ng-href="{{qrcode.qrCodeRenderURL}}"><img class="qrcode-image" ng-src="{{qrcode.qrCodeRenderURL}}"/></a>
+</div>

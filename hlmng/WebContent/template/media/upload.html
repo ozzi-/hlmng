@@ -1,5 +1,8 @@
-<input type="file" file-model="myFile"/>
-<button ng-click="show=true; $parent.uploadFile(myFile);">upload me</button>
-<div ng-show="show">
-	<img class="upload-image"  ng-src="{{$parent.uploadedMediaLink}}">
+<div ng-controller="MediaController">
+	<input type="file" file-model="myFile"/>
+	<button ng-click="show=true; uploadFile(myFile);">upload me</button>
+	!{{speaker.mediaIDFK}}!
+	<div ng-show="show">
+		<img class="upload-image"  ng-src="{{uploadedMediaLink}}">
+	</div>
 </div>

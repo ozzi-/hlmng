@@ -1,10 +1,7 @@
 <form name="speakerInfoNewForm" novalidate>
 	<speaker-info-edit speaker="speakerNewCtrl.speaker"></speaker-info-edit>
 	<br><br>
-	<div ng-controller="MediaController">
-			<media-upload></media-upload>
-			{{speakerNewCtrl.speaker.mediaIDFK=uploadedMediaID}}
-	</div>
+	<media-upload></media-upload>		
 	<br><br><br>
 </form>
 <button ng-disabled="!speakerInfoNewForm.$valid" ng-click="speakerNewCtrl.postAndRedir(speakerNewCtrl.speaker);">Submit</button>

@@ -240,6 +240,21 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}). 
+	state('/eventactive/newqrcode', {
+		url: "/eventactive/:eventId/newqrcode",
+		views:{
+			"content":{
+				templateUrl: "template/qrcode/qrcode-new.html",
+				controller: "QrCodeNewController",
+				controllerAs: 'qrCodeNewCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}). 	
 	state('/eventactive/qrcodelist', {
 		url: "/eventactive/:eventId/qrcodelist",
 		views:{

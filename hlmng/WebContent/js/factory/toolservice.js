@@ -8,7 +8,7 @@ app.factory('ToolService', ['$location','$log','$http','$q' , function ($locatio
 			var deferred = $q.defer();
 	        var fd = new FormData();
 	        fd.append('file', file);
-	        $http.post(apiUrl+"media/uploadbackend", fd, {
+	        $http.post(apiUrl+"media/upload", fd, {
 	            transformRequest: angular.identity,
 	            headers: {'Content-Type': undefined}
 	        })

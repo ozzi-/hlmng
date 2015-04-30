@@ -31,7 +31,6 @@ app.controller('EventOverviewController', ['$http','$stateParams','RestService',
 	
 	RestService.list('eventitem').then(function(data){
 	    $.each(data, function(i, item){
-    		hlmng.eventitemsCount++;
 	    	if(item.eventIDFK==$stateParams.eventId){
 	    		hlmng.eventitemsCount++;
 	    	}

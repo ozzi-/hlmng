@@ -1,13 +1,15 @@
 var speakerModule = angular.module('speaker', []);
 
 
-app.controller('SpeakerNewController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
+app.controller('SpeakerNewController', ['$http','RestService','ToolService','dataService', function($http,RestService,ToolService,dataService){
 	var hlmng = this;
 	hlmng.speaker={};
 	hlmng.media={};
 	hlmng.postSpeaker = RestService.post;
 	hlmng.redir=ToolService.redir;
-	hlmng.postAndRedir = function(fSpeaker) {  
+	hlmng.postAndRedir = function(fSpeaker) { 
+		hlmng.speaker.mediaIDFK=dataService.dataObj;
+		dataService.dataObj=0;
 		hlmng.postSpeaker(fSpeaker,'speaker').then(function(data){
 			hlmng.speaker=data;
 			hlmng.redir('/speaker/'+hlmng.speaker.speakerID);

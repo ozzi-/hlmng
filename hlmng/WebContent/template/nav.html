@@ -19,11 +19,12 @@
 				<li ui-sref-active="active"><a ui-sref="/newspeaker">New Speaker</a><br></li>
 	      	</ul>
 	      	<ul ng-show="navBarCtrl.checkEventActive()" class="nav navbar-nav">
-				<li ui-sref-active="active"><a ui-sref="/eventactive/eventroomlist({ eventId: navBarCtrl.getEventActive()})">EventRoom List</a></li>
-				<li ui-sref-active="active"><a ui-sref="/eventactive/neweventroom({ eventId: navBarCtrl.getEventActive()})">EventRoom New</a></li>
-				<li ui-sref-active="active"><a ui-sref="/eventactive/eventitemlist({ eventId: navBarCtrl.getEventActive()})">EventItem List</a></li>
-				<li ui-sref-active="active"><a ui-sref="/eventactive/neweventitem({ eventId: navBarCtrl.getEventActive()})">EventItem New</a></li>
-				<li ui-sref-active="active"><a ui-sref="/eventactive/qrcodelist({ eventId: navBarCtrl.getEventActive()})">QrCode List</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/eventroomlist({ eventId: navBarCtrl.getEventActive()})">Event Room List</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/neweventroom({ eventId: navBarCtrl.getEventActive()})">New Event Room</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/eventitemlist({ eventId: navBarCtrl.getEventActive()})">Event Item List</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/neweventitem({ eventId: navBarCtrl.getEventActive()})">New Even tItem</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/qrcodelist({ eventId: navBarCtrl.getEventActive()})">QR Code List</a></li>
+				<li ui-sref-active="active"><a ui-sref="/eventactive/newqrcode({ eventId: navBarCtrl.getEventActive()})">New QR Code</a></li>
 	      	</ul>
 	      	<ul class="nav navbar-nav navbar-right">
 	      		<li ng-show="navBarCtrl.checkEventActive()">
