@@ -2,9 +2,8 @@ var myapp = angular.module('stateprovider', ["ui.router"]);
 myapp.config(function($stateProvider, $urlRouterProvider){
 
 	$urlRouterProvider.otherwise("/");
-	
 	$stateProvider.
-    state('/', {
+    state('index', {
         url: "/",
         views: { 
         	"content": {
@@ -17,7 +16,10 @@ myapp.config(function($stateProvider, $urlRouterProvider){
             }
         }
     }).
-	state('/uploadmedia', {
+    // =====
+    // MEDIA
+    // =====
+	state('uploadmedia', {
 		url: "/uploadmedia",
 		views: {
 			"content":{
@@ -32,7 +34,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/medialist/', {
+	state('medialist', {
 		url: "/medialist",
 		views: {
 			"content":{
@@ -46,9 +48,24 @@ myapp.config(function($stateProvider, $urlRouterProvider){
             	controllerAs: "navBarCtrl"
 			}
 		}
-	}).	
-	state('/speakerlist', {
-		url: "/speakerlist",
+	}).		
+	// =======
+    // SPEAKER
+    // =======
+	state('speaker', {
+		url: "/speaker",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('speaker.list', {
+		url: "/list",
 		views: {
 			"content":{
 				templateUrl: "template/speaker/speaker-list.html",
@@ -62,8 +79,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/newspeaker', {
-		url: "/newspeaker",
+	state('speaker.new', {
+		url: "/new",
 		views: {
 			"content":{
 				templateUrl: "template/speaker/speaker-new.html",
@@ -75,8 +92,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/speaker/:speakerId', {
-		url: "/speaker/:speakerId",
+	state('speaker.id', {
+		url: "/:speakerId",
 		views:{
 			"content":{
 				templateUrl: "template/speaker/speaker-detail.html",
@@ -90,8 +107,23 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/eventlist', {
-		url: "/eventlist",
+	// =====
+	// EVENT
+	// =====
+	state('event', {
+		url: "/event",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('event.list', {
+		url: "/list",
 		views:{
 			"content":{
 				templateUrl: "template/event/event-list.html",
@@ -103,8 +135,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/newevent', {
-		url: "/newevent",
+	state('event.new', {
+		url: "/new",
 		views:{
 			"content":{
 				templateUrl: "template/event/event-new.html",
@@ -118,8 +150,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/event/:eventId', {
-		url: "/event/:eventId",
+	state('event.id', {
+		url: "/:eventId",
 		views:{
 			"content":{
 				templateUrl: "template/event/event-detail.html",
@@ -131,8 +163,23 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/eventactive/', {
-		url: "/eventactive/:eventId/",
+	state('event.active', {
+		url: "/active/:eventId",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	// ==============
+	// EVENT OVERVIEW
+	// ==============
+	state('event.active.overview', {
+		url: "/overview", 
 		views:{
 			"content":{
 				templateUrl: "template/event/event-overview.html",
@@ -146,11 +193,23 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/eventactive/:eventId/news-new', {
-		// ..
+	// ==========
+	// EVENT ROOM
+	// ==========
+	state('event.active.eventroom', {
+		url: "/eventroom",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
 	}).
-	state('/eventactive/neweventroom', {
-		url: "/eventactive/:eventId/neweventroom",
+	state('event.active.eventroom.new', {
+		url: "/new",
 		views:{
 			"content":{
 				templateUrl: "template/eventroom/eventroom-new.html",
@@ -164,8 +223,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/eventactive/eventroom', {
-		url: "/eventactive/:eventId/eventroom/:eventRoomId",
+	state('event.active.eventroom.id', {
+		url: "/:eventRoomId",
 		views:{
 			"content":{
 				templateUrl: "template/eventroom/eventroom-detail.html",
@@ -179,8 +238,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}). 
-	state('/eventactive/eventroomlist', {
-		url: "/eventactive/:eventId/eventroomlist",
+	state('event.active.eventroom.list', {
+		url: "/list",
 		views:{
 			"content":{
 				templateUrl: "template/eventroom/eventroom-list.html",
@@ -194,9 +253,23 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}). 
-	// eventItem
-	state('/eventactive/neweventitem', {
-		url: "/eventactive/:eventId/neweventitem",
+	// ==========
+	// EVENT ITEM
+	// ==========
+	state('event.active.eventitem', {
+		url: "/eventitem",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('event.active.eventitem.new', {
+		url: "/new",
 		views:{
 			"content":{
 				templateUrl: "template/eventitem/eventitem-new.html",
@@ -210,8 +283,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
-	state('/eventactive/eventitem', {
-		url: "/eventactive/:eventId/eventitem/:eventItemId",
+	state('event.active.eventitem.id', {
+		url: "/:eventItemId",
 		views:{
 			"content":{
 				templateUrl: "template/eventitem/eventitem-detail.html",
@@ -225,8 +298,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}). 
-	state('/eventactive/eventitemlist', {
-		url: "/eventactive/:eventId/eventitemlist",
+	state('event.active.eventitem.list', {
+		url: "/list",
 		views:{
 			"content":{
 				templateUrl: "template/eventitem/eventitem-list.html",
@@ -240,8 +313,23 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}). 
-	state('/eventactive/newqrcode', {
-		url: "/eventactive/:eventId/newqrcode",
+	// =======
+	// QR CODE
+	// =======
+	state('event.active.qrcode', {
+		url: "/qrcode",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('event.active.qrcode.new', {
+		url: "/new",
 		views:{
 			"content":{
 				templateUrl: "template/qrcode/qrcode-new.html",
@@ -255,8 +343,8 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}). 	
-	state('/eventactive/qrcodelist', {
-		url: "/eventactive/:eventId/qrcodelist",
+	state('event.active.qrcode.list', {
+		url: "/list",
 		views:{
 			"content":{
 				templateUrl: "template/qrcode/qrcode-list.html",
@@ -269,32 +357,5 @@ myapp.config(function($stateProvider, $urlRouterProvider){
             	controllerAs: "navBarCtrl"
 			}
 		}
-	}). 	
-	state('/eventactive/:eventId/social', {
-		// ..
-	}).
-	state('/eventactive/:eventId/newpush', {
-		// ..
-	}).
-	state('/eventactive/:eventId/pushlist', {
-		// ..
-	}).
-	state('/eventactive/:eventId/newvote', {
-		// ..
-	}).
-	state('/eventactive/:eventId/votelist', {
-		// ..
-	}).
-	state('/eventactive/:eventId/vote/:voteId', {
-		// ..
-	}).
-	state('/eventactive/:eventId/vote/:voteId/statistics', {
-		// ..
-	}).
-	state('/eventactive/:eventId/newqrcode', {
-		// ..
-	}).
-	state('/eventactive/:eventId/qrcodelist', {
-		// ..
 	});
 });
