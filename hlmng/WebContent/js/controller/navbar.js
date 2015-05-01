@@ -10,7 +10,8 @@ app.controller('NavBarController', ['$http','$location','RestService','$statePar
 	hlmng.getEventActive = function(){
 		return ($stateParams.eventId);
     };
-    
+ 
+      
     if(hlmng.checkEventActive()){
     	hlmng.eventName=RestService.get(hlmng.getEventActive(),'event').then(function(data){
     		hlmng.eventName=data.name;

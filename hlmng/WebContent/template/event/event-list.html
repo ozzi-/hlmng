@@ -1,14 +1,17 @@
-<h2>Upcoming:</h2>
+<h1>Upcoming:</h1>
 <span ng-repeat="eventUpcoming in eventListCtrl.eventsUpcoming">
 	<event-info event="eventUpcoming"></event-info><br><hr>
 </span>
-<br>
-<h2>Running:</h2>
+<nothing-here-yet list="eventListCtrl.eventsUpcoming"></nothing-here-yet>
+<br><br>
+<h1>Running:</h1>
 <span ng-repeat="eventRunning in eventListCtrl.eventsRunning">
 	<event-info event="eventRunning"></event-info><br><hr>
 </span>
-<br>
-<h2>Finished:</h2>
+<nothing-here-yet list="eventListCtrl.eventsRunning"></nothing-here-yet>
+<br><br>
+<h1>Finished:</h1>
 <span ng-repeat="eventFinished in eventListCtrl.eventsFinished">
 	<event-info event="eventFinished"></event-info><br><hr>
 </span>
+<nothing-here-yet list="eventListCtrl.eventsFinished"></nothing-here-yet>
