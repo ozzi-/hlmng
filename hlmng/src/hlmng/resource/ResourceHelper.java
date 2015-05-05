@@ -4,6 +4,8 @@ import hlmng.model.Media;
 import hlmng.model.ModelHelper;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +20,13 @@ import log.Log;
 import settings.HLMNGSettings;
 
 public class ResourceHelper {
+	
+	private static SecureRandom randomGen = new SecureRandom();
 
+	
+	public static String getSecret(){
+	    return new BigInteger(HLMNGSettings.secretStrengthInBit, randomGen).toString(32);
+	}
 
 	/**
 	 * @param ok

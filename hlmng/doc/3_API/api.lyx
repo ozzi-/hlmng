@@ -3111,7 +3111,7 @@ Der Zeitpunkt an dem der QR Code eingelöst wurde
 
 
 \series bold
-payload - [Unique]
+payload - [!] [Unique]
 \series default
  Der geheime Wert eines QR Code.
 \begin_inset Newline newline
@@ -3172,11 +3172,6 @@ status open
 \begin_layout Plain Layout
 
 	"claimedAt": "2015-06-21 23:09:13",
-\end_layout
-
-\begin_layout Plain Layout
-
-	"payload": "jdi7.di-n23i*msdgz?db*p",
 \end_layout
 
 \begin_layout Plain Layout

@@ -7,7 +7,8 @@ public class HLMNGSettings {
 	static boolean production=false;
 	
 	public static final String restAppPath="https://localhost:8443/hlmng/rest";
-
+	public static final int secretStrengthInBit = 130;
+	
 	/**
 	 * Data base config
 	 */

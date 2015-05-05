@@ -93,7 +93,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		}
 	}).
 	state('speaker.id', {
-		url: "/:speakerId",
+		url: "/{speakerId:int}",
 		views:{
 			"content":{
 				templateUrl: "template/speaker/speaker-detail.html",
@@ -151,7 +151,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		}
 	}).
 	state('event.id', {
-		url: "/:eventId",
+		url: "/{eventId:int}",
 		views:{
 			"content":{
 				templateUrl: "template/event/event-detail.html",
@@ -164,7 +164,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		}
 	}).
 	state('event.active', {
-		url: "/active/:eventId",
+		url: "/active/{eventId:int}",
 	    abstract: true,
 		views: {
 			"content":{
@@ -224,7 +224,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		}
 	}).
 	state('event.active.eventroom.id', {
-		url: "/:eventRoomId",
+		url: "/{eventRoomId:int}",
 		views:{
 			"content":{
 				templateUrl: "template/eventroom/eventroom-detail.html",
@@ -284,7 +284,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		}
 	}).
 	state('event.active.eventitem.id', {
-		url: "/:eventItemId",
+		url: "/{eventItemId:int}",
 		views:{
 			"content":{
 				templateUrl: "template/eventitem/eventitem-detail.html",
@@ -334,7 +334,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			"content":{
 				templateUrl: "template/qrcode/qrcode-new.html",
 				controller: "QrcodeNewController",
-				controllerAs: 'qrCodeNewCtrl'
+				controllerAs: 'qrcodeNewCtrl'
 			},
 			"nav":{
             	templateUrl: "template/nav.html",
@@ -344,7 +344,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		}
 	}). 	
 	state('event.active.qrcode.id', {
-		url: "/:qrcodeId",
+		url: "/{qrcodeId:int}",
 		views:{
 			"content":{
 				templateUrl: "template/qrcode/qrcode-detail.html",

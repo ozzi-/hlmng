@@ -1,4 +1,4 @@
 <form name="qrcodeInfoNewForm" novalidate>
-	<qrcode-info-edit qrcode="qrcodeNewCtrl.qrcode"></qrcode-info-edit>
+	<qrcode-info-new count="qrcodeNewCtrl.count" qrcode="qrcodeNewCtrl.qrcode"></qrcode-info-new>
 </form>
-<button ng-disabled="!qrcodeInfoNewForm.$valid" ng-click="qrcodeNewCtrl.postAndRedir(qrcodeNewCtrl.qrcode);">Submit</button>
+<button ng-disabled="!qrcodeInfoNewForm.$valid" ng-click="qrcodeNewCtrl.postAndRedir();">Submit</button>

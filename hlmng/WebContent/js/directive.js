@@ -40,6 +40,16 @@ directiveModule.directive('qrcodeInfo', function(){
 	};
 });
 
+directiveModule.directive('qrcodeInfoNew', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/qrcode/qrcode-info-new.html',
+		scope: {
+			qrcode: "=qrcode",
+			count: "=count"
+		}
+	};
+});
 
 directiveModule.directive('qrcodeInfoEdit', function(){
 	return {

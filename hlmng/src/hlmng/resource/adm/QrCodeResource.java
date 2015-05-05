@@ -4,6 +4,7 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.QrCode;
 import hlmng.resource.Resource;
+import hlmng.resource.ResourceHelper;
 import hlmng.resource.TimeHelper;
 
 import java.io.File;
@@ -92,6 +93,8 @@ public class QrCodeResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postQrCode(QrCode element) throws IOException {		
 		element.setCreatedAt(TimeHelper.getCurrentDateTime());
+		String payload= element.getRole()+"-"+element.getEventIDFK()+"-"+ResourceHelper.getSecret();
+		element.setPayload(payload);
 		return postResource(qrCodeDao, element);
 	}
 
