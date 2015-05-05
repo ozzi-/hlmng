@@ -5,13 +5,13 @@
 	position: absolute;
 	left: 0;
 	right: 0;
-	top: 70px;
+	top: 90px;
 	bottom: 0;
 	padding-top:15px;
 }
 
 .btn-dropdown-navbar{
-	padding-top:15px;
+	padding-bottom:15px;
 	padding-right: 6px;
 	padding-left: 6px;
 }

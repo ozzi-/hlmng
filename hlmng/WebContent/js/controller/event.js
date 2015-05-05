@@ -6,8 +6,8 @@ app.controller('EventNewController', ['$http','RestService','ToolService', funct
 	hlmng.event={};
 	hlmng.postEvent = RestService.post;
 	hlmng.redir=ToolService.redir;
-	hlmng.postAndRedir = function(fEvent) {  
-		hlmng.postEvent(fEvent,'event').then(function(data){
+	hlmng.postAndRedir = function() {  
+		hlmng.postEvent(hlmng.event,'event').then(function(data){
 			hlmng.event=data;
 			hlmng.redir('/eventactive/'+hlmng.event.eventID+"/");
 		});

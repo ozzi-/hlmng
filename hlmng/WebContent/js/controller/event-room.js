@@ -6,9 +6,9 @@ app.controller('EventRoomNewController', ['$http','RestService','ToolService','$
 	hlmng.eventroom={}; 
 	hlmng.redir=ToolService.redir;
 	hlmng.postEventRoom = RestService.post;
-	hlmng.postAndRedir = function(fEventRoom) {  
-		fEventRoom.eventIDFK=$stateParams.eventId;
-		hlmng.postEventRoom(fEventRoom,'eventroom').then(function(data){
+	hlmng.postAndRedir = function() {  
+		hlmng.eventroom.eventIDFK=$stateParams.eventId;
+		hlmng.postEventRoom(hlmng.eventroom,'eventroom').then(function(data){
 			hlmng.eventroom=data;
 			hlmng.redir('/eventactive/'+$stateParams.eventId+'/eventroom/'+hlmng.eventroom.eventRoomID);
 		});

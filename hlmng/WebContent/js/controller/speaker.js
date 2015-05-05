@@ -7,10 +7,10 @@ app.controller('SpeakerNewController', ['$http','RestService','ToolService','dat
 	hlmng.media={};
 	hlmng.postSpeaker = RestService.post;
 	hlmng.redir=ToolService.redir;
-	hlmng.postAndRedir = function(fSpeaker) { 
+	hlmng.postAndRedir = function() { 
 		hlmng.speaker.mediaIDFK=dataService.dataObj;
 		dataService.dataObj=0;
-		hlmng.postSpeaker(fSpeaker,'speaker').then(function(data){
+		hlmng.postSpeaker(hlmng.speaker,'speaker').then(function(data){
 			hlmng.speaker=data;
 			hlmng.redir('/speaker/'+hlmng.speaker.speakerID);
 		});

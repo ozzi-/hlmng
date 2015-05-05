@@ -9,6 +9,7 @@ app.controller('QrcodeNewController', ['$http','$stateParams','RestService','Too
 	hlmng.redir=ToolService.redir;
 	hlmng.postAndRedir = function() {
 		var asynci = 0;
+		hlmng.qrcode.eventIDFK=$stateParams.eventId;
 		for(var i = 0; i < hlmng.count;  i++) {
 			hlmng.postQrcode(hlmng.qrcode,'qrcode').then(function(data){
 				hlmng.qrcode=data;
@@ -29,9 +30,8 @@ app.controller('QrcodeIdController', ['$http','$state','$stateParams','RestServi
 	
 	hlmng.qrcode = {};	
 	RestService.get($stateParams.qrcodeId,'qrcode').then(function(data){
-
 		hlmng.qrcode=data;
-		hlmng.qrCodeRenderURL = apiUrl+"qrcode/"+hlmng.qrcode.qrcodeID+"/render";
+		hlmng.qrcode.qrCodeRenderURL = apiUrl+"qrcode/"+hlmng.qrcode.qrcodeID+"/render";
 	});
 
 	hlmng.putQrcode = RestService.put;
