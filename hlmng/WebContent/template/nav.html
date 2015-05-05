@@ -12,7 +12,7 @@
 			</button>
 		</div>
 		<div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
-			<h4>{{navBarCtrl.eventName}}</h4>
+			<h4>{{navBarCtrl.eventName}}</h4> 
 			<!--  Main -->
 			<ul ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
 		      	<li ng-repeat="nav in navBarCtrl.navMainContent" ui-sref-active="active"><a ui-sref="{{nav.state}}">{{nav.label}}</a><br></li>
