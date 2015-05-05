@@ -3077,7 +3077,7 @@ DELETE - Löscht den besagten Push Eintrag
 \end_layout
 
 \begin_layout Subsection
-QrCode
+QR Code
 \end_layout
 
 \begin_layout Standard
@@ -3113,7 +3113,7 @@ Der Zeitpunkt an dem der QR Code eingelöst wurde
 \series bold
 payload - [Unique]
 \series default
- Die Payload des QR Code.
+ Der geheime Wert eines QR Code.
 \begin_inset Newline newline
 \end_inset
 
@@ -3262,6 +3262,65 @@ GET - Liefert den QR Code als Bild zurück
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection
+QR Code Payload
+\end_layout
+
+\begin_layout Standard
+Der QR Code dient als geheimer Schlüssel, welche ein Mobile App User einlesen
+ kann.
+ Aus dem QR Code gewinnt man die Payload, welche als geheimer Schlüssel
+ dient um beim Server gewisse Privilegien (siehe Rolle) zu erlangen.
+ Gleichzeitig enthält die Payload Informationen für das Mobile App, welche
+ die Rolle sowie den Gültigkeitsbereich festlegen.
+ Dies ist so gelöst, da kein Mobile App User auf die QR Codes zugreifen
+ darf und so auch keine Metainformationen zu dem eingescannten QR Code erhalten
+ kann.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+Payload:
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+[role]-[eventId]-[secret]
+\begin_inset Newline newline
+\end_inset
+
+Role - Siehe Feld oben 
+\begin_inset Quotes ald
+\end_inset
+
+role
+\begin_inset Quotes ard
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+EventId - Die ID zu dem Event welcher der QR Code berechtigt ist
+\begin_inset Newline newline
+\end_inset
+
+Secret - 20 Zeichen zufälliger geheimer Schlüssel
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 

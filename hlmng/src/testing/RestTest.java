@@ -20,6 +20,7 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.util.List;
 import java.util.Properties;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -62,7 +63,7 @@ public class RestTest {
 	
 	@Test
 	public void checkVoteCorrectAuth(){
-	
+		cleanUpTestUsers();
 		User user = new User("testusername", "1234test1234", "4321test");
 		int userid  = userDao.addElement(user);
 		
@@ -83,7 +84,7 @@ public class RestTest {
 			} catch (KeyManagementException e) {
 			} catch (NoSuchAlgorithmException e) {
 			}
-			response = doURL(HLMNGSettings.appPath+"/rest"+HLMNGSettings.pubURL+"/vote/", "POST",postData,"Basic dGVzdHVzZXJuYW1lOjEyMzR0ZXN0MTIzNA==");
+			response = doURL(HLMNGSettings.restAppPath+HLMNGSettings.pubURL+"/vote/", "POST",postData,"Basic dGVzdHVzZXJuYW1lOjEyMzR0ZXN0MTIzNA==");
 		} catch (IOException e){
 			e.printStackTrace();
 		}
@@ -96,8 +97,19 @@ public class RestTest {
 		assertTrue(presentationDao.deleteElement(presentationid));
 		assertTrue(userDao.deleteElement(userid));
 	}
-	
-	
+
+	/**
+	 * If the JUnit test should fail, we still have a "testusername" user, clean up before running
+	 */
+	private void cleanUpTestUsers() {
+		List<Object> userList = userDao.listElements(false);
+		for (Object object : userList) {
+			User user = (User) object;
+			if(user.getName().equals("testusername")){
+				userDao.deleteElement(user.getUserID());
+			}
+		}
+	}
 	
 	@Test
 	public void checkVoteMissingAuth(){
@@ -122,7 +134,7 @@ public class RestTest {
 			} catch (KeyManagementException e) {
 			} catch (NoSuchAlgorithmException e) {
 			}
-			doURL(HLMNGSettings.appPath+"/rest"+HLMNGSettings.pubURL+"/vote/", "POST",postData,null);
+			doURL(HLMNGSettings.restAppPath+HLMNGSettings.pubURL+"/vote/", "POST",postData,null);
 		} catch (IOException e){
 			assertTrue(e.getLocalizedMessage().contains("Server returned HTTP response code: 401"));
 		}
@@ -141,7 +153,7 @@ public class RestTest {
 		String response = "";
 		try {
 			turnOffSslChecking();
-			response = doURL(HLMNGSettings.appPath+"/rest"+HLMNGSettings.admURL+"/event/"
+			response = doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/event/"
 					+ elementID, "GET",null,null);
 		} catch (Exception e) {
 			e.printStackTrace();

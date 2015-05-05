@@ -6,7 +6,7 @@ public class HLMNGSettings {
 	
 	static boolean production=false;
 	
-	public static final String appPath="https://localhost:8443/hlmng";
+	public static final String restAppPath="https://localhost:8443/hlmng/rest";
 
 	/**
 	 * Data base config

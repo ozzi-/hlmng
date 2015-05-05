@@ -1,0 +1,14 @@
+<div ng-hide="edit">
+	<qrcode-info qrcode="qrcodeIdCtrl.qrcode"></qrcode-info><br>
+</div>
+
+<div ng-show="edit">
+	<form name="qrcodeInfoEditForm" novalidate>
+		<qrcode-info-edit qrcode="qrcodeIdCtrl.qrcode"></qrcode-info-edit>
+	</form>
+	<button ng-disabled="!qrcodeInfoEditForm.$valid" ng-click="edit=!edit ;qrcodeIdCtrl.putQrcode(qrcodeIdCtrl.qrcode,qrcodeIdCtrl.qrcode.qrcodeID,'qrcode');">Submit</button>
+</div>
+
+
+<edit-button edit="edit"></edit-button>
+

@@ -1,56 +1,68 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a href="#/" class="navbar-brand">
-			<img src="img/logo.png" alt="Hacking-Lab Logo" class="navbar-logo" />
-		</a>
-	</div>
-	
-	<div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
-		<ul ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
-	      	<li ui-sref-active="active"><a ui-sref="event.list">Event List</a><br></li>
-			<li ui-sref-active="active"><a ui-sref="event.new">New Event</a><br></li>
-			<li ui-sref-active="active"><a ui-sref="speaker.list">Speaker List</a><br></li>
-			<li ui-sref-active="active"><a ui-sref="speaker.new">New Speaker</a><br></li>
-      	</ul>
-      	<div ng-show="navBarCtrl.checkEventActive()" >
-			<div class="btn-group btn-dropdown-navbar" dropdown>
-				<button ui-sref-active="active" ui-sref="event.active.eventroom" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-					Event Room <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li ui-sref-active="active"><a ui-sref="event.active.eventroom.list({ eventId: navBarCtrl.getEventActive()})">Event Room List</a></li>
-					<li ui-sref-active="active"><a ui-sref="event.active.eventroom.new({ eventId: navBarCtrl.getEventActive()})">New Event Room</a></li>
-				</ul>
-		    </div>
-		    <div class="btn-group btn-dropdown-navbar" dropdown>
-				<button ui-sref-active="active" ui-sref="event.active.eventitem" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-					Event Item <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li ui-sref-active="active"><a ui-sref="event.active.eventitem.list({ eventId: navBarCtrl.getEventActive()})">Event Item List</a></li>
-					<li ui-sref-active="active"><a ui-sref="event.active.eventitem.new({ eventId: navBarCtrl.getEventActive()})">New Even tItem</a></li>
-				</ul>
-		    </div>
-			<div class="btn-group btn-dropdown-navbar" dropdown>
-				<button ui-sref-active="active" ui-sref="event.active.qrcode" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
-					QR Code <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li ui-sref-active="active"><a ui-sref="event.active.qrcode.list({ eventId: navBarCtrl.getEventActive()})">QR Code List</a></li>
-					<li ui-sref-active="active"><a ui-sref="event.active.qrcode.new({ eventId: navBarCtrl.getEventActive()})">New QR Code</a></li>
-				</ul>
-		    </div>
-	      	<ul class="nav navbar-nav navbar-right">
-	      		<li ng-show="navBarCtrl.checkEventActive()">
-	      			<h3>Active: {{navBarCtrl.eventName}}</h3>
-	      		</li>
-			</ul>								
-      	</div>
+		<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="#/" class="navbar-brand">
+				<img src="img/logo.png" alt="Hacking-Lab Logo" class="navbar-logo" />
+			</a>
+		</div>
+		
+		<div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+			<ul ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
+		      	<li ui-sref-active="active"><a ui-sref="event.list">Event List</a><br></li>
+				<li ui-sref-active="active"><a ui-sref="event.new">New Event</a><br></li>
+				<li ui-sref-active="active"><a ui-sref="speaker.list">Speaker List</a><br></li>
+				<li ui-sref-active="active"><a ui-sref="speaker.new">New Speaker</a><br></li>
+	      	</ul>
+	      	<div ng-show="navBarCtrl.checkEventActive()" >
+				<div class="btn-group btn-dropdown-navbar" dropdown>
+					<button ui-sref-active="active" ui-sref="event.active.eventroom" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+						Event Room <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li ui-sref-active="active"><a ui-sref="event.active.eventroom.list({ eventId: navBarCtrl.getEventActive()})">Event Room List</a></li>
+						<li ui-sref-active="active"><a ui-sref="event.active.eventroom.new({ eventId: navBarCtrl.getEventActive()})">New Event Room</a></li>
+					</ul>
+			    </div>
+			    <div class="btn-group btn-dropdown-navbar" dropdown>
+					<button ui-sref-active="active" ui-sref="event.active.eventitem" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+						Event Item <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li ui-sref-active="active"><a ui-sref="event.active.eventitem.list({ eventId: navBarCtrl.getEventActive()})">Event Item List</a></li>
+						<li ui-sref-active="active"><a ui-sref="event.active.eventitem.new({ eventId: navBarCtrl.getEventActive()})">New Even tItem</a></li>
+					</ul>
+			    </div>
+				<div class="btn-group btn-dropdown-navbar" dropdown>
+					<button ui-sref-active="active" ui-sref="event.active.qrcode" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+						QR Code <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li ui-sref-active="active"><a ui-sref="event.active.qrcode.list({ eventId: navBarCtrl.getEventActive()})">QR Code List</a></li>
+						<li ui-sref-active="active"><a ui-sref="event.active.qrcode.new({ eventId: navBarCtrl.getEventActive()})">New QR Code</a></li>
+					</ul>
+			    </div>
+			    <div class="btn-group btn-dropdown-navbar" dropdown>
+					<button ui-sref-active="active" ui-sref="event.active.whatsup" type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+						Whats Up <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li ui-sref-active="active"><a ui-sref="event.active.whatsup.social.list({ eventId: navBarCtrl.getEventActive()})">Social Feed</a></li>
+						<li ui-sref-active="active"><a ui-sref="event.active.whatsup.news.list({ eventId: navBarCtrl.getEventActive()})">News Feed</a></li>
+						<li ui-sref-active="active"><a ui-sref="event.active.whatsup.news.new({ eventId: navBarCtrl.getEventActive()})">New News</a></li>
+					</ul>
+			    </div>
+		      	<ul class="nav navbar-nav navbar-right">
+		      		<li ng-show="navBarCtrl.checkEventActive()">
+		      			<h3>Active: {{navBarCtrl.eventName}}</h3>
+		      		</li>
+				</ul>								
+	      	</div>
+		</div>
 	</div>
 </nav>	

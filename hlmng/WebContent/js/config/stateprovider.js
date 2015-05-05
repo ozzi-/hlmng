@@ -333,7 +333,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		views:{
 			"content":{
 				templateUrl: "template/qrcode/qrcode-new.html",
-				controller: "QrCodeNewController",
+				controller: "QrcodeNewController",
 				controllerAs: 'qrCodeNewCtrl'
 			},
 			"nav":{
@@ -343,13 +343,82 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}). 	
+	state('event.active.qrcode.id', {
+		url: "/:qrcodeId",
+		views:{
+			"content":{
+				templateUrl: "template/qrcode/qrcode-detail.html",
+				controller: "QrcodeIdController",
+				controllerAs: 'qrcodeIdCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
 	state('event.active.qrcode.list', {
 		url: "/list",
 		views:{
 			"content":{
 				templateUrl: "template/qrcode/qrcode-list.html",
-				controller: "QrCodeListController",
+				controller: "QrcodeListController",
 				controllerAs: 'qrCodeListCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
+	// ********
+	// WHATS UP
+	// ********
+	state('event.active.whatsup', {
+		url: "/whatsup",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('event.active.whatsup.social', {
+		url: "/social",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('event.active.whatsup.news', {
+		url: "/news",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('event.active.whatsup.social.list', {
+		url: "/list",
+		views:{
+			"content":{
+				templateUrl: "template/whatsup/social/social-list.html",
+				controller: "SocialListController",
+				controllerAs: 'socialListCtrl'
 			},
 			"nav":{
             	templateUrl: "template/nav.html",

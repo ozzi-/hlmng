@@ -1,1 +1,25 @@
-edit . todo
+<div class="form-group">
+	<label for="qrcode-payload">Payload</label><br>
+	<input type="text" size="40" name="qrcode-payload" placeholder="Payload" ng-model="qrcode.payload" required><br>
+</div>
+<div class="form-group">
+	<label for="qrcode-role">Role</label><br>
+	<select name="qrcode-role" ng-model="qrcode.role" required>
+		<option value="jury">Jury</option>
+		<option value="author">Author</option>
+	</select>
+</div>
+<div class="form-group">
+	<label for="qrcode-createdAt">Created At:</label><br>
+	<input type="text" size="40" name="qrcode-createdAt" placeholder="YYYY-MM-DD HH:MM:SS" ng-model="qrcode.createdAt" required><br>
+</div>
+<div class="form-group">
+	<label for="qrcode-claimedAt">Created At:</label><br>
+	<input type="text" size="40" name="qrcode-claimedAt" placeholder="YYYY-MM-DD HH:MM:SS" ng-model="qrcode.claimedAt"><br>
+</div>
+<div class="form-group">
+	<label for="qrcode-userIDFK">Created By User ID:</label><br>
+	<input type="text" size="40" name="qrcode-userIDFK" placeholder="User ID" ng-model="qrcode.userIDFK"><br>
+</div>
+
+
