@@ -1,9 +1,9 @@
 <div>
-	<a href="#/event/{{event.eventID}}">ID: {{event.eventID}}</a><br>
+	<a ui-sref="event.id({ eventId: event.eventID})">ID: {{event.eventID}}</a><br>
 	<b>Name:</b> {{event.name}}<br>
 	<b>Description:</b> {{event.description}}<br>
 	<b>From:</b> {{event.startDate}} - <b>To:</b> {{event.endDate}} <br>
 	<b>Active:</b> {{event.active}}<br>
 	<br>
-	<a href="#/event/active/{{event.eventID}}/overview">Set Event Active</a><br>
+	<a ui-sref="event.active.overview({eventId: event.eventID})">Set Event Active</a><br>
 </div>

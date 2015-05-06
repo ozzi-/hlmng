@@ -3,6 +3,7 @@ package hlmng.resource.adm;
 
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
+import hlmng.model.Push;
 import hlmng.model.Slider;
 import hlmng.model.Vote;
 import hlmng.model.Voting;
@@ -22,6 +23,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.simple.parser.ParseException;
+
 import settings.HLMNGSettings;
 
 
@@ -32,6 +35,8 @@ public class VotingResource extends Resource {
 	private GenDao votingDao = GenDaoLoader.instance.getVotingDao();
 	private GenDao sliderDao = GenDaoLoader.instance.getSliderDao();
 	private GenDao voteDao = GenDaoLoader.instance.getVoteDao();
+	private GenDao pushDao = GenDaoLoader.instance.getPushDao();
+	private GenDao userDao = GenDaoLoader.instance.getUserDao();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,13 +83,19 @@ public class VotingResource extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException {
+	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException, ParseException {
+		if(element.getStatus().equals("presentation_end") || element.getStatus().equals("voting")){
+			List<Object> users = listResource(userDao, false);
+			Push pushNotif = new Push(element.getStatus(),"{ \"votingID\": "+element.getVotingID()+" , \"name\": \""+element.getName()+"\" }", "vote_event" );
+			PushResource.doGCMSend(pushNotif, users);
+			postResource(pushDao,pushNotif);
+		}
 		return putResource(votingDao, element, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Object postVoting(Voting element) throws IOException {
+	public Object postVoting(Voting element) throws IOException{
 		return postResource(votingDao, element);
 	}
 

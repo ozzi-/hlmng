@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="20" columns="4">
+<lyxtabular version="3" rows="21" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -971,7 +971,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -980,7 +980,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -989,11 +989,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Fertigstellung Adm/Pub + Voting /sliders & /votes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+06.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Voting Triggers + /sliders für Pub
 \end_layout
 
 \end_inset
@@ -4566,6 +4604,22 @@ GET - Liefert besagtes Votings
 
 
 \series bold
+pub/voting/{id}/sliders
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert alle Slider des besagten Voting
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 adm/voting
 \series default
 
@@ -4637,6 +4691,137 @@ GET - Liefert alle Votings aller Slider des Voting
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Voting Triggers
+\end_layout
+
+\begin_layout Standard
+Falls ein Voting durch einen Put Befehl in den Zustand 
+\begin_inset Quotes ald
+\end_inset
+
+presentation_end
+\begin_inset Quotes ard
+\end_inset
+
+ oder 
+\begin_inset Quotes ald
+\end_inset
+
+voting
+\begin_inset Quotes ard
+\end_inset
+
+ gesetzt wird, werden die Mobile App's per Push über diese Änderung informiert.
+ Der Push der automatisch versendet wird, sieht wie folgt aus: 
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"author": "vote_event",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"date": "2015-05-06",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"failedCounter": 2,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"pushID": 9,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"receivedCounter": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"text": "{ 
+\backslash
+"votingID
+\backslash
+": 0 , 
+\backslash
+"name
+\backslash
+": 
+\backslash
+"TEST
+\backslash
+" }",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"time": "16:24:55",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"title": "presentation_end"
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Das Feld 
+\begin_inset Quotes ald
+\end_inset
+
+author
+\begin_inset Quotes ard
+\end_inset
+
+ bezeichnet dabei, dass es sich nicht um einen regulären Push handelt und
+ enthält 
+\begin_inset Quotes ald
+\end_inset
+
+vote_event
+\begin_inset Quotes ard
+\end_inset
+
+ als Wert.
+ Das Feld 
+\begin_inset Quotes ald
+\end_inset
+
+title
+\begin_inset Quotes ard
+\end_inset
+
+ bezeichnet dabei den Zustand (also presentation_end oder voting).
+ Das Feld Text enthält wiederum als JSON in einem String die notwendigen
+ Metainformationen wie die ID und Namen des gestarteten Voting.
 \end_layout
 
 \begin_layout Subsection

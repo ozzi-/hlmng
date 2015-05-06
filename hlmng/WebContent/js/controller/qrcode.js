@@ -33,7 +33,7 @@ app.controller('QrcodeIdController', ['$http','$state','$stateParams','RestServi
 		hlmng.qrcode=data;
 		hlmng.qrcode.qrCodeRenderURL = apiUrl+"qrcode/"+hlmng.qrcode.qrcodeID+"/render";
 	});
-
+	
 	hlmng.putQrcode = RestService.put;
 	hlmng.deleteQrcode = RestService.del;
 	hlmng.redir=ToolService.redir;
@@ -45,6 +45,15 @@ app.controller('QrcodeListController', ['$http','RestService','$state','$statePa
 	var hlmng = this;
 	hlmng.qrcodes = [];
 	hlmng.apiUrl = apiUrl;
+	
+	hlmng.printQr = function(qrCode){
+		printWindow=window.open('','HLMNG - QR Code Print','width=500,height=500');
+		printWindow.document.write('<img class="qrcode-image" src="'+qrCode.qrCodeRenderURL+'"/>');
+		printWindow.document.close();
+		printWindow.focus();
+		printWindow.print(); 
+	};
+	
 	RestService.list('qrcode').then(function(data){
 	    $.each(data, function(i, item){
 	    	if(item.eventIDFK==$stateParams.eventId){
@@ -54,3 +63,4 @@ app.controller('QrcodeListController', ['$http','RestService','$state','$statePa
 	    });
 	});
 }]);
+

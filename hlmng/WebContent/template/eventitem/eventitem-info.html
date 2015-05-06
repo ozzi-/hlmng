@@ -1,5 +1,7 @@
 <div>
-	<a ng-href="#/event/active/{{eventitem.eventIDFK}}/eventitem/{{eventitem.eventItemID}}">ID: {{eventitem.eventItemID}}</a><br>
+	<a ui-sref="event.active.eventitem.id({eventId: eventitem.eventIDFK, eventItemId: eventitem.eventItemID})">
+		ID: {{eventitem.eventItemID}}
+	</a><br>
 	<b>Name:</b> {{eventitem.name}}<br>
 	<b>Description:</b> {{eventitem.description}}<br>
 	<b>From:</b> {{eventitem.startTime}}<br>

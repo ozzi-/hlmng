@@ -88,7 +88,9 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 				controllerAs: 'speakerNewCtrl'				
 			},
 			"nav":{
-				templateUrl: "template/nav.html"
+				templateUrl: "template/nav.html",
+				controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
 			}
 		}
 	}).
@@ -131,7 +133,9 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 				controllerAs: 'eventListCtrl'
 			},
 			"nav":{
-				templateUrl: "template/nav.html"
+				templateUrl: "template/nav.html",
+				controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
 			}
 		}
 	}).
@@ -159,7 +163,9 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 				controllerAs: 'eventIdCtrl'
 			},
 			"nav":{
-				templateUrl: "template/nav.html"
+				templateUrl: "template/nav.html",
+				controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
 			}
 		}
 	}).

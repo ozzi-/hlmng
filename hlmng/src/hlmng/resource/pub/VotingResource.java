@@ -23,6 +23,7 @@ import settings.HLMNGSettings;
 public class VotingResource extends Resource {
 
 	private GenDao votingDao = GenDaoLoader.instance.getVotingDao();
+	private GenDao sliderDao = GenDaoLoader.instance.getSliderDao();
 
 	
 	@GET
@@ -42,6 +43,15 @@ public class VotingResource extends Resource {
 	@Path("{id}")
 	public Voting getVoting(@PathParam("id") int id) throws IOException{
 		return (Voting) getResource(votingDao, id);
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("{id}/sliders")
+	public List<Object> getSliders(@PathParam("id") int id) throws IOException{
+		Object obj= sliderDao.listByFK("votingIDFK", id);
+		return (List<Object>) obj;
 	}
 
 }

@@ -10,6 +10,7 @@ import hlmng.resource.Resource;
 import hlmng.resource.TimeHelper;
 
 import java.io.IOException;
+import java.net.ProtocolException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,20 +76,28 @@ public class PushResource  extends Resource{
 	public Object postPush(Push element) throws IOException, ParseException {
 		if(!UserActionLimiter.actionsExceeded("pushResource")){
 			List<Object> users = listResource(GenDaoLoader.instance.getUserDao(), false);
-			List<String> regIds = new ArrayList<String>();
-			for (Object userobject : users) {
-				regIds.add(((User) userobject).getRegID());
-			}
-			
-			String gcmResponse = GCM.sendGcm(element.getTitle(), element.getText(), regIds);			
-		    setPushMetaData(element, gcmResponse);
+			doGCMSend(element, users);
 			return postResource(pushDao, element);
 		}else{
 			return null;
 		}
 	}
 
-	private void setPushMetaData(Push element, String gcmResponse) throws ParseException {
+
+	protected static void doGCMSend(Push element, List<Object> users)
+			throws ProtocolException, IOException, ParseException {
+		List<String> regIds = new ArrayList<String>();
+		for (Object userobject : users) {
+			regIds.add(((User) userobject).getRegID());
+		}
+		
+		String gcmResponse = GCM.sendGcm(element.getTitle(), element.getText(), regIds);			
+		setPushMetaData(element, gcmResponse);
+	}
+
+
+
+	private static void setPushMetaData(Push element, String gcmResponse) throws ParseException {
 		JSONParser parser = new JSONParser();
 		JSONObject response  = (JSONObject) parser.parse(gcmResponse);
 
