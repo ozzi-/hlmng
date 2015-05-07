@@ -101,7 +101,7 @@ public class AuthChecker {
 		if(credentialMatchesUser(authCredential, userDB)){
 			if(UserActionLimiter.actionsExceeded(userDB.getName())){
 				Log.addEntry(Level.WARNING, "Successful user auth but action limit exceeded. "+ModelHelper.valuestoString(authCredential));
-				return new AuthResult(false, HTTPCodes.toManyRequests);
+				return new AuthResult(false, HTTPCodes.tooManyRequests);
 			}
 			Log.addEntry(Level.INFO, "Successful user auth. "+ModelHelper.valuestoString(authCredential));
 			return new AuthResult(true, HTTPCodes.ok);	

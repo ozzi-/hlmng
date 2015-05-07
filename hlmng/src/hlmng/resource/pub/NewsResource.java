@@ -4,6 +4,7 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.News;
 import hlmng.resource.Resource;
+import hlmng.resource.adm.MediaResource;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,6 +57,15 @@ public class NewsResource extends Resource  {
 			news.setMedia(media);
 		}
 		return news;
+	}
+	
+
+	protected void enrichNewsWithMedia(List<Object> newsObjects) {
+		for (Object object : newsObjects) {
+			News news = (News) object;
+			String media = MediaResource.getMediaURL(uri, news.getMediaIDFK());
+			news.setMedia(media);
+		}
 	}
 }
 

@@ -5,6 +5,8 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Social;
 import hlmng.resource.Resource;
+import hlmng.resource.adm.MediaResource;
+import hlmng.resource.adm.UserResource;
 
 import java.io.IOException;
 import java.util.List;
@@ -76,6 +78,17 @@ public class SocialResource extends Resource  {
 		}
 		return social;
 	}
+	
+	protected void enrichSocialWithUsernameAndMedia(List<Object> socialObjects) {
+		for (Object object : socialObjects) {
+			Social social = (Social) object;
+			String authorName = UserResource.getUsername(social.getUserIDFK());
+			social.setAuthorName(authorName);
+			String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+			social.setMedia(media);
+
+		}
+	}	
 
 }
 

@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="21" columns="4">
+<lyxtabular version="3" rows="22" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -308,7 +308,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-Intial
+Erste Version
 \end_layout
 
 \end_inset
@@ -346,7 +346,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Events + Speaker
+Calls für Events & Speaker
 \end_layout
 
 \end_inset
@@ -384,7 +384,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Media
+Calls für Media
 \end_layout
 
 \end_inset
@@ -422,7 +422,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Weitere Items
+Calls für Event Item & Event Room
 \end_layout
 
 \end_inset
@@ -460,7 +460,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-JSON Beispiele
+JSON Beispiele hinzugefügt
 \end_layout
 
 \end_inset
@@ -498,7 +498,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Delete Operations / Formatierung
+Delete Operationen sowie Formatierung
 \end_layout
 
 \end_inset
@@ -536,7 +536,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Vote Vorgang UML
+Vote Vorgang in UML
 \end_layout
 
 \end_inset
@@ -612,7 +612,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Code Formatierung, Qr Code
+Code Formatierung, Cals für QR Code
 \end_layout
 
 \end_inset
@@ -650,7 +650,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Qr Code Überprüfung / File Upload
+QR Code Überprüfung , File Upload
 \end_layout
 
 \end_inset
@@ -726,7 +726,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Unique Kennzeichnung / Voting Duration
+Unique Kennzeichnung, Voting Duration
 \end_layout
 
 \end_inset
@@ -764,7 +764,14 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-'Newest' Calls + Spam Schutz
+\begin_inset Quotes ald
+\end_inset
+
+Newest
+\begin_inset Quotes ard
+\end_inset
+
+ Calls, Spam Schutz
 \end_layout
 
 \end_inset
@@ -802,7 +809,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Lastupdatetime
+Lastupdatetime Call
 \end_layout
 
 \end_inset
@@ -840,7 +847,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Informationen / Konventionen gruppiert und erweitert
+Informationen & Konventionen gruppiert und erweitert
 \end_layout
 
 \end_inset
@@ -993,7 +1000,69 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Fertigstellung Adm/Pub + Voting /sliders & /votes
+Fertigstellung Adm / Pub, 
+\begin_inset Quotes ald
+\end_inset
+
+/sliders
+\begin_inset Quotes ard
+\end_inset
+
+ und 
+\begin_inset Quotes ald
+\end_inset
+
+/votes
+\begin_inset Quotes ard
+\end_inset
+
+ Calls für Voting
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+06.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Voting Triggers, 
+\begin_inset Quotes ald
+\end_inset
+
+/sliders
+\begin_inset Quotes ard
+\end_inset
+
+ Call nun auch für Pub
 \end_layout
 
 \end_inset
@@ -1013,7 +1082,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-06.05.15
+07.05.15
 \end_layout
 
 \end_inset
@@ -1022,7 +1091,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.1
+4.1.1
 \end_layout
 
 \end_inset
@@ -1031,7 +1100,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Voting Triggers + /sliders für Pub
+Inhaltliche Verbesserungen, X-QRCode Header Feld
 \end_layout
 
 \end_inset
@@ -1086,6 +1155,8 @@ Calls
 
 , die zu erwartenden Antworten sowie Konventionen und Benutzungsinformationen
  aufgeführt werden.
+ Ziel ist es den Entwickler des Mobile Apps sowie des Backends eine Hilfe
+ bei der Erweiterung sowie Unterhalt von HLM-NG zu sein.
 \end_layout
 
 \begin_layout Section
@@ -1105,11 +1176,11 @@ Legende
 \series bold
 S
 \series default
- = Secure (User Authentisierung benötigt)
-\begin_inset Newline newline
-\end_inset
-
-Siehe 
+ 
+\series bold
+& Q
+\series default
+ User Authentisierung benötigt (Siehe Kapitel 
 \begin_inset Quotes ald
 \end_inset
 
@@ -1117,11 +1188,7 @@ Login
 \begin_inset Quotes ard
 \end_inset
 
- unter 
-\begin_inset Quotes ald
-\end_inset
-
-Diverses.
+)
 \end_layout
 
 \begin_layout Itemize
@@ -1137,7 +1204,7 @@ null
 \begin_inset Quotes ard
 \end_inset
 
- sein dürfen
+ sein dürfen und können
 \end_layout
 
 \begin_layout Itemize
@@ -1146,8 +1213,9 @@ null
 [!]
 \series default
  kennzeichnet Felder die automatisch gesetzt werden.
- D.h bei einem POST / PUT müssen diese nicht mitgeliefert werden, falls diese
- trotzdem mit gegeben werden, werden diese schlichtweg ignoriert.
+ Dies bedeutet, dass bei einem POST / PUT diese nicht mitgeliefert werden
+ müssen.
+ Falls diese trotzdem mit gegeben werden, werden diese schlichtweg ignoriert.
 \end_layout
 
 \begin_layout Itemize
@@ -1156,7 +1224,7 @@ null
 [Unique] 
 \series default
 kennzeichnet Felder welche Einzigartig sein müssen, falls etwas hinzugefügt
- / geändert wird und einen nicht Einzigartigen Wert enthält wird ein Bad
+ / geändert wird und einen nicht einzigartigen Wert enthält wird ein Bad
  Request zurückgeliefert.
 \end_layout
 
@@ -1174,29 +1242,119 @@ Zeit und Daten
 \end_layout
 
 \begin_layout Standard
-Datum Felder sind in MySQL als String gespeichert, dies da Jersey Probleme
- mit MySQL 
+Das Format für 
 \begin_inset Quotes ald
 \end_inset
 
-Dates
+Date
 \begin_inset Quotes ard
 \end_inset
 
- hat und ein eigener Serialisierer zu umständlich wäre.
- Das Format ist wie folgt 
+ 
 \series bold
 YYYY-MM-DD
 \series default
 .
-\end_layout
+ 
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Standard
-Time Felder werden durch 
+Das Format für 
+\begin_inset Quotes ald
+\end_inset
+
+Time
+\begin_inset Quotes ard
+\end_inset
+
+ 
 \series bold
 HH:MM
 \series default
- repräsentiert
+
+\begin_inset Newline newline
+\end_inset
+
+Das Format für 
+\begin_inset Quotes ald
+\end_inset
+
+Date Time
+\begin_inset Quotes ard
+\end_inset
+
+ 
+\series bold
+YYYY-MM-DD HH:MM
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Login
+\end_layout
+
+\begin_layout Itemize
+Bei den als 
+\series bold
+S
+\series default
+ gekennzeichneten Calls wird ein Basic 
+\series bold
+HTTP-Auth
+\series default
+ erwartet
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://de.wikipedia.org/wiki/HTTP-Authentifizierung#Basic_Authentication
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Das Passwort ist dabei gleich der DeviceID.
+ Kann 401, 403 zurückliefern.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Bei erfolgreicher Authentifizierung wird die eigentliche Aktion durchgeführt
+\end_layout
+
+\begin_layout Itemize
+Bei fehlgeschlagener Authentifizierung wegen falschen Anmeldedaten wird
+ erneut ein HTTP-Auth geschickt
+\end_layout
+
+\begin_layout Itemize
+Bei einem Fehler bei dem Anmeldedaten Parser wird ein Bad Request geschickt
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Bei den als Q gekennzeichneten Calls kann nebst der Basic HTTP-Auth ein
+ zusätzliches Header Feld mit dem Namen 
+\begin_inset Quotes ald
+\end_inset
+
+X-QRCode
+\begin_inset Quotes ard
+\end_inset
+
+ mitgesendet werden.
+ Bei erfolgreicher Auswertung des Wertes werden die Calls mit spezieller
+ Berechtigung ausgeführt (z.B.
+ Voting als Jury).
+ Der Wert dieses Header ist gleich der Payload des QR Codes.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1251,57 +1409,11 @@ PUT
 \begin_deeper
 \begin_layout Itemize
 Updatet lediglich - Es wird kein neues Element erstellt falls unter die
- definierte ID nicht exisitert
+ definierte ID nicht existiert
 \end_layout
 
 \begin_layout Itemize
 Ignoriert eine abweichende ID
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Login
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Bei den als 
-\series bold
-S
-\series default
- gekennzeichneten Calls wird ein Basic 
-\series bold
-HTTP-Auth
-\series default
- erwartet
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-https://de.wikipedia.org/wiki/HTTP-Authentifizierung#Basic_Authentication
-\end_layout
-
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-Das Passwort ist dabei gleich der DeviceID.
- Kann 401, 403 zurückliefern.
-\end_layout
-
-\begin_layout Itemize
-Bei erfolgreicher Authentifizierung wird die eigentliche Aktion durchgeführt
-\end_layout
-
-\begin_layout Itemize
-Bei fehlgeschlagener Authentifizierung wegen falschen Anmeldedaten wird
- erneut ein HTTP-Auth geschickt
-\end_layout
-
-\begin_layout Itemize
-Bei einem Fehler bei dem Anmeldedaten Parser wird ein Bad Request geschickt
 \end_layout
 
 \end_deeper
@@ -4333,13 +4445,18 @@ pub/vote
 
 POST - 
 \series bold
-S
+S 
+\series default
+-
+\series bold
+ Q
 \series default
  - Erstellt neuen Vote
-\series bold
- 
-\series default
-(1x pro Benutzer)
+\begin_inset Newline newline
+\end_inset
+
+Es ist dabei nur ein Vote pro User für ein Slider möglich, bei erneutem
+ Versuch wird HTTP Code 423 (locked) zurückgegeben.
 \series bold
 
 \begin_inset Newline newline
@@ -4787,10 +4904,6 @@ status open
 }
 \end_layout
 
-\end_inset
-
-
-\begin_inset Newline newline
 \end_inset
 
 Das Feld 

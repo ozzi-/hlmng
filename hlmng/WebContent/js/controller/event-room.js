@@ -35,5 +35,6 @@ app.controller('EventRoomIdController', ['$http','$stateParams','RestService', f
 		hlmng.eventroom=data;
 	});
 
-	hlmng.putEvent = RestService.put;
+	hlmng.deleteEventRoom = RestService.del;
+	hlmng.putEventRoom = RestService.put;
 }]);

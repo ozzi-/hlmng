@@ -1,5 +1,7 @@
 <div>
-	<a href="#/speaker/{{speaker.speakerID}}">ID: {{speaker.speakerID}}</a><br>
+	<a ui-sref="speaker.id({speakerId: speaker.speakerID})">
+		ID: {{speaker.speakerID}}
+	</a><br>
 	Name: {{speaker.name}}<br>
 	Title: {{speaker.title}}<br>
 	Nationality: {{speaker.nationality}} <img  ng-src="{{ './img/flags/flag_'+(speaker.nationality | lowercase)+'.png'}}" err-src="{{'./img/flags/flag_invalid.png'}}"/><br>

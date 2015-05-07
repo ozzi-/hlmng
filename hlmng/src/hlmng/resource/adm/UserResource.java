@@ -22,6 +22,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import settings.HLMNGSettings;
+import settings.HTTPCodes;
 
 
 
@@ -82,9 +83,9 @@ public class  UserResource  extends Resource {
 			if(!UserActionLimiter.actionsExceeded("userCreation")){ // we don't want people spamming the profile creation
 				return postResource(userDao, element);			
 			}
-			return Response.status(429).build();  // Too Many Requests			
+			return Response.status(HTTPCodes.tooManyRequests).build();			
 		}else{
-			return Response.status(422).build();  // Unprocessable Entity (exists)
+			return Response.status(HTTPCodes.unprocessableEntity).build();  
 		}
 	}
 

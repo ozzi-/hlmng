@@ -1,11 +1,6 @@
 package hlmng.resource;
 
 import hlmng.dao.GenDao;
-import hlmng.model.News;
-import hlmng.model.Social;
-import hlmng.model.Speaker;
-import hlmng.resource.adm.MediaResource;
-import hlmng.resource.adm.UserResource;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,6 +11,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import settings.HTTPCodes;
 
 public class Resource {
 	
@@ -66,7 +63,7 @@ public class Resource {
 	 * @return 202, 401
 	 */
 	protected Object postResource(GenDao dao, Object element){
-		int insertedID = dao.addElement(element); // todo auth check for users. . . . 
+		int insertedID = dao.addElement(element); 
 		return dao.getElement(insertedID);			
 	}
 
@@ -100,34 +97,9 @@ public class Resource {
 			dao.updateElement(element, id);
 			res = Response.accepted().build();
 		}else{
-			res = Response.status(404).build();
+			res = Response.status(HTTPCodes.notFound).build();
 		}
 		return res;				
-	}
-	
-	protected void enrichSpeakerWithMedia(List<Object> speakerObjects) {
-		for (Object object : speakerObjects) {
-			Speaker speaker = (Speaker) object;
-			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
-			speaker.setMedia(media);
-		}
-	}
-	protected void enrichSocialWithUsernameAndMedia(List<Object> socialObjects) {
-		for (Object object : socialObjects) {
-			Social social = (Social) object;
-			String authorName = UserResource.getUsername(social.getUserIDFK());
-			social.setAuthorName(authorName);
-			String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
-			social.setMedia(media);
-
-		}
-	}	
-	protected void enrichNewsWithMedia(List<Object> newsObjects) {
-		for (Object object : newsObjects) {
-			News news = (News) object;
-			String media = MediaResource.getMediaURL(uri, news.getMediaIDFK());
-			news.setMedia(media);
-		}
 	}
 }
 

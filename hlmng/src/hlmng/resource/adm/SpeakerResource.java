@@ -81,5 +81,13 @@ public class SpeakerResource extends Resource  {
 		}
 		return speaker;
 	}
+	
+	protected void enrichSpeakerWithMedia(List<Object> speakerObjects) {
+		for (Object object : speakerObjects) {
+			Speaker speaker = (Speaker) object;
+			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
+			speaker.setMedia(media);
+		}
+	}
 }
 

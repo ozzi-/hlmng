@@ -1,4 +1,5 @@
-<span ng-repeat="speaker in speakerListCtrl.speakers">
+<label>Search for Speaker: <input ng-model="search"></label><hr>
+<span ng-repeat="speaker in speakerListCtrl.speakers  | filter:search:strict">
 	<speaker-info speaker="speaker"></speaker-info><br><hr>
 </span>
 <nothing-here-yet list="speakerListCtrl.speakers"></nothing-here-yet>

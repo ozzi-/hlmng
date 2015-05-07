@@ -1,6 +1,6 @@
 var eventModule = angular.module('navbar', []);
 
-app.controller('NavBarController', ['$http','$location','RestService','$stateParams', function($http,$location,RestService,$stateParams){	
+app.controller('NavBarController', ['$http','$state','$location','RestService','$stateParams', function($http,$state,$location,RestService,$stateParams){	
 	var hlmng = this;
 	hlmng.eventName={};
 
@@ -86,7 +86,7 @@ app.controller('NavBarController', ['$http','$location','RestService','$statePar
 	    }];
 	
 	hlmng.checkEventActive = function(){
-		return ($stateParams.eventId!==undefined);
+		return ($state.includes("event.active"));
     };
 	hlmng.getEventActive = function(){
 		return ($stateParams.eventId);

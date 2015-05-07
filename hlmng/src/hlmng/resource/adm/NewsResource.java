@@ -82,5 +82,13 @@ public class NewsResource extends Resource  {
 	}
 	
 
+	protected void enrichNewsWithMedia(List<Object> newsObjects) {
+		for (Object object : newsObjects) {
+			News news = (News) object;
+			String media = MediaResource.getMediaURL(uri, news.getMediaIDFK());
+			news.setMedia(media);
+		}
+	}
+
 }
 

@@ -36,7 +36,7 @@ public class UserActionLimiterTest {
 		boolean exceeded=false;
 		for (int i = 0; i <= HLMNGSettings.maxActionsAllowed; i++) {
 			exceeded = UserActionLimiter.actionsExceeded("test");
-            Thread.sleep(HLMNGSettings.actionGraceTime/HLMNGSettings.maxActionsAllowed);
+            Thread.sleep((HLMNGSettings.actionGraceTime/HLMNGSettings.maxActionsAllowed)+10);
 		}
 		assertFalse(exceeded);
 	}

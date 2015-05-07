@@ -1,5 +1,7 @@
 <div>
-	<a ng-href="#/event/active/{{qrcode.eventIDFK}}/qrcode/{{qrcode.qrcodeID}}">ID: {{qrcode.qrcodeID}}</a><br>
+	<a ui-sref="event.active.qrcode.id({eventId: qrcode.eventIDFK, qrcodeId: qrcode.qrcodeID})">
+		ID: {{qrcode.qrcodeID}}
+	</a><br>
 	Payload: {{qrcode.payload}}<br>
 	Role: {{qrcode.role}}<br>
 	Created At: {{qrcode.createdAt}}<br>

@@ -159,13 +159,13 @@ public class MediaResource extends Resource{
 			String filePath = HLMNGSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
 			File f = new File(filePath);
 			if(f.exists()){
-				response=  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
+				response=  Response.status(HTTPCodes.unprocessableEntity).entity("File name already exists locally. Try again with another one!").build(); 
 			}else{
 				response = saveImage(fileInputStream, contentDispositionHeader, mimeType, filePath);
 			}
 		}else{
 			Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
-			response=Response.status(415).build();
+			response=Response.status(HTTPCodes.unsupportedMediaType).build();
 		}
 		return response;
 	}
@@ -183,11 +183,11 @@ public class MediaResource extends Resource{
 				response= getMediaAsResponse(insertedID, uri, request);
 			}else{
 				Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
-				response=Response.status(500).build();				
+				response=Response.status(HTTPCodes.internalServerError).build();				
 			}	
 		} catch (SizeLimitExceededException e) {
 			Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+HLMNGSettings.maxMediaImageSizeMB+" MB");
-			response=Response.status(413).build();
+			response=Response.status(HTTPCodes.requestEntityTooLarge).build();
 		}
 		return response;
 	}
@@ -243,6 +243,7 @@ public class MediaResource extends Resource{
 		return bytesWritten;
 	}
 
+	
 
 	public static Response mediaResponse(String filePath, String fileType, Request request) {
 		ResponseBuilder response;

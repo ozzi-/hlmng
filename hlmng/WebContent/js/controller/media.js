@@ -10,7 +10,7 @@ app.controller('MediaController', ['$scope', 'ToolService','$log','dataService',
 	$scope.showUploadPicture=false;
 	$scope.showUploadErrorCode=false;
 	$scope.uploadErrorCode={};
-	$scope.uploadFile = function(file,saveto){
+	$scope.uploadFile = function(file){
 		$log.log("Starting upload in media controller");
         ToolService.uploadFile(file).then(function(data){
         	$scope.uploadedMediaLink=data.link;

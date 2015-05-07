@@ -1,4 +1,5 @@
-<span ng-repeat="eventRoom in eventRoomListCtrl.eventrooms">
+<label>Search for Event Room: <input ng-model="search"></label><hr>
+<span ng-repeat="eventRoom in eventRoomListCtrl.eventrooms | filter:search:strict">
 	<event-room-info eventroom="eventRoom"></event-room-info><br><hr>
 </span>
 <nothing-here-yet list="eventRoomListCtrl.eventrooms"></nothing-here-yet>

@@ -13,6 +13,11 @@ public class Voting {
 	private int presentationIDFK;
 	private int eventIDFK;
 
+	  
+	public enum statusEnum {
+		pre_presentation,presentation,presentation_end,voting,voting_end
+	}
+	
 	public Voting(){
 	
 	}

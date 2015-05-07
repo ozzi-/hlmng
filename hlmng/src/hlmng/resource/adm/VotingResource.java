@@ -84,7 +84,7 @@ public class VotingResource extends Resource {
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException, ParseException {
-		if(element.getStatus().equals("presentation_end") || element.getStatus().equals("voting")){
+		if(element.getStatus().equals(Voting.statusEnum.presentation_end) || element.getStatus().equals(Voting.statusEnum.voting)){
 			List<Object> users = listResource(userDao, false);
 			Push pushNotif = new Push(element.getStatus(),"{ \"votingID\": "+element.getVotingID()+" , \"name\": \""+element.getName()+"\" }", "vote_event" );
 			PushResource.doGCMSend(pushNotif, users);
