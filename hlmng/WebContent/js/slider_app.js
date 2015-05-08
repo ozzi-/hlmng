@@ -19,9 +19,42 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 });
 
 
-app.controller('SliderController', ['$http','$stateParams','RestService','$scope',function($http,$stateParams,RestService,$scope){
+app.controller('SliderController', ['$http','$stateParams','RestService','$scope','$interval',function($http,$stateParams,RestService,$scope,$interval){
+	
+	var refreshData = function() {
+		RestService.list('social').then(function(data){
+		    $.each(data, function(i, item){
+		    	if(item.eventIDFK==$stateParams.eventId){
+		    		if(item.status=="accepted"){
+		    			var there=false;
+		    			for(var i=0; i<$scope.socialsAccepted.length; i++) {
+	    			        if ($scope.socialsAccepted[i].media == item.media){
+	    			        	there=true;
+	    			        }
+	    			    }
+		    			if(there==false){
+		    				$scope.socialsAccepted.push(item);	 
+		    			}
+		    		}
+		    	}
+		    });
+		});
+	};
+
+	var promise = $interval(refreshData, 5000);
+
+	// Cancel interval on page changes
+	$scope.$on('$destroy', function(){
+	    if (angular.isDefined(promise)) {
+	        $interval.cancel(promise);
+	        promise = undefined;
+	    }
+	});
+
+	
+	
 	$scope.socialsAccepted = [];
-	$scope.interval = $stateParams.interval;
+	$scope.intervalSlide = $stateParams.interval;
 	RestService.list('social').then(function(data){
 	    $.each(data, function(i, item){
 	    	if(item.eventIDFK==$stateParams.eventId){
