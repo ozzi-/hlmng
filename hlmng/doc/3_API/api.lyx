@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="22" columns="4">
+<lyxtabular version="3" rows="23" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1078,7 +1078,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1087,7 +1087,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1096,11 +1096,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Inhaltliche Verbesserungen, X-QRCode Header Feld
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+08.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+User Listing für Pub entfernt, Social Status update
 \end_layout
 
 \end_inset
@@ -3686,7 +3724,7 @@ Der Text des Eintrages
 
 
 \series bold
-status - 
+status [!] - 
 \series default
 Der Moderationsstatus [pending,accepted,rejected]
 \begin_inset Newline newline
@@ -3694,7 +3732,7 @@ Der Moderationsstatus [pending,accepted,rejected]
 
 
 \series bold
-authorName - 
+authorName [!] - 
 \series default
 Der Username des Social Items, falls der User nicht gefunden wird ist das
  Feld 
@@ -3826,7 +3864,15 @@ POST -
 \series bold
 S
 \series default
- - Erstellt neuen Social Eintrag
+ - Erstellt neuen Social Eintrag, immer mit dem Moderationsstatus 
+\begin_inset Quotes ald
+\end_inset
+
+pending
+\begin_inset Quotes ard
+\end_inset
+
+ 
 \begin_inset Newline newline
 \end_inset
 
@@ -4217,10 +4263,6 @@ pub/user
 \begin_inset Newline newline
 \end_inset
 
-GET - Liefert alle user 
-\begin_inset Newline newline
-\end_inset
-
 POST - Erstellt neuen user.
  Falls der Username bereits existiert wird 422 (unprocessable entity / exists)
  zurückgeliefert.
@@ -4229,22 +4271,6 @@ POST - Erstellt neuen user.
 \begin_inset Newline newline
 \end_inset
 
-
-\begin_inset Newline newline
-\end_inset
-
-pub/user/{id}
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-GET - Liefert den besagten User
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
 
 \begin_inset Newline newline
 \end_inset
@@ -4277,11 +4303,7 @@ regID
 \begin_inset Quotes ard
 \end_inset
 
- werden 
-\series bold
-nicht
-\series default
- geändert.
+ werden ignoriert.
 \begin_inset Newline newline
 \end_inset
 

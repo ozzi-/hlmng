@@ -1,6 +1,6 @@
 <span ng-repeat="qrCode in qrCodeListCtrl.qrcodes">
 	<qrcode-info qrcode="qrCode"></qrcode-info><br>
-	<button ng-click="qrCodeListCtrl.printQr(qrCode)">Print QR Code</button>
+	<button class="btn btn-default" ng-click="qrCodeListCtrl.printQr(qrCode)">Print QR Code</button>
 	<br><hr>
 </span>
 <nothing-here-yet list="qrCodeListCtrl.qrcodes"></nothing-here-yet>

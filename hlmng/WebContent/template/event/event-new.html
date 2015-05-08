@@ -1,7 +1,8 @@
-<form name="eventInfoNewForm" novalidate>
-	<event-info-edit event="eventNewCtrl.event"></event-info-edit>
-	<br><br><br>
-</form>
-<button ng-disabled="!eventInfoNewForm.$valid" ng-click="eventNewCtrl.postAndRedir();">Submit</button>
-
+<div class="col-xs-4">
+	<form name="eventInfoNewForm" novalidate>
+		<event-info-edit event="eventNewCtrl.event"></event-info-edit>
+		<br><br>
+	</form>
+	<button class="btn btn-success" ng-disabled="!eventInfoNewForm.$valid" ng-click="eventNewCtrl.postAndRedir();">Submit</button>
+</div>
 

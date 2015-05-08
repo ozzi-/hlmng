@@ -406,6 +406,21 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
+	state('event.active.whatsup.social.id', {
+		url: "/{socialId:int}",
+		views:{
+			"content":{
+				templateUrl: "template/whatsup/social/social-detail.html",
+				controller: "SocialIdController",
+				controllerAs: 'socialIdCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
 	state('event.active.whatsup.news', {
 		url: "/news",
 	    abstract: true,

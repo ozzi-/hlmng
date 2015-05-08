@@ -1,0 +1,18 @@
+<div ng-hide="edit">
+	<social-info social="socialIdCtrl.social"></social-info><br>
+</div>
+
+<div ng-show="edit">
+	<div class="col-xs-4">
+		<form name="socialInfoEditForm" novalidate>
+			<social-info-edit social="socialIdCtrl.social"></social-info-edit>
+		</form>
+		<br>
+		<button class="btn btn-danger" ng-click="socialIdCtrl.deleteSocial(socialIdCtrl.social.socialID,'social'); socialIdCtrl.redir('/speaker/list');">Delete this Social Item</button>
+		<button class="btn btn-success" ng-disabled="!socialInfoEditForm.$valid" ng-click="edit=!edit ;socialIdCtrl.putSocial(socialIdCtrl.social,socialIdCtrl.social.socialID,'social');">Submit</button>
+	</div>
+</div>
+
+
+<edit-button edit="edit"></edit-button>
+

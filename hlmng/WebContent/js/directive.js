@@ -101,6 +101,25 @@ directiveModule.directive('eventItemInfo', function(){
 	};
 });
 
+directiveModule.directive('socialInfo', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/whatsup/social/social-info.html',
+		scope: {
+			social: "=social"
+		}
+	};
+});
+
+directiveModule.directive('socialInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/whatsup/social/social-info-edit.html',
+		scope: {
+			social: "=social"
+		}
+	};
+});
 
 directiveModule.directive('eventRoomInfoEdit', function(){
 	return {
@@ -121,7 +140,6 @@ directiveModule.directive('eventRoomInfo', function(){
 		}
 	};
 });
-
 
 
 

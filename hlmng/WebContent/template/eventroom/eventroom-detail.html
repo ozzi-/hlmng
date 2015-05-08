@@ -3,12 +3,14 @@
 </div>
 
 <div ng-show="edit">
-	<form name="eventRoomInfoEditForm" novalidate>
-		<event-room-info-edit eventroom="eventRoomIdCtrl.eventroom"></event-room-info-edit>
-	</form>
-	<button ng-click="eventRoomIdCtrl.deleteEventRoom(eventRoomIdCtrl.eventroom.eventRoomID,'eventroom'); speakerIdCtrl.redir('/speaker/list');">Delete this Event Room</button>
-	<br>
-	<button ng-disabled="!eventRoomInfoEditForm.$valid" ng-click="edit=!edit ;eventRoomIdCtrl.putEventRoom(eventRoomIdCtrl.eventroom,eventRoomIdCtrl.eventroom.eventRoomID,'eventroom');">Submit</button>
+	<div class="col-xs-4">
+		<form name="eventRoomInfoEditForm" novalidate>
+			<event-room-info-edit eventroom="eventRoomIdCtrl.eventroom"></event-room-info-edit>
+		</form>
+		<br>
+		<button class="btn btn-danger" ng-click="eventRoomIdCtrl.deleteEventRoom(eventRoomIdCtrl.eventroom.eventRoomID,'eventroom'); speakerIdCtrl.redir('/speaker/list');">Delete this Event Room</button>
+		<button class="btn btn-success" ng-disabled="!eventRoomInfoEditForm.$valid" ng-click="edit=!edit ;eventRoomIdCtrl.putEventRoom(eventRoomIdCtrl.eventroom,eventRoomIdCtrl.eventroom.eventRoomID,'eventroom');">Submit</button>
+	</div>
 </div>
 
 

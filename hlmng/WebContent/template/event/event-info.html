@@ -5,5 +5,9 @@
 	<b>From:</b> {{event.startDate}} - <b>To:</b> {{event.endDate}} <br>
 	<b>Active:</b> {{event.active}}<br>
 	<br>
-	<a ui-sref="event.active.overview({eventId: event.eventID})">Set Event Active</a><br>
+	<a ui-sref="event.active.overview({eventId: event.eventID})">
+		<button class="btn btn-default">
+			Set Event Active
+		</button>
+	</a>
 </div>

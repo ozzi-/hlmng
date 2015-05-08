@@ -1,15 +1,19 @@
 <b>Payload</b><br>
 {{qrcode.payload}}<br><br>
 <div class="form-group">
+	<label for="qrcode-role">Role</label><br>
+	{{qrcode.role}}
+</div>
+<div class="form-group">
 	<label for="qrcode-createdAt">Created At:</label><br>
-	<input type="text" size="40" name="qrcode-createdAt" placeholder="YYYY-MM-DD HH:MM:SS" ng-model="qrcode.createdAt" required><br>
+	<input class="form-control" type="text" size="40" name="qrcode-createdAt" placeholder="YYYY-MM-DD HH:MM:SS" ng-model="qrcode.createdAt" required><br>
 </div>
 <div class="form-group">
 	<label for="qrcode-claimedAt">Claimed At:</label><br>
-	<input type="text" size="40" name="qrcode-claimedAt" placeholder="YYYY-MM-DD HH:MM:SS" ng-model="qrcode.claimedAt"><br>
+	<input class="form-control" type="text" size="40" name="qrcode-claimedAt" placeholder="YYYY-MM-DD HH:MM:SS" ng-model="qrcode.claimedAt"><br>
 </div>
 <div class="form-group">
 	<label for="qrcode-userIDFK">Created By User ID:</label><br>
-	<input type="text" size="40" name="qrcode-userIDFK" placeholder="User ID" ng-model="qrcode.userIDFK"><br>
+	<input class="form-control" type="text" size="40" name="qrcode-userIDFK" placeholder="User ID" ng-model="qrcode.userIDFK"><br>
 </div>
 

@@ -10,10 +10,14 @@ public class Social {
 	private int mediaIDFK;
 	private int eventIDFK;
 
+	
+	public enum statusEnum {
+		pending,accepted,rejected
+	}
+	
 	public Social() {
 
 	}
-
 	public Social(int socialID, String text, String status, String media, int userIDFK,
 			int mediaIDFK, int eventIDFK) {
 		this.socialID = socialID;

@@ -11,7 +11,6 @@ import hlmng.model.UserActionLimiter;
 import hlmng.resource.Resource;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 
 import javax.ws.rs.Consumes;
@@ -24,8 +23,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import settings.HLMNGSettings;
 import log.Log;
+import settings.HLMNGSettings;
 
 
 
@@ -33,13 +32,6 @@ import log.Log;
 public class  UserResource  extends Resource {
 	private static GenDao userDao = GenDaoLoader.instance.getUserDao();
 
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getUsers() throws IOException {
-		return listResource(userDao, false);
-	}
-	
 	
 	@GET
 	@Path("/lastupdate")
@@ -48,11 +40,6 @@ public class  UserResource  extends Resource {
 		return userDao.getLastUpdateTime();
 	}
 	
-	@GET 
-	@Path("{id}")
-	public User getUser(@PathParam("id") int id) throws IOException{
-		return (User) getResource(userDao, id);
-	}
 	
 	public static String getUsername(int id){
 		System.out.println();

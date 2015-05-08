@@ -3,10 +3,13 @@
 </div>
 
 <div ng-show="edit">
-	<form name="eventItemInfoEditForm" novalidate>
-		<event-item-info-edit eventitem="eventItemIdCtrl.eventitem"></event-item-info-edit>
-	</form>
-	<button ng-disabled="!eventItemInfoEditForm.$valid" ng-click="edit=!edit ;eventItemIdCtrl.putEvent(eventItemIdCtrl.eventitem,eventItemIdCtrl.eventitem.eventItemID,'eventitem');">Submit</button>
+	<div class="col-xs-4">
+		<form name="eventItemInfoEditForm" novalidate>
+			<event-item-info-edit eventitem="eventItemIdCtrl.eventitem"></event-item-info-edit>
+		</form>
+		<button class="btn btn-danger" ng-click="eventItemIdCtrl.deleteEventItem(eventItemIdCtrl.eventitem.eventItemID,'eventitem'); speakerIdCtrl.redir('/speaker/list');">Delete this Event Item</button>
+		<button class="btn btn-success" ng-disabled="!eventItemInfoEditForm.$valid" ng-click="edit=!edit ;eventItemIdCtrl.putEvent(eventItemIdCtrl.eventitem,eventItemIdCtrl.eventitem.eventItemID,'eventitem');">Submit</button>
+	</div>
 </div>
 
 
