@@ -16,11 +16,23 @@
 	padding-left: 6px;
 }
 
+
+
+.slider-image{
+  max-height:50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
 .speaker-image{
     max-width: 80px;
     width: 100%;
     height: auto;
 }
+
 
 .social-image{
     max-width: 100px;

@@ -60,23 +60,6 @@ app.controller('SocialListController', ['$http','RestService','$stateParams', fu
 	});
 }]);
 
-RestService.list('event').then(function(data){
-	var curDate = new Date().setHours(0,0,0,0);
-    $.each(data, function(i, item){
-    	var itemStartDate = new Date(item.startDate).setHours(0,0,0,0);
-    	var itemEndDate = new Date(item.endDate).setHours(0,0,0,0);
-    	if(itemStartDate<=curDate && itemEndDate>=curDate){
-    		hlmng.eventsRunning.push(item);
-    	}
-    	if(itemEndDate<curDate && itemStartDate<curDate){
-    		hlmng.eventsFinished.push(item);
-    	}
-    	if(itemStartDate>curDate && itemEndDate>curDate){
-    		hlmng.eventsUpcoming.push(item);
-    	}
-    	hlmng.events.push(item);
-    });	
-});
 
 app.controller('SocialIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
 	var hlmng = this;
@@ -90,3 +73,4 @@ app.controller('SocialIdController', ['$http','$stateParams','RestService','Tool
 	hlmng.deleteSocial = RestService.del;
 	hlmng.redir=ToolService.redir;
 }]);
+

@@ -1,0 +1,10 @@
+<carousel interval="interval">
+	<slide ng-repeat="social in socialsAccepted" active="slide.active">
+		<img class="slider-image" ng-src="{{social.media}}" style="margin:auto;">
+		<div>
+			<h1>{{social.authorName}} says:</h1>
+			<h3><i>{{social.text}}</i></h3>
+		</div>
+	</slide>
+	<br><br><br>
+</carousel>
