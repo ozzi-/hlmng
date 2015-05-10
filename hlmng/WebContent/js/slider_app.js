@@ -7,14 +7,14 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 	$urlRouterProvider.otherwise("/");
 	$stateProvider.
     state('event', {
-		url: "/event/{eventId:int}/interval/{interval:int}",
+		url: "/event/{eventId:int}/interval/{interval:int}/updateinterval/{updateinterval:int}",
 		templateUrl: "template/slider/slider.html",
        	controller: "SliderController",
        	controllerAs: "sliderCtrl"
     }).
     state('index', {
 		url: "/",
-		template: "Use /event/{id}/interval/{ms}"
+		template: "Use /event/{id}/interval/{ms}/updateinterval/{ms}"
     });
 });
 
@@ -35,13 +35,15 @@ app.controller('SliderController', ['$http','$stateParams','RestService','$scope
 		    			if(there==false){
 		    				$scope.socialsAccepted.push(item);	 
 		    			}
+		    		}else{
+		    			$scope.socialsAccepted.splice(item, 1);
 		    		}
 		    	}
 		    });
 		});
 	};
 
-	var promise = $interval(refreshData, 5000);
+	var promise = $interval(refreshData, $stateParams.updateinterval);
 
 	// Cancel interval on page changes
 	$scope.$on('$destroy', function(){
@@ -50,8 +52,6 @@ app.controller('SliderController', ['$http','$stateParams','RestService','$scope
 	        promise = undefined;
 	    }
 	});
-
-	
 	
 	$scope.socialsAccepted = [];
 	$scope.intervalSlide = $stateParams.interval;
