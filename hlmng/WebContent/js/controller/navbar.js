@@ -17,6 +17,13 @@ app.controller('NavBarController', ['$http','$state','$location','RestService','
 	    },{
 	        label: 'New Speaker',
 	        state: 'speaker.new'
+	    },{
+	       	label: 'Push List',
+	       	state: 'push.list'
+	    },{
+	       	label: 'New Push',
+	       	state: 'push.new'
+		      
 	    }];
 	
 	hlmng.navEventActiveContent = 
@@ -62,16 +69,6 @@ app.controller('NavBarController', ['$http','$state','$location','RestService','
 	        },{
 	            label: 'New News',
 	            state: 'event.active.whatsup.news.new'
-	        }]
-	    },{
-	    	label: 'Push',
-	    	state: 'event.active.push',
-	        children: [{
-	            label: 'Push Feed',
-	            state: 'event.active.push.list'
-	        },{
-	            label: 'New Push',
-	            state: 'event.active.push.new'
 	        }]
 	    },{
 	        label: 'Voting',

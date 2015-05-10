@@ -152,6 +152,28 @@ directiveModule.directive('mediaUpload', function(){
 	};
 });
 
+
+directiveModule.directive('pushInfo', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/push/push-info.html',
+		scope: {
+			push: "=push"
+		}
+	};
+});
+
+
+directiveModule.directive('pushInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/push/push-info-edit.html',
+		scope: {
+			push: "=push"
+		}
+	};
+});
+
 	
 // This code comes from: https://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs
 directiveModule.directive('fileModel', ['$parse', function ($parse) {

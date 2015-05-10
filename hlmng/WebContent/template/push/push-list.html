@@ -1,0 +1,5 @@
+<label>Search for Push: <input ng-model="search"></label><hr>
+<span ng-repeat="push in pushListCtrl.pushes | filter:search:strict">
+	<push-info push="push"></push-info><br><hr>
+</span>
+<nothing-here-yet list="pushListCtrl.pushes"></nothing-here-yet>

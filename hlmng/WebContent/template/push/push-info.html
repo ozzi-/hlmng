@@ -1,0 +1,11 @@
+<div>
+	<a ui-sref="push.id({pushId: push.pushID})">
+		ID: {{push.pushID}}
+	</a><br>
+	<b>Author:</b> {{push.author}}<br>
+	<b>Title:</b> {{push.title}}<br>
+	<b>Text:</b> {{push.text}}<br>
+	<b>Date:</b> {{push.date}}<br>
+	<b>Time:</b> {{push.time}}<br>	
+	<b>Received:</b> {{push.receivedCounter}} - <b>  Failed: {{push.failedCounter}}</b> - (Total: {{push.failedCounter+push.receivedCounter}})<br>
+</div>

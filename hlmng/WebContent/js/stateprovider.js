@@ -447,5 +447,50 @@ myapp.config(function($stateProvider, $urlRouterProvider){
             	controllerAs: "navBarCtrl"
 			}
 		}
+	}).
+	// ****
+	// PUSH
+	// ****
+	state('push', {
+		url: "/push",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('push.list', {
+		url: "/list",
+		views:{
+			"content":{
+				templateUrl: "template/push/push-list.html",
+				controller: "PushListController",
+				controllerAs: 'pushListCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
+	state('push.new', {
+		url: "/new",
+		views:{
+			"content":{
+				templateUrl: "template/push/push-new.html",
+				controller: "PushNewController",
+				controllerAs: 'pushNewCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	});
 });
