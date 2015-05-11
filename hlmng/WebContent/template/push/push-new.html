@@ -1,8 +1,9 @@
-<form name="pushInfoNewForm" novalidate>
-	<push-info-edit push="pushNewCtrl.push"></push-info-edit>
-	<br><br><br>
-</form>
-<button ng-disabled="!pushInfoNewForm.$valid" ng-click="pushNewCtrl.postAndRedir();">Submit</button>
-
-
+<div class="col-xs-4">
+	<form name="pushInfoNewForm" novalidate>
+		<push-info-edit push="pushNewCtrl.push"></push-info-edit>
+		<br><br><br>
+	</form>
+	<button class="btn btn-success" ng-disabled="!pushInfoNewForm.$valid" ng-click="pushNewCtrl.postAndRedir();">Submit</button>
+</div>	
+	
  

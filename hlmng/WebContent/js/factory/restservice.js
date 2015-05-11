@@ -7,8 +7,8 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
             .success(function (data) {
     			$log.log('post '+className+' successfully!');  
                 deferred.resolve(data);
-            }).error(function (data) {
-    			$log.log('couldn\'t post '+className);
+            }).error(function (data,error) {
+    			$log.log('couldn\'t post '+className+"\nError:"+error);
                 deferred.reject(data);
             });
             return deferred.promise;
@@ -16,8 +16,8 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
         put: function (obj,objId,className) {
     		$http.put(apiUrl+className+'/'+objId, obj).success(function(data) {
     			$log.log('put '+className+' successfully');
-    		}).error(function(data){
-    			$log.log('couldn\'t put '+className+', ID='+objId);
+    		}).error(function(data,error){
+    			$log.log('couldn\'t put '+className+', ID='+objId+"\nError:"+error);
     		});
         },
     	get: function (objId,className) {
@@ -26,8 +26,8 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
             .success(function (data) {
 				$log.log('get '+className+' successfully, ID='+objId);
                 deferred.resolve(data);
-            }).error(function (data) {
-				$log.log('couldn\'t get '+className+', ID='+objId);
+            }).error(function (data,error) {
+				$log.log('couldn\'t get '+className+', ID='+objId+"\nError:"+error);
                 deferred.reject(data);
             });
             return deferred.promise;
@@ -39,7 +39,7 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
 				$log.log('list '+className+' successfully');
                 deferred.resolve(data);
             }).error(function (data) {
-				$log.log('couldn\'t list '+className);
+				$log.log('couldn\'t list '+className+"\nError:"+error);
                 deferred.reject(data);
             });
             return deferred.promise;
@@ -48,8 +48,8 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
             $http({ method: "DELETE", url: apiUrl+className+'/'+objId })
             .success(function (data) {
 				$log.log('deleted '+className+' successfully, ID='+objId);
-            }).error(function (data) {
-				$log.log('couldn\'t delete '+className+', ID='+objId);
+            }).error(function (data,error) {
+				$log.log('couldn\'t delete '+className+', ID='+objId+"\nError:"+error);
             });
 		}
     };

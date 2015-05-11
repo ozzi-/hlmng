@@ -394,6 +394,63 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			}
 		}
 	}).
+	state('event.active.whatsup.news', {
+		url: "/news",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).
+	state('event.active.whatsup.news.list', {
+		url: "/list",
+		views:{
+			"content":{
+				templateUrl: "template/whatsup/news/news-list.html",
+				controller: "NewsListController",
+				controllerAs: 'newsListCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
+	state('event.active.whatsup.news.id', {
+		url: "/{newsId:int}",
+		views:{
+			"content":{
+				templateUrl: "template/whatsup/news/news-detail.html",
+				controller: "NewsIdController",
+				controllerAs: 'newsIdCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
+	state('event.active.whatsup.news.new', {
+		url: "/new",
+		views:{
+			"content":{
+				templateUrl: "template/whatsup/news/news-new.html",
+				controller: "NewsNewController",
+				controllerAs: 'newsNewCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
 	state('event.active.whatsup.social', {
 		url: "/social",
 	    abstract: true,
@@ -418,18 +475,6 @@ myapp.config(function($stateProvider, $urlRouterProvider){
             	templateUrl: "template/nav.html",
             	controller: "NavBarController",
             	controllerAs: "navBarCtrl"
-			}
-		}
-	}).
-	state('event.active.whatsup.news', {
-		url: "/news",
-	    abstract: true,
-		views: {
-			"content":{
-				template: '<div ui-view="content"></div>',
-			},
-			"nav":{
-				template: '<div ui-view="nav"></div>',
 			}
 		}
 	}).

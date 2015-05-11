@@ -1,4 +1,4 @@
-var app = angular.module('hlmngApp',['stateprovider','speaker','event','push','navbar','eventroom','qrcode','eventitem','media','helper','directive','ui.bootstrap']);
+var app = angular.module('hlmngApp',['stateprovider','speaker','event','news','push','navbar','eventroom','qrcode','eventitem','media','helper','directive','ui.bootstrap']);
 var apiUrl = 'https://localhost:8443/hlmng/rest/adm/';
 
 app.service('dataService', function() {

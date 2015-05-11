@@ -1,0 +1,16 @@
+<div ng-hide="edit">
+	<news-info news="newsIdCtrl.news"></news-info><br>
+</div>
+
+<div ng-show="edit">
+	<div class="col-xs-4">
+		<form name="newsInfoEditForm" novalidate>
+			<news-info-edit news="newsIdCtrl.news"></news-info-edit>
+		</form>
+		<button class="btn btn-success" ng-disabled="!newsInfoEditForm.$valid" ng-click="edit=!edit ;newsIdCtrl.putNews(newsIdCtrl.news,newsIdCtrl.news.newsID,'news');">Submit</button>
+	</div>
+</div>
+
+
+<edit-button edit="edit"></edit-button>
+

@@ -1,4 +1,4 @@
-var eventModule = angular.module('push', []);
+var pushModule = angular.module('push', []);
 
 app.controller('PushListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
 	var hlmng = this;
@@ -19,7 +19,7 @@ app.controller('PushNewController', ['$http','RestService','ToolService','$state
 	hlmng.postAndRedir = function() {  
 		hlmng.postPush(hlmng.push,'push').then(function(data){
 			hlmng.push=data;
-			hlmng.redir('/eventactive/'+$stateParams.eventId+'/eventroom/'+hlmng.eventroom.eventRoomID); // TODO change
+			hlmng.redir('/eventactive/'+$stateParams.eventId+'/eventroom/'+hlmng.eventroom.eventRoomID); // TODO change redir, on error show msg.
 		}); 
 	};
 }]);

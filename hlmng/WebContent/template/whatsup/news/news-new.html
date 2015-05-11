@@ -1,0 +1,9 @@
+<div class="col-xs-4">
+	<form name="newsInfoNewForm" novalidate>
+		<news-info-edit news="newsNewCtrl.news"></news-info-edit>
+		<br>
+		<media-upload></media-upload>
+		<br><br>		
+	</form>
+	<button class="btn btn-success" ng-disabled="!newsInfoNewForm.$valid" ng-click="newsNewCtrl.postAndRedir();">Submit</button>
+</div>

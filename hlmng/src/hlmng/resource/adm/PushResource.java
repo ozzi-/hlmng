@@ -3,6 +3,7 @@ package hlmng.resource.adm;
 import gcm.GCM;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
+import hlmng.model.ModelHelper;
 import hlmng.model.Push;
 import hlmng.model.User;
 import hlmng.model.UserActionLimiter;
@@ -77,6 +78,7 @@ public class PushResource  extends Resource{
 		if(!UserActionLimiter.actionsExceeded("pushResource")){
 			List<Object> users = listResource(GenDaoLoader.instance.getUserDao(), false);
 			doGCMSend(element, users);
+			ModelHelper.valuestoString(element);
 			return postResource(pushDao, element);
 		}else{
 			return null;

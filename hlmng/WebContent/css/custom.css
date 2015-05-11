@@ -34,6 +34,13 @@
 }
 
 
+.news-image{
+    max-width: 80px;
+    width: 100%;
+    height: auto;
+}
+
+
 .social-image{
     max-width: 100px;
     width: 100%;

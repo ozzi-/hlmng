@@ -174,6 +174,28 @@ directiveModule.directive('pushInfoEdit', function(){
 	};
 });
 
+directiveModule.directive('newsInfo', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/whatsup/news/news-info.html',
+		scope: {
+			news: "=news"
+		}
+	};
+});
+
+
+directiveModule.directive('newsInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/whatsup/news/news-info-edit.html',
+		scope: {
+			news: "=news"
+		}
+	};
+});
+
+	
 	
 // This code comes from: https://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs
 directiveModule.directive('fileModel', ['$parse', function ($parse) {
