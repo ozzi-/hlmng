@@ -38,7 +38,6 @@ public class GenDao {
 	private long lastUpdateTime=System.currentTimeMillis();
 
 
-
 	public <T> GenDao(Class<T> classTypeP){
 
 		className=classTypeP.getSimpleName();
@@ -231,7 +230,8 @@ public class GenDao {
 
 	/**
 	 * This is used to enable the client the ability to determine if he has to reload the json data or not.
-	 * I wish i could have asked the DB directly, but InnoDB has a bug getting update_time ( https://bugs.mysql.com/bug.php?id=14374 ) and calculating a checksum is way to costly..
+	 * I wish i could have asked the DB directly, but 
+	 * InnoDB has a bug getting update_time ( https://bugs.mysql.com/bug.php?id=14374 ) and calculating a checksum is way to costly..
 	 */
 	public long getLastUpdateTime() {
 		return lastUpdateTime;

@@ -1,7 +1,7 @@
-var eventModule = angular.module('eventroom', []);
+var eventRoomModule = angular.module('eventroom', []);
 
 
-app.controller('EventRoomNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
+eventRoomModule.controller('EventRoomNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
 	var hlmng = this;
 	hlmng.eventroom={}; 
 	hlmng.redir=ToolService.redir;
@@ -15,7 +15,7 @@ app.controller('EventRoomNewController', ['$http','RestService','ToolService','$
 	};
 }]);
 
-app.controller('EventRoomListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
+eventRoomModule.controller('EventRoomListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
 	var hlmng = this;
 	hlmng.eventrooms = [];
 	
@@ -28,7 +28,7 @@ app.controller('EventRoomListController', ['$http','RestService','$stateParams',
 	});
 }]);
 
-app.controller('EventRoomIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
+eventRoomModule.controller('EventRoomIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
 	var hlmng = this;
 	
 	RestService.get($stateParams.eventRoomId,'eventroom').then(function(data){

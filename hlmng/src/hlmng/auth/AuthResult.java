@@ -1,6 +1,9 @@
 package hlmng.auth;
 
-
+/**
+ * POD: AuthResult consists of a boolean stating if the user is 
+ * authorized and a http error code according to what went wrong.
+ */
 public class AuthResult {
 	private boolean authorized;
 	private int responseCode;

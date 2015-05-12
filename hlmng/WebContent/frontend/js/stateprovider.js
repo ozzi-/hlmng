@@ -537,5 +537,50 @@ myapp.config(function($stateProvider, $urlRouterProvider){
             	controllerAs: "navBarCtrl"
 			}
 		}
+	}).
+	// ******
+	// VOTING
+	// ******
+	state('event.active.voting', {
+		url: "/voting",
+	    abstract: true,
+		views: {
+			"content":{
+				template: '<div ui-view="content"></div>',
+			},
+			"nav":{
+				template: '<div ui-view="nav"></div>',
+			}
+		}
+	}).	
+	state('event.active.voting.list', {
+		url: "/list",
+		views:{
+			"content":{
+				templateUrl: "template/voting/voting-list.html",
+				controller: "VotingListController",
+				controllerAs: 'votingListCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
+	}).
+	state('event.active.voting.new', {
+		url: "/new",
+		views:{
+			"content":{
+				templateUrl: "template/voting/voting-new.html",
+				controller: "VotingNewController",
+				controllerAs: 'votingNewCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	});
 });

@@ -19,7 +19,6 @@ public class QrCodeDao extends GenDao {
 		super(classTypeP);
 	}
 	
-	
 	public QrCode getQrCodeByPayload(String payload) {
 		QrCode element = null;
 		try (Connection dbConnection = getDBConnection()){

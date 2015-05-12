@@ -17,6 +17,10 @@
 }
 
 
+.nav-border {
+    border: 2px solid #AB3232;
+    margin-right:5px;
+}
 
 .slider-image{
   max-height:50%;

@@ -1,20 +1,19 @@
 package testing;
 
-import static org.junit.Assert.*;
-
-import java.util.Properties;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
 import hlmng.model.EventItem;
 import hlmng.model.EventRoom;
 import hlmng.model.Media;
-import hlmng.model.Presentation;
 import hlmng.model.Slider;
 import hlmng.model.User;
 import hlmng.model.Vote;
 import hlmng.model.Voting;
+
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,39 +45,36 @@ public class DaoTest {
 		votingDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 		voteDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 		sliderDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
-		presentationDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 	}
 	
 	@Test
 	public void testLastUpdateTimeNoChange(){
-		long t1= presentationDao.getLastUpdateTime();
+		long t1= eventDao.getLastUpdateTime();
 		
 		assertTrue(System.currentTimeMillis()-t1<10000);
-		presentationDao.listElements(true);
+		eventDao.listElements(true);
 		
-		long t2= presentationDao.getLastUpdateTime();
+		long t2= eventDao.getLastUpdateTime();
 		
 		assertTrue(t1==t2);
 	}
 	
 	@Test
 	public void testLastUpdateTimeChange(){
-		long t1= presentationDao.getLastUpdateTime();
-		Presentation presentation = new Presentation("TEST","TEST","TEST","00:10:10");
-		int presentationid = presentationDao.addElement(presentation);
-		presentationDao.deleteElement(presentationid);
+		long t1= eventDao.getLastUpdateTime();
+		Event event = new Event("event", "desc", "2015-05-05", "2015-05-05", false);
+		int eventid = eventDao.addElement(event);
+		eventDao.deleteElement(eventid);
 		
-		long t2= presentationDao.getLastUpdateTime();
+		long t2= eventDao.getLastUpdateTime();
 		assertFalse(t1==t2);
 	}
 	
 	@Test
 	public void testVotingRelations(){
 		
-		Presentation presentation = new Presentation("TEST","TEST","TEST","00:10:10");
-		int presentationid = presentationDao.addElement(presentation);
 		
-		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, presentationid, 1);
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, 1);
 		int votingid = votingDao.addElement(voting);
 		
 		Slider slider = new Slider("TEST", 1, votingid);
@@ -91,7 +87,6 @@ public class DaoTest {
 		assertTrue(voteDao.deleteElement(voteid));
 		assertTrue(sliderDao.deleteElement(sliderid));
 		assertTrue(votingDao.deleteElement(votingid));
-		assertTrue(presentationDao.deleteElement(presentationid));
 	}
 	
 	@Test
@@ -126,18 +121,13 @@ public class DaoTest {
 	}	
 	@Test
 	 public void testNewVoting(){
-		boolean votingCreate =testDaoGenericAdd(new Voting("name", 10, "undef", 10, "00:05:00", "undef", 1, 1, 1), votingDao);
+		boolean votingCreate =testDaoGenericAdd(new Voting("name", 10, "undef", 10, "00:05:00", "undef", 1, 1), votingDao);
 		assertTrue(votingCreate);
 	}	
 	@Test
 	 public void testNewSlider(){
 		boolean sliderCreate =testDaoGenericAdd(new Slider("name", 10, 1), sliderDao);
 		assertTrue(sliderCreate);
-	}	
-	@Test
-	 public void testNewPresentation(){
-		boolean presentationCreate =testDaoGenericAdd(new Presentation("name", "name", "2015-05-05", "00:05:03"), presentationDao);
-		assertTrue(presentationCreate);
 	}	
 	
 	public boolean testDaoGenericAdd(Object element, GenDao dao){
@@ -146,6 +136,9 @@ public class DaoTest {
 		int elementCountAfterAdd=dao.listElements(false).size();
 		dao.deleteElement(elementID);
 		int elementCountAfterRemove=dao.listElements(false).size();
+		System.out.println("Count before:"+elementCountBeforeAdd);
+		System.out.println("Count after added one element:"+elementCountAfterAdd);
+		System.out.println("Count after deleted one element:"+elementCountAfterRemove);
 		return (elementCountAfterAdd==elementCountBeforeAdd+1 && elementCountBeforeAdd==elementCountAfterRemove);
 	}
 	@Test 

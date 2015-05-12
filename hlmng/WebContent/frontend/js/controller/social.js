@@ -1,4 +1,6 @@
-app.controller('SocialListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
+var socialModule = angular.module('social', []);
+
+socialModule.controller('SocialListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
 	var hlmng = this;
 	hlmng.socials = [];  // contains all
 	hlmng.socialsAccepted = [];
@@ -61,7 +63,7 @@ app.controller('SocialListController', ['$http','RestService','$stateParams', fu
 }]);
 
 
-app.controller('SocialIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
+socialModule.controller('SocialIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
 	var hlmng = this;
 	
 	hlmng.social = {};	

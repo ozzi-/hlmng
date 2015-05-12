@@ -2,6 +2,7 @@
 	<a href="#/" class="navbar-brand">
 		<img src="img/logo.png" alt="Hacking-Lab Logo" class="navbar-logo" />
 	</a>
+	<span style="float:right; padding-top:20px; padding-right:20px;"><a ng-href="../../logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Logout</a></span>
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
@@ -14,7 +15,7 @@
 		<div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
 			<!--  Main (same for mobile and desktop) -->
 			<ul ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
-		      	<li ng-repeat="nav in navBarCtrl.navMainContent" ui-sref-active="active"><a ui-sref="{{nav.state}}">{{nav.label}}</a><br></li>
+		      	<li ng-repeat="nav in navBarCtrl.navMainContent" ui-sref-active="active"><a class="nav-border" ui-sref="{{nav.state}}">{{nav.label}}</a><br></li>
 	      	</ul>
 	      	<!-- Event Active -->
 	      	<div ng-show="navBarCtrl.checkEventActive()">

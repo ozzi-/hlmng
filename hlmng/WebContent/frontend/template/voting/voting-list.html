@@ -1,0 +1,5 @@
+<label>Search for Voting: <input ng-model="search"></label><hr>
+<span ng-repeat="voting in votingListCtrl.votings  | filter:search:strict">
+	<voting-info voting="voting"></voting-info><br><hr>
+</span>
+<nothing-here-yet list="votingListCtrl.votings"></nothing-here-yet>

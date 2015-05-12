@@ -1,7 +1,7 @@
-var eventModule = angular.module('eventitem', []);
+var eventItemModule = angular.module('eventitem', []);
 
 
-app.controller('EventItemNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
+eventItemModule.controller('EventItemNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
 	var hlmng = this;
 	hlmng.eventitem={}; 
 	hlmng.redir=ToolService.redir;
@@ -15,7 +15,7 @@ app.controller('EventItemNewController', ['$http','RestService','ToolService','$
 	};
 }]);
 
-app.controller('EventItemListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
+eventItemModule.controller('EventItemListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
 	var hlmng = this;
 	hlmng.eventitems = [];
 	
@@ -28,7 +28,7 @@ app.controller('EventItemListController', ['$http','RestService','$stateParams',
 	});
 }]);
 
-app.controller('EventItemIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
+eventItemModule.controller('EventItemIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
 	var hlmng = this;
 	
 	RestService.get($stateParams.eventItemId,'eventitem').then(function(data){

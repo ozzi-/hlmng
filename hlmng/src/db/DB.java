@@ -111,7 +111,8 @@ public class DB {
 		String className= classType.getSimpleName();
 		String classID = className.toLowerCase()+"ID";	
 		for (Field field : classType.getDeclaredFields()) {
-			if(!classID.toLowerCase().equals(field.getName().toLowerCase())&& !(dontMapFields.contains(field.getName()))){ // ID is set by DB, others injected
+			// ID is set by DB, others injected
+			if(!classID.toLowerCase().equals(field.getName().toLowerCase())&& !(dontMapFields.contains(field.getName()))){ 
 				try {
 					propertyDescriptor = new PropertyDescriptor(field.getName(), classType);
 					Method method = propertyDescriptor.getReadMethod();

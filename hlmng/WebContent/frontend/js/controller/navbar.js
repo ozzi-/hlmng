@@ -1,6 +1,6 @@
-var eventModule = angular.module('navbar', []);
+var navbarModule = angular.module('navbar', []);
 
-app.controller('NavBarController', ['$http','$state','$location','RestService','$stateParams', function($http,$state,$location,RestService,$stateParams){	
+navbarModule.controller('NavBarController', ['$http','$state','$location','RestService','$stateParams', function($http,$state,$location,RestService,$stateParams){	
 	var hlmng = this;
 	hlmng.eventName={};
 
@@ -23,7 +23,6 @@ app.controller('NavBarController', ['$http','$state','$location','RestService','
 	    },{
 	       	label: 'New Push',
 	       	state: 'push.new'
-		      
 	    }];
 	
 	hlmng.navEventActiveContent = 

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * GCM stands for Google Cloud Messaging. We are using GCM to inform the Mobile Apps about new changes.
  *  * @see <a href="https://developer.android.com/google/gcm/index.html">https://developer.android.com/google/gcm/index.html</a>
- *  Disclaimer: Parts of the following class (in edited form) is from the following url: http://hmkcode.com/send-http-post-request-from-java-application-to-google-messaging-service/
+ *  Parts of the following class (in edited form) is from the following url: http://hmkcode.com/send-http-post-request-from-java-application-to-google-messaging-service/
  */
 public class GCM {
 

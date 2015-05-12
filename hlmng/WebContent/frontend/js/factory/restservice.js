@@ -21,7 +21,8 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
     		});
         },
     	get: function (objId,className) {
-            var deferred = $q.defer(); // we need the q lib -> deferred because else the view would receive the data too late
+    		 // we need the q lib -> deferred because else the view would receive the data "too late"
+            var deferred = $q.defer();
             $http({ method: "GET", url: apiUrl+className+'/'+objId })
             .success(function (data) {
 				$log.log('get '+className+' successfully, ID='+objId);
@@ -33,7 +34,7 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
             return deferred.promise;
 		},
     	list: function (className) {
-            var deferred = $q.defer(); // we need the q lib -> deferred because else the view would receive the data too late
+            var deferred = $q.defer();
             $http({ method: "GET", url: apiUrl+className })
             .success(function (data) {
 				$log.log('list '+className+' successfully');

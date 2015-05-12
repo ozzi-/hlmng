@@ -195,6 +195,26 @@ directiveModule.directive('newsInfoEdit', function(){
 	};
 });
 
+directiveModule.directive('votingInfo', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/voting/voting-info.html',
+		scope: {
+			voting: "=voting"
+		}
+	};
+});
+
+directiveModule.directive('votingInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/voting/voting-info-edit.html',
+		scope: {
+			voting: "=voting"
+		}
+	};
+});
+
 	
 	
 // This code comes from: https://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs

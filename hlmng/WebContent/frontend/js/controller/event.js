@@ -1,7 +1,7 @@
 var eventModule = angular.module('event', []);
 
 
-app.controller('EventNewController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
+eventModule.controller('EventNewController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
 	var hlmng = this;
 	hlmng.event={};
 	hlmng.postEvent = RestService.post;
@@ -16,7 +16,7 @@ app.controller('EventNewController', ['$http','RestService','ToolService', funct
 
 
 
-app.controller('EventOverviewController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
+eventModule.controller('EventOverviewController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
 	var hlmng = this;
 	hlmng.eventroomsCount = 0;
 	hlmng.eventitemsCount = 0;
@@ -39,7 +39,7 @@ app.controller('EventOverviewController', ['$http','$stateParams','RestService',
 
 }]);
 
-app.controller('EventIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
+eventModule.controller('EventIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
 	var hlmng = this;
 	hlmng.form = {};
 	
@@ -50,7 +50,7 @@ app.controller('EventIdController', ['$http','$stateParams','RestService', funct
 	hlmng.putEvent = RestService.put;
 }]);
 
-app.controller('EventListController', ['$http','RestService', function($http,RestService){
+eventModule.controller('EventListController', ['$http','RestService', function($http,RestService){
 	var hlmng = this;
 	hlmng.eventsUpcoming = [];
 	hlmng.eventsRunning = [];

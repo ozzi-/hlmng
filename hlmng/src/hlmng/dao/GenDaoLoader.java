@@ -5,7 +5,6 @@ import hlmng.model.EventItem;
 import hlmng.model.EventRoom;
 import hlmng.model.Media;
 import hlmng.model.News;
-import hlmng.model.Presentation;
 import hlmng.model.Push;
 import hlmng.model.QrCode;
 import hlmng.model.Slider;
@@ -42,7 +41,6 @@ public enum GenDaoLoader {
 		eventRoomDao= new GenDao(EventRoom.class);
 		mediaDao= new GenDao(Media.class);
 		newsDao=new GenDao(News.class);
-		presentationDao= new GenDao(Presentation.class);
 		pushDao=new GenDao(Push.class);
 		qrCodeDao=new QrCodeDao(QrCode.class);
 		sliderDao=new GenDao(Slider.class);

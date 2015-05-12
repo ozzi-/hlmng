@@ -1,7 +1,7 @@
 var speakerModule = angular.module('speaker', []);
 
 
-app.controller('SpeakerNewController', ['$http','RestService','ToolService','dataService', function($http,RestService,ToolService,dataService){
+speakerModule.controller('SpeakerNewController', ['$http','RestService','ToolService','dataService', function($http,RestService,ToolService,dataService){
 	var hlmng = this;
 	hlmng.speaker={};
 	hlmng.media={};
@@ -17,7 +17,7 @@ app.controller('SpeakerNewController', ['$http','RestService','ToolService','dat
 	};
 }]);
 
-app.controller('SpeakerListController', ['$http','RestService', function($http,RestService){
+speakerModule.controller('SpeakerListController', ['$http','RestService', function($http,RestService){
 	var hlmng = this;
 	hlmng.speakers = [];
 	
@@ -27,7 +27,7 @@ app.controller('SpeakerListController', ['$http','RestService', function($http,R
 }]);
 
 
-app.controller('SpeakerIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
+speakerModule.controller('SpeakerIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
 	var hlmng = this;
 	
 	hlmng.speaker = {};	

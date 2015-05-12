@@ -1,7 +1,7 @@
-var mediaModule = angular.module('helper', []);
+var helperModule = angular.module('helper', []);
 
 
-mediaModule.directive('editButton', function(){
+helperModule.directive('editButton', function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'template/helper/edit-button.html',
@@ -12,7 +12,7 @@ mediaModule.directive('editButton', function(){
 });
 
 
-mediaModule.directive('nothingHereYet', function(){
+helperModule.directive('nothingHereYet', function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'template/helper/nothing-here-yet.html',

@@ -1,6 +1,5 @@
 var app = angular.module('hlmngSliderApp',['stateprovider','ui.bootstrap','ui.router']);
-var apiUrl = 'https://localhost:8443/hlmng/rest/adm/';
-
+var apiUrl = '../rest/adm/';
 
 var myapp = angular.module('stateprovider', ["ui.router"]); 
 myapp.config(function($stateProvider, $urlRouterProvider){
@@ -44,7 +43,6 @@ app.controller('SliderController', ['$http','$stateParams','RestService','$scope
 	};
 
 	var promise = $interval(refreshData, $stateParams.updateinterval);
-
 	// Cancel interval on page changes
 	$scope.$on('$destroy', function(){
 	    if (angular.isDefined(promise)) {

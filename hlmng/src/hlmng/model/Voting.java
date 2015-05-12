@@ -10,7 +10,6 @@ public class Voting {
 	private String votingDuration;
 	private String arethmeticMode;
 	private int round;
-	private int presentationIDFK;
 	private int eventIDFK;
 
 	  
@@ -21,7 +20,7 @@ public class Voting {
 	public Voting(){
 	
 	}
-	public Voting(int votingID, String name, int juryCount, String status, int sliderMaxValue, String votingStarted, String votingDuration, String arethmeticMode, int round, int presentationIDFK, int eventIDFK){
+	public Voting(int votingID, String name, int juryCount, String status, int sliderMaxValue, String votingStarted, String votingDuration, String arethmeticMode, int round, int eventIDFK){
 		this.votingID=votingID;
 		this.name=name;
 		this.juryCount=juryCount;
@@ -31,10 +30,9 @@ public class Voting {
 		this.votingDuration=votingDuration;
 		this.arethmeticMode=arethmeticMode;
 		this.round=round;
-		this.presentationIDFK=presentationIDFK;
 		this.eventIDFK=eventIDFK;
 	}
-	public Voting(String name, int juryCount, String status, int sliderMaxValue, String votingDuration, String arethmeticMode, int round, int presentationIDFK, int eventIDFK){
+	public Voting(String name, int juryCount, String status, int sliderMaxValue, String votingDuration, String arethmeticMode, int round, int eventIDFK){
 		this.name=name;
 		this.juryCount=juryCount;
 		this.status=status;
@@ -42,7 +40,6 @@ public class Voting {
 		this.votingDuration=votingDuration;
 		this.arethmeticMode=arethmeticMode;
 		this.round=round;
-		this.presentationIDFK=presentationIDFK;
 		this.eventIDFK=eventIDFK;
 	}
 
@@ -81,12 +78,6 @@ public class Voting {
 	}
 	public void setRound(int round) {
 		this.round = round;
-	}
-	public int getPresentationIDFK() {
-		return presentationIDFK;
-	}
-	public void setPresentationIDFK(int presentationIDFK) {
-		this.presentationIDFK = presentationIDFK;
 	}
 	public int getEventIDFK() {
 		return eventIDFK;

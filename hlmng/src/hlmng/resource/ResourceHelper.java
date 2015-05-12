@@ -18,6 +18,7 @@ import javax.ws.rs.core.UriInfo;
 
 import log.Log;
 import settings.HLMNGSettings;
+import settings.HTTPCodes;
 
 public class ResourceHelper {
 	
@@ -25,7 +26,7 @@ public class ResourceHelper {
 
 	
 	public static String getSecret(){
-	    return new BigInteger(HLMNGSettings.secretStrengthInBit, randomGen).toString(32);
+	    return new BigInteger(HLMNGSettings.qrcodeSecretStrengthInBit, randomGen).toString(32);
 	}
 
 	/**
@@ -36,7 +37,7 @@ public class ResourceHelper {
 		if(ok){
 			return Response.ok().build();			
 		}else{
-			return Response.status(400).build();
+			return Response.status(HTTPCodes.badRequest).build();
 		}
 	}
 	
@@ -44,13 +45,13 @@ public class ResourceHelper {
 		if(ok){
 			return Response.ok().build();			
 		}else{
-			return Response.status(404).build();
+			return Response.status(HTTPCodes.notFound).build();
 		}
 	}
 	
 	static boolean sendErrorIfNull(Object obj,HttpServletResponse response) throws IOException {
 		if(obj==null){
-		    response.sendError(404);
+		    response.sendError(HTTPCodes.notFound);
 		    return true;
 		}
 		return false;
@@ -81,10 +82,8 @@ public class ResourceHelper {
 	}
 	
 	
-
-	
 	public static void setMediaURLPath(UriInfo uri, Media media) {
-		media.setLink(uri.getBaseUri().toString() +HLMNGSettings.pubURL.substring(1) +"/media/"
+		media.setLink(HLMNGSettings.restAppPath+"/"+HLMNGSettings.pubURL.substring(1) +"/media/"
 				+ media.getType() + "/" + media.getLink());
 	}
 }

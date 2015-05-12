@@ -5,7 +5,6 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
 import hlmng.model.ModelHelper;
-import hlmng.model.Presentation;
 import hlmng.model.Slider;
 import hlmng.model.User;
 import hlmng.model.Vote;
@@ -43,7 +42,6 @@ public class RestTest {
 	GenDao voteDao = GenDaoLoader.instance.getVoteDao();
 	GenDao votingDao = GenDaoLoader.instance.getVotingDao();
 	GenDao sliderDao = GenDaoLoader.instance.getSliderDao();
-	GenDao presentationDao = GenDaoLoader.instance.getPresentationDao();
 	
 
 	@Before
@@ -57,7 +55,6 @@ public class RestTest {
 		voteDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		votingDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		sliderDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
-		presentationDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 	}
 
 	
@@ -66,11 +63,8 @@ public class RestTest {
 		cleanUpTestUsers();
 		User user = new User("testusername", "1234test1234", "4321test");
 		int userid  = userDao.addElement(user);
-		
-		Presentation presentation = new Presentation("presentation", "teamname", "2015-05-05", "00:30:00");
-		int presentationid = presentationDao.addElement(presentation);
-		
-		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, presentationid, 1);
+			
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, 1);
 		int votingid = votingDao.addElement(voting);
 		
 		Slider slider = new Slider("TEST", 1, votingid);
@@ -94,7 +88,6 @@ public class RestTest {
 		assertTrue(voteDao.deleteElement(vote.getVoteID()));
 		assertTrue(sliderDao.deleteElement(sliderid));
 		assertTrue(votingDao.deleteElement(votingid));
-		assertTrue(presentationDao.deleteElement(presentationid));
 		assertTrue(userDao.deleteElement(userid));
 	}
 
@@ -116,11 +109,8 @@ public class RestTest {
 		
 		User user = new User("name", "1234", "4321");
 		int userid  = userDao.addElement(user);
-	
-		Presentation presentation = new Presentation("presentation", "teamname", "2015-05-05", "00:30:00");
-		int presentationid = presentationDao.addElement(presentation);
-		
-		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, presentationid, 1);
+			
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, 1);
 		int votingid = votingDao.addElement(voting);
 		
 		Slider slider = new Slider("TEST", 1, votingid);
@@ -141,7 +131,6 @@ public class RestTest {
 		
 		assertTrue(sliderDao.deleteElement(sliderid));
 		assertTrue(votingDao.deleteElement(votingid));
-		assertTrue(presentationDao.deleteElement(presentationid));
 		assertTrue(userDao.deleteElement(userid));
 	}
 

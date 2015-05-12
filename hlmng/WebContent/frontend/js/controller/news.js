@@ -1,6 +1,6 @@
 var newsModule = angular.module('news', []);
 
-app.controller('NewsListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
+newsModule.controller('NewsListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
 	var hlmng = this;
 	hlmng.newsList = [];
 	
@@ -11,7 +11,7 @@ app.controller('NewsListController', ['$http','RestService','$stateParams', func
 	});
 }]);
 
-app.controller('NewsNewController', ['$http','RestService','ToolService','$stateParams','dataService', function($http,RestService,ToolService,$stateParams,dataService){
+newsModule.controller('NewsNewController', ['$http','RestService','ToolService','$stateParams','dataService', function($http,RestService,ToolService,$stateParams,dataService){
 	var hlmng = this;
 	hlmng.news={}; 
 	hlmng.media={};
@@ -28,7 +28,7 @@ app.controller('NewsNewController', ['$http','RestService','ToolService','$state
 	};
 }]);
 
-app.controller('NewsIdController', ['$http','$state','$stateParams','RestService','ToolService', function($http,$state, $stateParams,RestService,ToolService){
+newsModule.controller('NewsIdController', ['$http','$state','$stateParams','RestService','ToolService', function($http,$state, $stateParams,RestService,ToolService){
 	var hlmng = this;
 	
 	hlmng.news = {};	

@@ -1,7 +1,7 @@
-var eventModule = angular.module('qrcode', []);
+var qrCodeModule = angular.module('qrcode', []);
 
 
-app.controller('QrcodeNewController', ['$http','$stateParams','RestService','ToolService','dataService', function($http,$stateParams,RestService,ToolService,dataService){
+qrCodeModule.controller('QrcodeNewController', ['$http','$stateParams','RestService','ToolService','dataService', function($http,$stateParams,RestService,ToolService,dataService){
 	var hlmng = this;
 	hlmng.qrcode={};
 	hlmng.count=1;
@@ -25,7 +25,7 @@ app.controller('QrcodeNewController', ['$http','$stateParams','RestService','Too
 }]);
 
 
-app.controller('QrcodeIdController', ['$http','$state','$stateParams','RestService','ToolService', function($http,$state, $stateParams,RestService,ToolService){
+qrCodeModule.controller('QrcodeIdController', ['$http','$state','$stateParams','RestService','ToolService', function($http,$state, $stateParams,RestService,ToolService){
 	var hlmng = this;
 	
 	hlmng.qrcode = {};	
@@ -41,7 +41,7 @@ app.controller('QrcodeIdController', ['$http','$state','$stateParams','RestServi
 
 
 
-app.controller('QrcodeListController', ['$http','RestService','$state','$stateParams', function($http,RestService,$state,$stateParams){
+qrCodeModule.controller('QrcodeListController', ['$http','RestService','$state','$stateParams', function($http,RestService,$state,$stateParams){
 	var hlmng = this;
 	hlmng.qrcodes = [];
 	hlmng.apiUrl = apiUrl;

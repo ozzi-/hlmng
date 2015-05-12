@@ -1,6 +1,6 @@
 var pushModule = angular.module('push', []);
 
-app.controller('PushListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
+pushModule.controller('PushListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
 	var hlmng = this;
 	hlmng.pushes = [];
 	
@@ -11,7 +11,7 @@ app.controller('PushListController', ['$http','RestService','$stateParams', func
 	});
 }]);
 
-app.controller('PushNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
+pushModule.controller('PushNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
 	var hlmng = this;
 	hlmng.push={}; 
 	hlmng.redir=ToolService.redir;

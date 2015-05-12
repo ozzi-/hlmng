@@ -1,7 +1,5 @@
 package settings;
 
-
-
 public class HTTPCodes {
 	public static final int ok=200;
 	public static final int badRequest=400;

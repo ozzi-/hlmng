@@ -1,7 +1,7 @@
 var mediaModule = angular.module('media', []);
 
 
-app.controller('MediaController', ['$scope', 'ToolService','$log','dataService', function($scope, ToolService,$log,dataService){
+mediaModule.controller('MediaController', ['$scope', 'ToolService','$log','dataService', function($scope, ToolService,$log,dataService){
 	var hlmng = this;
 	$scope.uploadedMediaLink={};
 	$scope.uploadedMediaID={};
