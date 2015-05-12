@@ -1,8 +1,8 @@
-app.factory('ToolService', ['$location','$log','$http','$q' , function ($location,$log,$http,$q){
+app.factory('ToolService', ['$location','$state','$log','$http','$q' , function ($location,$state,$log,$http,$q){
 	return {
-		redir: function(path){
-			$log.log("Redirecting to: "+path);
-			$location.path(path);
+		redir: function(state,params){
+			$log.log("Redirecting to state: "+state+" with params: "+params.toSource());
+			$state.go(state,params);
 		},
 		uploadFile: function(file){
 			var deferred = $q.defer();
@@ -24,3 +24,5 @@ app.factory('ToolService', ['$location','$log','$http','$q' , function ($locatio
 		}
 	};
 }]);
+
+

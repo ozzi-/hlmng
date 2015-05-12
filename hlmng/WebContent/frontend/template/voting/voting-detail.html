@@ -1,0 +1,16 @@
+<div ng-hide="edit">
+	<voting-info voting="votingIdCtrl.voting"></voting-info><br>
+</div>
+
+<div ng-show="edit">
+	<div class="col-xs-4">
+		<form name="votingInfoEditForm" novalidate>
+			<voting-info-edit voting="votingIdCtrl.voting"></voting-info-edit>
+		</form>
+		<button class="btn btn-success" ng-disabled="!votingInfoEditForm.$valid" ng-click="edit=!edit ;votingIdCtrl.putQrcode(votingIdCtrl.voting,votingIdCtrl.voting.votingID,'voting');">Submit</button>
+	</div>
+</div>
+
+
+<edit-button edit="edit"></edit-button>
+

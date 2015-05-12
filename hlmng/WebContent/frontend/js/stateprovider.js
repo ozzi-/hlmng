@@ -582,5 +582,20 @@ myapp.config(function($stateProvider, $urlRouterProvider){
             	controllerAs: "navBarCtrl"
 			}
 		}
+	}).
+	state('event.active.voting.id', {
+		url: "/{votingId:int}",
+		views:{
+			"content":{
+				templateUrl: "template/voting/voting-detail.html",
+				controller: "VotingIdController",
+				controllerAs: 'votingIdCtrl'
+			},
+			"nav":{
+            	templateUrl: "template/nav.html",
+            	controller: "NavBarController",
+            	controllerAs: "navBarCtrl"
+			}
+		}
 	});
 });

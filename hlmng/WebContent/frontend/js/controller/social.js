@@ -73,6 +73,5 @@ socialModule.controller('SocialIdController', ['$http','$stateParams','RestServi
 
 	hlmng.putSocial = RestService.put;
 	hlmng.deleteSocial = RestService.del;
-	hlmng.redir=ToolService.redir;
 }]);
 

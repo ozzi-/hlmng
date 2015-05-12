@@ -6,7 +6,7 @@ var app = angular.module('hlmngApp',['stateprovider','speaker','event','voting',
 var apiUrl = '../rest/adm/';
 
 app.service('dataService', function() {
-  var _dataObj = {};
+  var _dataObj = 0;
   this.dataObj = _dataObj;
 });
 

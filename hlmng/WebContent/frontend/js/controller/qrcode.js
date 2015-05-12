@@ -6,7 +6,6 @@ qrCodeModule.controller('QrcodeNewController', ['$http','$stateParams','RestServ
 	hlmng.qrcode={};
 	hlmng.count=1;
 	hlmng.postQrcode = RestService.post;
-	hlmng.redir=ToolService.redir;
 	hlmng.postAndRedir = function() {
 		var asynci = 0;
 		hlmng.qrcode.eventIDFK=$stateParams.eventId;
@@ -15,9 +14,9 @@ qrCodeModule.controller('QrcodeNewController', ['$http','$stateParams','RestServ
 				hlmng.qrcode=data;
 				asynci ++;
 				if(hlmng.count===1){
-					hlmng.redir('/event/active/'+$stateParams.eventId+'/qrcode/'+hlmng.qrcode.qrcodeID);			
+					ToolService.redir('event.active.qrcode.id',{eventId: $stateParams.eventId, qrcodeId: hlmng.qrcode.qrcodeID});			
 				}else if(asynci===hlmng.count){
-					hlmng.redir('/event/active/'+$stateParams.eventId+'/qrcode/list');			
+					ToolService.redir('event.active.qrcode.list',{eventId: $stateParams.eventId});			
 				}
 			});
 		}
@@ -36,7 +35,7 @@ qrCodeModule.controller('QrcodeIdController', ['$http','$state','$stateParams','
 	
 	hlmng.putQrcode = RestService.put;
 	hlmng.deleteQrcode = RestService.del;
-	hlmng.redir=ToolService.redir;
+
 }]);
 
 

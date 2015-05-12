@@ -1,5 +1,33 @@
 <label>Search for Voting: <input ng-model="search"></label><hr>
-<span ng-repeat="voting in votingListCtrl.votings  | filter:search:strict">
-	<voting-info voting="voting"></voting-info><br><hr>
+<h1>Upcoming Votings</h1>
+<span ng-repeat="voting in votingListCtrl.votingsUpcomingPrePresentation  | filter:search:strict">
+	<voting-info voting="voting"></voting-info><br>
+	<button ng-click="votingListCtrl.startPresentation(voting);" class="btn btn-info">Start Presentation</button>
+	<br><br>
 </span>
-<nothing-here-yet list="votingListCtrl.votings"></nothing-here-yet>
+<span ng-repeat="voting in votingListCtrl.votingsUpcomingPresentation  | filter:search:strict">
+	<voting-info voting="voting"></voting-info><br>
+	<button ng-click="votingListCtrl.endPresentation(voting);" class="btn btn-warning">End Presentation</button>
+	<br><br>
+</span>
+<span ng-repeat="voting in votingListCtrl.votingsUpcomingEndPresentation  | filter:search:strict">
+	<voting-info voting="voting"></voting-info><br>
+	<button ng-click="votingListCtrl.startVoting(voting);" class="btn btn-success">Start Voting</button>
+</span>
+<!--   TODO 3 lists -> all 3 empty -> then show nothing here <nothing-here-yet list="votingListCtrl.votingsUpcoming"></nothing-here-yet>-->
+<br><br>
+<h1>Running Votings</h1>
+<span ng-repeat="voting in votingListCtrl.votingsRunning  | filter:search:strict">
+	<voting-info voting="voting"></voting-info><br>
+	<button ng-click="votingListCtrl.stopVoting(voting);" class="btn btn-danger">Stop Voting</button>
+	<br><br>
+</span>
+<nothing-here-yet list="votingListCtrl.votingsRunning"></nothing-here-yet>
+<br><br>
+<h1>Finished Votings</h1>
+<span ng-repeat="voting in votingListCtrl.votingsFinished  | filter:search:strict">
+	<voting-info voting="voting"></voting-info><br>
+	<br><br>
+</span>
+<nothing-here-yet list="votingListCtrl.votingsFinished"></nothing-here-yet>
+<br><br>

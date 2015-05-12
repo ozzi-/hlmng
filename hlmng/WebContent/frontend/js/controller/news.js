@@ -15,7 +15,6 @@ newsModule.controller('NewsNewController', ['$http','RestService','ToolService',
 	var hlmng = this;
 	hlmng.news={}; 
 	hlmng.media={};
-	hlmng.redir=ToolService.redir;
 	hlmng.postNews = RestService.post;
 	hlmng.postAndRedir = function() {  
 		hlmng.news.eventIDFK=$stateParams.eventId;
@@ -23,7 +22,7 @@ newsModule.controller('NewsNewController', ['$http','RestService','ToolService',
 		dataService.dataObj=0;
 		hlmng.postNews(hlmng.news,'news').then(function(data){
 			hlmng.news=data;
-			//hlmng.redir('/eventactive/'+$stateParams.eventId+'/eventroom/'+hlmng.eventroom.eventRoomID); // TODO change redir, on error show msg.
+			ToolService.redir('event.active.news.id',{eventId: $stateParams.eventId, newsId: hlmng.news.newsID});
 		}); 
 	};
 }]);
@@ -38,6 +37,5 @@ newsModule.controller('NewsIdController', ['$http','$state','$stateParams','Rest
 	
 	hlmng.putNews = RestService.put;
 	hlmng.deleteNews = RestService.del;
-	hlmng.redir=ToolService.redir;
 }]);
 

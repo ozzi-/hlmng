@@ -5,11 +5,10 @@ eventModule.controller('EventNewController', ['$http','RestService','ToolService
 	var hlmng = this;
 	hlmng.event={};
 	hlmng.postEvent = RestService.post;
-	hlmng.redir=ToolService.redir;
 	hlmng.postAndRedir = function() {  
 		hlmng.postEvent(hlmng.event,'event').then(function(data){
 			hlmng.event=data;
-			hlmng.redir('/eventactive/'+hlmng.event.eventID+"/");
+			ToolService.redir('event.active.overview',{eventId:hlmng.event.eventID});
 		});
 	};
 }]);

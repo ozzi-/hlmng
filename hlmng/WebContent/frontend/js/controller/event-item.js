@@ -4,13 +4,13 @@ var eventItemModule = angular.module('eventitem', []);
 eventItemModule.controller('EventItemNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
 	var hlmng = this;
 	hlmng.eventitem={}; 
-	hlmng.redir=ToolService.redir;
 	hlmng.postEventItem = RestService.post;
 	hlmng.postAndRedir = function() {  
 		hlmng.eventitem.eventIDFK=$stateParams.eventId;
 		hlmng.postEventItem(hlmng.eventitem,'eventitem').then(function(data){
 			hlmng.eventitem=data;
-			hlmng.redir('/eventactive/'+$stateParams.eventId+'/eventitem/'+hlmng.eventitem.eventItemID);
+			alert(hlmng.eventitem.toSource());
+			ToolService.redir('event.active.eventitem.id',{eventId:$stateParams.eventId, eventItemId: hlmng.eventitem.eventItemID});
 		});
 	};
 }]);

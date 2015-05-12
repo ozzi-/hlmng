@@ -4,13 +4,12 @@ var eventRoomModule = angular.module('eventroom', []);
 eventRoomModule.controller('EventRoomNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
 	var hlmng = this;
 	hlmng.eventroom={}; 
-	hlmng.redir=ToolService.redir;
 	hlmng.postEventRoom = RestService.post;
 	hlmng.postAndRedir = function() {  
 		hlmng.eventroom.eventIDFK=$stateParams.eventId;
 		hlmng.postEventRoom(hlmng.eventroom,'eventroom').then(function(data){
 			hlmng.eventroom=data;
-			hlmng.redir('/eventactive/'+$stateParams.eventId+'/eventroom/'+hlmng.eventroom.eventRoomID);
+			ToolService.redir('event.active.eventroom.id',{eventId: $stateParams.eventId, eventRoomId: hlmng.eventroom.eventRoomID});
 		});
 	};
 }]);

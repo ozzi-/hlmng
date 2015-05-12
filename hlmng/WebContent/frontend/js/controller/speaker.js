@@ -6,13 +6,12 @@ speakerModule.controller('SpeakerNewController', ['$http','RestService','ToolSer
 	hlmng.speaker={};
 	hlmng.media={};
 	hlmng.postSpeaker = RestService.post;
-	hlmng.redir=ToolService.redir;
 	hlmng.postAndRedir = function() { 
 		hlmng.speaker.mediaIDFK=dataService.dataObj;
 		dataService.dataObj=0;
 		hlmng.postSpeaker(hlmng.speaker,'speaker').then(function(data){
 			hlmng.speaker=data;
-			hlmng.redir('/speaker/'+hlmng.speaker.speakerID);
+			ToolService.redir('speaker.id',{speakerId: hlmng.speaker.speakerID});
 		});
 	};
 }]);
@@ -37,6 +36,6 @@ speakerModule.controller('SpeakerIdController', ['$http','$stateParams','RestSer
 
 	hlmng.putSpeaker = RestService.put;
 	hlmng.deleteSpeaker = RestService.del;
-	hlmng.redir=ToolService.redir;
+
 }]);
 
