@@ -1,12 +1,11 @@
 <div ng-controller="MediaController">
 	<input type="file" ng-click="showUploadButton=true;" file-model="myFile"/>
-	<button ng-disabled="!showUploadButton" ng-click="uploadFile(myFile);">Upload</button>
+	<button class="btn btn-info" ng-disabled="!showUploadButton" ng-click="uploadFile(myFile);">Upload</button>
 	<div ng-show="showUploadPicture">
 		<img class="upload-image"  ng-src="{{uploadedMediaLink}}">
 	</div>
 	<div ng-show="showUploadErrorCode">
 		<b>Woops, something went wrong!<br>Please try again</b><br>
 		(HTTP Error Code:{{uploadErrorCode}})
-		
 	</div>
 </div>

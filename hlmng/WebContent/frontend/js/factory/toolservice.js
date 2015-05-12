@@ -21,6 +21,13 @@ app.factory('ToolService', ['$location','$state','$log','$http','$q' , function 
 	            deferred.reject(status);
 	        });
 	        return deferred.promise;
+		},
+		pagination:  function(list,hlmng) {  
+			hlmng.startItem = (hlmng.currentPage-1)*hlmng.itemsPerPage;
+			hlmng.assumedEndItem = hlmng.startItem+hlmng.itemsPerPage;
+			hlmng.endItem = (hlmng.assumedEndItem > list.length) ? list.length : hlmng.assumedEndItem;
+			hlmng.pageCount =  Math.ceil(list.length / hlmng.itemsPerPage);
+			hlmng.speakersPaginated = hlmng.speakers.slice(hlmng.startItem,hlmng.endItem);
 		}
 	};
 }]);

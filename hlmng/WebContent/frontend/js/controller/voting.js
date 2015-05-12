@@ -8,7 +8,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	hlmng.votingsUpcomingEndPresentation = [];
 	hlmng.votingsRunning = [];
 	hlmng.votingsFinished = [];
-	hlmng.allVotings = [hlmng.votingsUpcomingPrePresentation,hlmng.votingsUpcomingPresentation,hlmng.votingsUpcomingEndPresentation,hlmng.votingsRunning,hlmng.votingsFinished];
+	hlmng.votingsList = [hlmng.votingsUpcomingPrePresentation,hlmng.votingsUpcomingPresentation,hlmng.votingsUpcomingEndPresentation,hlmng.votingsRunning,hlmng.votingsFinished];
 	
 	hlmng.putVoting = RestService.put;
 	
@@ -41,10 +41,10 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	};
 	
 	hlmng.removeFromAll = function(voting){	
-		for (var index = 0; index < hlmng.allVotings.length; ++index) {
-			var i = hlmng.allVotings[index].indexOf(voting);
+		for (var index = 0; index < hlmng.votingsList.length; ++index) {
+			var i = hlmng.votingsList[index].indexOf(voting);
 			if(i != -1) {
-				hlmng.allVotings[index].splice(i, 1);
+				hlmng.votingsList[index].splice(i, 1);
 			}
 		}
 	};

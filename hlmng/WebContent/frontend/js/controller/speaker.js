@@ -16,12 +16,21 @@ speakerModule.controller('SpeakerNewController', ['$http','RestService','ToolSer
 	};
 }]);
 
-speakerModule.controller('SpeakerListController', ['$http','RestService', function($http,RestService){
+speakerModule.controller('SpeakerListController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
 	var hlmng = this;
 	hlmng.speakers = [];
+	hlmng.speakersPaginated = [];
+	
+	hlmng.itemsPerPage = 5;
+	hlmng.currentPage = 1;
+	
+	hlmng.updatePage = function(){
+		ToolService.pagination(hlmng.speakers,hlmng);
+	};
 	
 	RestService.list('speaker').then(function(data){
 		hlmng.speakers=data;
+		hlmng.updatePage();
 	});	
 }]);
 
