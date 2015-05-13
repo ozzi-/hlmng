@@ -1,5 +1,27 @@
 <label>Search for Push: <input ng-model="search"></label><hr>
-<span ng-repeat="push in pushListCtrl.pushes | filter:search:strict">
-	<push-info push="push"></push-info><br><hr>
-</span>
-<nothing-here-yet list="pushListCtrl.pushes"></nothing-here-yet>
+<br>
+<div ng-show="!search">
+	<pagination total-items="pushListCtrl.pushes.length"
+		items-per-page="pushListCtrl.itemsPerPage"
+		ng-model="pushListCtrl.currentPage"
+		ng-change="pushListCtrl.updatePage()"></pagination>
+	<hr>
+	<span ng-repeat="push in pushListCtrl.itemsPaginated | filter:search:strict">
+		<push-info push="push"></push-info><br><hr>
+	</span>
+	<nothing-here-yet list="pushListCtrl.pushes"></nothing-here-yet>
+
+	<pagination total-items="pushListCtrl.pushes.length"
+		items-per-page="pushListCtrl.itemsPerPage"
+		ng-model="pushListCtrl.currentPage"
+		ng-change="pushListCtrl.updatePage()"></pagination>
+</div>
+
+<div ng-show="search">
+	<span
+		ng-repeat="push in pushListCtrl.pushes  | filter:search">
+		<push-info push="push"></push-info><br>
+	<hr>
+	</span>
+</div>
+

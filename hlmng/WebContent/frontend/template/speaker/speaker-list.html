@@ -1,17 +1,28 @@
-<label>Search for Speaker Name: <input ng-model="search"></label>
+<label>Search for Speaker Name: <input ng-model="search"></label><hr>
 <br>
 <div ng-show="!search">
-	<pagination total-items="speakerListCtrl.speakers.length" items-per-page="speakerListCtrl.itemsPerPage" ng-model="speakerListCtrl.currentPage" ng-change="speakerListCtrl.updatePage()"></pagination>
+	<pagination total-items="speakerListCtrl.speakers.length"
+		items-per-page="speakerListCtrl.itemsPerPage"
+		ng-model="speakerListCtrl.currentPage"
+		ng-change="speakerListCtrl.updatePage()"></pagination>
 	<hr>
-	<span ng-repeat="speaker in speakerListCtrl.speakersPaginated  | filter:search:strict">
-		<speaker-info speaker="speaker"></speaker-info><br><hr>
+	<span
+		ng-repeat="speaker in speakerListCtrl.itemsPaginated  | filter:search:strict">
+		<speaker-info speaker="speaker"></speaker-info><br>
+	<hr>
 	</span>
 	<nothing-here-yet list="speakerListCtrl.speakers"></nothing-here-yet>
-	<br>
-	<pagination total-items="speakerListCtrl.speakers.length" items-per-page="speakerListCtrl.itemsPerPage" ng-model="speakerListCtrl.currentPage" ng-change="speakerListCtrl.updatePage()"></pagination>
+
+	<pagination total-items="speakerListCtrl.speakers.length"
+		items-per-page="speakerListCtrl.itemsPerPage"
+		ng-model="speakerListCtrl.currentPage"
+		ng-change="speakerListCtrl.updatePage()"></pagination>
 </div>
+
 <div ng-show="search">
-	<span ng-repeat="speaker in speakerListCtrl.speakers  | filter:{name:search}">
-		<speaker-info speaker="speaker"></speaker-info><br><hr>
+	<span
+		ng-repeat="speaker in speakerListCtrl.speakers  | filter:{name:search}">
+		<speaker-info speaker="speaker"></speaker-info><br>
+	<hr>
 	</span>
 </div>

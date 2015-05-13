@@ -3,6 +3,7 @@ package hlmng.resource.adm;
 import hlmng.dao.GenDao;
 import hlmng.model.Speaker;
 import hlmng.resource.Resource;
+import hlmng.resource.ResourceHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,7 +50,7 @@ public class SpeakerResource extends Resource  {
 	public Speaker getSpeaker(@PathParam("id") int id) throws IOException{
 		Speaker speaker = (Speaker) getResource(speakerDao, id);
 		if(speaker!=null){
-			String media = MediaResource.getMediaURL(uri,speaker.getMediaIDFK());
+			String media = ResourceHelper.getMediaURL(uri,speaker.getMediaIDFK());
 			speaker.setMedia(media);
 		}
 		return speaker;
@@ -76,7 +77,7 @@ public class SpeakerResource extends Resource  {
 		element.setNationality(element.getNationality().toUpperCase());
 		Speaker speaker = (Speaker) postResource(speakerDao, element);
 		if(speaker!=null){
-			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
+			String media = ResourceHelper.getMediaURL(uri, speaker.getMediaIDFK());
 			speaker.setMedia(media);
 		}
 		return speaker;
@@ -85,7 +86,7 @@ public class SpeakerResource extends Resource  {
 	protected void enrichSpeakerWithMedia(List<Object> speakerObjects) {
 		for (Object object : speakerObjects) {
 			Speaker speaker = (Speaker) object;
-			String media = MediaResource.getMediaURL(uri, speaker.getMediaIDFK());
+			String media = ResourceHelper.getMediaURL(uri, speaker.getMediaIDFK());
 			speaker.setMedia(media);
 		}
 	}

@@ -82,5 +82,6 @@ public class HLMNGSettings {
 	 * Misc
 	 */
 	public static final int qrcodeSecretStrengthInBit = 130;
+	public static final int mediaUploadThumbnailPixel = 200;
 	
 }

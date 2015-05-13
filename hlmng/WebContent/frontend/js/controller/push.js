@@ -1,12 +1,20 @@
 var pushModule = angular.module('push', []);
 
-pushModule.controller('PushListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
+pushModule.controller('PushListController', ['$http','RestService','$stateParams','ToolService', function($http,RestService,$stateParams,ToolService){
 	var hlmng = this;
 	hlmng.pushes = [];
+	hlmng.pushesPaginated=[];
+	
+	hlmng.currentPage = 1;
+	hlmng.updatePage = function(){
+		ToolService.pagination(hlmng.pushes,hlmng);
+	};
+
 	
 	RestService.list('push').then(function(data){
 	    $.each(data, function(i, item){
-	    	hlmng.pushes.push(item);	  
+	    	hlmng.pushes.push(item);	 
+			hlmng.updatePage();
 	    });
 	});
 }]);

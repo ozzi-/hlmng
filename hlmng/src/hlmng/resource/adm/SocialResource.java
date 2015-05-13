@@ -4,6 +4,7 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Social;
 import hlmng.resource.Resource;
+import hlmng.resource.ResourceHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,7 +59,7 @@ public class SocialResource extends Resource  {
 	@Path("{id}")
 	public Social getSocial(@PathParam("id") int id) throws IOException{
 		Social social = (Social) getResource(socialDao, id);
-		String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+		String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
 		social.setMedia(media);
 		return social;
 	}
@@ -84,7 +85,7 @@ public class SocialResource extends Resource  {
 		if(social!=null){
 			String authorName = UserResource.getUsername(social.getUserIDFK());
 			social.setAuthorName(authorName);
-			String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+			String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
 			social.setMedia(media);			
 		}
 		return social;
@@ -95,7 +96,7 @@ public class SocialResource extends Resource  {
 			Social social = (Social) object;
 			String authorName = UserResource.getUsername(social.getUserIDFK());
 			social.setAuthorName(authorName);
-			String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+			String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
 			social.setMedia(media);
 
 		}

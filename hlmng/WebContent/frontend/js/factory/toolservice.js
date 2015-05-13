@@ -22,12 +22,15 @@ app.factory('ToolService', ['$location','$state','$log','$http','$q' , function 
 	        });
 	        return deferred.promise;
 		},
-		pagination:  function(list,hlmng) {  
+		pagination:  function(list,hlmng) {
+			// Config
+			hlmng.itemsPerPage = 5;
+			// ------
 			hlmng.startItem = (hlmng.currentPage-1)*hlmng.itemsPerPage;
 			hlmng.assumedEndItem = hlmng.startItem+hlmng.itemsPerPage;
 			hlmng.endItem = (hlmng.assumedEndItem > list.length) ? list.length : hlmng.assumedEndItem;
 			hlmng.pageCount =  Math.ceil(list.length / hlmng.itemsPerPage);
-			hlmng.speakersPaginated = hlmng.speakers.slice(hlmng.startItem,hlmng.endItem);
+			hlmng.itemsPaginated = list.slice(hlmng.startItem,hlmng.endItem);
 		}
 	};
 }]);

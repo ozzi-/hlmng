@@ -9,8 +9,8 @@ import hlmng.model.ModelHelper;
 import hlmng.model.Social;
 import hlmng.model.User;
 import hlmng.resource.Resource;
+import hlmng.resource.ResourceHelper;
 import hlmng.resource.TimeHelper;
-import hlmng.resource.adm.MediaResource;
 import hlmng.resource.adm.UserResource;
 
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class SocialResource extends Resource  {
 	@Path("{id}")
 	public Social getSocial(@PathParam("id") int id) throws IOException{
 		Social social = (Social) getResource(socialDao, id);
-		String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+		String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
 		social.setMedia(media);
 		return social;
 	}
@@ -115,7 +115,7 @@ public class SocialResource extends Resource  {
 			if(social!=null){
 				String authorName = UserResource.getUsername(social.getUserIDFK());
 				social.setAuthorName(authorName);
-				String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+				String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
 				social.setMedia(media);		
 			}			
 		}
@@ -127,7 +127,7 @@ public class SocialResource extends Resource  {
 			Social social = (Social) object;
 			String authorName = UserResource.getUsername(social.getUserIDFK());
 			social.setAuthorName(authorName);
-			String media = MediaResource.getMediaURL(uri, social.getMediaIDFK());
+			String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
 			social.setMedia(media);
 
 		}

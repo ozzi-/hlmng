@@ -73,7 +73,7 @@ public class QrCodeResource extends Resource {
 		if(qrCode!=null){
 			try {
 				String filePath = generateQR(qrCode.getQrcodeID(),qrCode.getPayload());
-				return MediaResource.mediaResponse(filePath, "png", request);			
+				return ResourceHelper.mediaResponse(filePath, "png", request);			
 			} catch (WriterException e) {
 				response.sendError(500);
 			} 			

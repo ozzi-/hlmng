@@ -3,19 +3,13 @@ package hlmng.resource.pub;
 import hlmng.auth.AuthChecker;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
-import hlmng.model.Media;
 import hlmng.resource.Resource;
 import hlmng.resource.ResourceHelper;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
-import java.util.logging.Level;
 
-import javax.naming.SizeLimitExceededException;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -26,12 +20,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.UriInfo;
-
-import log.Log;
 
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -45,7 +34,6 @@ import settings.HTTPCodes;
 @Path(HLMNGSettings.pubURL+"/media")
 public class MediaResource extends Resource{
 
-	private static final int bytesPerMB = 1048576;
 	private static GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
 
 
@@ -53,7 +41,7 @@ public class MediaResource extends Resource{
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> listMedia() throws IOException {
 		List<Object> listMedia = listResource(mediaDao, false);
-		setURLPathList(listMedia);
+		ResourceHelper.setURLPathList(listMedia,uri);
 		return listMedia;
 	}
 
@@ -61,7 +49,7 @@ public class MediaResource extends Resource{
 	@GET
 	@Path("{id}")
 	public Response getMedia(@PathParam("id") int id) throws IOException {
-		return getMediaAsResponse(id, uri, request);
+		return ResourceHelper.getMediaAsResponse(id, uri, request);
 	}
 	
 	@GET
@@ -71,39 +59,13 @@ public class MediaResource extends Resource{
 		return mediaDao.getLastUpdateTime();
 	}
 	
-	
-	public static Response getMediaStatic(int id, UriInfo uriS, Request requestS) throws IOException {
-		return getMediaAsResponse(id, uriS, requestS);
-	}
 
-	private static Response getMediaAsResponse(int id, UriInfo uriS,Request requestS) {
-		ResponseBuilder builder;
-		Object obj = mediaDao.getElement(id);
-		if(obj==null){
-			builder = Response.status(404);
-		}else{
-			Media media = (Media) obj;
-			ResourceHelper.setMediaURLPath(uriS,media);
-			builder = ResourceHelper.cacheControl(media,requestS);			
-		}
-        return builder.build();
-	}
-	
-	public static String getMediaURL(UriInfo uri, int id){
-		Media media = (Media) mediaDao.getElement(id);
-		if(media!=null){
-			ResourceHelper.setMediaURLPath(uri,media);
-			return media.getLink();			
-		}
-		return null;
-	}
-	
 
 	@GET
 	@Path("image/jpeg/{name}")
 	@Produces("image/jpeg")
 	public Response getJPG(@PathParam("name") String fileName) throws IOException {
-			return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "jpg", request);
+			return ResourceHelper.mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "jpg", request);
 	}
 
 	@GET
@@ -111,7 +73,7 @@ public class MediaResource extends Resource{
 	@Produces("image/png")
 	public Response getPNG(@PathParam("name") String fileName)
 			throws IOException { 
-		return mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "png", request);
+		return ResourceHelper.mediaResponse(HLMNGSettings.mediaFileRootDir+fileName, "png", request);
 	}
 	
 	@POST
@@ -123,7 +85,7 @@ public class MediaResource extends Resource{
 			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader,
 			@Context HttpHeaders headers, 
 			@Context HttpServletResponse servletResponse
-			) {
+			) throws IOException {
 
 		String mimeType=(body.getMediaType()==null)?"none provided" :body.getMediaType().toString() ;
 
@@ -131,7 +93,7 @@ public class MediaResource extends Resource{
 		Response response;
 		
 		if(authenticated){
-			response = doUpload(fileInputStream, contentDispositionHeader, mimeType);
+			response = ResourceHelper.doUpload(fileInputStream, contentDispositionHeader, mimeType,uri,request);
 		}else{
 			response=Response.status(HTTPCodes.unauthorized).build();
 		}
@@ -139,116 +101,5 @@ public class MediaResource extends Resource{
 
 	}
 
-
-	private Response doUpload(InputStream fileInputStream,
-			FormDataContentDisposition contentDispositionHeader, String mimeType) {
-		Response response;
-		if(mimeType.equals("image/png")||mimeType.equals("image/jpeg")){
-			String filePath = HLMNGSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
-			File f = new File(filePath);
-			if(f.exists()){
-				response=  Response.status(422).entity("File name already exists locally. Try again with another one!").build(); 
-			}else{
-				response = saveImage(fileInputStream, contentDispositionHeader, mimeType, filePath);
-			}
-		}else{
-			Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
-			response=Response.status(415).build();
-		}
-		return response;
-	}
-
-	private Response saveImage(InputStream fileInputStream,
-			FormDataContentDisposition contentDispositionHeader,
-			String mimeType, String filePath) {
-		Response response;
-		boolean savedOK=false;
-		try {
-			savedOK = saveInputStreamToFile(fileInputStream, filePath,HLMNGSettings.maxMediaImageSizeMB);
-			if(savedOK){
-				Log.addEntry(Level.INFO, "File uploaded to:"+filePath+" with mime type: "+mimeType );
-				int insertedID = mediaDao.addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
-				response= getMediaAsResponse(insertedID, uri, request);
-			}else{
-				Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );
-				response=Response.status(500).build();				
-			}	
-		} catch (SizeLimitExceededException e) {
-			Log.addEntry(Level.WARNING, "Somebody tried to upload a media resource bigger than "+HLMNGSettings.maxMediaImageSizeMB+" MB");
-			response=Response.status(413).build();
-		}
-		return response;
-	}
-
-
-	private boolean saveInputStreamToFile(InputStream uploadedInputStream, String serverLocation, double maxMediaImageSize) throws SizeLimitExceededException {
-		try {
-			OutputStream outputStream = new FileOutputStream(new File(serverLocation));
-			int read = 0;
-			byte[] bytes = new byte[1024];
-			long bytesWritten=0;
-			outputStream = new FileOutputStream(new File(serverLocation));
-			while ((read = uploadedInputStream.read(bytes)) != -1) {
-				bytesWritten = checkIfUploadToBig(serverLocation, maxMediaImageSize, outputStream, bytes, bytesWritten);
-				outputStream.write(bytes, 0, read);
-			}
-			outputStream.flush();
-			outputStream.close();
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
-	/**
-	 * Stop downloading if file is bigger than @param maxMediaSize, cleanup and throw exception
-	 * @param serverLocation
-	 * @param maxMediaSize
-	 * @param outputStream
-	 * @param bytes
-	 * @param bytesWritten
-	 * @return
-	 * @throws IOException
-	 * @throws SizeLimitExceededException
-	 */
-	private long checkIfUploadToBig(String serverLocation, double maxMediaSize,
-			OutputStream outputStream, byte[] bytes, long bytesWritten)
-			throws IOException, SizeLimitExceededException {
-		
-		double mbWritten;
-		
-		bytesWritten+=bytes.length;
-		mbWritten=bytesWritten/bytesPerMB;
-		
-		if(Double.compare(mbWritten,maxMediaSize)>0){
-			outputStream.flush();
-			outputStream.close();
-			File removeFile = new File(serverLocation);
-			removeFile.delete();
-			throw new SizeLimitExceededException();
-		}
-		return bytesWritten;
-	}
-	
-
-
-	public static Response mediaResponse(String filePath, String fileType, Request request) {
-		ResponseBuilder response;
-		File file = new File(filePath);
-		if (file.canRead()) {
-			response = ResourceHelper.cacheControl((File) file,request);
-		} else {
-			response = Response.status(Response.Status.NOT_FOUND);
-		}
-		response.expires(null);
-		return response.build();
-	}
-
-	private void setURLPathList(List<Object> listMedia) {
-		for (Object obj : listMedia) {
-			ResourceHelper.setMediaURLPath(uri,(Media) obj);
-		}
-	}
 
 }
