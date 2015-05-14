@@ -71,6 +71,19 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 }]);
 
 
+speakerModule.controller('VotingNewController', ['$http','RestService','ToolService','dataService', function($http,RestService,ToolService,dataService){
+	var hlmng = this;
+	hlmng.voting={};
+	hlmng.voting.sliderMaxValue=10;
+	hlmng.postVoting = RestService.post;
+	hlmng.postAndRedir = function() { 
+		hlmng.postVoting(hlmng.voting,'voting').then(function(data){
+			hlmng.voting=data;
+			ToolService.redir('voting.id',{votingId: hlmng.voting.votingID});
+		});
+	};
+}]);
+
 
 votingModule.controller('VotingIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
 	var hlmng = this;

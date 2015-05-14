@@ -19,6 +19,10 @@ eventModule.controller('EventOverviewController', ['$http','$stateParams','RestS
 	var hlmng = this;
 	hlmng.eventroomsCount = 0;
 	hlmng.eventitemsCount = 0;
+	hlmng.qrcodeCount = 0;
+	hlmng.socialCount = 0;
+	hlmng.newsCount = 0;
+	hlmng.socialPendingCount = 0;
 	
 	RestService.list('eventroom').then(function(data){
 	    $.each(data, function(i, item){
@@ -32,6 +36,33 @@ eventModule.controller('EventOverviewController', ['$http','$stateParams','RestS
 	    $.each(data, function(i, item){
 	    	if(item.eventIDFK==$stateParams.eventId){
 	    		hlmng.eventitemsCount++;
+	    	}
+	    });
+	});
+	
+	RestService.list('qrcode').then(function(data){
+	    $.each(data, function(i, item){
+	    	if(item.eventIDFK==$stateParams.eventId){
+	    		hlmng.qrcodeCount++;
+	    	}
+	    });
+	});
+	
+	RestService.list('news').then(function(data){
+	    $.each(data, function(i, item){
+	    	if(item.eventIDFK==$stateParams.eventId){
+	    		hlmng.newsCount++;
+	    	}
+	    });
+	});
+	
+	RestService.list('social').then(function(data){
+	    $.each(data, function(i, item){
+	    	if(item.eventIDFK==$stateParams.eventId){
+	    		if(item.status=="pending"){
+	    			hlmng.socialPendingCount++;	
+	    		}
+	    		hlmng.socialCount++;
 	    	}
 	    });
 	});

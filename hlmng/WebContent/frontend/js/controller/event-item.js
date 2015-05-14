@@ -40,6 +40,11 @@ eventItemModule.controller('EventItemIdController', ['$http','$stateParams','Res
 			hlmng.eventitem.speakerName=data.name;
 		});
 	});
+	
+	hlmng.redirToList = function() { 
+		ToolService.redir('event.active.eventitem.list',{eventId: $stateParams.eventId});
+	};
+	
+	hlmng.deleteEventItem = RestService.del;
 
-	hlmng.putEvent = RestService.put;
 }]);

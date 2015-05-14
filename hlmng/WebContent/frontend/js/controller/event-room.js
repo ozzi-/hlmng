@@ -29,13 +29,15 @@ eventRoomModule.controller('EventRoomListController', ['$http','RestService','$s
 
 
 
-eventRoomModule.controller('EventRoomIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
+eventRoomModule.controller('EventRoomIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
 	var hlmng = this;
 	
 	RestService.get($stateParams.eventRoomId,'eventroom').then(function(data){
 		hlmng.eventroom=data;
 	});
-
+	hlmng.redirToList = function() { 
+		ToolService.redir('event.active.eventroom.list',{eventId: $stateParams.eventId});
+	};
 	hlmng.deleteEventRoom = RestService.del;
 	hlmng.putEventRoom = RestService.put;
 }]);

@@ -15,6 +15,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.owasp.esapi.ESAPI;
+
 import log.Log;
 
 /**
@@ -123,6 +125,9 @@ public class DB {
 						if (v==0){
 							value=null;
 						}
+					}
+					if(value instanceof String){
+						value = ESAPI.encoder().encodeForHTML( (String) value);
 					}
 					ps.setObject(++i, value);
 				} catch (Exception e) {
