@@ -23,8 +23,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.owasp.esapi.ESAPI;
+
 import log.Log;
 import settings.HLMNGSettings;
+import settings.HTTPCodes;
 
 
 
@@ -53,14 +56,21 @@ public class  UserResource  extends Resource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postUser(User element) throws IOException {	
+		String escapedName  = ESAPI.encoder().encodeForHTML(element.getName());
+		String escapedRegId  = ESAPI.encoder().encodeForHTML(element.getRegID());
+		String escapedDevId  = ESAPI.encoder().encodeForHTML(element.getDeviceID());
+
+		if(!(escapedName.equals(element.getName())) || !(escapedRegId.equals(element.getRegID())) || !(escapedDevId.equals(element.getDeviceID()))){
+			return Response.status(HTTPCodes.badRequest).build();
+		}
 		User userNameExists = ((UserDao) userDao).getUserByName(element.getName());
 		if(userNameExists == null){ 
 			if(!UserActionLimiter.actionsExceeded("userCreation")){ // we don't want people spamming the profile creation
 				return postResource(userDao, element);			
 			}
-			return Response.status(429).build();  // Too Many Requests			
+			return Response.status(HTTPCodes.tooManyRequests).build();  			
 		}else{
-			return Response.status(422).build();  // Unprocessable Entity (exists)
+			return Response.status(HTTPCodes.unprocessableEntity).build();  // Unprocessable Entity (exists)
 		}
 	}
 	
@@ -69,12 +79,19 @@ public class  UserResource  extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response putUserChangeRegID(User element,@PathParam("id") int id) throws IOException {
 		Response res;
+		
+		String escapedRegId  = ESAPI.encoder().encodeForHTML(element.getRegID());
+
+		if(!(escapedRegId.equals(element.getRegID()))){
+			return Response.status(HTTPCodes.badRequest).build();
+		}
+		
 		String authorizationHeader = headers.getHeaderString("Authorization");
 		if(authorizationHeader==null){
-			return Response.status(401).build();
+			return Response.status(HTTPCodes.unauthorized).build();
 		}
 		if(element==null || element.getName()==null){
-			return Response.status(400).build();
+			return Response.status(HTTPCodes.badRequest).build();
 		} 
 				
 		AuthCredential authCredential = AuthChecker.decodeBasicAuthB64(authorizationHeader);

@@ -27,6 +27,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import log.Log;
+
+import org.owasp.esapi.ESAPI;
+
 import settings.HLMNGSettings;
 import settings.HTTPCodes;
 
@@ -76,7 +79,7 @@ public class SocialResource extends Resource  {
 	public Object postSocial(Social element) throws IOException {
 		Social social = null;
 		if(AuthChecker.checkAuthorization(headers, servletResponse)){
-						
+			element.setText(ESAPI.encoder().encodeForHTML(element.getText())); 
 			boolean isAuthor=false;
 			String qrHeader = headers.getHeaderString("X-QRCode"); 
 			if(qrHeader!=null){
