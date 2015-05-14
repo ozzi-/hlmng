@@ -7,11 +7,9 @@
 				<speaker-info-edit speaker="speakerIdCtrl.speaker"></speaker-info-edit>
 		</form>	
 		<br>
-		<button class="btn btn-danger" ng-click="speakerIdCtrl.deleteSpeaker(speakerIdCtrl.speaker.speakerID,'speaker'); speakerIdCtrl.redir('/speaker/list');">Delete this Speaker</button>
+		<button class="btn btn-danger" ng-click="speakerIdCtrl.deleteSpeaker(speakerIdCtrl.speaker.speakerID,'speaker'); speakerIdCtrl.redir('speaker.list');">Delete this Speaker</button>
 		<button class="btn btn-success" ng-disabled="!speakerInfoEditForm.$valid" ng-click="edit=!edit ;speakerIdCtrl.putSpeaker(speakerIdCtrl.speaker,speakerIdCtrl.speaker.speakerID,'speaker');">Submit</button>
 	</div>
 </div>
 
 <edit-button edit="edit"></edit-button>
-
-

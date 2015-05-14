@@ -111,7 +111,7 @@ public class DaoTest {
 	}
 	@Test
 	 public void testNewEventItem(){
-		boolean eventItemCreate =testDaoGenericAdd(new EventItem("name", "desc", "2015-05-05", "13:00", "14:00", 1, 1), eventItemDao);
+		boolean eventItemCreate =testDaoGenericAdd(new EventItem("name", "desc", "2015-05-05", "13:00", "14:00", 1, 1,1), eventItemDao);
 		assertTrue(eventItemCreate);
 	}
 	@Test

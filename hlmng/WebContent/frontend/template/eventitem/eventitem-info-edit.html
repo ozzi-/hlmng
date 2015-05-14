@@ -18,3 +18,13 @@
 	<label for="eventitem-date">Date</label><br>
 	<input class="form-control" type="text" size="40" name="eventitem-date" ng-model="eventitem.date" required>
 </div>
+	<div class="form-group" ng-controller="EventRoomListController as eventRoomListCtrl">
+		<label for="event-room-eventIDFK">In Event Room</label><br>
+		<select  style="width: 350px" ng-model="eventitem.roomIDFK" ng-options="eventroom.eventRoomID as eventroom.name for eventroom in eventRoomListCtrl.eventrooms">
+		</select>
+	</div>
+<div class="form-group" ng-controller="SpeakerListController as speakerListCtrl">
+	<label for="event-room-eventIDFK">By Speaker</label><br>
+	<select  style="width: 350px" ng-model="eventitem.speakerIDFK" ng-options="speaker.speakerID as speaker.name for speaker in speakerListCtrl.speakers">
+	</select>
+</div>

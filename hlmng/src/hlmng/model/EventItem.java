@@ -10,11 +10,11 @@ public class EventItem {
 	private String endTime;
 	private int roomIDFK;
 	private int eventIDFK;
-
+	private int speakerIDFK;
 	public EventItem(){
 	}
 	
-	public EventItem(int eventItemID, String name, String description, String date, String startTime, String endTime, int roomIDFK, int eventIDFK){
+	public EventItem(int eventItemID, String name, String description, String date, String startTime, String endTime, int roomIDFK, int eventIDFK,int speakerIDFK){
 		this.eventItemID=eventItemID;
 		this.name=name;
 		this.setDescription(description);
@@ -23,9 +23,10 @@ public class EventItem {
 		this.endTime=endTime;
 		this.roomIDFK=roomIDFK;
 		this.eventIDFK=eventIDFK;
+		this.speakerIDFK=speakerIDFK;
 	}
 	
-	public EventItem(String name, String description, String date, String startTime, String endTime, int roomIDFK, int eventIDFK){
+	public EventItem(String name, String description, String date, String startTime, String endTime, int roomIDFK, int eventIDFK, int speakerIDFK){
 		this.name=name;
 		this.setDescription(description);
 		this.date=date;
@@ -33,6 +34,7 @@ public class EventItem {
 		this.endTime=endTime;
 		this.roomIDFK=roomIDFK;
 		this.eventIDFK=eventIDFK;
+		this.speakerIDFK=speakerIDFK;
 	}
 	
 	
@@ -91,6 +93,15 @@ public class EventItem {
 	public void setEventIDFK(int eventIDFK) {
 		this.eventIDFK = eventIDFK;
 	}
+	
+	public int getSpeakerIDFK() {
+		return speakerIDFK;
+	}
+
+	public void setSpeakerIDFK(int speakerIDFK) {
+		this.speakerIDFK = speakerIDFK;
+	}
+
 
 	public String getDescription() {
 		return description;

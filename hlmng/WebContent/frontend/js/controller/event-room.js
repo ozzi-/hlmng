@@ -27,6 +27,8 @@ eventRoomModule.controller('EventRoomListController', ['$http','RestService','$s
 	});
 }]);
 
+
+
 eventRoomModule.controller('EventRoomIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
 	var hlmng = this;
 	

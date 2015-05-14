@@ -9,7 +9,6 @@ eventItemModule.controller('EventItemNewController', ['$http','RestService','Too
 		hlmng.eventitem.eventIDFK=$stateParams.eventId;
 		hlmng.postEventItem(hlmng.eventitem,'eventitem').then(function(data){
 			hlmng.eventitem=data;
-			alert(hlmng.eventitem.toSource());
 			ToolService.redir('event.active.eventitem.id',{eventId:$stateParams.eventId, eventItemId: hlmng.eventitem.eventItemID});
 		});
 	};
@@ -28,11 +27,18 @@ eventItemModule.controller('EventItemListController', ['$http','RestService','$s
 	});
 }]);
 
-eventItemModule.controller('EventItemIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
+eventItemModule.controller('EventItemIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
 	var hlmng = this;
+	hlmng.eventitem = {};
 	
 	RestService.get($stateParams.eventItemId,'eventitem').then(function(data){
 		hlmng.eventitem=data;
+		ToolService.idSolver(hlmng.eventitem.roomIDFK,'eventroom').then(function(data){
+			hlmng.eventitem.roomName=data.name;
+		});
+		ToolService.idSolver(hlmng.eventitem.speakerIDFK,'speaker').then(function(data){
+			hlmng.eventitem.speakerName=data.name;
+		});
 	});
 
 	hlmng.putEvent = RestService.put;

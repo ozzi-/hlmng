@@ -1,4 +1,4 @@
-app.factory('ToolService', ['$location','$state','$log','$http','$q' , function ($location,$state,$log,$http,$q){
+app.factory('ToolService', ['$location','RestService','$state','$log','$http','$q' , function ($location,RestService,$state,$log,$http,$q){
 	return {
 		redir: function(state,params){
 			$log.log("Redirecting to state: "+state+" with params: "+params.toSource());
@@ -31,6 +31,14 @@ app.factory('ToolService', ['$location','$state','$log','$http','$q' , function 
 			hlmng.endItem = (hlmng.assumedEndItem > list.length) ? list.length : hlmng.assumedEndItem;
 			hlmng.pageCount =  Math.ceil(list.length / hlmng.itemsPerPage);
 			hlmng.itemsPaginated = list.slice(hlmng.startItem,hlmng.endItem);
+		},
+		idSolver: function(id,name){
+            var deferred = $q.defer();
+		   	RestService.get(id,name).then(function(data){
+                deferred.resolve(data);
+		   	});	
+            return deferred.promise;
+
 		}
 	};
 }]);

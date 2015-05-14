@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="23" columns="4">
+<lyxtabular version="3" rows="25" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1116,7 +1116,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1125,7 +1125,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1134,11 +1134,87 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 User Listing für Pub entfernt, Social Status update
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.2.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Media Thumbnail
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SpeakerIDFK in Event Item nachgeführt
 \end_layout
 
 \end_inset
@@ -1516,6 +1592,30 @@ https://de.wikipedia.org/wiki/Unixzeit
 
 \begin_layout Itemize
 Alle Pfade werden relativ angegeben
+\end_layout
+
+\begin_layout Itemize
+Thumbnails
+\begin_inset Newline newline
+\end_inset
+
+Bei allen 
+\begin_inset Quotes ald
+\end_inset
+
+media
+\begin_inset Quotes ard
+\end_inset
+
+ Links kann 
+\begin_inset Quotes ald
+\end_inset
+
+_thumb
+\begin_inset Quotes ard
+\end_inset
+
+ angehängt werden, um ein Thumbnail des besagten Bildes zu erhalten
 \end_layout
 
 \begin_layout Itemize
@@ -2065,6 +2165,14 @@ Ein FK zu dem Raum in welchem das Item stattfindet
 eventIDFK - 
 \series default
 Ein FK zu dem Event in welchem das Item stattfindet 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+speakerIDFK - 
+\series default
+Ein FK zu dem Speaker welcher das Item moderiert
 \end_layout
 
 \begin_layout LyX-Code
@@ -2115,7 +2223,12 @@ status open
 
 \begin_layout Plain Layout
 
-	"eventIDFK": 1
+	"eventIDFK": 1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"speakerIDFK": 1
 \end_layout
 
 \begin_layout Plain Layout
