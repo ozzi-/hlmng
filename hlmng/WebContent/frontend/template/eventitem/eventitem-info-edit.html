@@ -8,21 +8,21 @@
 </div>
 <div class="form-group">
 	<label for="eventitem-startTime">From</label><br>
-	<input class="form-control" type="text" size="40" name="eventitem-startTime" ng-model="eventitem.startTime" required>
+	<input class="form-control" pattern="([0-1][0-9])|([2][0-3]):([0-5][0-9])" placeholder="HH:MM" type="text" size="40" name="eventitem-startTime" ng-model="eventitem.startTime" required>
 </div>
 <div class="form-group">
 	<label for="eventitem-endTime">To</label><br>
-	<input class="form-control" type="text" size="40" name="eventitem-endTime" ng-model="eventitem.endTime" required>
+	<input class="form-control" pattern="([0-1][0-9])|([2][0-3]):([0-5][0-9])" placeholder="HH:MM" type="text" size="40" name="eventitem-endTime" ng-model="eventitem.endTime" required>
 </div>
 <div class="form-group">
 	<label for="eventitem-date">Date</label><br>
-	<input class="form-control" type="text" size="40" name="eventitem-date" ng-model="eventitem.date" required>
+	<input class="form-control" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="YYYY-MM-DD" type="text" size="40" name="eventitem-date" ng-model="eventitem.date" required>
 </div>
-	<div class="form-group" ng-controller="EventRoomListController as eventRoomListCtrl">
-		<label for="event-room-eventIDFK">In Event Room</label><br>
-		<select  style="width: 350px" ng-model="eventitem.roomIDFK" ng-options="eventroom.eventRoomID as eventroom.name for eventroom in eventRoomListCtrl.eventrooms">
-		</select>
-	</div>
+<div class="form-group" ng-controller="EventRoomListController as eventRoomListCtrl">
+	<label for="event-room-eventIDFK">In Event Room</label><br>
+	<select  style="width: 350px" ng-model="eventitem.roomIDFK" ng-options="eventroom.eventRoomID as eventroom.name for eventroom in eventRoomListCtrl.eventrooms">
+	</select>
+</div>
 <div class="form-group" ng-controller="SpeakerListController as speakerListCtrl">
 	<label for="event-room-eventIDFK">By Speaker</label><br>
 	<select  style="width: 350px" ng-model="eventitem.speakerIDFK" ng-options="speaker.speakerID as speaker.name for speaker in speakerListCtrl.speakers">

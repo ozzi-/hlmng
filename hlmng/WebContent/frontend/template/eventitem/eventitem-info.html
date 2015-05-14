@@ -6,8 +6,10 @@
 	<b>Description:</b> {{eventitem.description}}<br>
 	<b>From:</b> {{eventitem.startTime}}<br>
 	<b>To:</b> {{eventitem.endTime}}<br>
-	<b>Date:</b> {{eventitem.date}}<br>
-	<b>Room:</b> {{eventitem.roomName}}<br>
-	<b>Speaker:</b> {{eventitem.speakerName}}<br>
+	<span ng-show="details!=false">
+		<b>Date:</b> {{eventitem.date}}<br>
+		<b>Room:</b> {{eventitem.roomName}}<br>
+		<b>Speaker:</b> {{eventitem.speakerName}}<br>
+	</span>
 </div>
 

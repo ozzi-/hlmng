@@ -1,17 +1,6 @@
 	<div class="col-xs-4">
 	<form name="eventItemInfoNewForm" novalidate>
 		<event-item-info-edit eventitem="eventItemNewCtrl.eventitem"></event-item-info-edit>
-		<div class="form-group" ng-controller="EventRoomListController as eventRoomListCtrl">
-			<label for="event-room-eventIDFK">In Event Room</label><br>
-			<select  style="width: 350px" ng-model="eventItemNewCtrl.eventitem.roomIDFK" ng-options="eventroom.eventRoomID as eventroom.name for eventroom in eventRoomListCtrl.eventrooms">
-			</select>
-		</div>
-		<div class="form-group" ng-controller="SpeakerListController as speakerListCtrl">
-			<label for="event-room-eventIDFK">By Speaker</label><br>
-			<select  style="width: 350px" ng-model="eventItemNewCtrl.eventitem.speakerIDFK" ng-options="speaker.speakerID as speaker.name for speaker in speakerListCtrl.speakers">
-			</select>
-		</div>
-		
 	</form>
 	<br><br>	
 	<button class="btn btn-success" ng-disabled="!eventItemInfoNewForm.$valid" ng-click="eventItemNewCtrl.postAndRedir();">Submit</button>

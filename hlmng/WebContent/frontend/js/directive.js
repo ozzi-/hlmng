@@ -96,7 +96,8 @@ directiveModule.directive('eventItemInfo', function(){
 		restrict: 'E',
 		templateUrl: 'template/eventitem/eventitem-info.html',
 		scope: {
-			eventitem: "=eventitem"
+			eventitem: "=eventitem",
+			details: "=details"
 		}
 	};
 });
