@@ -33,7 +33,7 @@ public class SocialResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getNewestSocials() throws IOException {
 		List<Object> socialObjects = listResource(socialDao, true);
-		enrichSocialWithUsernameAndMedia(socialObjects);
+		enrichSocialListWithUsernameAndMedia(socialObjects);
 		return socialObjects;
 	}
 	
@@ -50,7 +50,7 @@ public class SocialResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSocials() throws IOException {
 		List<Object> socialObjects = listResource(socialDao, false);
-		enrichSocialWithUsernameAndMedia(socialObjects);
+		enrichSocialListWithUsernameAndMedia(socialObjects);
 		return socialObjects;
 	}
 
@@ -59,8 +59,7 @@ public class SocialResource extends Resource  {
 	@Path("{id}")
 	public Social getSocial(@PathParam("id") int id) throws IOException{
 		Social social = (Social) getResource(socialDao, id);
-		String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
-		social.setMedia(media);
+		enrichSocialWithUsernameAndMedia(social);
 		return social;
 	}
 
@@ -91,16 +90,21 @@ public class SocialResource extends Resource  {
 		return social;
 	}
 
-	protected void enrichSocialWithUsernameAndMedia(List<Object> socialObjects) {
+	protected void enrichSocialListWithUsernameAndMedia(List<Object> socialObjects) {
 		for (Object object : socialObjects) {
 			Social social = (Social) object;
-			String authorName = UserResource.getUsername(social.getUserIDFK());
-			social.setAuthorName(authorName);
-			String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
-			social.setMedia(media);
-
+			enrichSocialWithUsernameAndMedia(social);
 		}
+	}
+
+
+	private void enrichSocialWithUsernameAndMedia(Social social) {
+		String authorName = UserResource.getUsername(social.getUserIDFK());
+		social.setAuthorName(authorName);
+		String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
+		social.setMedia(media);
 	}	
+
 	
 }
 
