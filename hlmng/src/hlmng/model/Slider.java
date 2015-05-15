@@ -3,20 +3,20 @@ package hlmng.model;
 public class Slider {
 	private int sliderID;
 	private String name;
-	private int weigth;
+	private int weight;
 	private int votingIDFK;
 	public Slider(){
 		
 	}
-	public Slider(int sliderID, String name, int weigth, int votingIDFK){
+	public Slider(int sliderID, String name, int weight, int votingIDFK){
 		this.sliderID=sliderID;
 		this.name=name;
-		this.weigth=weigth;
+		this.weight=weight;
 		this.votingIDFK=votingIDFK;
 	}
-	public Slider(String name, int weigth, int votingIDFK){
+	public Slider(String name, int weight, int votingIDFK){
 		this.name=name;
-		this.weigth=weigth;
+		this.weight=weight;
 		this.votingIDFK=votingIDFK;
 	}
 	public int getSliderID() {
@@ -31,11 +31,11 @@ public class Slider {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getWeigth() {
-		return weigth;
+	public int getWeight() {
+		return weight;
 	}
-	public void setWeigth(int weigth) {
-		this.weigth = weigth;
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 	public int getVotingIDFK() {
 		return votingIDFK;
