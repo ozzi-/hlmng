@@ -61,6 +61,7 @@ public class  UserResource  extends Resource {
 		String escapedDevId  = ESAPI.encoder().encodeForHTML(element.getDeviceID());
 
 		if(!(escapedName.equals(element.getName())) || !(escapedRegId.equals(element.getRegID())) || !(escapedDevId.equals(element.getDeviceID()))){
+			Log. addEntry(Level.WARNING,"Somebody possibly tried to insert XSS in the user creation");
 			return Response.status(HTTPCodes.badRequest).build();
 		}
 		User userNameExists = ((UserDao) userDao).getUserByName(element.getName());
@@ -83,6 +84,7 @@ public class  UserResource  extends Resource {
 		String escapedRegId  = ESAPI.encoder().encodeForHTML(element.getRegID());
 
 		if(!(escapedRegId.equals(element.getRegID()))){
+			Log. addEntry(Level.WARNING,"Somebody possibly tried to insert XSS in the change reg id");
 			return Response.status(HTTPCodes.badRequest).build();
 		}
 		

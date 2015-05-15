@@ -79,33 +79,36 @@ public class SocialResource extends Resource  {
 	public Object postSocial(Social element) throws IOException {
 		Social social = null;
 		if(AuthChecker.checkAuthorization(headers, servletResponse)){
+			if(!(ESAPI.encoder().encodeForHTML(element.getText()).equals(element.getText()))){
+				Log. addEntry(Level.WARNING,"Somebody possibly tried to insert XSS while posting a social entry");
+			}
 			element.setText(ESAPI.encoder().encodeForHTML(element.getText())); 
+		
+			String authorizationHeader = headers.getHeaderString("Authorization");
+			if(authorizationHeader==null){
+				return Response.status(401).build();
+			} 	
+			
+			AuthCredential authCredential = AuthChecker.decodeBasicAuthB64(authorizationHeader);
+			User user = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(), authCredential.getSecret());
+			if( user.getUserID()!=element.getUserIDFK()){
+				Log.addEntry(Level.WARNING, "User tried to be author as somebody else . UserID: "+user.getUserID()+" as "
+											+element.getUserIDFK()
+											+". "+ModelHelper.valuestoString(element));
+				return Response.status(HTTPCodes.forbidden).build();
+			}
+			
 			boolean isAuthor=false;
 			String qrHeader = headers.getHeaderString("X-QRCode"); 
-			if(qrHeader!=null){
-				String authorizationHeader = headers.getHeaderString("Authorization");
-				if(authorizationHeader==null){
-					return Response.status(401).build();
-				} 	
-				AuthCredential authCredential = AuthChecker.decodeBasicAuthB64(authorizationHeader);
-				User user = GenDaoLoader.instance.getUserDao().getUserByNameAndDeviceID(authCredential.getUsername(), authCredential.getSecret());
-				if(user==null){
-					Log.addEntry(Level.WARNING, "User tried to be author with wrong credentials. "+ModelHelper.valuestoString(element));
-					return Response.status(HTTPCodes.forbidden).build();
-				}
-				if( user.getUserID()!=element.getUserIDFK()){
-					Log.addEntry(Level.WARNING, "User tried to be author as somebody else . UserID: "+user.getUserID()+" as "
-												+element.getUserIDFK()
-												+". "+ModelHelper.valuestoString(element));
-					return Response.status(HTTPCodes.forbidden).build();
-				}
+		
+			if(qrHeader!=null){							
 				AuthResult qrAuthRes = AuthChecker.checkQRCodeAuthorization(qrHeader,element.getEventIDFK(),user,"jury",TimeHelper.getCurrentDateTime());
 				if(qrAuthRes.isAuthorized()){
 					isAuthor=true;
 				}else{
 					return Response.status(qrAuthRes.getResponseCode()).build();
 				}
-			} // TODO refactor this into authchecker , same for vote resource ..
+			}
 			
 			if(isAuthor){
 				element.setStatus(Social.statusEnum.accepted.toString());
