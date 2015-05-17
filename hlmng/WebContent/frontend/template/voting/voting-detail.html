@@ -1,5 +1,16 @@
 <div ng-hide="edit">
-	<voting-info voting="votingIdCtrl.voting"></voting-info><br>
+	<div class="col-xs-4">
+		<voting-info voting="votingIdCtrl.voting"></voting-info><br>
+		<edit-button edit="edit"></edit-button>
+	</div>
+	<div class="col-xs-4">
+		<h4>Sliders:</h4>
+		<div ng-controller="SliderListController as sliderListCtrl">
+			<span ng-repeat="slider in sliderListCtrl.sliders" ng-if="slider.votingIDFK==votingIdCtrl.voting.votingID">
+				{{slider.name}} - {{slider.weight}}x<br>
+			</span>
+		</div>
+	</div>
 </div>
 
 <div ng-show="edit">
@@ -10,7 +21,3 @@
 		<button class="btn btn-success" ng-disabled="!votingInfoEditForm.$valid" ng-click="edit=!edit ;votingIdCtrl.putVoting(votingIdCtrl.voting,votingIdCtrl.voting.votingID,'voting');">Submit</button>
 	</div>
 </div>
-
-
-<edit-button edit="edit"></edit-button>
-

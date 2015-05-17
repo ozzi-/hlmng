@@ -71,14 +71,15 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 }]);
 
 
-votingModule.controller('VotingNewController', ['$http','RestService','ToolService','dataService', function($http,RestService,ToolService,dataService){
+votingModule.controller('VotingNewController', ['$http','$stateParams','RestService','ToolService','dataService', function($http,$stateParams,RestService,ToolService,dataService){
 	var hlmng = this;
 	hlmng.voting={};
 	hlmng.sliders=[];
 	hlmng.voting.sliderMaxValue=10;
 	hlmng.postVoting = RestService.post;
+	hlmng.postSlider = RestService.post;
 	hlmng.votingSettingsMode='voting-default';
-	hlmng.voting.arethmeticMode="arithmetic";
+	hlmng.voting.arithmeticMode="arithmetic";
 	var internalIDCounter=0;
 
 
@@ -91,10 +92,21 @@ votingModule.controller('VotingNewController', ['$http','RestService','ToolServi
 	hlmng.sliders.push(JSON.parse(defaultSliderThree));
 	
 	hlmng.postAndRedir = function() { 
-		hlmng.postVoting(hlmng.voting,'voting').then(function(data){
+		hlmng.voting.status="pre_presentation";
+		hlmng.voting.eventIDFK=$stateParams.eventId;
+			hlmng.postVoting(hlmng.voting,'voting').then(function(data){
 			hlmng.voting=data;
-			ToolService.redir('voting.id',{votingId: hlmng.voting.votingID});
+			for (var index = 0; index < hlmng.sliders.length ; ++index) {
+				hlmng.sliders[index].votingIDFK= hlmng.voting.votingID;
+				hlmng.postSlider(hlmng.sliders[index],'slider').then(function(data){
+					if(index==hlmng.sliders.length){
+						ToolService.redir('event.active.voting.id',{eventId: $stateParams.eventId, votingId: hlmng.voting.votingID});
+					}
+				});
+			}
 		});
+			
+		
 	};
 	
 	hlmng.addNewSlider = function() {

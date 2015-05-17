@@ -7,10 +7,6 @@
 </div>
 <div class="col-xs-4">
 	<div ng-show="votingNewCtrl.votingSettingsMode == 'voting-custom'">
-		<button class="btn btn-info" ng-click="votingNewCtrl.addNewSlider()">
-			Add Slider
-		</button>
-		<br><br>
 		<div ng-repeat="slider in votingNewCtrl.sliders">
 			<slider-info-edit slider="slider">
 			</slider-info-edit>
@@ -19,5 +15,9 @@
 			</button>
 			<br><br>
 		</div>
+		<br>
+		<button class="btn btn-info" ng-click="votingNewCtrl.addNewSlider()">
+			Add another Slider
+		</button>
 	</div>
 </div>

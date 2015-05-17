@@ -9,11 +9,6 @@
 </div>
 
 <div class="form-group">
-	<label for="voting-votingStarted">Voting Started</label><br>
-	<input class="form-control" type="text" size="40" name="voting-votingStarted" ng-model="voting.votingStarted" required>
-</div>
-
-<div class="form-group">
 	<label for="voting-juryCount">Jury Member Count</label><br>
 	<input class="form-control" ng-model="voting.juryCount" name="voting-juryCount" type="number" value="1" min="1" max="30" required>
 </div>
@@ -30,9 +25,9 @@
 <div ng-show="votingSettingsMode == 'voting-custom'">
 	<div class="form-group">
 		Rating Mode<br>
-		<input type="radio" id="vc" name="voting-rating-mode" ng-model="voting.arethmeticMode" value="arithmetic" checked>
+		<input type="radio" id="vc" name="voting-rating-mode" ng-model="voting.arithmeticMode" value="arithmetic" checked>
 		<label for="arithmetic">Arithmetic</label><br> 
-		<input type="radio" id="vd" name="voting-rating-mode" ng-model="voting.arethmeticMode" value="median">
+		<input type="radio" id="vd" name="voting-rating-mode" ng-model="voting.arithmeticMode" value="median">
 		<label for="median">Median</label><br> 
 	</div>
 	<br>
@@ -41,16 +36,12 @@
 		<input type="number" name="voting-sliderMaxCount" ng-model="voting.sliderMaxValue" min="1" max="30" value="10">
 	</div>
 	<div class="form-group">
-		<label for="voting-duration">Voting Duration</label><br>
-		<input class="form-control" type="text" size="40" name="voting-duration" ng-model="voting.votingDuration" required>
-	</div>
-	<div class="form-group">
 		<label for="voting-duration">Presentation Min Time</label><br>
-		<input class="form-control" type="text" size="40" name="voting-presentation-min-time" ng-model="voting.presentationMinTime" required>
+		<input class="form-control" type="text" pattern="(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])" placeholder="HH:MM:SS" size="40" name="voting-presentation-min-time" ng-model="voting.presentationMinTime" required>
 	</div>
 	<div class="form-group">
 		<label for="voting-duration">Presentation Max Time</label><br>
-		<input class="form-control" type="text" size="40" name="voting-presentation-max-time" ng-model="voting.presentationMaxTime" required>
+		<input class="form-control" type="text" pattern="(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])" placeholder="HH:MM:SS" size="40" name="voting-presentation-max-time" ng-model="voting.presentationMaxTime" required>
 	</div>
 	<hr>
 </div>
