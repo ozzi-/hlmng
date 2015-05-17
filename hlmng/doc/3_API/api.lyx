@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="25" columns="4">
+<lyxtabular version="3" rows="26" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1192,7 +1192,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1201,7 +1201,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1210,11 +1210,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 SpeakerIDFK in Event Item nachgeführt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Presentation Calls entfernt, Typo, Voting Pauses
 \end_layout
 
 \end_inset
@@ -2973,168 +3011,6 @@ DELETE -  Löscht den besagten News Eintrag
 \end_layout
 
 \begin_layout Subsection
-Presentation
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-presentationID -
-\series default
- Die eindeutige ID zu der Präsentation
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-name - 
-\series default
-Der durch das Team gewählte Name der Präsentation
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-teamName - 
-\series default
-Der Teamname
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-date - 
-\series default
-Das Datum an welchem die Präsentation durchgeführt wurde
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-duration - [!] [Null]
-\series default
- Die Dauer der Präsentation
-\end_layout
-
-\begin_layout LyX-Code
-\begin_inset listings
-lstparams "showstringspaces=false"
-inline false
-status open
-
-\begin_layout LyX-Code
-
-{
-\end_layout
-
-\begin_layout LyX-Code
-
-	"presentationID": 1,    
-\end_layout
-
-\begin_layout LyX-Code
-
-	"name": "presentation 1",
-\end_layout
-
-\begin_layout LyX-Code
-
-	"teamName": "1336+1",
-\end_layout
-
-\begin_layout LyX-Code
-
-	"date": "2015-05-10", 
-\end_layout
-
-\begin_layout LyX-Code
-
-	"duration": "00:12:35"
-\end_layout
-
-\begin_layout LyX-Code
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-pub/presentation
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-GET - Liefert alle Präsentationen
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-
-\begin_inset Newline newline
-\end_inset
-
-pub/presentation/{id}
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-GET - Liefert die besagte Präsentation
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-adm/presentation
-\series default
-
-\begin_inset Newline newline
-\end_inset
-
-GET - Liefert alle Präsentationen
-\begin_inset Newline newline
-\end_inset
-
-POST - Erstellt neue Präsentation
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-
-\begin_inset Newline newline
-\end_inset
-
-adm/presentation/{id}
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-GET - Liefert die besagte Präsentation
-\begin_inset Newline newline
-\end_inset
-
-PUT - Updatet die besagte Präsentation
-\begin_inset Newline newline
-\end_inset
-
-DELETE - Löscht die besagte Präsentation
-\end_layout
-
-\begin_layout Subsection
 Push
 \end_layout
 
@@ -4705,6 +4581,38 @@ Der maximale Wert der Slider
 
 
 \series bold
+presentationStarted [Null]
+\series default
+ - Der Zeitpunkt an dem die Präsentation gestartet wurde
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+presentationEnded [Null] 
+\series default
+- Der Zeitpunkt an dem die Präsentation beendet wurde
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+presentationMaxTime 
+\series default
+- Die maximal erlaubte Zeit für eine Präsentation
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+presentationMinTime 
+\series default
+- Die minimal erlaubte Zeit für eine Präsentation
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 votingStarted - [Null] 
 \series default
 Der Zeitpunkt an welchem das Voting gestartet wurde (also status=voting)
@@ -4725,7 +4633,7 @@ Die Zeit in der, nach dem erhaltenen Push, abgestimmt werden darf
 
 
 \series bold
-arethmeticMode - 
+arithmeticMode - 
 \series default
 Die Auswahl der mathematischen Funktion zur Auswertung (median,todo)
 \begin_inset Newline newline
@@ -4793,12 +4701,32 @@ status open
 
 \begin_layout Plain Layout
 
+	"presentationStarted": "14:30:30",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"presentationEnded": "14:37:50", 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"presentationMaxTime": "00:07:00", 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"presentationMinTime": "00:05:00", 
+\end_layout
+
+\begin_layout Plain Layout
+
 	"sliderMaxValue": 10,
 \end_layout
 
 \begin_layout Plain Layout
 
-	"arethmeticMode": "median",
+	"arithmeticMode": "median",
 \end_layout
 
 \begin_layout Plain Layout
@@ -4943,6 +4871,19 @@ GET - Liefert alle Votings aller Slider des Voting
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/duration
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Die gesamte Dauer der Präsentation (inkl.
+ Abzug der Pausen), 00:00:00 falls noch nicht beendet
 \begin_inset Newline newline
 \end_inset
 
