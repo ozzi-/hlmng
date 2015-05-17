@@ -217,6 +217,17 @@ directiveModule.directive('votingInfoEdit', function(){
 	};
 });
 
+directiveModule.directive('votingInfoEditNew', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/voting/voting-info-edit-new.html',
+		scope: {
+			voting: "=voting",
+			votingSettingsMode: "=votingsettingsmode",
+			ctrl: "=ctrl"
+		}
+	};
+});
 
 directiveModule.directive('sliderInfo', function(){
 	return {

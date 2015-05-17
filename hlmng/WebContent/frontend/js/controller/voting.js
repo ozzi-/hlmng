@@ -75,21 +75,26 @@ votingModule.controller('VotingNewController', ['$http','$stateParams','RestServ
 	var hlmng = this;
 	hlmng.voting={};
 	hlmng.sliders=[];
-	hlmng.voting.sliderMaxValue=10;
 	hlmng.postVoting = RestService.post;
 	hlmng.postSlider = RestService.post;
-	hlmng.votingSettingsMode='voting-default';
-	hlmng.voting.arithmeticMode="arithmetic";
 	var internalIDCounter=0;
-
-
 	var defaultSlider='{ "name":"" , "votingIDFK":0, "weight":1,"internalID":3 }';
-	var defaultSliderOne='{ "name":"Speech" , "votingIDFK":0, "weight":1,"internalID":0}';
-	var defaultSliderTwo='{ "name":"Solution" , "votingIDFK":0, "weight":1,"internalID":1 }';
-	var defaultSliderThree='{ "name":"Presentation" , "votingIDFK":0, "weight":1,"internalID":2 }';
-	hlmng.sliders.push(JSON.parse(defaultSliderOne));
-	hlmng.sliders.push(JSON.parse(defaultSliderTwo));
-	hlmng.sliders.push(JSON.parse(defaultSliderThree));
+
+	
+	hlmng.resetDefault = function() { 
+		hlmng.sliders.length =0 ;
+		var defaultSliderOne='{ "name":"Speech" , "votingIDFK":0, "weight":1,"internalID":0}';
+		var defaultSliderTwo='{ "name":"Solution" , "votingIDFK":0, "weight":1,"internalID":1 }';
+		var defaultSliderThree='{ "name":"Presentation" , "votingIDFK":0, "weight":1,"internalID":2 }';
+		hlmng.sliders.push(JSON.parse(defaultSliderOne));
+		hlmng.sliders.push(JSON.parse(defaultSliderTwo));
+		hlmng.sliders.push(JSON.parse(defaultSliderThree));
+		hlmng.votingSettingsMode='voting-default';
+		hlmng.voting.arithmeticMode="arithmetic";
+		hlmng.voting.sliderMaxValue=10;
+	};
+
+	hlmng.resetDefault();
 	
 	hlmng.postAndRedir = function() { 
 		hlmng.voting.status="pre_presentation";
