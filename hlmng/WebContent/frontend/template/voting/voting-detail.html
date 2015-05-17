@@ -7,7 +7,7 @@
 		<form name="votingInfoEditForm" novalidate>
 			<voting-info-edit voting="votingIdCtrl.voting"></voting-info-edit>
 		</form>
-		<button class="btn btn-success" ng-disabled="!votingInfoEditForm.$valid" ng-click="edit=!edit ;votingIdCtrl.putQrcode(votingIdCtrl.voting,votingIdCtrl.voting.votingID,'voting');">Submit</button>
+		<button class="btn btn-success" ng-disabled="!votingInfoEditForm.$valid" ng-click="edit=!edit ;votingIdCtrl.putVoting(votingIdCtrl.voting,votingIdCtrl.voting.votingID,'voting');">Submit</button>
 	</div>
 </div>
 

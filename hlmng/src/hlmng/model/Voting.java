@@ -8,7 +8,11 @@ public class Voting {
 	private int sliderMaxValue;
 	private String votingStarted;
 	private String votingDuration;
-	private String arethmeticMode;
+	private String arithmeticMode;
+	private String presentationMinTime;
+	private String presentationMaxTime;
+	private String presentationStarted;
+	private String presentationEnded;
 	private int round;
 	private int eventIDFK;
 
@@ -20,7 +24,7 @@ public class Voting {
 	public Voting(){
 	
 	}
-	public Voting(int votingID, String name, int juryCount, String status, int sliderMaxValue, String votingStarted, String votingDuration, String arethmeticMode, int round, int eventIDFK){
+	public Voting(int votingID, String name, int juryCount, String status, int sliderMaxValue, String votingStarted, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded, int round, int eventIDFK){
 		this.votingID=votingID;
 		this.name=name;
 		this.juryCount=juryCount;
@@ -28,17 +32,25 @@ public class Voting {
 		this.sliderMaxValue=sliderMaxValue;
 		this.votingStarted=votingStarted;
 		this.votingDuration=votingDuration;
-		this.arethmeticMode=arethmeticMode;
+		this.arithmeticMode=arithmeticMode;
+		this.presentationMinTime=presentationMinTime;
+		this.presentationMaxTime=presentationMaxTime;
+		this.presentationStarted=presentationStarted;
+		this.presentationEnded=presentationEnded;
 		this.round=round;
 		this.eventIDFK=eventIDFK;
 	}
-	public Voting(String name, int juryCount, String status, int sliderMaxValue, String votingDuration, String arethmeticMode, int round, int eventIDFK){
+	public Voting(String name, int juryCount, String status, int sliderMaxValue, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded, int round, int eventIDFK){
 		this.name=name;
 		this.juryCount=juryCount;
 		this.status=status;
 		this.sliderMaxValue=sliderMaxValue;
 		this.votingDuration=votingDuration;
-		this.arethmeticMode=arethmeticMode;
+		this.arithmeticMode=arithmeticMode;
+		this.presentationMinTime=presentationMinTime;
+		this.presentationMaxTime=presentationMaxTime;
+		this.presentationStarted=presentationStarted;
+		this.presentationEnded=presentationEnded;
 		this.round=round;
 		this.eventIDFK=eventIDFK;
 	}
@@ -85,11 +97,11 @@ public class Voting {
 	public void setEventIDFK(int eventIDFK) {
 		this.eventIDFK = eventIDFK;
 	}
-	public String getArethmeticMode() {
-		return arethmeticMode;
+	public String getArithmeticMode() {
+		return arithmeticMode;
 	}
-	public void setArethmeticMode(String arethmeticMode) {
-		this.arethmeticMode = arethmeticMode;
+	public void setArithmeticMode(String arithmeticMode) {
+		this.arithmeticMode = arithmeticMode;
 	}
 	public String getVotingStarted() {
 		return votingStarted;
@@ -102,6 +114,30 @@ public class Voting {
 	}
 	public void setVotingDuration(String votingDuration) {
 		this.votingDuration = votingDuration;
+	}
+	public String getPresentationMinTime() {
+		return presentationMinTime;
+	}
+	public void setPresentationMinTime(String presentationMinTime) {
+		this.presentationMinTime = presentationMinTime;
+	}
+	public String getPresentationMaxTime() {
+		return presentationMaxTime;
+	}
+	public void setPresentationMaxTime(String presentationMaxTime) {
+		this.presentationMaxTime = presentationMaxTime;
+	}
+	public String getPresentationEnded() {
+		return presentationEnded;
+	}
+	public void setPresentationEnded(String presentationEnded) {
+		this.presentationEnded = presentationEnded;
+	}
+	public String getPresentationStarted() {
+		return presentationStarted;
+	}
+	public void setPresentationStarted(String presentationStarted) {
+		this.presentationStarted = presentationStarted;
 	}
 
 }

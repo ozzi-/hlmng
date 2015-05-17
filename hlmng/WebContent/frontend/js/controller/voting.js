@@ -71,17 +71,56 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 }]);
 
 
-speakerModule.controller('VotingNewController', ['$http','RestService','ToolService','dataService', function($http,RestService,ToolService,dataService){
+votingModule.controller('VotingNewController', ['$http','RestService','ToolService','dataService', function($http,RestService,ToolService,dataService){
 	var hlmng = this;
 	hlmng.voting={};
+	hlmng.sliders=[];
 	hlmng.voting.sliderMaxValue=10;
 	hlmng.postVoting = RestService.post;
+	hlmng.votingSettingsMode='voting-default';
+	hlmng.voting.arethmeticMode="arithmetic";
+	var internalIDCounter=0;
+
+
+	var defaultSlider='{ "name":"" , "votingIDFK":0, "weight":1,"internalID":3 }';
+	var defaultSliderOne='{ "name":"Speech" , "votingIDFK":0, "weight":1,"internalID":0}';
+	var defaultSliderTwo='{ "name":"Solution" , "votingIDFK":0, "weight":1,"internalID":1 }';
+	var defaultSliderThree='{ "name":"Presentation" , "votingIDFK":0, "weight":1,"internalID":2 }';
+	hlmng.sliders.push(JSON.parse(defaultSliderOne));
+	hlmng.sliders.push(JSON.parse(defaultSliderTwo));
+	hlmng.sliders.push(JSON.parse(defaultSliderThree));
+	
 	hlmng.postAndRedir = function() { 
 		hlmng.postVoting(hlmng.voting,'voting').then(function(data){
 			hlmng.voting=data;
 			ToolService.redir('voting.id',{votingId: hlmng.voting.votingID});
 		});
 	};
+	
+	hlmng.addNewSlider = function() {
+		var sliderObj = JSON.parse(defaultSlider);
+		sliderObj.internalID = internalIDCounter;
+		hlmng.sliders.push(sliderObj);
+		internalIDCounter++;
+	};
+	
+	hlmng.removeSlider = function(id){
+		for (var index = 0; index < hlmng.sliders.length; ++index) {
+			if(hlmng.sliders[index].internalID==id){
+				hlmng.sliders.splice(index,1);					
+			}
+		}
+	};
+	
+	
+	hlmng.postSliders = function() {
+		for(var i = 0; i < hlmng.sliders.length;  i++) {
+			RestService.post(hlmng.sliders[i],'slider').then(function(data){
+				alert(data);
+			});
+		}
+	};
+	
 }]);
 
 

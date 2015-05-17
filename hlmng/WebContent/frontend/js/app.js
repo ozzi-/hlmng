@@ -1,6 +1,6 @@
 var app = angular.module('hlmngApp',['stateprovider','speaker','event','voting','social','news',
                                      'push','navbar','eventroom','qrcode','eventitem','media',
-                                     'helper','directive','ui.bootstrap']);
+                                     'helper','directive','slider','ui.bootstrap']);
 
 
 var apiUrl = '../rest/adm/';

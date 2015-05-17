@@ -1,8 +1,23 @@
 <div class="col-xs-4">
 	<form name="votingInfoNewForm" novalidate>
-		<voting-info-edit voting="votingNewCtrl.voting"></voting-info-edit>
+		<voting-info-edit votingsettingsmode="votingNewCtrl.votingSettingsMode" voting="votingNewCtrl.voting"></voting-info-edit>
 		<br><br><br>
 	</form>
 	<button class="btn btn-success" ng-disabled="!votingInfoNewForm.$valid" ng-click="votingNewCtrl.postAndRedir();">Submit</button>
 </div>
-
+<div class="col-xs-4">
+	<div ng-show="votingNewCtrl.votingSettingsMode == 'voting-custom'">
+		<button class="btn btn-info" ng-click="votingNewCtrl.addNewSlider()">
+			Add Slider
+		</button>
+		<br><br>
+		<div ng-repeat="slider in votingNewCtrl.sliders">
+			<slider-info-edit slider="slider">
+			</slider-info-edit>
+			<button class="btn btn-danger" ng-click="votingNewCtrl.removeSlider(slider.internalID)">
+				Remove this Slider
+			</button>
+			<br><br>
+		</div>
+	</div>
+</div>

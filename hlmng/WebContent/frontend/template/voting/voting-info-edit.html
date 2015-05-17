@@ -18,10 +18,11 @@
 	<input class="form-control" ng-model="voting.juryCount" name="voting-juryCount" type="number" value="1" min="1" max="30" required>
 </div>
 
-<input type="radio" id="vd" name="voting-settings-mode" ng-model="votingSettingsMode" value="voting-default" checked>
+<input type="radio" id="vd" name="voting-settings-mode" ng-model="votingSettingsMode" ng-true-value="voting-default" value="voting-default" checked>
 <label for="vd">Use default Voting settings</label><br> 
-<input type="radio" id="vc" name="voting-settings-mode" ng-model="votingSettingsMode" value="voting-custom">
+<input type="radio" id="vc" name="voting-settings-mode" ng-model="votingSettingsMode"  ng-true-value="voting-custom"  value="voting-custom">
 <label for="vc">Use custom Voting settings</label><br> 
+
 <br><hr><br>
 <div ng-show="votingSettingsMode == 'voting-default'">
 	Default
@@ -29,9 +30,9 @@
 <div ng-show="votingSettingsMode == 'voting-custom'">
 	<div class="form-group">
 		Rating Mode<br>
-		<input type="radio" id="vc" name="voting-rating-mode" ng-model="votingRatingMode" value="mode-arithmetic" checked>
+		<input type="radio" id="vc" name="voting-rating-mode" ng-model="voting.arethmeticMode" value="arithmetic" checked>
 		<label for="arithmetic">Arithmetic</label><br> 
-		<input type="radio" id="vd" name="voting-rating-mode" ng-model="votingRatingMode" value="mode-median">
+		<input type="radio" id="vd" name="voting-rating-mode" ng-model="voting.arethmeticMode" value="median">
 		<label for="median">Median</label><br> 
 	</div>
 	<br>
@@ -43,6 +44,15 @@
 		<label for="voting-duration">Voting Duration</label><br>
 		<input class="form-control" type="text" size="40" name="voting-duration" ng-model="voting.votingDuration" required>
 	</div>
+	<div class="form-group">
+		<label for="voting-duration">Presentation Min Time</label><br>
+		<input class="form-control" type="text" size="40" name="voting-presentation-min-time" ng-model="voting.presentationMinTime" required>
+	</div>
+	<div class="form-group">
+		<label for="voting-duration">Presentation Max Time</label><br>
+		<input class="form-control" type="text" size="40" name="voting-presentation-max-time" ng-model="voting.presentationMaxTime" required>
+	</div>
+	<hr>
 </div>
 
 

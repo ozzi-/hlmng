@@ -1,0 +1,16 @@
+<div ng-hide="edit">
+	<slider-info slider="sliderIdCtrl.slider"></slider-info><br>
+</div>
+
+<div ng-show="edit">
+	<div class="col-xs-4">
+		<form name="sliderInfoEditForm" novalidate>
+			<slider-info-edit slider="sliderIdCtrl.slider"></slider-info-edit>
+		</form>
+		<button class="btn btn-success" ng-disabled="!sliderInfoEditForm.$valid" ng-click="edit=!edit ;sliderIdCtrl.putSlider(sliderIdCtrl.slider,sliderIdCtrl.slider.sliderID,'slider');">Submit</button>
+	</div>
+</div>
+
+
+<edit-button edit="edit"></edit-button>
+

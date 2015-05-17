@@ -74,7 +74,7 @@ public class DaoTest {
 	public void testVotingRelations(){
 		
 		
-		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode", 1, 1);
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode","00:05:00","00:07:00","00:07:00","00:07:00",1, 1);
 		int votingid = votingDao.addElement(voting);
 		
 		Slider slider = new Slider("TEST", 1, votingid);
@@ -121,7 +121,7 @@ public class DaoTest {
 	}	
 	@Test
 	 public void testNewVoting(){
-		boolean votingCreate =testDaoGenericAdd(new Voting("name", 10, "undef", 10, "00:05:00", "undef", 1, 1), votingDao);
+		boolean votingCreate =testDaoGenericAdd(new Voting("name", 10, "undef", 10, "00:05:00", "undef","00:06:00","00:07:30","00:07:00","00:07:00", 1, 1), votingDao);
 		assertTrue(votingCreate);
 	}	
 	@Test

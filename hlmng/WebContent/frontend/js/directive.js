@@ -211,12 +211,32 @@ directiveModule.directive('votingInfoEdit', function(){
 		restrict: 'E',
 		templateUrl: 'template/voting/voting-info-edit.html',
 		scope: {
-			voting: "=voting"
+			voting: "=voting",
+			votingSettingsMode: "=votingsettingsmode"
 		}
 	};
 });
 
-	
+
+directiveModule.directive('sliderInfo', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/slider/slider-info.html',
+		scope: {
+			slider: "=slider"
+		}
+	};
+});
+
+directiveModule.directive('sliderInfoEdit', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/slider/slider-info-edit.html',
+		scope: {
+			slider: "=slider"
+		}
+	};
+});
 	
 // This code comes from: https://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs
 directiveModule.directive('fileModel', ['$parse', function ($parse) {

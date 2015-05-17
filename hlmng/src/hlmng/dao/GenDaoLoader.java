@@ -5,6 +5,7 @@ import hlmng.model.EventItem;
 import hlmng.model.EventRoom;
 import hlmng.model.Media;
 import hlmng.model.News;
+import hlmng.model.PresentationPause;
 import hlmng.model.Push;
 import hlmng.model.QrCode;
 import hlmng.model.Slider;
@@ -34,7 +35,9 @@ public enum GenDaoLoader {
 	private GenDao presentationDao;
 	private GenDao pushDao;
 	private GenDao socialDao;
-	
+	private GenDao presentationpauseDao;
+
+
 	private GenDaoLoader() {
 		eventDao = new GenDao(Event.class);
 		eventItemDao = new GenDao(EventItem.class);
@@ -49,6 +52,13 @@ public enum GenDaoLoader {
 		userDao = new UserDao(User.class);
 		voteDao=new VoteDao(Vote.class);
 		votingDao=new GenDao(Voting.class);
+		presentationpauseDao=new GenDao(PresentationPause.class);
+	}
+	public GenDao getPresentationpauseDao(){
+		return presentationpauseDao;
+	}
+	public void setPresentationpauseDao(GenDao presentationpauseDao){
+		this.presentationpauseDao=presentationpauseDao;
 	}
 	public GenDao getSliderDao() {
 		return sliderDao;

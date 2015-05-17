@@ -3,11 +3,14 @@ package hlmng.resource.adm;
 
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
+import hlmng.model.PresentationPause;
 import hlmng.model.Push;
 import hlmng.model.Slider;
 import hlmng.model.Vote;
 import hlmng.model.Voting;
 import hlmng.resource.Resource;
+import hlmng.resource.TimeHelper;
+import hlmng.resource.TimeHelper.TimePart;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +40,7 @@ public class VotingResource extends Resource {
 	private GenDao voteDao = GenDaoLoader.instance.getVoteDao();
 	private GenDao pushDao = GenDaoLoader.instance.getPushDao();
 	private GenDao userDao = GenDaoLoader.instance.getUserDao();
+	private GenDao presentationpauseDao = GenDaoLoader.instance.getPresentationpauseDao();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -65,6 +69,54 @@ public class VotingResource extends Resource {
 		return (List<Object>) obj;
 	}
 
+	
+	@GET
+	@Path("{id}/presentationpauses")
+	public List<Object> getPauses(@PathParam("id") int id){
+		return presentationpauseDao.listByFK("votingIDFK", id);
+	}
+	
+	@GET
+	@Path("{id}/duration")
+	public String getDuration(@PathParam("id") int id) throws java.text.ParseException{
+		Voting voting = (Voting)votingDao.getElement(id);
+		if(voting.getPresentationStarted()==null || voting.getPresentationEnded()==null){
+			return "00:00:00";
+		}
+		String presentationDiff = calcDifference(voting.getPresentationStarted(), voting.getPresentationEnded());
+        String pauseTotal="00:00:00"; 
+        String pausePart ="00:00:00";
+        
+        List<Object> pauses = presentationpauseDao.listByFK("votingIDFK", id);
+        for (Object pauseObj : pauses) {
+			PresentationPause pause = (PresentationPause) pauseObj;
+			pausePart = calcDifference(pause.getStart(),pause.getStop());
+			pauseTotal = calcSum(pausePart,pauseTotal);
+		}
+        return calcDifference(pauseTotal,presentationDiff);
+	}  
+ 
+	private String calcSum(String timeOneP, String timeTwoP) throws java.text.ParseException{
+		TimePart tp = new TimeHelper.TimePart();
+		TimePart one = TimeHelper.TimePart.parse(timeOneP);
+		TimePart two = TimeHelper.TimePart.parse(timeTwoP);		
+		tp.add(one);
+		tp.add(two);
+		return(tp.toString());
+	}
+	private String calcDifference(String startedP, String endedP)
+			throws java.text.ParseException {
+		if(startedP==null || endedP==null){
+			return "00:00:00";
+		}
+		TimePart tp = new TimeHelper.TimePart();
+		TimePart started = TimeHelper.TimePart.parse(startedP);
+		TimePart ended = TimeHelper.TimePart.parse(endedP);
+		tp.add(ended);
+		tp.sub(started);
+		return (tp.toString());
+	} 
+	
 	@GET
 	@Path("{id}/votes")
 	public List<Vote> getVotes(@PathParam("id") int id) throws IOException{
