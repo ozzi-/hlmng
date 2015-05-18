@@ -8,6 +8,18 @@ app.factory('ToolService', ['$location','RestService','$state','$log','$http','$
 			var time = new Date();
 			return ("0" + time.getHours()).slice(-2)   + ":" +  ("0" + time.getMinutes()).slice(-2) + ":" +  ("0" + time.getSeconds()).slice(-2);
 		},
+		dateCompare: function(time1,time2) {
+		  var t1 = new Date();
+		  var parts = time1.split(":");
+		  t1.setHours(parts[0],parts[1],parts[2],0);
+		  var t2 = new Date();
+		  parts = time2.split(":");
+		  t2.setHours(parts[0],parts[1],parts[2],0);
+		  // returns 1 if greater, -1 if less and 0 if the same
+		  if (t1.getTime()>t2.getTime()) return 1;
+		  if (t1.getTime()<t2.getTime()) return -1;
+		  return 0;
+		},
 		uploadFile: function(file){
 			var deferred = $q.defer();
 	        var fd = new FormData();

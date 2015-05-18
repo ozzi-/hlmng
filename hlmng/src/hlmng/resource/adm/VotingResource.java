@@ -90,7 +90,7 @@ public class VotingResource extends Resource {
 		}
 		return isPaused;
 	}
-	// TODO document those two calls /\ \/ 
+	// TODO document all new calls here . . .  
 	@GET
 	@Path("{id}/getpause")
 	public PresentationPause getPauseElem(@PathParam("id") int id){
@@ -103,6 +103,21 @@ public class VotingResource extends Resource {
 		}
 		return null;
 	}
+	@GET
+	@Path("{id}/audiencevotingover")
+	public boolean checkAudienceVotingOver(@PathParam("id") int id) throws IOException{
+		Voting voting = (Voting) getResource(votingDao, id);
+		if(voting==null || voting.getVotingDuration()==null || voting.getVotingStarted()==null){
+			return false;
+		}
+		TimePart tpShould = new TimeHelper.TimePart();
+		tpShould.add(TimePart.parse(voting.getVotingStarted()));
+		tpShould.add(TimePart.parse(voting.getVotingDuration()));
+		
+		TimePart tpIs = new TimeHelper.TimePart();
+		return tpShould.compareTo(tpIs)==1?true:false;
+	}
+	
 	
 	@GET
 	@Path("{id}/duration")
@@ -153,6 +168,7 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}/votes/count")
 	public int getVotesCount(@PathParam("id") int id) throws IOException{
+		// TODO device by slider count!
 		return getVoteList(id,modes.all).size();
 	}
 	@GET

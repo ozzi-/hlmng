@@ -95,6 +95,37 @@ public class TimeHelper {
 	        this.hours += tp.hours + of;
 	        return this;
 	    }
+	    /**
+	     * @return 1 if >, -1 if <, 0 if ==
+	     */
+	    public int compareTo(TimePart other){
+			if(this.hours>other.hours){
+				return 1;
+			}
+			if(this.hours<other.hours){
+				return -1;
+			}
+			if(this.hours==other.hours){
+				if(this.minutes>other.minutes){
+					return 1;
+				}
+				if(this.minutes<other.minutes){
+					return -1;
+				}
+				if(this.hours==other.hours){
+					if(this.seconds>other.seconds){
+						return 1;
+					}
+					if(this.seconds<other.seconds){
+						return -1;
+					}
+					if(this.seconds==other.seconds){
+						return 0;
+					}
+				}
+			}
+			return 0;
+	    }
 
 	    @Override
 	    public String toString() {
