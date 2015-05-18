@@ -15,6 +15,7 @@ import hlmng.resource.TimeHelper.TimePart;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -147,27 +148,75 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}/votes")
 	public List<Vote> getVotes(@PathParam("id") int id) throws IOException{
+		return getVoteList(id,modes.all);
+	}
+	@GET
+	@Path("{id}/votes/count")
+	public int getVotesCount(@PathParam("id") int id) throws IOException{
+		return getVoteList(id,modes.all).size();
+	}
+	@GET
+	@Path("{id}/votes/audience")
+	public List<Vote> getVotesAudience(@PathParam("id") int id) throws IOException{
+		return getVoteList(id,modes.audienceOnly);
+	}
+	@GET
+	@Path("{id}/votes/audience/count")
+	public int getVotesAudienceCount(@PathParam("id") int id) throws IOException{
+		return getVoteList(id,modes.audienceOnly).size();
+	}
+	@GET
+	@Path("{id}/votes/jury")
+	public List<Vote> getVotesJury(@PathParam("id") int id) throws IOException{
+		return getVoteList(id,modes.juryOnly);
+	}
+	@GET
+	@Path("{id}/votes/jury/count")
+	public int getVotesJuryCount(@PathParam("id") int id) throws IOException{
+		return getVoteList(id,modes.juryOnly).size();
+	}
+	
+
+	private enum modes{
+		juryOnly, audienceOnly, all
+	}
+	private List<Vote> getVoteList(int id, modes selectionJuryMode) {
 		List<Object> sliders= sliderDao.listByFK("votingIDFK", id);
 		List<Vote> voteList = new ArrayList<Vote>(); 
 		for (Object sliderObj : sliders) {
 			List<Object> toAddVotes = voteDao.listByFK("sliderIDFK", ((Slider) sliderObj).getSliderID());
 			for (Object toAddVoteObj : toAddVotes) {
-				voteList.add((Vote)toAddVoteObj);
+				Vote vote = (Vote)toAddVoteObj;
+				if(selectionJuryMode==modes.all){
+					voteList.add(vote);					
+				}else{
+					if(selectionJuryMode==modes.juryOnly){
+						if(vote.isIsJury()){
+							voteList.add(vote);					
+						}
+					}else{
+						if(!vote.isIsJury()){
+							voteList.add(vote);					
+						}
+					}
+				}
 			}
 		}
 		return voteList;
 	}
-
+	
 	
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException, ParseException {
-		if(element.getStatus().equals(Voting.statusEnum.presentation_end) || element.getStatus().equals(Voting.statusEnum.voting)){
+		if(element.getStatus().equals(Voting.statusEnum.presentation_end.toString()) || element.getStatus().equals(Voting.statusEnum.voting.toString())){
 			List<Object> users = listResource(userDao, false);
 			Push pushNotif = new Push(element.getStatus(),"{ \"votingID\": "+element.getVotingID()+" , \"name\": \""+element.getName()+"\" }", "vote_event" );
 			PushResource.doGCMSend(pushNotif, users);
 			postResource(pushDao,pushNotif);
+		}else{
+			log.Log.addEntry(Level.INFO, "No need for GCM push");
 		}
 		return putResource(votingDao, element, id);
 	}

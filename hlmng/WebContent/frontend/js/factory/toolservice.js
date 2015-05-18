@@ -4,6 +4,10 @@ app.factory('ToolService', ['$location','RestService','$state','$log','$http','$
 			$log.log("Redirecting to state: "+state+" with params: "+params.toSource());
 			$state.go(state,params);
 		},
+		getCurTime: function (){
+			var time = new Date();
+			return ("0" + time.getHours()).slice(-2)   + ":" +  ("0" + time.getMinutes()).slice(-2) + ":" +  ("0" + time.getSeconds()).slice(-2);
+		},
 		uploadFile: function(file){
 			var deferred = $q.defer();
 	        var fd = new FormData();

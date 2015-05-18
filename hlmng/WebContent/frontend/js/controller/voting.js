@@ -1,6 +1,6 @@
 var votingModule = angular.module('voting', []);
 
-votingModule.controller('VotingListController', ['$http','RestService','$stateParams', function($http,RestService,$stateParams){
+votingModule.controller('VotingListController', ['$http','RestService','$stateParams','ToolService', function($http,RestService,$stateParams,ToolService){
 	var hlmng = this;
 	hlmng.votings = [];
 	hlmng.votingsUpcomingPrePresentation = [];
@@ -30,15 +30,17 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 		if(voting.ispaused==true){
 			RestService.get(voting.votingID,'voting','getpause').then(function(data){
 				var pauseObj = data;
-				var time = new Date();
-				pauseObj.stop= ("0" + time.getHours()).slice(-2)   + ":" +  ("0" + time.getMinutes()).slice(-2) + ":" +  ("0" + time.getSeconds()).slice(-2);
+				pauseObj.stop= ToolService.getCurTime();
 				RestService.put(pauseObj,pauseObj.presentationpauseID,'presentationpause');
 				voting.ispaused=false;
 			});
 		}
 	};
+	
 	hlmng.startPresentation = function(voting) {  
 		voting.status = "presentation";
+		voting.presentationStarted=ToolService.getCurTime();
+		voting.ispaused=false;
 		hlmng.putVoting(voting,voting.votingID,'voting');
 		hlmng.removeFromAll(voting);
 		hlmng.votingsUpcomingPresentation.push(voting);
@@ -46,6 +48,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	
 	hlmng.endPresentation = function(voting) {  
 		voting.status = "presentation_end";
+		voting.presentationEnded=ToolService.getCurTime();
 		hlmng.putVoting(voting,voting.votingID,'voting');
 		hlmng.removeFromAll(voting);
 		hlmng.votingsUpcomingEndPresentation.push(voting);
@@ -74,6 +77,38 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 		}
 	};
 	
+	
+	var refreshData = function() {	
+		RestService.list('social').then(function(data){
+		    $.each(data, function(i, item){
+		    	if(item.eventIDFK==$stateParams.eventId){
+		    		var there=false;
+		    		var thereIndex=0;
+	    			for(var i=0; i<$scope.socialsAccepted.length; i++) {
+    			        if ($scope.socialsAccepted[i].socialID == item.socialID){
+    			        	there=true;
+    			        	thereIndex=i;
+    			        }
+    			    }
+	    			if(there==false && item.status=="accepted"){
+    					$scope.socialsAccepted.push(item);	
+	    			}
+	    			if(there==true && item.status!="accepted"){
+    					$scope.socialsAccepted.splice(thereIndex,1);	 
+	    			}
+		    	}
+		    });
+		});
+	};
+
+	var promise = $interval(refreshData,4000);
+	// Cancel interval on page changes
+	$scope.$on('$destroy', function(){
+	    if (angular.isDefined(promise)) {
+	        $interval.cancel(promise);
+	        promise = undefined;
+	    }
+	});
 	
 	RestService.list('voting').then(function(data){
 	    $.each(data, function(i, item){
