@@ -27,6 +27,7 @@
 <h1>Running Votings</h1>
 <span ng-repeat="voting in votingListCtrl.votingsRunning  | filter:search:strict">
 	<voting-info voting="voting"></voting-info><br>
+	Jury Vote Count: {{voting.votesJuryCount}} - Audience Vote Count: {{voting.votesAudienceCount}}<br>
 	<button ng-click="votingListCtrl.stopVoting(voting);" class="btn btn-danger">Stop Voting</button>
 	<br><br>
 </span>

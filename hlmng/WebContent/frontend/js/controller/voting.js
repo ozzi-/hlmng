@@ -1,6 +1,6 @@
 var votingModule = angular.module('voting', []);
 
-votingModule.controller('VotingListController', ['$http','RestService','$stateParams','ToolService', function($http,RestService,$stateParams,ToolService){
+votingModule.controller('VotingListController', ['$http','RestService','$stateParams','$interval','$scope','ToolService', function($http,RestService,$stateParams,$interval,$scope,ToolService){
 	var hlmng = this;
 	hlmng.votings = [];
 	hlmng.votingsUpcomingPrePresentation = [];
@@ -76,29 +76,18 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 			}
 		}
 	};
-	
-	
-	var refreshData = function() {	
-		RestService.list('social').then(function(data){
-		    $.each(data, function(i, item){
-		    	if(item.eventIDFK==$stateParams.eventId){
-		    		var there=false;
-		    		var thereIndex=0;
-	    			for(var i=0; i<$scope.socialsAccepted.length; i++) {
-    			        if ($scope.socialsAccepted[i].socialID == item.socialID){
-    			        	there=true;
-    			        	thereIndex=i;
-    			        }
-    			    }
-	    			if(there==false && item.status=="accepted"){
-    					$scope.socialsAccepted.push(item);	
-	    			}
-	    			if(there==true && item.status!="accepted"){
-    					$scope.socialsAccepted.splice(thereIndex,1);	 
-	    			}
-		    	}
-		    });
-		});
+
+	var refreshData = function() {
+		var index;
+		for (index = 0; index < hlmng.votingsRunning.length; ++index) {
+			var voting = hlmng.votingsRunning[index];
+			RestService.get(hlmng.votingsRunning[index].votingID,'voting','votes/audience/count').then(function(data){
+				voting.votesAudienceCount=data;
+			});
+			RestService.get(hlmng.votingsRunning[index].votingID,'voting','votes/jury/count').then(function(data){
+				voting.votesJuryCount=data;
+			});
+		}
 	};
 
 	var promise = $interval(refreshData,4000);
@@ -146,12 +135,16 @@ votingModule.controller('VotingNewController', ['$http','$stateParams','RestServ
 	
 	hlmng.resetDefault = function() { 
 		hlmng.sliders.length =0 ;
-		var defaultSliderOne='{ "name":"Speech" , "votingIDFK":0, "weight":1,"internalID":0}';
-		var defaultSliderTwo='{ "name":"Solution" , "votingIDFK":0, "weight":1,"internalID":1 }';
-		var defaultSliderThree='{ "name":"Presentation" , "votingIDFK":0, "weight":1,"internalID":2 }';
+		var defaultSliderOne='{ "name":"Talk Intro" , "votingIDFK":0, "weight":1,"internalID":0}';
+		var defaultSliderTwo='{ "name":"Clear Statement" , "votingIDFK":0, "weight":1,"internalID":1 }';
+		var defaultSliderThree='{ "name":"Lesson Learned" , "votingIDFK":0, "weight":1,"internalID":2 }';
+		var defaultSliderFour='{ "name":"Rhetoric" , "votingIDFK":0, "weight":1,"internalID":3 }';
+		var defaultSliderFive='{ "name":"Like Factor" , "votingIDFK":0, "weight":1,"internalID":4 }';
 		hlmng.sliders.push(JSON.parse(defaultSliderOne));
 		hlmng.sliders.push(JSON.parse(defaultSliderTwo));
 		hlmng.sliders.push(JSON.parse(defaultSliderThree));
+		hlmng.sliders.push(JSON.parse(defaultSliderFour));
+		hlmng.sliders.push(JSON.parse(defaultSliderFive));
 		hlmng.votingSettingsMode='voting-default';
 		hlmng.voting.arithmeticMode="arithmetic";
 		hlmng.voting.sliderMaxValue=10;
