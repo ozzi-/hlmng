@@ -7,7 +7,15 @@
 </span>
 <span ng-repeat="voting in votingListCtrl.votingsUpcomingPresentation  | filter:search:strict">
 	<voting-info voting="voting"></voting-info><br>
-	<button ng-click="votingListCtrl.endPresentation(voting);" class="btn btn-warning">End Presentation</button>
+	<span ng-hide="voting.ispaused">
+		<button ng-click="votingListCtrl.endPresentation(voting);" class="btn btn-warning">End Presentation</button>
+	</span>
+	<span ng-show="voting.ispaused">
+		<button ng-click="votingListCtrl.resumePresentation(voting);" class="btn btn-default">Resume Presentation</button>
+	</span>
+	<span ng-hide="voting.ispaused">
+		<button ng-click="votingListCtrl.pausePresentation(voting);" class="btn btn-default">Pause Presentation</button>
+	</span>
 	<br><br>
 </span>
 <span ng-repeat="voting in votingListCtrl.votingsUpcomingEndPresentation  | filter:search:strict">

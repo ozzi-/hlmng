@@ -77,6 +77,33 @@ public class VotingResource extends Resource {
 	}
 	
 	@GET
+	@Path("{id}/ispaused")
+	public boolean isPaused(@PathParam("id") int id){
+		List<Object> pauseObjList = presentationpauseDao.listByFK("votingIDFK", id);
+		boolean isPaused = false;
+		for (Object pPobj : pauseObjList) {
+			PresentationPause pP = (PresentationPause) pPobj;
+			if(pP.getStop()==null){
+				isPaused=true;
+			}
+		}
+		return isPaused;
+	}
+	// TODO document those two calls /\ \/ 
+	@GET
+	@Path("{id}/getpause")
+	public PresentationPause getPauseElem(@PathParam("id") int id){
+		List<Object> pauseObjList = presentationpauseDao.listByFK("votingIDFK", id);
+		for (Object pPobj : pauseObjList) {
+			PresentationPause pP = (PresentationPause) pPobj;
+			if(pP.getStop()==null){
+				return pP;
+			}
+		}
+		return null;
+	}
+	
+	@GET
 	@Path("{id}/duration")
 	public String getDuration(@PathParam("id") int id) throws java.text.ParseException{
 		Voting voting = (Voting)votingDao.getElement(id);

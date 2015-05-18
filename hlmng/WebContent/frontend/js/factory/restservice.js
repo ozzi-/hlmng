@@ -20,10 +20,15 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
     			$log.log('couldn\'t put '+className+', ID='+objId+"\nError:"+error);
     		});
         },
-    	get: function (objId,className) {
+    	get: function (objId,className,addition) {
     		 // we need the q lib -> deferred because else the view would receive the data "too late"
             var deferred = $q.defer();
-            $http({ method: "GET", url: apiUrl+className+'/'+objId })
+            if (addition === undefined){
+            	addition = "";            	
+            }else {
+            	addition = "/"+addition;
+            }
+            $http({ method: "GET", url: apiUrl+className+'/'+objId+addition })
             .success(function (data) {
 				$log.log('get '+className+' successfully, ID='+objId);
                 deferred.resolve(data);

@@ -17,11 +17,13 @@ import javax.ws.rs.core.Response;
 
 import org.json.simple.parser.ParseException;
 
+import settings.HLMNGSettings;
+
+@Path(HLMNGSettings.admURL+"/presentationpause")
 public class PresentationpauseResource extends Resource {
 
 	private GenDao presentationpauseDao = GenDaoLoader.instance.getPresentationpauseDao();
-
-
+	
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)

@@ -11,7 +11,32 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	hlmng.votingsList = [hlmng.votingsUpcomingPrePresentation,hlmng.votingsUpcomingPresentation,hlmng.votingsUpcomingEndPresentation,hlmng.votingsRunning,hlmng.votingsFinished];
 	
 	hlmng.putVoting = RestService.put;
-	
+	hlmng.postPausePresentation= RestService.post;
+
+	// use /ispaused 
+	hlmng.pausePresentation = function(voting) {
+		if(voting.ispaused==false){
+			var pause='{ "start":"00:00:00" , "votingIDFK":0}';
+			var time = new Date();
+			var pauseObj=JSON.parse(pause);
+			pauseObj.start = ("0" + time.getHours()).slice(-2)   + ":" +  ("0" + time.getMinutes()).slice(-2) + ":" +  ("0" + time.getSeconds()).slice(-2);
+			pauseObj.votingIDFK= voting.votingID;
+			hlmng.postPausePresentation(pauseObj,'presentationpause').then(function(data){
+				voting.ispaused=true;
+			});
+		}
+	};
+	hlmng.resumePresentation = function(voting) {
+		if(voting.ispaused==true){
+			RestService.get(voting.votingID,'voting','getpause').then(function(data){
+				var pauseObj = data;
+				var time = new Date();
+				pauseObj.stop= ("0" + time.getHours()).slice(-2)   + ":" +  ("0" + time.getMinutes()).slice(-2) + ":" +  ("0" + time.getSeconds()).slice(-2);
+				RestService.put(pauseObj,pauseObj.presentationpauseID,'presentationpause');
+				voting.ispaused=false;
+			});
+		}
+	};
 	hlmng.startPresentation = function(voting) {  
 		voting.status = "presentation";
 		hlmng.putVoting(voting,voting.votingID,'voting');
@@ -57,7 +82,10 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	    		if (item.status=="pre_presentation"){
 	    			hlmng.votingsUpcomingPrePresentation.push(item);
     			}else if (item.status=="presentation"){
-    				hlmng.votingsUpcomingPresentation.push(item);
+    				RestService.get(item.votingID,'voting','ispaused').then(function(data){
+    					item.ispaused=data;
+    					hlmng.votingsUpcomingPresentation.push(item);
+    				});
 	    		}else if (item.status=="presentation_end"){
 	    			hlmng.votingsUpcomingEndPresentation.push(item);
 	    		}else if (item.status=="voting"){
