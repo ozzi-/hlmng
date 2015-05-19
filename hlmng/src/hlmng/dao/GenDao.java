@@ -71,10 +71,12 @@ public class GenDao {
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
 			try(PreparedStatement ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS)){
 				try(PreparedStatement psF = DB.setAllFieldsOfPS(ps, classType, tModel ,null)){
-					psF.executeUpdate();
-					try(ResultSet rs = ps.getGeneratedKeys()){						
-						rs.next();
-						insertedID = rs.getInt(1);				
+					if(psF!=null){
+						psF.executeUpdate();
+						try(ResultSet rs = ps.getGeneratedKeys()){						
+							rs.next();
+							insertedID = rs.getInt(1);				
+						}						
 					}
 				}
 			}			

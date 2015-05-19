@@ -17,6 +17,8 @@ import javax.sql.DataSource;
 
 import log.Log;
 
+import org.owasp.esapi.ESAPI;
+
 /**
  * This class handles the creation of a DB connection and allows building 'dynamic' prepared statements.
  */
@@ -29,12 +31,21 @@ public class DB {
 	 * That way the client has to perform one call less!
 	 */
 	@SuppressWarnings("serial")
-	private static ArrayList<String> dontMapFields = new ArrayList<String>() {
-	{
+	private static ArrayList<String> dontMapFields = new ArrayList<String>() {{
 	    add("media");
 	    add("authorName");
 	}};
-	
+	@SuppressWarnings("serial")
+	private static ArrayList<SafeValues> safeValuesMap = new ArrayList<SafeValues>() {	{
+		add(new SafeValues(8, "(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])")); // HH:MM:ss
+		add(new SafeValues(10, "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])")); //  YYYY-MM-DD
+		add(new SafeValues(19, "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01]) (([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])")); //  YYYY-MM-DD HH:MM:ss
+		add(new SafeValues(9, "image/png")); // image/png
+		add(new SafeValues(10, "image/jpeg")); // image/jpeg	
+	}};
+
+		
+		
 	/**
 	 * See WEB-INF/web.xml and WEB-INF/context.xml for DB context settings
 	 * DO NOT use this directly, use the class dao, since it contains the logic for testing and more.
@@ -122,6 +133,22 @@ public class DB {
 						int v = (int) value;
 						if (v==0){
 							value=null;
+						}
+					}
+					if(value instanceof String){
+						boolean isSafe=false;
+						for (SafeValues safeValue : safeValuesMap) {
+							if(safeValue.isSafeString(value)){
+								isSafe=true;
+							}
+						}
+						if(!isSafe){
+							String valueOld = (String)value;
+							value = ESAPI.encoder().encodeForHTML((String)value);
+							if(!valueOld.equals(value)){
+								Log.addEntry(Level.WARNING,"ESAPI Encoding returned different value, possible XSS attack prevented!");
+								return null;
+							}													
 						}
 					}
 					ps.setObject(++i, value);
