@@ -9,6 +9,7 @@ import hlmng.model.Slider;
 import hlmng.model.User;
 import hlmng.model.Vote;
 import hlmng.model.Voting;
+import hlmng.resource.TimeHelper;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -64,13 +65,14 @@ public class RestTest {
 		User user = new User("testusername", "1234test1234", "4321test");
 		int userid  = userDao.addElement(user);
 			
-		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode","00:05:30","00:06:30","00:07:00","00:07:00", 1, 1);
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "median","00:05:30","00:06:30",TimeHelper.getCurrentTime(),"00:07:00", 1, 1);
+		voting.setVotingStarted(TimeHelper.getCurrentTime());
 		int votingid = votingDao.addElement(voting);
 		
 		Slider slider = new Slider("TEST", 1, votingid);
 		int sliderid = sliderDao.addElement(slider);
 
-		String postData= "{\"isJury\": false,\"score\": 7,\"sliderIDFK\": "+sliderid+",\"userIDFK\": "+userid+"},";
+		String postData= "{\"isJury\": false,\"score\": 7,\"sliderIDFK\": "+sliderid+",\"userIDFK\": "+userid+"}";
 		String response="";
 		try {
 			try {
@@ -190,13 +192,11 @@ public class RestTest {
 				con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
-
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);
 		}
 		in.close();
 		return response.toString();
-
 	}
 
 	/*

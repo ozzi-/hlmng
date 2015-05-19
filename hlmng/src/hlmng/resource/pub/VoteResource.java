@@ -89,7 +89,7 @@ public class VoteResource extends Resource  {
 		
 		if(voting.getStatus().equals("voting")){
 			if(voting==null || voting.getVotingDuration()==null || voting.getVotingStarted()==null){
-				return false;
+				return Response.status(HTTPCodes.locked).build();
 			}
 			TimePart tpShould = new TimeHelper.TimePart();
 			tpShould.add(TimePart.parse(voting.getVotingStarted()));

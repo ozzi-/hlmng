@@ -43,6 +43,7 @@ public class DB {
 	@SuppressWarnings("serial")
 	private static ArrayList<SafeValues> safeValuesMap = new ArrayList<SafeValues>() {	{
 		add(new SafeValues(8, "(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])")); // HH:MM:ss
+		add(new SafeValues(5, "(([0-1][0-9])|([2][0-3])):([0-5][0-9])")); // HH:MM
 		add(new SafeValues(10, "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])")); //  YYYY-MM-DD
 		add(new SafeValues(19, "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01]) (([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])")); //  YYYY-MM-DD HH:MM:ss
 		add(new SafeValues(9, "image/png")); // image/png
