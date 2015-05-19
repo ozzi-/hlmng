@@ -90,7 +90,6 @@ public class VotingResource extends Resource {
 		}
 		return isPaused;
 	}
-	// TODO document all new calls here . . .  
 	@GET
 	@Path("{id}/getpause")
 	public PresentationPause getPauseElem(@PathParam("id") int id){

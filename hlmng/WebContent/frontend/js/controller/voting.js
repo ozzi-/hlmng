@@ -196,8 +196,7 @@ votingModule.controller('VotingNewController', ['$http','$stateParams','RestServ
 			}
 		}
 	};
-	
-	
+
 	hlmng.postSliders = function() {
 		for(var i = 0; i < hlmng.sliders.length;  i++) {
 			RestService.post(hlmng.sliders[i],'slider').then(function(data){

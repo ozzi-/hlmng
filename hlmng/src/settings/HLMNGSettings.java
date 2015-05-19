@@ -5,8 +5,7 @@ package settings;
 public class HLMNGSettings {
 	
 	static boolean production=false;
-	
-	
+
 	/**
 	 * Data base Configuration
 	 */

@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="26" columns="4">
+<lyxtabular version="3" rows="27" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1230,7 +1230,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1239,7 +1239,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1248,11 +1248,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Presentation Calls entfernt, Typo, Voting Pauses
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Voting Calls
 \end_layout
 
 \end_inset
@@ -4876,6 +4914,23 @@ GET - Liefert alle Votings aller Slider des Voting
 
 
 \series bold
+adm/voting/{id}/votes/count
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Anzahl Votes (es muss dabei für jeden Slider ein Vote vorhanden sein
+ um als gültig zu gelten)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 adm/voting/{id}/duration
 \begin_inset Newline newline
 \end_inset
@@ -4884,6 +4939,139 @@ adm/voting/{id}/duration
 \series default
 GET - Die gesamte Dauer der Präsentation (inkl.
  Abzug der Pausen), 00:00:00 falls noch nicht beendet
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/getpause
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Das momentan aktive (also noch keine Stopp-Zeit eingetragene) Pausenelemen
+t
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/presentationpauses
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Alle Pausenelemente
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/ispaused
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - True oder False 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/audiencevotingover
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - True oder False - True falls Started+Duration<Current 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/votes/audience
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Alle Votes welche durch das Publikum erstellt wurden
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/votes/audience/count
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Anzahl Votes des Publikum (es muss dabei für jeden Slider ein Vote
+ vorhanden sein um als gültig zu gelten)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/votes/jury
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Alle Votes welche durch die Jury erstellt wurden
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/votes/jury/count
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Anzahl Votes der Jury (es muss dabei für jeden Slider ein Vote vorhanden
+ sein um als gültig zu gelten)
+\series bold
+
 \begin_inset Newline newline
 \end_inset
 
