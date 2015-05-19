@@ -1,5 +1,6 @@
 package hlmng.resource;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class TimeHelper {
 	    int hours = 0;
 	    int minutes = 0;
 	    int seconds = 0;
-
+	    
 	    public static TimePart parse(String in) {
 	        if (in != null) {
 	            String[] arr = in.split(":");

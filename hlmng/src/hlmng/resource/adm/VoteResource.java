@@ -32,7 +32,6 @@ public class VoteResource extends Resource  {
 		return listResource(voteDao, false);			
 	}
 
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)

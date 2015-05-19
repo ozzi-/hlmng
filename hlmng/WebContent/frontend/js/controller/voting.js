@@ -79,22 +79,26 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 
 	var refreshData = function() {
 		var index;
-		for (index = 0; index < hlmng.votingsRunning.length; ++index) {
-			var voting = hlmng.votingsRunning[index];
-			RestService.get(hlmng.votingsRunning[index].votingID,'voting','votes/audience/count').then(function(data){
-				voting.votesAudienceCount=data; 
-			});
-			RestService.get(hlmng.votingsRunning[index].votingID,'voting','votes/jury/count').then(function(data){
-				voting.votesJuryCount=data;
-			});
-			RestService.get(hlmng.votingsRunning[index].votingID,'voting','audiencevotingover').then(function(data){
-				if(data){
-					voting.audiencevotingover=true;
-				}
-			});
-			
+		for (index = 0; index < hlmng.votingsRunning.length; ++index) {		
+			refreshVoting(index);
 		}
 	};
+	
+	var refreshVoting = function(index){
+		var voting = hlmng.votingsRunning[index];
+			RestService.get(hlmng.votingsRunning[index].votingID,'voting','votes/audience/count').then(function(data){	
+			voting.votesAudienceCount=data;
+			RestService.get(voting.votingID,'voting','votes/jury/count').then(function(data){
+				voting.votesJuryCount=data;
+				RestService.get(voting.votingID,'voting','audiencevotingover').then(function(data){
+					if(data){
+						voting.audiencevotingover=true;
+					}
+				});
+			});
+		});
+	}
+	
 
 	var promise = $interval(refreshData,4000);
 	// Cancel interval on page changes
@@ -126,6 +130,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	    		}
 	    	}
 	    });
+	    refreshData();
 	});
 }]);
 
@@ -196,7 +201,6 @@ votingModule.controller('VotingNewController', ['$http','$stateParams','RestServ
 	hlmng.postSliders = function() {
 		for(var i = 0; i < hlmng.sliders.length;  i++) {
 			RestService.post(hlmng.sliders[i],'slider').then(function(data){
-				alert(data);
 			});
 		}
 	};

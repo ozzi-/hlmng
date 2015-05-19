@@ -1,5 +1,9 @@
 package db;
 
+/**
+ * This class is here for entries we don't wan't to be escaped by the ESAPI.
+ * If the check fails they have to be escaped.
+ */
 public class SafeValues {
 	private int length;
 	private String regex;

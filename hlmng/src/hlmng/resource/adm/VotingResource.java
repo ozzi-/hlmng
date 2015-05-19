@@ -113,9 +113,9 @@ public class VotingResource extends Resource {
 		TimePart tpShould = new TimeHelper.TimePart();
 		tpShould.add(TimePart.parse(voting.getVotingStarted()));
 		tpShould.add(TimePart.parse(voting.getVotingDuration()));
-		
 		TimePart tpIs = new TimeHelper.TimePart();
-		return tpShould.compareTo(tpIs)==1?true:false;
+		tpIs = TimePart.parse(TimeHelper.getCurrentTime());
+		return (tpShould.compareTo(tpIs)==-1);
 	}
 	
 	
@@ -169,7 +169,8 @@ public class VotingResource extends Resource {
 	@Path("{id}/votes/count")
 	public int getVotesCount(@PathParam("id") int id) throws IOException{
 		// TODO device by slider count!
-		return getVoteList(id,modes.all).size();
+		int sliderCount = getSliders(id).size();
+		return getVoteList(id,modes.all).size()/sliderCount;
 	}
 	@GET
 	@Path("{id}/votes/audience")
@@ -179,7 +180,8 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}/votes/audience/count")
 	public int getVotesAudienceCount(@PathParam("id") int id) throws IOException{
-		return getVoteList(id,modes.audienceOnly).size();
+		int sliderCount = getSliders(id).size();
+		return getVoteList(id,modes.audienceOnly).size()/sliderCount;
 	}
 	@GET
 	@Path("{id}/votes/jury")
@@ -189,7 +191,8 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}/votes/jury/count")
 	public int getVotesJuryCount(@PathParam("id") int id) throws IOException{
-		return getVoteList(id,modes.juryOnly).size();
+		int sliderCount = getSliders(id).size();
+		return getVoteList(id,modes.juryOnly).size()/sliderCount;
 	}
 	
 

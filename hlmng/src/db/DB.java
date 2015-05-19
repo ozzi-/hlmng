@@ -35,6 +35,11 @@ public class DB {
 	    add("media");
 	    add("authorName");
 	}};
+	/**
+	 * Here are entries we don't wan't to be escaped by the ESAPI.
+	 * These entries are checked by SafeValues.isSafeString.
+	 * If the check fails they will be escaped.
+	 */
 	@SuppressWarnings("serial")
 	private static ArrayList<SafeValues> safeValuesMap = new ArrayList<SafeValues>() {	{
 		add(new SafeValues(8, "(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])")); // HH:MM:ss

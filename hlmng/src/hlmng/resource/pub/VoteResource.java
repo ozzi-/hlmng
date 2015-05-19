@@ -13,6 +13,7 @@ import hlmng.model.Vote;
 import hlmng.model.Voting;
 import hlmng.resource.Resource;
 import hlmng.resource.TimeHelper;
+import hlmng.resource.TimeHelper.TimePart;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -87,16 +88,29 @@ public class VoteResource extends Resource  {
 		element.setIsJury(isJury);
 		
 		if(voting.getStatus().equals("voting")){
-			boolean userHasVoted=((VoteDao)voteDao).userVotedSliderBefore(element.getUserIDFK(), element.getSliderIDFK());
-			if(!userHasVoted){
-				Log.addEntry(Level.INFO, "User voted successfully. UserID:"+user.getUserID()+" is jury = "+isJury);
-				return postResource(voteDao, element); 			
-			}else{			
-				Log.addEntry(Level.WARNING, "User tried to vote twice. UserID:"+user.getUserID()+". "+ModelHelper.valuestoString(element));
-				return Response.status(HTTPCodes.locked).build();
-			}			
+			if(voting==null || voting.getVotingDuration()==null || voting.getVotingStarted()==null){
+				return false;
+			}
+			TimePart tpShould = new TimeHelper.TimePart();
+			tpShould.add(TimePart.parse(voting.getVotingStarted()));
+			tpShould.add(TimePart.parse(voting.getVotingDuration()));
+			TimePart tpIs = new TimeHelper.TimePart();
+			tpIs = TimePart.parse(TimeHelper.getCurrentTime());
+			if(tpShould.compareTo(tpIs)==1){ // if we have not reached the end yet
+				boolean userHasVoted=((VoteDao)voteDao).userVotedSliderBefore(element.getUserIDFK(), element.getSliderIDFK());
+				if(!userHasVoted){
+					Log.addEntry(Level.INFO, "User voted successfully. UserID:"+user.getUserID()+" is jury = "+isJury);
+					return postResource(voteDao, element); 			
+				}else{			
+					Log.addEntry(Level.WARNING, "User tried to vote twice. UserID:"+user.getUserID()+". "+ModelHelper.valuestoString(element));
+					return Response.status(HTTPCodes.locked).build();
+				}							
+			}else{
+				Log.addEntry(Level.INFO, "User tried to vote publicly but its already over. UserID:"+user.getUserID());
+				return Response.status(HTTPCodes.failedDependency).build();
+			}
 		}else{
-			Log.addEntry(Level.INFO, "User treid to vote while voting status wasn't 'voting'. "+ModelHelper.valuestoString(element));
+			Log.addEntry(Level.INFO, "User tried to vote while voting status wasn't 'voting'. "+ModelHelper.valuestoString(element));
 			return Response.status(HTTPCodes.failedDependency).build();
 		}
 	}
