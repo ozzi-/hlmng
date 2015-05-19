@@ -97,7 +97,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 				});
 			});
 		});
-	}
+	};
 	
 
 	var promise = $interval(refreshData,4000);

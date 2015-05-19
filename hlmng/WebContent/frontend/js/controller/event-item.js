@@ -1,11 +1,14 @@
 var eventItemModule = angular.module('eventitem', []);
 
 
-eventItemModule.controller('EventItemNewController', ['$http','RestService','ToolService','$stateParams', function($http,RestService,ToolService,$stateParams){
+eventItemModule.controller('EventItemNewController', ['$http','RestService','ToolService','$stateParams','$filter', function($http,RestService,ToolService,$stateParams,$filter){
 	var hlmng = this;
 	hlmng.eventitem={}; 
 	hlmng.postEventItem = RestService.post;
 	hlmng.postAndRedir = function() {  
+		hlmng.eventitem.startTime = $filter('date')(hlmng.eventitem.startTime, "HH:mm");
+		hlmng.eventitem.endTime = $filter('date')(hlmng.eventitem.endTime, "HH:mm");
+
 		hlmng.eventitem.eventIDFK=$stateParams.eventId;
 		hlmng.postEventItem(hlmng.eventitem,'eventitem').then(function(data){
 			hlmng.eventitem=data;

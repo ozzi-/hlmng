@@ -11,7 +11,6 @@ helperModule.directive('editButton', function(){
 	};
 });
 
-
 helperModule.directive('nothingHereYet', function(){
 	return {
 		restrict: 'E',
@@ -19,5 +18,47 @@ helperModule.directive('nothingHereYet', function(){
 		scope:{
 			list: "=list"
 		}
+	};
+});
+
+directiveModule.directive('datePicker', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/helper/date-picker.html',
+		scope: {
+			date: "=date"
+		},
+    	controller: function($scope,$filter) {
+    	
+    		$scope.clear = function () {
+    			$scope.dt = null;
+    		};
+    		
+    		$scope.$watch('date', function(v){  // override the output format of datepicker
+    			if($scope.date!=undefined){
+    				$scope.date = $filter('date')($scope.date, "yyyy-MM-dd");
+    			}
+    		});
+
+    		$scope.open = function($event) {
+    			$event.preventDefault();
+    			$event.stopPropagation();
+    			
+    			$scope.opened = true;
+    		};
+       	}
+	};
+});
+
+directiveModule.directive('timePicker', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/helper/time-picker.html',
+		scope: {
+			time: "=time"
+		}
+		// sadly we can't override the output format, the directive will start to cry: 
+		// "Timepicker directive: "ng-model" value must be a Date object, a number of milliseconds 
+		// since 01.01.1970 or a string representing an RFC2822 or ISO 8601 date."
 	};
 });

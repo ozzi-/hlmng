@@ -1,7 +1,7 @@
 var eventModule = angular.module('event', []);
 
 
-eventModule.controller('EventNewController', ['$http','RestService','ToolService', function($http,RestService,ToolService){
+eventModule.controller('EventNewController', ['$http','RestService','ToolService','$scope','$filter', function($http,RestService,ToolService,$scope,$filter){
 	var hlmng = this;
 	hlmng.event={};
 	hlmng.postEvent = RestService.post;
