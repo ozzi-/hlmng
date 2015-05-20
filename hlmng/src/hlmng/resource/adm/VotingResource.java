@@ -93,7 +93,6 @@ public class VotingResource extends Resource {
 		}
 		return totalScore / virtualSliderCount;
 	}
-	// TODO document new calls
 	private double getSliderScore(int id,boolean jury) {
 		List<Object> objVoteList= voteDao.listByFK("sliderIDFK", id);
 		int voteSum=0;

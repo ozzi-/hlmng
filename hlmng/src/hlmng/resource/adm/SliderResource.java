@@ -43,7 +43,6 @@ public class SliderResource extends Resource {
 		Object obj= voteDao.listByFK("sliderIDFK", id);
 		return (List<Object>) obj;			
 	}
-	// TODO document new calls
 	@GET
 	@Path("{id}/votescorejury")
 	public double getVoteScoreJury(@PathParam("id") int id) throws IOException{

@@ -38,6 +38,7 @@ public class VotingResource extends Resource {
 	public long getLastUpdateTime() throws IOException {
 		return votingDao.getLastUpdateTime();
 	}
+	
 		
 	@GET
 	@Path("{id}")

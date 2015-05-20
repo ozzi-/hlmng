@@ -42,7 +42,7 @@ public class VoteResource extends Resource  {
 		
 		String authorizationHeader = headers.getHeaderString("Authorization");
 		if(authorizationHeader==null){
-			return Response.status(401).build();
+			return Response.status(HTTPCodes.unauthorized).build();
 		} 	
 
 		AuthCredential authCredential = AuthChecker.decodeBasicAuthB64(authorizationHeader);
@@ -68,6 +68,12 @@ public class VoteResource extends Resource  {
 		if(voting==null){
 			return Response.status(HTTPCodes.badRequest).build();
 		}
+
+		if(element.getScore()<0 || element.getScore()>voting.getSliderMaxValue()){
+			Log.addEntry(Level.WARNING, "User tried to vote with a score not in the range set (0-"+voting.getSliderMaxValue()+") with the UserID: "+user.getUserID());
+			return Response.status(HTTPCodes.badRequest).build();
+		}
+		
 		
 		boolean isJury = false;
 		

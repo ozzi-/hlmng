@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="27" columns="4">
+<lyxtabular version="3" rows="28" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1268,7 +1268,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1277,7 +1277,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1286,11 +1286,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Voting Calls
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Zusätzliche Event Calls
 \end_layout
 
 \end_inset
@@ -2074,7 +2112,7 @@ GET - Liefert den besagten Event
 \begin_inset Newline newline
 \end_inset
 
-pub/event/{id}/eventrooms
+pub+adm/event/{id}/eventrooms
 \series default
 
 \begin_inset Newline newline
@@ -2090,13 +2128,81 @@ GET - Liefert alle Event Rooms welche zu Event {id} gehören
 \begin_inset Newline newline
 \end_inset
 
-pub/event/{id}/eventitems
+pub+adm/event/{id}/eventitems
 \series default
 
 \begin_inset Newline newline
 \end_inset
 
 GET - Liefert alle Event Items welche zu Event {id} gehören
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+pub+adm/event/{id}/news
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle News Items welche zu Event {id} gehören
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+pub+adm/event/{id}/socials
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Social Items welche zu Event {id} gehören
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+pub+adm/event/{id}/votings
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Votings welche zu Event {id} gehören
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+pub+adm/event/{id}/pushes
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Pushes welche zu Event {id} gehören
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -3715,6 +3821,38 @@ DELETE - Löscht dem besagten Slider
 
 
 \series bold
+adm/slider/{id}/votescorejury
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den gesamt Score der Jury für den besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/slider/{id}/votescoreaudience
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den gesamt Score des Publikums für den besagten Slider
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 adm/slider{id}/votes
 \begin_inset Newline newline
 \end_inset
@@ -4889,6 +5027,38 @@ adm/voting/{id}/sliders
 
 \series default
 GET - Liefert alle Slider des besagten Voting
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/totalscoreaudience
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den Score über alle Slider des Voting des Publikums
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/{id}/totalscorejury
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert den Score über alle Slider des Voting der Jury
 \begin_inset Newline newline
 \end_inset
 
