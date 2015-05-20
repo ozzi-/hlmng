@@ -3,6 +3,7 @@ package hlmng.resource.adm;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Slider;
+import hlmng.model.Vote;
 import hlmng.resource.Resource;
 
 import java.io.IOException;
@@ -42,7 +43,44 @@ public class SliderResource extends Resource {
 		Object obj= voteDao.listByFK("sliderIDFK", id);
 		return (List<Object>) obj;			
 	}
+	// TODO document new calls
+	@GET
+	@Path("{id}/votescorejury")
+	public double getVoteScoreJury(@PathParam("id") int id) throws IOException{
+		List<Object> objList= voteDao.listByFK("sliderIDFK", id);
+		int voteSum=0;
+		int voteCounter=0;
+		for (Object obj : objList) {
+			Vote vote = (Vote) obj;
+			if(vote.isIsJury()){
+				voteSum+=vote.getScore();
+				voteCounter++;
+			}
+		}
+		if(voteCounter>0){
+			return (double)voteSum/(double)voteCounter;
+		}
+		return -1;
+	}
 	
+	@GET
+	@Path("{id}/votescoreaudience")
+	public double getVoteScoreAudience(@PathParam("id") int id) throws IOException{
+		List<Object> objList= voteDao.listByFK("sliderIDFK", id);
+		int voteSum=0;
+		int voteCounter=0;
+		for (Object obj : objList) {
+			Vote vote = (Vote) obj;
+			if(!vote.isIsJury()){
+				voteSum+=vote.getScore();
+				voteCounter++;
+			}
+		}
+		if(voteCounter>0){
+			return (double)voteSum/(double)voteCounter;
+		}
+		return -1;		
+	}
 	
 	@GET
 	@Path("/lastupdate")

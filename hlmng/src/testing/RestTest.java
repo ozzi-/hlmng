@@ -1,5 +1,6 @@
 package testing;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
@@ -58,6 +59,62 @@ public class RestTest {
 		sliderDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 	}
 
+	@Test
+	public void testVoteScoring() throws IOException{
+		Voting voting = new Voting("Name",10,"voting_end",8,"00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:06:00",1,1);
+		int votingid = votingDao.addElement(voting);
+
+		Slider slider1 = new Slider("slider1",1, votingid);
+		int sliderid1 = sliderDao.addElement(slider1);
+		Slider slider2 = new Slider("slider2",2, votingid);
+		int sliderid2 = sliderDao.addElement(slider2);
+		Slider slider4 = new Slider("slider4",4, votingid);
+		int sliderid4 = sliderDao.addElement(slider4);
+		// public votings
+		Vote vote1_1 = new Vote(10,0,sliderid1,1);
+		int vote1_1_id = voteDao.addElement(vote1_1);
+		
+		Vote vote2_1 = new Vote(5,0,sliderid2,1);
+		int vote2_1_id = voteDao.addElement(vote2_1);
+		
+		Vote vote4_1 = new Vote(7,0,sliderid4,1);
+		int vote4_1_id = voteDao.addElement(vote4_1);
+		// jury votings
+		Vote vote1_2 = new Vote(7,1,sliderid1,1);
+		int vote1_2_id = voteDao.addElement(vote1_2);
+		
+		Vote vote2_2 = new Vote(10,1,sliderid2,1);
+		int vote2_2_id = voteDao.addElement(vote2_2);
+
+		Vote vote4_2 = new Vote(5,1,sliderid4,1);
+		int vote4_2_id = voteDao.addElement(vote4_2);
+
+
+		try {
+			turnOffSslChecking();
+		} catch (KeyManagementException e) {
+		} catch (NoSuchAlgorithmException e) {
+		}
+
+		
+		double response =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscoreaudience", "GET",null,null));
+		assertEquals(6.857,response,0.05);
+
+		response =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscorejury", "GET",null,null));
+		assertEquals(6.714,response,0.05);
+
+		assertTrue(voteDao.deleteElement(vote4_2_id));
+		assertTrue(voteDao.deleteElement(vote2_2_id));
+		assertTrue(voteDao.deleteElement(vote1_2_id));
+		assertTrue(voteDao.deleteElement(vote4_1_id));
+		assertTrue(voteDao.deleteElement(vote2_1_id));
+		assertTrue(voteDao.deleteElement(vote1_1_id));
+		assertTrue(sliderDao.deleteElement(sliderid4));
+		assertTrue(sliderDao.deleteElement(sliderid2));
+		assertTrue(sliderDao.deleteElement(sliderid1));
+		assertTrue(votingDao.deleteElement(votingid));
+		
+	}
 	
 	@Test
 	public void checkVoteCorrectAuth(){

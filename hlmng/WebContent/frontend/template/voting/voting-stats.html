@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-6">
+	<table>
+		<tr ng-repeat="field in votingStatsCtrl.fields">
+			<td ng-if="field.value=='<hr>'">
+				<h3>{{field.label}}</h3>
+			</td>
+			<td ng-if="field.value!='<hr>'" style="padding-right:15px">			
+				{{field.label}}
+			</td>
+			<td ng-if="field.value=='<hr>'">
+			</td>
+			<td ng-if="field.value!='<hr>'">			
+				<span class="label label-default">
+					{{field.value}}
+				</span>
+			</td>
+		</tr>
+	</table>
+  </div>
+  <div class="col-md-6">
+  	<table cellpadding="10">
+  		<tr>
+  			<td><h3>Slider</h3></td>
+  			<td><h3>Jury</h3></td>
+  			<td><h3>Audience</h3></td>
+  		</tr>
+	  	<tr ng-repeat="slider in votingStatsCtrl.sliders" ng-class-odd="'rowodd'" ng-class-even="'roweven'">
+	  		<td>{{slider.name}} ({{slider.weight}}x)</td>
+	  		<td>{{slider.voteScoreJury}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
+	  		<td>{{slider.voteScoreAudience}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
+	  	</tr>
+	  	<tr>
+  			<td>Total</td>
+  			<td>{{votingStatsCtrl.voting.totalVoteScoreJury}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
+  			<td>{{votingStatsCtrl.voting.totalVoteScoreAudience}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
+  		</tr>
+  	</table>
+  </div>
+</div>
+	

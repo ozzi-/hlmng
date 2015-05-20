@@ -69,6 +69,55 @@ public class VotingResource extends Resource {
 		Object obj= sliderDao.listByFK("votingIDFK", id);
 		return (List<Object>) obj;
 	}
+	
+	@GET
+	@Path("{id}/totalscorejury")
+	public Double getTotalScoreJury(@PathParam("id") int id) throws IOException{
+		List<Object> objSliderList= sliderDao.listByFK("votingIDFK", id);
+		return getTotalScore(objSliderList,true);
+	}
+	@GET
+	@Path("{id}/totalscoreaudience")
+	public Double getTotalScoreAudience(@PathParam("id") int id) throws IOException{
+		List<Object> objSliderList= sliderDao.listByFK("votingIDFK", id);
+		return getTotalScore(objSliderList,false);
+	}
+
+	private Double getTotalScore(List<Object> objSliderList,boolean jury) {
+		double totalScore = 0.0;
+		int virtualSliderCount=0;
+		for (Object obj : objSliderList) {
+			Slider slider = (Slider) obj;
+			virtualSliderCount+=slider.getWeight();
+			totalScore += getSliderScore(slider.getSliderID(),jury)*slider.getWeight();
+		}
+		return totalScore / virtualSliderCount;
+	}
+	// TODO document new calls
+	private double getSliderScore(int id,boolean jury) {
+		List<Object> objVoteList= voteDao.listByFK("sliderIDFK", id);
+		int voteSum=0;
+		int voteCounter=0;
+		for (Object objVote : objVoteList) {
+			Vote vote = (Vote) objVote;
+			if(jury){
+				if(vote.isIsJury()){
+					voteSum+=vote.getScore();
+					voteCounter++;
+				}
+			}else{
+				if(!vote.isIsJury()){
+					voteSum+=vote.getScore();
+					voteCounter++;
+				}
+			}
+		
+		}
+		if(voteCounter>0){
+			return (double)voteSum/(double)voteCounter;
+		}
+		return -1;
+	}
 
 	
 	@GET
@@ -167,7 +216,6 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}/votes/count")
 	public int getVotesCount(@PathParam("id") int id) throws IOException{
-		// TODO device by slider count!
 		int sliderCount = getSliders(id).size();
 		return getVoteList(id,modes.all).size()/sliderCount;
 	}

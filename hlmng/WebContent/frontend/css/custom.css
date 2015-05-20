@@ -1,3 +1,13 @@
+
+
+.rowodd {
+  color: #AB3232;
+}
+.roweven {
+  color: white;
+}
+
+
 .content {
 	background:#000 url(../img/bg.png) repeat-x;
 	margin-top:0px;
