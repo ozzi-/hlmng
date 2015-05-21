@@ -5167,6 +5167,31 @@ GET - True oder False
 
 
 \series bold
+adm/voting/{id}/presentationintime
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - True oder False, je nach dem ob die 
+\begin_inset Quotes ald
+\end_inset
+
+Duration
+\begin_inset Quotes ard
+\end_inset
+
+ innerhalb des Range definiert durch minPresentationTime und maxPresentationTime
+ liegt
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 adm/voting/{id}/audiencevotingover
 \series default
 

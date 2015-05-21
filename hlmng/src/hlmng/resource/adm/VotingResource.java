@@ -124,7 +124,19 @@ public class VotingResource extends Resource {
 	public List<Object> getPauses(@PathParam("id") int id){
 		return presentationpauseDao.listByFK("votingIDFK", id);
 	}
-	
+	@GET
+	@Path("{id}/presentationintime")
+	public boolean isPresentationInTime(@PathParam("id") int id) throws java.text.ParseException, IOException{
+		Voting voting = (Voting) getResource(votingDao, id);
+		String presentationDuration = presentationDuration(id, voting);
+		String presentationMinTime = voting.getPresentationMinTime();
+		String presentationMaxTime = voting.getPresentationMaxTime();
+		TimePart tpDur = TimePart.parse(presentationDuration);
+		TimePart tpMin = TimePart.parse(presentationMinTime);
+		TimePart tpMax = TimePart.parse(presentationMaxTime);
+		return(tpDur.compareTo(tpMin)>=0 && (tpDur.compareTo(tpMax)<=0));
+		
+	}	
 	@GET
 	@Path("{id}/ispaused")
 	public boolean isPaused(@PathParam("id") int id){
@@ -170,6 +182,11 @@ public class VotingResource extends Resource {
 	@Path("{id}/duration")
 	public String getDuration(@PathParam("id") int id) throws java.text.ParseException{
 		Voting voting = (Voting)votingDao.getElement(id);
+		return presentationDuration(id, voting);
+	}
+
+	private String presentationDuration(int id, Voting voting)
+			throws java.text.ParseException {
 		if(voting.getPresentationStarted()==null || voting.getPresentationEnded()==null){
 			return "00:00:00";
 		}

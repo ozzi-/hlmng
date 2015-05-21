@@ -40,6 +40,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 		voting.status = "presentation";
 		voting.presentationStarted=ToolService.getCurTime();
 		voting.ispaused=false;
+		voting.votingStartedAt=ToolService.getCurTime();
 		hlmng.putVoting(voting,voting.votingID,'voting');
 		hlmng.removeFromAll(voting);
 		hlmng.votingsUpcomingPresentation.push(voting);
@@ -208,84 +209,95 @@ votingModule.controller('VotingStatsController', ['$http','$stateParams','RestSe
 	var hlmng = this;
 	
 	hlmng.voting = {};	
+	
+	
+	hlmng.getVoteScores = function(slider) {	
+		RestService.get(slider.sliderID,'slider','votescorejury').then(function(data){
+			slider.voteScoreJury=data;
+		});
+		RestService.get(slider.sliderID,'slider','votescoreaudience').then(function(data){
+			slider.voteScoreAudience=data;
+		});
+		return slider;
+	};
+	hlmng.getTotalVoteScores = function(voting) {	
+		RestService.get(voting.votingID,'voting','totalscorejury').then(function(data){
+			voting.totalVoteScoreJury=data;
+		});
+		RestService.get(voting.votingID,'voting','totalscoreaudience').then(function(data){
+			voting.totalVoteScoreAudience=data;
+		});
+		return voting;
+	};
+	
 	RestService.get($stateParams.votingId,'voting').then(function(data){
 		hlmng.voting=data;
 		hlmng.sliders={};
-		
-		RestService.get($stateParams.votingId,'voting','sliders').then(function(data){
-		   hlmng.sliders=data;
-		   for (var index = 0; index < hlmng.sliders.length; ++index) {
-			   hlmng.sliders[index] = hlmng.getVoteScores(hlmng.sliders[index]);
-		   }
-		   hlmng.voting=hlmng.getTotalVoteScores(hlmng.voting);
-		});
-
-		hlmng.getVoteScores = function(slider) {	
-			RestService.get(slider.sliderID,'slider','votescorejury').then(function(data){
-				slider.voteScoreJury=data;
+		hlmng.inTime="--	";
+		RestService.get($stateParams.votingId,'voting','presentationintime').then(function(data){
+			if(data==true){
+				hlmng.inTime="Yes";				
+			}else{
+				hlmng.inTime="No";
+			}
+			RestService.get($stateParams.votingId,'voting','sliders').then(function(data){
+				hlmng.sliders=data;
+				for (var index = 0; index < hlmng.sliders.length; ++index) {
+					hlmng.sliders[index] = hlmng.getVoteScores(hlmng.sliders[index]);
+				}
+				hlmng.voting=hlmng.getTotalVoteScores(hlmng.voting);
+				hlmng.fields = [{	
+			       	label: 'Voting',
+			       	value: '<hr>'
+			    },{
+					label: 'Name',
+					value: hlmng.voting.name
+			    },{
+					label: 'Voting ID',
+					value: hlmng.voting.votingID
+			    },{
+			       	label: 'Voting Started',
+			       	value: hlmng.voting.votingStarted
+			    },{
+			       	label: 'Voting Duration',
+			       	value: hlmng.voting.votingDuration
+			    },{
+			       	label: 'Jury Vote Count',
+			       	value: hlmng.voting.votingDuration
+			    },{
+			       	label: 'Jury Count',
+			       	value: hlmng.voting.juryCount
+			    },{
+			       	label: 'Audience Vote Count',
+			       	value: hlmng.voting.votingDuration
+			    },{
+			       	label: 'Mode',
+			       	value: hlmng.voting.arithmeticMode
+			    },{
+			       	label: 'Presentation',
+			       	value: '<hr>'
+			    },{
+			       	label: 'Presentation Min Time',
+			       	value: hlmng.voting.presentationMinTime
+			    },{
+			       	label: 'Presentation Min Time',
+			       	value: hlmng.voting.presentationMinTime
+			    },{
+			       	label: 'Presentation Max Time',
+			       	value: hlmng.voting.presentationMaxTime
+			    },{
+			       	label: 'Presentation Started',
+			       	value: hlmng.voting.presentationStarted
+			    },{
+			       	label: 'Presentation Ended',
+			       	value: hlmng.voting.presentationEnded
+			    },{
+			       	label: 'Presentation was in Time',
+			       	value: hlmng.inTime
+				}];
 			});
-			RestService.get(slider.sliderID,'slider','votescoreaudience').then(function(data){
-				slider.voteScoreAudience=data;
-			});
-			return slider;
-		};
-		hlmng.getTotalVoteScores = function(voting) {	
-			RestService.get(voting.votingID,'voting','totalscorejury').then(function(data){
-				voting.totalVoteScoreJury=data;
-			});
-			RestService.get(voting.votingID,'voting','totalscoreaudience').then(function(data){
-				voting.totalVoteScoreAudience=data;
-			});
-			return voting;
-		};
-
-	
-		hlmng.fields = [{	
-	       	label: 'Voting',
-	       	value: '<hr>'
-	    },{
-			label: 'Name',
-			value: hlmng.voting.name
-	    },{
-			label: 'Voting ID',
-			value: hlmng.voting.votingID
-	    },{
-	       	label: 'Voting Started',
-	       	value: hlmng.voting.votingStarted
-	    },{
-	       	label: 'Voting Duration',
-	       	value: hlmng.voting.votingDuration
-	    },{
-	       	label: 'Jury Vote Count',
-	       	value: hlmng.voting.votingDuration
-	    },{
-	       	label: 'Jury Count',
-	       	value: hlmng.voting.juryCount
-	    },{
-	       	label: 'Audience Vote Count',
-	       	value: hlmng.voting.votingDuration
-	    },{
-	       	label: 'Mode',
-	       	value: hlmng.voting.arithmeticMode
-	    },{
-	       	label: 'Presentation',
-	       	value: '<hr>'
-	    },{
-	       	label: 'Presentation Min Time',
-	       	value: hlmng.voting.presentationMinTime
-	    },{
-	       	label: 'Presentation Min Time',
-	       	value: hlmng.voting.presentationMinTime
-	    },{
-	       	label: 'Presentation Max Time',
-	       	value: hlmng.voting.presentationMaxTime
-	    },{
-	       	label: 'Presentation Started',
-	       	value: hlmng.voting.presentationStarted
-	    },{
-	       	label: 'Presentation Ended',
-	       	value: hlmng.voting.presentationEnded
-		}];
+			
+		});		
 	});
 }]);
 
