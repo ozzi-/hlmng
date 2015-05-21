@@ -40,7 +40,6 @@ public class MediaResource extends Resource{
 
 	private static GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
 
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> listMedia() throws IOException {
@@ -49,9 +48,9 @@ public class MediaResource extends Resource{
 		return listMedia;
 	}
 
-
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMedia(@PathParam("id") int id) throws IOException {
 		return ResourceHelper.getMediaAsResponse(id, uri, request);
 	}
@@ -65,6 +64,7 @@ public class MediaResource extends Resource{
 	
 	@DELETE
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteMedia(@PathParam("id") int id) throws IOException{
 		Media media = (Media)mediaDao.getElement(id);
 		// ONLY deletes on filesystem -  since path's to that media still have to be there, see documentation
@@ -104,6 +104,7 @@ public class MediaResource extends Resource{
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response uploadFileBackend(
 			@FormDataParam("file") InputStream fileInputStream,
 			@FormDataParam("file") FormDataBodyPart body,

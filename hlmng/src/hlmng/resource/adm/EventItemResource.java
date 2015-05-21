@@ -34,8 +34,7 @@ public class EventItemResource extends Resource{
 	public List<Object> getEventItems() throws IOException {
 		return listResource(eventItemDao, false);
 	}
-	
-	
+
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -45,6 +44,7 @@ public class EventItemResource extends Resource{
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public EventItem getEventItem(@PathParam("id") int id) throws IOException{
 		return (EventItem) getResource(eventItemDao, id);	
 	}
@@ -52,18 +52,21 @@ public class EventItemResource extends Resource{
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putEventItem(EventItem element,@PathParam("id") int id) throws IOException {
 		return putResource(eventItemDao, element, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postEventItem(EventItem element) throws IOException {
 		return postResource(eventItemDao, element);
 	}
 	
 	@DELETE
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteEventItem(@PathParam("id") int id) throws IOException {
 		return deleteResource(eventItemDao, id);
 	}

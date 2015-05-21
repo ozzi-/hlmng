@@ -37,7 +37,6 @@ public class  UserResource  extends Resource {
 		return listResource(userDao, false);
 	}
 	
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -47,6 +46,7 @@ public class  UserResource  extends Resource {
 	
 	@GET 
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public User getUser(@PathParam("id") int id) throws IOException{
 		return (User) getResource(userDao, id);
 	}
@@ -54,29 +54,21 @@ public class  UserResource  extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putUser(User element,@PathParam("id") int id) throws IOException {
 		return putResource(userDao, element, id);
 	}
 	
-	
-	public static String getUsername(int id){
-		System.out.println();
-		User user = (User) userDao.getElement(id);
-		if(user!=null){
-			return user.getName();
-		}
-		return "unknown";
-	}
-	
-	
 	@DELETE
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteUser(@PathParam("id") int id) throws IOException {
 		return deleteResource(userDao, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postUser(User element) throws IOException {	
 		User userNameExists = ((UserDao) userDao).getUserByName(element.getName());
 		if(userNameExists == null){ 
@@ -88,5 +80,4 @@ public class  UserResource  extends Resource {
 			return Response.status(HTTPCodes.unprocessableEntity).build();  
 		}
 	}
-
 }

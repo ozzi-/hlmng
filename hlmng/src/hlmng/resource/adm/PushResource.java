@@ -54,6 +54,7 @@ public class PushResource  extends Resource{
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Push getPush(@PathParam("id") int id) throws IOException{
 		return (Push)getResource(pushDao, id);
 	}
@@ -68,12 +69,14 @@ public class PushResource  extends Resource{
 	@DELETE
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletePush(@PathParam("id") int id) throws IOException {
 		return deleteResource(pushDao, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postPush(Push element) throws IOException, ParseException {
 		if(!UserActionLimiter.actionsExceeded("pushResource")){
 			List<Object> users = listResource(GenDaoLoader.instance.getUserDao(), false);

@@ -3,8 +3,6 @@ package hlmng.resource.adm;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Event;
-import hlmng.model.News;
-import hlmng.model.Social;
 import hlmng.resource.Resource;
 import hlmng.resource.ResourceHelper;
 
@@ -39,46 +37,53 @@ public class EventResource extends Resource {
 	
 	@GET
 	@Path("{id}/votings")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getVotings(@PathParam("id") int id) throws IOException{
 		List<Object> obj=votingDao.listByFK("eventIDFK",id);
 		return obj;
 	}
 	@GET
 	@Path("{id}/socials")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSocials(@PathParam("id") int id) throws IOException{
 		List<Object> obj=socialDao.listByFK("eventIDFK",id);
-		enrichSocialListWithUsernameAndMedia(obj);
+		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,obj);
 		return obj;
 	}
 	@GET
 	@Path("{id}/pushes")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEventPushes(@PathParam("id") int id) throws IOException{
 		List<Object> obj=pushDao.listByFK("eventIDFK",id);
 		return obj;
 	}
 	@GET
 	@Path("{id}/eventitems")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEventItems(@PathParam("id") int id) throws IOException{
 		List<Object> obj=eventItemDao.listByFK("eventIDFK",id);
 		return obj;
 	}
 	@GET
 	@Path("{id}/eventrooms")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEventRooms(@PathParam("id") int id) throws IOException{
 		List<Object> obj=eventRoomDao.listByFK("eventIDFK",id);
 		return obj;
 	}
 	@GET
 	@Path("{id}/qrcodes")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getQrCodes(@PathParam("id") int id) throws IOException{
 		List<Object> obj=qrCodeDao.listByFK("eventIDFK",id);
 		return obj;
 	}
 	@GET
 	@Path("{id}/news")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSliders(@PathParam("id") int id) throws IOException{
 		List<Object> obj= newsDao.listByFK("eventIDFK", id);
-		enrichNewsListWithMedia(obj);
+		ResourceHelper.enrichNewsListWithMedia(uri,obj);
 		return  obj;
 	}	
 	@GET
@@ -86,8 +91,6 @@ public class EventResource extends Resource {
 	public List<Object> getEvent() throws IOException {
 		return listResource(eventDao, false);
 	}
-	
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -97,45 +100,31 @@ public class EventResource extends Resource {
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Event getEvent(@PathParam("id") int id) throws IOException{
 		return (Event) getResource(eventDao, id);
 	}
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putEvent(Event element,@PathParam("id") int id) throws IOException {
 		return putResource(eventDao,element,id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postEvent(Event element) throws IOException {
 		return postResource(eventDao, element);
 	}
 	
 	@DELETE
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteEvent(@PathParam("id") int id) throws IOException {
 		return deleteResource(eventDao, id);
 	}
-	protected void enrichSocialListWithUsernameAndMedia(List<Object> socialObjects) {
-		for (Object object : socialObjects) {
-			Social social = (Social) object;
-			enrichSocialWithUsernameAndMedia(social);
-		}
-	}
-	private void enrichSocialWithUsernameAndMedia(Social social) {
-		String authorName = UserResource.getUsername(social.getUserIDFK());
-		social.setAuthorName(authorName);
-		String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
-		social.setMedia(media);
-	}
-	protected void enrichNewsListWithMedia(List<Object> newsObjects) {
-		for (Object object : newsObjects) {
-			News news = (News) object;
-			String media = ResourceHelper.getMediaURL(uri, news.getMediaIDFK());
-			news.setMedia(media);
-		}
-	}
+
 }
 

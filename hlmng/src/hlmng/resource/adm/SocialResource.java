@@ -33,39 +33,38 @@ public class SocialResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getNewestSocials() throws IOException {
 		List<Object> socialObjects = listResource(socialDao, true);
-		enrichSocialListWithUsernameAndMedia(socialObjects);
+		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,socialObjects);
 		return socialObjects;
 	}
-	
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
 	public long getLastUpdateTime() throws IOException {
 		return socialDao.getLastUpdateTime();
 	}
-	
 		
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSocials() throws IOException {
 		List<Object> socialObjects = listResource(socialDao, false);
-		enrichSocialListWithUsernameAndMedia(socialObjects);
+		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,socialObjects);
 		return socialObjects;
 	}
 
 
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Social getSocial(@PathParam("id") int id) throws IOException{
 		Social social = (Social) getResource(socialDao, id);
-		enrichSocialWithUsernameAndMedia(social);
+		ResourceHelper.enrichSocialWithUsernameAndMedia(uri,social);
 		return social;
 	}
 
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putSocial(Social element,@PathParam("id") int id) throws IOException {
 		return putResource(socialDao, element, id);
 	}
@@ -73,37 +72,22 @@ public class SocialResource extends Resource  {
 
 	@DELETE
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteSocial(@PathParam("id") int id) throws IOException {
 		return deleteResource(socialDao, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postSocial(Social element) throws IOException {
 		Social social = (Social) postResource(socialDao, element);
 		if(social!=null){
-			String authorName = UserResource.getUsername(social.getUserIDFK());
-			social.setAuthorName(authorName);
-			String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
-			social.setMedia(media);			
+			ResourceHelper.enrichSocialWithUsernameAndMedia(uri,social);
 		}
 		return social;
 	}
 
-	protected void enrichSocialListWithUsernameAndMedia(List<Object> socialObjects) {
-		for (Object object : socialObjects) {
-			Social social = (Social) object;
-			enrichSocialWithUsernameAndMedia(social);
-		}
-	}
-
-
-	private void enrichSocialWithUsernameAndMedia(Social social) {
-		String authorName = UserResource.getUsername(social.getUserIDFK());
-		social.setAuthorName(authorName);
-		String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
-		social.setMedia(media);
-	}	
 
 	
 }

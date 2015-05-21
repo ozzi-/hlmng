@@ -26,10 +26,9 @@ public class SpeakerResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSpeakers() throws IOException {
 		List<Object> speakerObjects = listResource(speakerDao, false);
-		enrichSpeakerWithMedia(speakerObjects);
+		ResourceHelper.enrichSpeakerWithMedia(uri,speakerObjects);
 		return speakerObjects;
 	}
-
 	
 	@GET
 	@Path("/lastupdate")
@@ -38,9 +37,9 @@ public class SpeakerResource extends Resource  {
 		return speakerDao.getLastUpdateTime();
 	}
 
-	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Speaker getSpeaker(@PathParam("id") int id) throws IOException{
 		Speaker speaker = (Speaker) getResource(speakerDao, id);
 		if(speaker!=null){
@@ -49,13 +48,6 @@ public class SpeakerResource extends Resource  {
 		}
 		return speaker;
 	}
-	
-	protected void enrichSpeakerWithMedia(List<Object> speakerObjects) {
-		for (Object object : speakerObjects) {
-			Speaker speaker = (Speaker) object;
-			String media = ResourceHelper.getMediaURL(uri, speaker.getMediaIDFK());
-			speaker.setMedia(media);
-		}
-	}
+
 }
 

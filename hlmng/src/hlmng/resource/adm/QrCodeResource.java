@@ -51,7 +51,6 @@ public class QrCodeResource extends Resource {
 		return listResource(qrCodeDao, false);
 	}
 	
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -61,6 +60,7 @@ public class QrCodeResource extends Resource {
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public QrCode getQrCode(@PathParam("id") int id) throws IOException{
 		return (QrCode)getResource(qrCodeDao, id);
 	}
@@ -85,12 +85,14 @@ public class QrCodeResource extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putQrCode(QrCode element,@PathParam("id") int id) throws IOException {
 		return putResource(qrCodeDao, element, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postQrCode(QrCode element) throws IOException {		
 		element.setCreatedAt(TimeHelper.getCurrentDateTime());
 		String payload= element.getRole()+"-"+element.getEventIDFK()+"-"+ResourceHelper.getSecret();
@@ -100,6 +102,7 @@ public class QrCodeResource extends Resource {
 
 	@DELETE
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteQrCode(@PathParam("id") int id) throws IOException {
 		
 		QrCode qrcode = (QrCode)qrCodeDao.getElement(id);

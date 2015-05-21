@@ -43,18 +43,9 @@ public class  UserResource  extends Resource {
 		return userDao.getLastUpdateTime();
 	}
 	
-	
-	public static String getUsername(int id){
-		System.out.println();
-		User user = (User) userDao.getElement(id);
-		if(user!=null){
-			return user.getName();
-		}
-		return "unknown";
-	}
-	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public Object postUser(User element) throws IOException {	
 		String escapedName  = ESAPI.encoder().encodeForHTML(element.getName());
 		String escapedRegId  = ESAPI.encoder().encodeForHTML(element.getRegID());
@@ -78,6 +69,7 @@ public class  UserResource  extends Resource {
 	@PUT
 	@Path("{id}/changeregid")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public Response putUserChangeRegID(User element,@PathParam("id") int id) throws IOException {
 		Response res;
 		
@@ -107,11 +99,11 @@ public class  UserResource  extends Resource {
 				Log.addEntry(Level.INFO, "User ("+authCredential.getUsername()+") successfully changed his registration id");
 			}else{
 				Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to edit a non existant user. "+ModelHelper.valuestoString(element));
-				res = Response.status(404).build();
+				res = Response.status(HTTPCodes.notFound).build();
 			}
 		}else{
 			Log.addEntry(Level.WARNING, "User ("+authCredential.getUsername()+") tried to PUT user with wrong credentials or wrong name. "+ModelHelper.valuestoString(element));
-			res = Response.status(401).build();
+			res = Response.status(HTTPCodes.unauthorized).build();
 		}
 		return res;		
 	}

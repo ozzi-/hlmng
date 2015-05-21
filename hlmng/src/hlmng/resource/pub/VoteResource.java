@@ -35,7 +35,6 @@ public class VoteResource extends Resource  {
 		
 	private GenDao voteDao = GenDaoLoader.instance.getVoteDao();
 
-
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Object postVote(Vote element) throws IOException {

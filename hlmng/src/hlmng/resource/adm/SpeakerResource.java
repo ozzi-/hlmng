@@ -31,22 +31,20 @@ public class SpeakerResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSpeakers() throws IOException {
 		List<Object> speakerObjects = listResource(speakerDao, false);
-		enrichSpeakerWithMedia(speakerObjects);
+		ResourceHelper.enrichSpeakerWithMedia(uri,speakerObjects);
 		return speakerObjects;
 	}
 
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
 	public long getLastUpdateTime() throws IOException {
 		return speakerDao.getLastUpdateTime();
 	}
-
-
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Speaker getSpeaker(@PathParam("id") int id) throws IOException{
 		Speaker speaker = (Speaker) getResource(speakerDao, id);
 		if(speaker!=null){
@@ -60,6 +58,7 @@ public class SpeakerResource extends Resource  {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putSpeaker(Speaker element,@PathParam("id") int id) throws IOException {
 		element.setNationality(element.getNationality().toUpperCase());
 		return putResource(speakerDao, element, id);
@@ -67,12 +66,14 @@ public class SpeakerResource extends Resource  {
 	
 	@DELETE
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteSpeaker(@PathParam("id") int id) throws IOException {
 		return deleteResource(speakerDao, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postSpeaker(Speaker element) throws IOException {
 		element.setNationality(element.getNationality().toUpperCase());
 		Speaker speaker = (Speaker) postResource(speakerDao, element);
@@ -83,12 +84,6 @@ public class SpeakerResource extends Resource  {
 		return speaker;
 	}
 	
-	protected void enrichSpeakerWithMedia(List<Object> speakerObjects) {
-		for (Object object : speakerObjects) {
-			Speaker speaker = (Speaker) object;
-			String media = ResourceHelper.getMediaURL(uri, speaker.getMediaIDFK());
-			speaker.setMedia(media);
-		}
-	}
+	
 }
 

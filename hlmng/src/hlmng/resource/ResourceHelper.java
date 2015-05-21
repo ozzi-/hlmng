@@ -4,6 +4,10 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Media;
 import hlmng.model.ModelHelper;
+import hlmng.model.News;
+import hlmng.model.Social;
+import hlmng.model.Speaker;
+import hlmng.model.User;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,10 +30,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import log.Log;
+
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.imgscalr.Scalr;
 
-import log.Log;
 import settings.HLMNGSettings;
 import settings.HTTPCodes;
 
@@ -43,7 +48,51 @@ public class ResourceHelper {
 	public static String getSecret(){
 	    return new BigInteger(HLMNGSettings.qrcodeSecretStrengthInBit, randomGen).toString(32);
 	}
+	
+	public static void enrichSpeakerWithMedia(UriInfo uri, List<Object> speakerObjects) {
+		for (Object object : speakerObjects) {
+			Speaker speaker = (Speaker) object;
+			String media = ResourceHelper.getMediaURL(uri, speaker.getMediaIDFK());
+			speaker.setMedia(media);
+		}
+	}
 
+	public static void enrichNewsListWithMedia(UriInfo uri, List<Object> newsObjects) {
+		for (Object object : newsObjects) {
+			News news = (News) object;
+			String media = ResourceHelper.getMediaURL(uri, news.getMediaIDFK());
+			news.setMedia(media);
+		}
+	}
+	
+	public static void enrichNewsWithMedia(UriInfo uri, List<Object> newsObjects) {
+		for (Object object : newsObjects) {
+			News news = (News) object;
+			String media = ResourceHelper.getMediaURL(uri, news.getMediaIDFK());
+			news.setMedia(media);
+		}
+	}
+	
+	public static void enrichSocialListWithUsernameAndMedia(UriInfo uri, List<Object> socialObjects) {
+		for (Object object : socialObjects) {
+			Social social = (Social) object;
+			enrichSocialWithUsernameAndMedia(uri,social);
+		}
+	}
+	private static String getUsername(int id){
+		User user = (User) GenDaoLoader.instance.getUserDao().getElement(id);
+		if(user!=null){
+			return user.getName();
+		}
+		return "unknown";
+	}
+	public static void enrichSocialWithUsernameAndMedia(UriInfo uri, Social social) {
+		String authorName = getUsername(social.getUserIDFK());
+		social.setAuthorName(authorName);
+		String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
+		social.setMedia(media);
+	}	
+	
 	/**
 	 * @param ok
 	 * @return If @param is true returns a HTTP 200 (OK) Response, else 400 (bad request)

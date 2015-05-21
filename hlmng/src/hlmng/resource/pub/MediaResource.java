@@ -48,6 +48,7 @@ public class MediaResource extends Resource{
 
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMedia(@PathParam("id") int id) throws IOException {
 		return ResourceHelper.getMediaAsResponse(id, uri, request);
 	}
@@ -59,8 +60,6 @@ public class MediaResource extends Resource{
 		return mediaDao.getLastUpdateTime();
 	}
 	
-
-
 	@GET
 	@Path("image/jpeg/{name}")
 	@Produces("image/jpeg")
@@ -79,6 +78,7 @@ public class MediaResource extends Resource{
 	@POST
 	@Path("/upload")
 	@Consumes("multipart/form-data")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response uploadFile(
 			@FormDataParam("file") InputStream fileInputStream,
 			@FormDataParam("file") FormDataBodyPart body,

@@ -31,11 +31,10 @@ public class NewsResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getNewestNews() throws IOException {
 		List<Object> newsObjects = listResource(newsDao, true);
-		enrichNewsWithMedia(newsObjects);
+		ResourceHelper.enrichNewsWithMedia(uri,newsObjects);
 		return newsObjects;
 	}
 
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -43,18 +42,17 @@ public class NewsResource extends Resource  {
 		return newsDao.getLastUpdateTime();
 	}
 
-
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getNews() throws IOException {
 		List<Object> newsObjects = listResource(newsDao, false);
-		enrichNewsWithMedia(newsObjects);
+		ResourceHelper.enrichNewsWithMedia(uri,newsObjects);
 		return newsObjects;
 	}
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public News getNews(@PathParam("id") int id) throws IOException{
 		News news = (News)getResource(newsDao, id);
 		if(news!=null){
@@ -67,12 +65,14 @@ public class NewsResource extends Resource  {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putNews(News element,@PathParam("id") int id) throws IOException {
 		return putResource(newsDao, element, id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postNews(News element) throws IOException {
 		News news = (News) postResource(newsDao, element);
 		if(news!=null){
@@ -81,15 +81,5 @@ public class NewsResource extends Resource  {
 		}
 		return news;
 	}
-	
-
-	protected void enrichNewsWithMedia(List<Object> newsObjects) {
-		for (Object object : newsObjects) {
-			News news = (News) object;
-			String media = ResourceHelper.getMediaURL(uri, news.getMediaIDFK());
-			news.setMedia(media);
-		}
-	}
-
 }
 

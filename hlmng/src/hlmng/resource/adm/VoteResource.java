@@ -41,6 +41,7 @@ public class VoteResource extends Resource  {
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Vote getVote(@PathParam("id") int id) throws IOException{
 			return (Vote) getResource(voteDao, id);			
 	}
@@ -48,6 +49,7 @@ public class VoteResource extends Resource  {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putVote(Vote element,@PathParam("id") int id) throws IOException {
 		return putResource(voteDao, element, id);
 	}

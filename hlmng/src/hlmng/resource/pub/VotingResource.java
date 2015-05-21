@@ -42,14 +42,15 @@ public class VotingResource extends Resource {
 		
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Voting getVoting(@PathParam("id") int id) throws IOException{
 		return (Voting) getResource(votingDao, id);
 	}
 	
-
 	@SuppressWarnings("unchecked")
 	@GET
 	@Path("{id}/sliders")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSliders(@PathParam("id") int id) throws IOException{
 		Object obj= sliderDao.listByFK("votingIDFK", id);
 		return (List<Object>) obj;

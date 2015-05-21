@@ -15,7 +15,6 @@ import settings.HLMNGSettings;
 
 @Path(HLMNGSettings.pubURL+"/time")
 public class TimeResource extends Resource  {	
-	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	/**

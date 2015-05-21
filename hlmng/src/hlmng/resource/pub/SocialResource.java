@@ -11,7 +11,6 @@ import hlmng.model.User;
 import hlmng.resource.Resource;
 import hlmng.resource.ResourceHelper;
 import hlmng.resource.TimeHelper;
-import hlmng.resource.adm.UserResource;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,7 +43,7 @@ public class SocialResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getNewestSocials() throws IOException {
 		List<Object> socialObjects = listResource(socialDao, true);
-		enrichSocialListWithUsernameAndMedia(socialObjects);
+		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,socialObjects);
 		return socialObjects;
 	}
 	
@@ -61,7 +60,7 @@ public class SocialResource extends Resource  {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getSocials() throws IOException {
 		List<Object> socialObjects = listResource(socialDao, false);
-		enrichSocialListWithUsernameAndMedia(socialObjects);
+		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,socialObjects);
 		return socialObjects;
 	}
 	
@@ -69,13 +68,14 @@ public class SocialResource extends Resource  {
 	@Path("{id}")
 	public Social getSocial(@PathParam("id") int id) throws IOException{
 		Social social = (Social) getResource(socialDao, id);
-		enrichSocialWithUsernameAndMedia(social);
+		ResourceHelper.enrichSocialWithUsernameAndMedia(uri,social);
 		return social;
 	}
 
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postSocial(Social element) throws IOException {
 		Social social = null;
 		if(AuthChecker.checkAuthorization(headers, servletResponse)){
@@ -111,34 +111,23 @@ public class SocialResource extends Resource  {
 				}
 			}
 			
-			if(isAuthor){
-				element.setStatus(Social.statusEnum.accepted.toString());
-			}else{				
-				element.setStatus(Social.statusEnum.pending.toString());
-			}
+			setStatus(element, isAuthor);
 				
 			social = (Social) postResource(socialDao, element);
 			if(social!=null){
-				enrichSocialWithUsernameAndMedia(social);		
+				ResourceHelper.enrichSocialWithUsernameAndMedia(uri,social);		
 			}			
 		}
 		return social;
 	}
-	
-	protected void enrichSocialListWithUsernameAndMedia(List<Object> socialObjects) {
-		for (Object object : socialObjects) {
-			Social social = (Social) object;
-			enrichSocialWithUsernameAndMedia(social);
+
+
+	private void setStatus(Social element, boolean isAuthor) {
+		if(isAuthor){
+			element.setStatus(Social.statusEnum.accepted.toString());
+		}else{				
+			element.setStatus(Social.statusEnum.pending.toString());
 		}
 	}
-
-
-	private void enrichSocialWithUsernameAndMedia(Social social) {
-		String authorName = UserResource.getUsername(social.getUserIDFK());
-		social.setAuthorName(authorName);
-		String media = ResourceHelper.getMediaURL(uri, social.getMediaIDFK());
-		social.setMedia(media);
-	}	
-
 }
 

@@ -30,7 +30,6 @@ public class EventItemResource extends Resource{
 		return listResource(eventItemDao, false);
 	}
 	
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -40,6 +39,7 @@ public class EventItemResource extends Resource{
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public EventItem getEventItem(@PathParam("id") int id) throws IOException{
 		return (EventItem) getResource(eventItemDao, id);	
 	}

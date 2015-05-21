@@ -149,18 +149,7 @@ public class DB {
 							}
 						}
 						if(!isSafe){
-							String valueOld = (String)value;
-							value = ESAPI.encoder().encodeForHTML((String)value);	
-							String valueS = (String) value;
-							valueS = valueS.replace("&#x21;", "!");
-							valueS = valueS.replace("&#x3f;", "?");
-							valueS = valueS.replace("&#x3a;", ":");
-							valueS = valueS.replace("&#x23;", "#");
-							valueS = valueS.replace("&#x40;", "@");
-							value=valueS;
-							if(!valueOld.equals(value)){
-								Log.addEntry(Level.WARNING,"ESAPI Encoding returned different value, possible XSS attack prevented!");
-							}	
+							value = escapeString(value);	
 						}
 					}
 					ps.setObject(++i, value);
@@ -179,6 +168,22 @@ public class DB {
 			}
 		}
 		return ps;
+	}
+
+	private static Object escapeString(Object value) {
+		String valueOld = (String)value;
+		value = ESAPI.encoder().encodeForHTML((String)value);	
+		String valueS = (String) value;
+		valueS = valueS.replace("&#x21;", "!");
+		valueS = valueS.replace("&#x3f;", "?");
+		valueS = valueS.replace("&#x3a;", ":");
+		valueS = valueS.replace("&#x23;", "#");
+		valueS = valueS.replace("&#x40;", "@");
+		value=valueS;
+		if(!valueOld.equals(value)){
+			Log.addEntry(Level.WARNING,"ESAPI Encoding returned different value, possible XSS attack prevented!");
+		}
+		return value;
 	}
 	
 	public static ArrayList<String> getDontMapFields() {

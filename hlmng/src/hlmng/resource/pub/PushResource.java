@@ -37,6 +37,7 @@ public class PushResource  extends Resource{
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Push getPush(@PathParam("id") int id) throws IOException{
 		return (Push)getResource(pushDao, id);
 	}

@@ -36,15 +36,16 @@ public class SliderResource extends Resource {
 		return listResource(sliderDao, false);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@GET
 	@Path("{id}/votes")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getVotesOfSlider(@PathParam("id") int id) throws IOException{
-		Object obj= voteDao.listByFK("sliderIDFK", id);
-		return (List<Object>) obj;			
+		List<Object> obj= voteDao.listByFK("sliderIDFK", id);
+		return obj;			
 	}
 	@GET
 	@Path("{id}/votescorejury")
+	@Produces(MediaType.APPLICATION_JSON)
 	public double getVoteScoreJury(@PathParam("id") int id) throws IOException{
 		List<Object> objList= voteDao.listByFK("sliderIDFK", id);
 		int voteSum=0;
@@ -64,6 +65,7 @@ public class SliderResource extends Resource {
 	
 	@GET
 	@Path("{id}/votescoreaudience")
+	@Produces(MediaType.APPLICATION_JSON)
 	public double getVoteScoreAudience(@PathParam("id") int id) throws IOException{
 		List<Object> objList= voteDao.listByFK("sliderIDFK", id);
 		int voteSum=0;
@@ -90,6 +92,7 @@ public class SliderResource extends Resource {
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Slider getSlider(@PathParam("id") int id) throws IOException{
 		return (Slider) getResource(sliderDao, id);
 	}
@@ -97,12 +100,14 @@ public class SliderResource extends Resource {
 	@PUT
 	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response putSlider(Slider element,@PathParam("id") int id) throws IOException {
 		return putResource(sliderDao, element, id);
 	}
 	
 	@DELETE
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteSlider(@PathParam("id") int id) throws IOException {
 		return deleteResource(sliderDao, id);
 	}
@@ -110,6 +115,7 @@ public class SliderResource extends Resource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postSlider(Slider element) throws IOException {
 		return postResource(sliderDao, element);
 	}

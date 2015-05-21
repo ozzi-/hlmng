@@ -24,14 +24,12 @@ public class EventRoomResource extends Resource  {
 
 	private GenDao eventRoomDao =GenDaoLoader.instance.getEventRoomDao();
 	
-	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEventRoom() throws IOException {
 		return listResource(eventRoomDao, false);
 	}
 
-	
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -41,11 +39,10 @@ public class EventRoomResource extends Resource  {
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public EventRoom getEventRoom(@PathParam("id") int id) throws IOException{
 		return (EventRoom) getResource(eventRoomDao, id);
 	}
-
-	
 
 }
 

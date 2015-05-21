@@ -37,6 +37,7 @@ public class SliderResource extends Resource {
 	
 	@GET
 	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Slider getSlider(@PathParam("id") int id) throws IOException{
 		return (Slider) getResource(sliderDao, id);
 	}
