@@ -79,6 +79,7 @@ public class SocialResource extends Resource  {
 	public Object postSocial(Social element) throws IOException {
 		Social social = null;
 		if(AuthChecker.checkAuthorization(headers, servletResponse)){
+			Log.addEntry(Level.INFO, "CHEKED AUTH POST SOCIAL");
 			if(!(ESAPI.encoder().encodeForHTML(element.getText()).equals(element.getText()))){
 				Log. addEntry(Level.WARNING,"Somebody possibly tried to insert XSS while posting a social entry");
 			}
@@ -86,7 +87,7 @@ public class SocialResource extends Resource  {
 		
 			String authorizationHeader = headers.getHeaderString("Authorization");
 			if(authorizationHeader==null){
-				return Response.status(401).build();
+				return Response.status(HTTPCodes.unauthorized).build();
 			} 	
 			
 			AuthCredential authCredential = AuthChecker.decodeBasicAuthB64(authorizationHeader);

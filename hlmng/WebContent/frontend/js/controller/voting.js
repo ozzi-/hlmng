@@ -108,27 +108,24 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	        promise = undefined;
 	    }
 	});
-	
-	RestService.list('voting').then(function(data){
+	RestService.get($stateParams.eventId,'event','votings').then(function(data){
 	    $.each(data, function(i, item){
-	    	if(item.eventIDFK==$stateParams.eventId){
-	    		hlmng.votings.push(item);	 
-	    		item.audiencevotingover=false;
-	    		if (item.status=="pre_presentation"){
-	    			hlmng.votingsUpcomingPrePresentation.push(item);
-    			}else if (item.status=="presentation"){
-    				RestService.get(item.votingID,'voting','ispaused').then(function(data){
-    					item.ispaused=data;
-    					hlmng.votingsUpcomingPresentation.push(item);
-    				});
-	    		}else if (item.status=="presentation_end"){
-	    			hlmng.votingsUpcomingEndPresentation.push(item);
-	    		}else if (item.status=="voting"){
-	    			hlmng.votingsRunning.push(item);
-	    		}else if (item.status=="voting_end"){
-	    			hlmng.votingsFinished.push(item);
-	    		}
-	    	}
+    		hlmng.votings.push(item);	 
+    		item.audiencevotingover=false;
+    		if (item.status=="pre_presentation"){
+    			hlmng.votingsUpcomingPrePresentation.push(item);
+			}else if (item.status=="presentation"){
+				RestService.get(item.votingID,'voting','ispaused').then(function(data){
+					item.ispaused=data;
+					hlmng.votingsUpcomingPresentation.push(item);
+				});
+    		}else if (item.status=="presentation_end"){
+    			hlmng.votingsUpcomingEndPresentation.push(item);
+    		}else if (item.status=="voting"){
+    			hlmng.votingsRunning.push(item);
+    		}else if (item.status=="voting_end"){
+    			hlmng.votingsFinished.push(item);
+    		}
 	    });
 	    refreshData();
 	});

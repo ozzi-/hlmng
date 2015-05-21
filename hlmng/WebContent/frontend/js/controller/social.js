@@ -43,21 +43,18 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 			hlmng.socialsRejected.splice(i, 1);
 		}
 	};
-	
-	RestService.list('social').then(function(data){
+	RestService.get($stateParams.eventId,'event','socials').then(function(data){
 	    $.each(data, function(i, item){
-	    	if(item.eventIDFK==$stateParams.eventId){
-	    		hlmng.socials.push(item);
-	    		if(item.status=="pending"){
-	    			hlmng.socialsPending.push(item);	  	    			
-	    		}
-	    		if(item.status=="accepted"){
-	    			hlmng.socialsAccepted.push(item);	  	    			
-	    		}
-	    		if(item.status=="rejected"){
-	    			hlmng.socialsRejected.push(item);	  	    			
-	    		}
-	    	}
+    		hlmng.socials.push(item);
+    		if(item.status=="pending"){
+    			hlmng.socialsPending.push(item);	  	    			
+    		}
+    		if(item.status=="accepted"){
+    			hlmng.socialsAccepted.push(item);	  	    			
+    		}
+    		if(item.status=="rejected"){
+    			hlmng.socialsRejected.push(item);	  	    			
+    		}
 	    });
 	});
 }]);

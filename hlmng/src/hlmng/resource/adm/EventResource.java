@@ -35,6 +35,7 @@ public class EventResource extends Resource {
 	private GenDao pushDao =GenDaoLoader.instance.getPushDao();
 	private GenDao socialDao =GenDaoLoader.instance.getSocialDao();
 	private GenDao votingDao =GenDaoLoader.instance.getVotingDao();
+	private GenDao qrCodeDao =GenDaoLoader.instance.getQrCodeDao();
 	
 	@GET
 	@Path("{id}/votings")
@@ -65,6 +66,12 @@ public class EventResource extends Resource {
 	@Path("{id}/eventrooms")
 	public List<Object> getEventRooms(@PathParam("id") int id) throws IOException{
 		List<Object> obj=eventRoomDao.listByFK("eventIDFK",id);
+		return obj;
+	}
+	@GET
+	@Path("{id}/qrcodes")
+	public List<Object> getQrCodes(@PathParam("id") int id) throws IOException{
+		List<Object> obj=qrCodeDao.listByFK("eventIDFK",id);
 		return obj;
 	}
 	@GET

@@ -53,12 +53,11 @@ qrCodeModule.controller('QrcodeListController', ['$http','RestService','$state',
 		printWindow.print(); 
 	};
 	
-	RestService.list('qrcode').then(function(data){
+	
+	RestService.get($stateParams.eventId,'event','qrcodes').then(function(data){
 	    $.each(data, function(i, item){
-	    	if(item.eventIDFK==$stateParams.eventId){
-	    		item.qrCodeRenderURL = apiUrl+"qrcode/"+item.qrcodeID+"/render";
-	    		hlmng.qrcodes.push(item);	
-	    	}
+	    	item.qrCodeRenderURL = apiUrl+"qrcode/"+item.qrcodeID+"/render";
+	    	hlmng.qrcodes.push(item);	
 	    });
 	});
 }]);

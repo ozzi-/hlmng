@@ -18,11 +18,9 @@ eventRoomModule.controller('EventRoomListController', ['$http','RestService','$s
 	var hlmng = this;
 	hlmng.eventrooms = [];
 	
-	RestService.list('eventroom').then(function(data){
+	RestService.get($stateParams.eventId,'event','eventrooms').then(function(data){
 	    $.each(data, function(i, item){
-	    	if(item.eventIDFK==$stateParams.eventId){
-	    		hlmng.eventrooms.push(item);	  
-	    	}
+	    	hlmng.eventrooms.push(item);	  
 	    });
 	});
 }]);

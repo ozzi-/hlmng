@@ -21,11 +21,9 @@ eventItemModule.controller('EventItemListController', ['$http','RestService','$s
 	var hlmng = this;
 	hlmng.eventitems = [];
 	
-	RestService.list('eventitem').then(function(data){
+	RestService.get($stateParams.eventId,'event','eventitems').then(function(data){
 	    $.each(data, function(i, item){
-	    	if(item.eventIDFK==$stateParams.eventId){
-	    		hlmng.eventitems.push(item);	  
-	    	}
+	    	hlmng.eventitems.push(item);	  
 	    });
 	});
 }]);
