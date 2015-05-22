@@ -70,16 +70,18 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}/totalscorejury")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Double getTotalScoreJury(@PathParam("id") int id) throws IOException{
+	public Double getTotalScoreJury(@PathParam("id") int id) throws IOException, java.text.ParseException{
 		List<Object> objSliderList= sliderDao.listByFK("votingIDFK", id);
-		return getTotalScore(objSliderList,true);
+		boolean inTime = isPresentationInTimeInternal(id);
+		Double totalScoreJury = getTotalScore(objSliderList,inTime,id);
+		return totalScoreJury;
 	}
 	@GET
 	@Path("{id}/totalscoreaudience")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Double getTotalScoreAudience(@PathParam("id") int id) throws IOException{
 		List<Object> objSliderList= sliderDao.listByFK("votingIDFK", id);
-		return getTotalScore(objSliderList,false);
+		return getTotalScore(objSliderList);
 	}
 	@GET
 	@Path("{id}/presentationpauses")
@@ -91,6 +93,10 @@ public class VotingResource extends Resource {
 	@Path("{id}/presentationintime")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean isPresentationInTime(@PathParam("id") int id) throws java.text.ParseException, IOException{
+		return isPresentationInTimeInternal(id);
+	}
+	private boolean isPresentationInTimeInternal(int id) throws IOException,
+			java.text.ParseException {
 		Voting voting = (Voting) getResource(votingDao, id);
 		String presentationDuration = presentationDuration(id, voting);
 		String presentationMinTime = voting.getPresentationMinTime();
@@ -99,7 +105,6 @@ public class VotingResource extends Resource {
 		TimePart tpMin = TimePart.parse(presentationMinTime);
 		TimePart tpMax = TimePart.parse(presentationMaxTime);
 		return(tpDur.compareTo(tpMin)>=0 && (tpDur.compareTo(tpMax)<=0));
-		
 	}	
 	@GET
 	@Path("{id}/ispaused")
@@ -273,13 +278,26 @@ public class VotingResource extends Resource {
 		}
         return calcDifference(pauseTotal,presentationDiff);
 	}
-	private Double getTotalScore(List<Object> objSliderList,boolean jury) {
+	private Double getTotalScore(List<Object> objSliderList,Boolean inTime, int id) {
+		double totalScore = 0.0;
+		int virtualSliderCount=1; // 1 for inTimeScore
+		for (Object obj : objSliderList) {
+			Slider slider = (Slider) obj;
+			virtualSliderCount+=slider.getWeight();
+			totalScore += getSliderScore(slider.getSliderID(),false)*slider.getWeight();
+		}
+		Voting voting = (Voting) votingDao.getElement(id);
+		double inTimeScore = (inTime)?voting.getSliderMaxValue():0.0;
+		totalScore+=inTimeScore;
+		return totalScore / virtualSliderCount;
+	}
+	private Double getTotalScore(List<Object> objSliderList) {
 		double totalScore = 0.0;
 		int virtualSliderCount=0;
 		for (Object obj : objSliderList) {
 			Slider slider = (Slider) obj;
 			virtualSliderCount+=slider.getWeight();
-			totalScore += getSliderScore(slider.getSliderID(),jury)*slider.getWeight();
+			totalScore += getSliderScore(slider.getSliderID(),false)*slider.getWeight();
 		}
 		return totalScore / virtualSliderCount;
 	}

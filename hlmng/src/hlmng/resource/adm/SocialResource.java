@@ -29,14 +29,6 @@ public class SocialResource extends Resource  {
 	private GenDao socialDao = GenDaoLoader.instance.getSocialDao();
 
 	@GET
-	@Path("newest")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getNewestSocials() throws IOException {
-		List<Object> socialObjects = listResource(socialDao, true);
-		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,socialObjects);
-		return socialObjects;
-	}
-	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)
 	public long getLastUpdateTime() throws IOException {

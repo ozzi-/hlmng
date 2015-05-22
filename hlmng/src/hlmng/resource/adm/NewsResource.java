@@ -25,16 +25,6 @@ import settings.HLMNGSettings;
 public class NewsResource extends Resource  {
 	private GenDao newsDao =GenDaoLoader.instance.getNewsDao();
 
-
-	@GET
-	@Path("newest")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Object> getNewestNews() throws IOException {
-		List<Object> newsObjects = listResource(newsDao, true);
-		ResourceHelper.enrichNewsWithMedia(uri,newsObjects);
-		return newsObjects;
-	}
-
 	@GET
 	@Path("/lastupdate")
 	@Produces(MediaType.TEXT_PLAIN)

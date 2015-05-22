@@ -172,12 +172,23 @@ public class GenDao {
 	}
 	
 	
+	/**
+	 * 
+	 * @return A list of all elements from the specified class/model
+	 */
+	public <T> List<Object> listElements(boolean limit) {
+		return doListElements((limit)?listElementsLimit:listElements);
+	}
 	
+	public <T> List<Object> listByFKLimited(String fkName, int idFK){
+		return listByFK(fkName+"_limited",idFK);
+	}
+
 	public <T> List<Object> listByFK(String fkName, int idFK){
 		List<Object> elemList = new ArrayList<Object>();
 		try (Connection dbConnection = getDBConnection()){
 			try(PreparedStatement ps = dbConnection.prepareStatement(fkElement.get(fkName).toString())){
-				PreparedStatement psF=DB.setIdFieldOfPS(ps,idFK);				
+				PreparedStatement psF= DB.setIdFieldOfPS(ps,idFK);				
 				try(ResultSet rs = psF.executeQuery()){
 					while (rs.next()) {
 						elemList.add(DB.getObjectFromRS(rs,classType));
@@ -192,15 +203,6 @@ public class GenDao {
 		return elemList;
 	}
 	
-	
-	/**
-	 * 
-	 * @return A list of all elements from the specified class/model
-	 */
-	public <T> List<Object> listElements(boolean limit) {
-		return doListElements((limit)?listElementsLimit:listElements);
-	}
-
 	private <T> List<Object> doListElements(String listElementsQuery){
 		List<Object> elemList = new ArrayList<Object>();
 		try(Connection dbConnection = getDBConnection()){

@@ -233,7 +233,7 @@ votingModule.controller('VotingStatsController', ['$http','$stateParams','RestSe
 	RestService.get($stateParams.votingId,'voting').then(function(data){
 		hlmng.voting=data;
 		hlmng.sliders={};
-		hlmng.inTime="--	";
+		hlmng.inTime="-";
 		RestService.get($stateParams.votingId,'voting','presentationintime').then(function(data){
 			if(data==true){
 				hlmng.inTime="Yes";				
@@ -307,9 +307,14 @@ votingModule.controller('VotingStatsController', ['$http','$stateParams','RestSe
 votingModule.controller('VotingIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
 	var hlmng = this;
 	
-	hlmng.voting = {};	
+	hlmng.voting = {};
+	hlmng.sliders ={};
+	
 	RestService.get($stateParams.votingId,'voting').then(function(data){
 		hlmng.voting=data;
+	});
+	RestService.get($stateParams.votingId,'voting','sliders').then(function(data){
+		hlmng.sliders=data;
 	});
 
 	hlmng.putVoting = RestService.put;

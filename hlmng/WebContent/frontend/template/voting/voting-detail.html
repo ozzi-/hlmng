@@ -10,11 +10,9 @@
 	</div>
 	<div class="col-xs-4">
 		<h4>Sliders:</h4>
-		<div ng-controller="SliderListController as sliderListCtrl">
-			<span ng-repeat="slider in sliderListCtrl.sliders" ng-if="slider.votingIDFK==votingIdCtrl.voting.votingID">
-				<slider-info slider="slider"></slider-info><br>
-			</span>
-		</div>
+		<span ng-repeat="slider in votingIdCtrl.sliders">
+			<slider-info slider="slider"></slider-info><br>
+		</span>
 	</div>
 </div>
 

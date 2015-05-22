@@ -51,6 +51,14 @@ public class EventResource extends Resource {
 		return obj;
 	}
 	@GET
+	@Path("{id}/socials/newest")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> getNewestSocials(@PathParam("id") int id) throws IOException {
+		List<Object> socialObjects = socialDao.listByFKLimited("eventIDFK", id);
+		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,socialObjects);
+		return socialObjects;
+	}
+	@GET
 	@Path("{id}/pushes")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEventPushes(@PathParam("id") int id) throws IOException{
@@ -86,6 +94,14 @@ public class EventResource extends Resource {
 		ResourceHelper.enrichNewsListWithMedia(uri,obj);
 		return  obj;
 	}	
+	@GET
+	@Path("{id}/news/newest")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> getNewestNews(@PathParam("id") int id) throws IOException {
+		List<Object> newsObjects = newsDao.listByFKLimited("eventIDFK", id);
+		ResourceHelper.enrichNewsWithMedia(uri,newsObjects);
+		return newsObjects;
+	}
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEvent() throws IOException {
