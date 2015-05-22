@@ -158,6 +158,7 @@ votingModule.controller('VotingNewController', ['$http','$stateParams','RestServ
 		hlmng.votingSettingsMode='voting-default';
 		hlmng.voting.arithmeticMode="arithmetic";
 		hlmng.voting.sliderMaxValue=10;
+		hlmng.voting.inTimeScoreWeight=1;
 	};
 
 	hlmng.resetDefault();

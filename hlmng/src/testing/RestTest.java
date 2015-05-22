@@ -61,7 +61,7 @@ public class RestTest {
 
 	@Test
 	public void testVoteScoring() throws IOException{
-		Voting voting = new Voting("Name",10,"voting_end",8,"00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:06:00",1,1);
+		Voting voting = new Voting("Name",10,"voting_end",8,"00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:06:00",1,1,1);
 		int votingid = votingDao.addElement(voting);
 
 		Slider slider1 = new Slider("slider1",1, votingid);
@@ -122,7 +122,7 @@ public class RestTest {
 		User user = new User("testusername", "1234test1234", "4321test");
 		int userid  = userDao.addElement(user);
 			
-		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "median","00:05:30","00:06:30",TimeHelper.getCurrentTime(),"00:07:00", 1, 1);
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "median","00:05:30","00:06:30",TimeHelper.getCurrentTime(),"00:07:00", 1,1,1);
 		voting.setVotingStarted(TimeHelper.getCurrentTime());
 		int votingid = votingDao.addElement(voting);
 		
@@ -169,7 +169,7 @@ public class RestTest {
 		User user = new User("name", "1234", "4321");
 		int userid  = userDao.addElement(user);
 			
-		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode","00:03:50","00:33:33","00:07:00","00:07:00",1, 1);
+		Voting voting = new Voting("TEST", 10, "voting", 10,"00:00:50", "testmode","00:03:50","00:33:33","00:07:00","00:07:00",1,1,1);
 		int votingid = votingDao.addElement(voting);
 		
 		Slider slider = new Slider("TEST", 1, votingid);

@@ -13,6 +13,7 @@ public class Voting {
 	private String presentationMaxTime;
 	private String presentationStarted;
 	private String presentationEnded;
+	private int inTimeScoreWeight;
 	private int round;
 	private int eventIDFK;
 
@@ -24,7 +25,7 @@ public class Voting {
 	public Voting(){
 	
 	}
-	public Voting(int votingID, String name, int juryCount, String status, int sliderMaxValue, String votingStarted, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded, int round, int eventIDFK){
+	public Voting(int votingID, String name, int juryCount, String status, int sliderMaxValue, String votingStarted, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded,int inTimeScoreWeight, int round, int eventIDFK){
 		this.votingID=votingID;
 		this.name=name;
 		this.juryCount=juryCount;
@@ -37,10 +38,11 @@ public class Voting {
 		this.presentationMaxTime=presentationMaxTime;
 		this.presentationStarted=presentationStarted;
 		this.presentationEnded=presentationEnded;
+		this.inTimeScoreWeight=inTimeScoreWeight;
 		this.round=round;
 		this.eventIDFK=eventIDFK;
 	}
-	public Voting(String name, int juryCount, String status, int sliderMaxValue, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded, int round, int eventIDFK){
+	public Voting(String name, int juryCount, String status, int sliderMaxValue, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded, int inTimeScoreWeight, int round, int eventIDFK){
 		this.name=name;
 		this.juryCount=juryCount;
 		this.status=status;
@@ -51,6 +53,7 @@ public class Voting {
 		this.presentationMaxTime=presentationMaxTime;
 		this.presentationStarted=presentationStarted;
 		this.presentationEnded=presentationEnded;
+		this.inTimeScoreWeight=inTimeScoreWeight;
 		this.round=round;
 		this.eventIDFK=eventIDFK;
 	}
@@ -138,6 +141,12 @@ public class Voting {
 	}
 	public void setPresentationStarted(String presentationStarted) {
 		this.presentationStarted = presentationStarted;
+	}
+	public int getInTimeScoreWeight() {
+		return inTimeScoreWeight;
+	}
+	public void setInTimeScoreWeight(int inTimeScoreWeight) {
+		this.inTimeScoreWeight = inTimeScoreWeight;
 	}
 
 }

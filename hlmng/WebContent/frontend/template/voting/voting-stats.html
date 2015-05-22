@@ -31,7 +31,7 @@
 	  		<td>{{slider.voteScoreAudience}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
 	  	</tr>
 	  	<tr>
-	  		<td>Presentation In Time x1</td>
+	  		<td>Presentation In Time (x{{votingStatsCtrl.voting.inTimeScoreWeight}})</td>
 	  		<td ng-if="votingStatsCtrl.inTime=='Yes'">{{votingStatsCtrl.voting.sliderMaxValue}}/{{votingStatsCtrl.voting.sliderMaxValue}}</td>
 	  		<td ng-if="votingStatsCtrl.inTime=='No'">0.0</td>
 	  		<td>-</td>

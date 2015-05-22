@@ -26,7 +26,7 @@ CREATE DATABASE  IF NOT EXISTS `hlmng` /*!40100 DEFAULT CHARACTER SET latin1 */;
 	`votingIDFK` int(11) NOT NULL,
     PRIMARY KEY (`presentationpauseID`),
     KEY `votingIDFK_vg` (`votingIDFK`),
-    CONSTRAINT `votingIDFK_pp` FOREIGN KEY (`votingIDFK`) REFERENCES `voting` (`votingID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `votingIDFK_pp` FOREIGN KEY (`votingIDFK`) REFERENCES `voting` (`votingID`) ON DELETE CASCADE ON UPDATE CASCADE
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   /*!40101 SET character_set_client = @saved_cs_client */;
 

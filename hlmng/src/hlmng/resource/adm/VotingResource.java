@@ -280,14 +280,15 @@ public class VotingResource extends Resource {
 	}
 	private Double getTotalScore(List<Object> objSliderList,Boolean inTime, int id) {
 		double totalScore = 0.0;
-		int virtualSliderCount=1; // 1 for inTimeScore
+		int virtualSliderCount=0;
 		for (Object obj : objSliderList) {
 			Slider slider = (Slider) obj;
 			virtualSliderCount+=slider.getWeight();
 			totalScore += getSliderScore(slider.getSliderID(),false)*slider.getWeight();
 		}
 		Voting voting = (Voting) votingDao.getElement(id);
-		double inTimeScore = (inTime)?voting.getSliderMaxValue():0.0;
+		double inTimeScore = (inTime)?voting.getSliderMaxValue()*voting.getInTimeScoreWeight():0.0;
+		virtualSliderCount+=voting.getInTimeScoreWeight();
 		totalScore+=inTimeScore;
 		return totalScore / virtualSliderCount;
 	}

@@ -1,4 +1,4 @@
-  CREATE DATABASE  IF NOT EXISTS `hlmng` /*!40100 DEFAULT CHARACTER SET latin1 */;
+ CREATE DATABASE  IF NOT EXISTS `hlmng` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
   -- Host: localhost    Database: hlmng
   -- ------------------------------------------------------
@@ -32,6 +32,7 @@
     `presentationMaxTime` varchar(8) NOT NULL,
     `presentationStarted` varchar(8),
     `presentationEnded` varchar(8),
+    `inTimeScoreWeight` int(11) NOT NULL,
     `round` int(11) NOT NULL,
     `eventIDFK` int(11) NOT NULL,
     PRIMARY KEY (`votingID`),
@@ -41,6 +42,6 @@
   /*!40101 SET character_set_client = @saved_cs_client */;
 
   LOCK TABLES `voting` WRITE;
-  INSERT INTO `voting` VALUES (1,'Voting 1',15,'running',10,NULL,'00:00:50','median','00:05:00','00:07:00','14:30:30','14:35:50',1,1);
-  INSERT INTO `voting` VALUES (2,'Voting 2',15,'voting',10,'14:39:57','00:00:50','median','00:05:00','00:07:00',NULL,NULL,1,1);
+  INSERT INTO `voting` VALUES (1,'Voting 1',15,'running',10,NULL,'00:00:50','median','00:05:00','00:07:00','14:30:30','14:35:50',2,1,1);
+  INSERT INTO `voting` VALUES (2,'Voting 2',15,'voting',10,'14:39:57','00:00:50','median','00:05:00','00:07:00',NULL,NULL,1,1,1);
   UNLOCK TABLES;

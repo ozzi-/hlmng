@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="28" columns="4">
+<lyxtabular version="3" rows="29" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1306,7 +1306,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1315,7 +1315,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1324,11 +1324,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Zusätzliche Event Calls
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Newest Calls verschoben, inTimeScoreWeight
 \end_layout
 
 \end_inset
@@ -2160,6 +2198,24 @@ GET - Liefert alle News Items welche zu Event {id} gehören
 
 
 \series bold
+pub+adm/event/{id}/news/newest
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
+ Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
+ alle Einträge.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 pub+adm/event/{id}/socials
 \series default
 
@@ -2167,6 +2223,24 @@ pub+adm/event/{id}/socials
 \end_inset
 
 GET - Liefert alle Social Items welche zu Event {id} gehören
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+pub+adm/event/{id}/social/newest
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
+ Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
+ alle Einträge.
 \begin_inset Newline newline
 \end_inset
 
@@ -2199,10 +2273,6 @@ pub+adm/event/{id}/pushes
 \end_inset
 
 GET - Liefert alle Pushes welche zu Event {id} gehören
-\begin_inset Newline newline
-\end_inset
-
-
 \begin_inset Newline newline
 \end_inset
 
@@ -3060,24 +3130,6 @@ GET - Liefert alle News Einträge
 \end_inset
 
 
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-pub/news/newest
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
- Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
- alle Einträge.
-\begin_inset Newline newline
-\end_inset
-
-
 \series bold
 
 \begin_inset Newline newline
@@ -3119,24 +3171,6 @@ POST - Erstellt neuen News Eintrag
 \begin_inset Newline newline
 \end_inset
 
-adm/news/newest
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
- Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
- alle Einträge.
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-
-\begin_inset Newline newline
-\end_inset
-
 adm/news/{id}
 \series default
 
@@ -3152,6 +3186,119 @@ PUT - Updatet den besagten News Eintrag
 \end_inset
 
 DELETE -  Löscht den besagten News Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Presentationpause
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+presentationpauseID - 
+\series default
+Die eindeutige ID der Presentationpause
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+start - 
+\series default
+Der Startzeitpunkt der Pause
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+stop [Null] - 
+\series default
+Der Stopzeitpunkt der Pause
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+votingIDFK - 
+\series default
+Ein FK zu dem dazugehörigen Voting
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	"presentationpauseID": 1,	
+\end_layout
+
+\begin_layout Plain Layout
+
+	"start": "14:02:03",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"stop": "14:03:28", 
+\end_layout
+
+\begin_layout Plain Layout
+
+	"votingIDFK": 1
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+adm/presentationpause/{id}
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+PUT - Updatet besagten Presentationpause Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/presentationpause/
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+POST - Erstellt neuen Presentationpause Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -4063,24 +4210,6 @@ GET - Liefert den besagten Social Eintrag
 
 
 \series bold
-pub/social/newest
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
- Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
- alle Einträge.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
 adm/social
 \series default
 
@@ -4116,24 +4245,6 @@ PUT - Updatet den besagten Social Eintrag
 \end_inset
 
 DELETE - Löscht den besagten Social Eintrag
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-adm/social/newest
-\begin_inset Newline newline
-\end_inset
-
-
-\series default
-GET - Liefert nur die neusten (höchste ID zuerst) 15 (Standardwert) Einträge.
- Es wird empfohlen diesen Call zu werden, ausser der User wünscht explizit
- alle Einträge.
 \begin_inset Newline newline
 \end_inset
 
@@ -4817,6 +4928,15 @@ Die Auswahl der mathematischen Funktion zur Auswertung (median,todo)
 
 
 \series bold
+inTimeScoreWeight
+\series default
+ - Legt die Gewichtung fest, mit welcher der Score für die Einhaltung der
+ Zeit gewichtet wird 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 round - 
 \series default
 Die Runde 
@@ -4903,6 +5023,11 @@ status open
 \begin_layout Plain Layout
 
 	"arithmeticMode": "median",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"inTimeScoreWeight": 1,
 \end_layout
 
 \begin_layout Plain Layout
