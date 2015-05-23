@@ -27,6 +27,7 @@ import settings.HLMNGSettings;
 @Path(HLMNGSettings.admURL+"/social")
 public class SocialResource extends Resource  {
 	private GenDao socialDao = GenDaoLoader.instance.getSocialDao();
+	private GenDao socialPublishDao = GenDaoLoader.instance.getSocialPublishDao();
 
 	@GET
 	@Path("/lastupdate")
@@ -42,7 +43,6 @@ public class SocialResource extends Resource  {
 		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,socialObjects);
 		return socialObjects;
 	}
-
 
 	@GET
 	@Path("{id}")
@@ -61,6 +61,12 @@ public class SocialResource extends Resource  {
 		return putResource(socialDao, element, id);
 	}
 	
+	@GET
+	@Path("{id}/publications")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> getPublications(@PathParam("id") int id){
+		return socialPublishDao.listByFK("socialIDFK", id);
+	}
 
 	@DELETE
 	@Path("{id}")

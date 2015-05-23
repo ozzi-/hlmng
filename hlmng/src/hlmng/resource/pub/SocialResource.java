@@ -37,6 +37,8 @@ import settings.HTTPCodes;
 @Path(HLMNGSettings.pubURL+"/social")
 public class SocialResource extends Resource  {
 	private GenDao socialDao = GenDaoLoader.instance.getSocialDao();
+	private GenDao socialPublishDao = GenDaoLoader.instance.getSocialPublishDao();
+
 	
 	@GET
 	@Path("/lastupdate")
@@ -45,6 +47,12 @@ public class SocialResource extends Resource  {
 		return socialDao.getLastUpdateTime();
 	}
 	
+	@GET
+	@Path("{id}/publications")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> getPublications(@PathParam("id") int id){
+		return socialPublishDao.listByFK("socialIDFK", id);
+	}
 		
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

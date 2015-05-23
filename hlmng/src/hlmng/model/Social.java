@@ -12,7 +12,7 @@ public class Social {
 
 	
 	public enum statusEnum {
-		pending,accepted,rejected
+		pending,accepted,rejected,published
 	}
 	
 	public Social() {

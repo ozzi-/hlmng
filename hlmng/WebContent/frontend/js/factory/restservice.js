@@ -1,5 +1,6 @@
 app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
     return {
+    	
         post: function (obj,className) {
         	var deferred = $q.defer();       
             $http({ method: "POST", url: apiUrl+className, data: obj })
@@ -12,6 +13,7 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
             });
             return deferred.promise;
         },
+        
         put: function (obj,objId,className) {
     		$http.put(apiUrl+className+'/'+objId, obj).success(function(data) {
     			$log.log('put '+className+' successfully');
@@ -19,6 +21,7 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
     			$log.log('couldn\'t put '+className+', ID='+objId+"\nError:"+error);
     		});
         },
+        
     	get: function (objId,className,addition) {
     		 // we need the q lib -> deferred because else the view would receive the data "too late"
             var deferred = $q.defer();
@@ -37,6 +40,7 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
             });
             return deferred.promise;
 		},
+		
     	list: function (className) {
             var deferred = $q.defer();
             $http({ method: "GET", url: apiUrl+className })
@@ -49,6 +53,7 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
             });
             return deferred.promise;
 		},
+		
     	del: function (objId,className) {
             $http({ method: "DELETE", url: apiUrl+className+'/'+objId })
             .success(function (data) {

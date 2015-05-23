@@ -1,13 +1,16 @@
 app.factory('ToolService', ['$location','RestService','$state','$log','$http','$q' , function ($location,RestService,$state,$log,$http,$q){
 	return {
+		
 		redir: function(state,params){
 			$log.log("Redirecting to state: "+state+" with params: "+params.toSource());
 			$state.go(state,params);
 		},
+		
 		getCurTime: function (){
 			var time = new Date();
 			return ("0" + time.getHours()).slice(-2)   + ":" +  ("0" + time.getMinutes()).slice(-2) + ":" +  ("0" + time.getSeconds()).slice(-2);
 		},
+		
 		dateCompare: function(time1,time2) {
 		  var t1 = new Date();
 		  var parts = time1.split(":");
@@ -20,6 +23,7 @@ app.factory('ToolService', ['$location','RestService','$state','$log','$http','$
 		  if (t1.getTime()<t2.getTime()) return -1;
 		  return 0;
 		},
+		
 		uploadFile: function(file){
 			var deferred = $q.defer();
 	        var fd = new FormData();
@@ -38,6 +42,7 @@ app.factory('ToolService', ['$location','RestService','$state','$log','$http','$
 	        });
 	        return deferred.promise;
 		},
+		
 		pagination:  function(list,hlmng) {
 			// Config
 			hlmng.itemsPerPage = 5;
@@ -48,6 +53,7 @@ app.factory('ToolService', ['$location','RestService','$state','$log','$http','$
 			hlmng.pageCount =  Math.ceil(list.length / hlmng.itemsPerPage);
 			hlmng.itemsPaginated = list.slice(hlmng.startItem,hlmng.endItem);
 		},
+		
 		idSolver: function(id,name){
             var deferred = $q.defer();
 		   	RestService.get(id,name).then(function(data){

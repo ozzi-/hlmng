@@ -14,9 +14,14 @@
 		</div>
 		<div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
 			<!--  Main (same for mobile and desktop) -->
-			<ul ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
-		      	<li ng-repeat="nav in navBarCtrl.navMainContent" ui-sref-active="active"><a class="nav-border" ui-sref="{{nav.state}}">{{nav.label}}</a><br></li>
-	      	</ul>
+			<span ng-hide="navBarCtrl.checkEventActive()" class="nav navbar-nav">
+		      	<br>
+		      	<a ng-repeat="nav in navBarCtrl.navMainContent" ui-sref="{{nav.state}}" ui-sref-active="active">
+			      	<button  ui-sref="{{nav.state}}" class="btn btn-primary"  ui-sref-active="active">
+			      		{{nav.label}}
+			      	</button>
+		      	</a>
+	      	</span>
 	      	<!-- Event Active -->
 	      	<div ng-show="navBarCtrl.checkEventActive()">
 				<h4>{{navBarCtrl.eventName}}</h4> 

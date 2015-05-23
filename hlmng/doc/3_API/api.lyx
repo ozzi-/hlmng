@@ -4038,7 +4038,7 @@ Der Text des Eintrages
 \series bold
 status [!] - 
 \series default
-Der Moderationsstatus [pending,accepted,rejected]
+Der Moderationsstatus [pending,accepted,published,rejected]
 \begin_inset Newline newline
 \end_inset
 

@@ -1,4 +1,5 @@
 <label>Search for Social Item: <input ng-model="search"></label><hr>
+
 <h1>Pending:</h1>
 <span ng-repeat="social in socialListCtrl.socialsPending | filter:search:strict">
 	<social-info social="social"></social-info>
@@ -8,14 +9,29 @@
 </span>
 <nothing-here-yet list="socialListCtrl.socialsPending"></nothing-here-yet>
 <br><br>
+
 <h1>Accepted:</h1>
 <span ng-repeat="social in socialListCtrl.socialsAccepted | filter:search:strict">
 	<social-info social="social"></social-info>
 	<button ng-click="socialListCtrl.setPending(social);" class="btn btn-danger">Send to pending</button>
+	<button ng-click="socialListCtrl.setPublished(social);" class="btn btn-info">Publish on Social Media</button>
 	<hr>
 </span>
 <nothing-here-yet list="socialListCtrl.socialsAccepted"></nothing-here-yet>
 <br><br>
+
+<h1>Accepted & Published</h1>
+<span ng-repeat="social in socialListCtrl.socialsPublished | filter:search:strict">
+	<social-info social="social"></social-info>
+	Published on:<br>
+	<span ng-repeat="publication in social.publications">
+		<a ng-href="{{publication.publishedLink}}">{{publication.publisher}}</a><br>
+	</span>
+	<hr>
+</span>
+<nothing-here-yet list="socialListCtrl.socialsPublished"></nothing-here-yet>
+<br><br>
+
 <h1>Rejected:</h1>
 <span ng-repeat="social in socialListCtrl.socialsRejected | filter:search:strict">
 	<social-info social="social"></social-info>

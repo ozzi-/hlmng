@@ -10,6 +10,7 @@ import hlmng.model.Push;
 import hlmng.model.QrCode;
 import hlmng.model.Slider;
 import hlmng.model.Social;
+import hlmng.model.SocialPublish;
 import hlmng.model.Speaker;
 import hlmng.model.User;
 import hlmng.model.Vote;
@@ -36,7 +37,7 @@ public enum GenDaoLoader {
 	private GenDao pushDao;
 	private GenDao socialDao;
 	private GenDao presentationpauseDao;
-
+	private GenDao socialPublishDao;
 
 	private GenDaoLoader() {
 		eventDao = new GenDao(Event.class);
@@ -53,6 +54,7 @@ public enum GenDaoLoader {
 		voteDao=new VoteDao(Vote.class);
 		votingDao=new GenDao(Voting.class);
 		presentationpauseDao=new GenDao(PresentationPause.class);
+		socialPublishDao=new GenDao(SocialPublish.class);
 	}
 	public GenDao getPresentationpauseDao(){
 		return presentationpauseDao;
@@ -104,6 +106,9 @@ public enum GenDaoLoader {
 	}
 	public GenDao getPresentationDao() {
 		return presentationDao;
+	}
+	public GenDao getSocialPublishDao() {
+		return socialPublishDao;
 	}
 
 }

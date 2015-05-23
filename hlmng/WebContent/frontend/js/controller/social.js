@@ -4,6 +4,7 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 	var hlmng = this;
 	hlmng.socials = [];  // contains all
 	hlmng.socialsAccepted = [];
+	hlmng.socialsPublished = [];
 	hlmng.socialsRejected = [];
 	hlmng.socialsPending  = [];
 	
@@ -13,6 +14,17 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 		hlmng.putSocial(social,social.socialID,'social');
 		hlmng.removeFromAll(social);
 		hlmng.socialsAccepted.push(social);
+	}; 
+	hlmng.setPublished = function(social) {  
+		social.status = "published";
+		alert("Waiting for Publish Functions from Tobias. . . ");
+		RestService.get(social.socialID,'social','publications').then(function(data){
+			social.publications=data;
+			hlmng.socialsPublished.push(social);	
+			hlmng.putSocial(social,social.socialID,'social');
+			hlmng.removeFromAll(social);
+			hlmng.socialsPublished.push(social);
+		});
 	}; 
 	hlmng.setRejected = function(social) {  
 		social.status = "rejected";
@@ -42,6 +54,10 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 		if(i != -1) {
 			hlmng.socialsRejected.splice(i, 1);
 		}
+		var i = hlmng.socialsPublished.indexOf(social);
+		if(i != -1) {
+			hlmng.socialsPublished.splice(i, 1);
+		}
 	};
 	RestService.get($stateParams.eventId,'event','socials').then(function(data){
 	    $.each(data, function(i, item){
@@ -54,6 +70,12 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
     		}
     		if(item.status=="rejected"){
     			hlmng.socialsRejected.push(item);	  	    			
+    		}
+    		if(item.status=="published"){
+    			RestService.get(item.socialID,'social','publications').then(function(data){
+    				item.publications=data;
+        			hlmng.socialsPublished.push(item);	
+    			});
     		}
 	    });
 	});
