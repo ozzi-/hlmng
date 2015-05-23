@@ -8,6 +8,7 @@ import hlmng.model.Push;
 import hlmng.model.Slider;
 import hlmng.model.Vote;
 import hlmng.model.Voting;
+import hlmng.resource.CSVExporter;
 import hlmng.resource.Resource;
 import hlmng.resource.TimeHelper;
 import hlmng.resource.TimeHelper.TimePart;
@@ -66,6 +67,35 @@ public class VotingResource extends Resource {
 	public List<Object> getSliders(@PathParam("id") int id) throws IOException{
 		List<Object> obj= sliderDao.listByFK("votingIDFK", id);
 		return obj;
+	}
+	@GET
+	@Path("{id}/export")
+	@Produces({"text/csv"})
+	public String doExport(@PathParam("id") int id) throws IOException, java.text.ParseException{
+		CSVExporter csvExp = new CSVExporter();
+		List<Vote> voteList = getVoteList(id,modes.all);
+		if(voteList.size()==0){
+			csvExp.addValue("Didn't find any votes or voting id invalid", true);
+		}else{
+			csvExp.addValue("Voting Settings", true);
+			csvExp.addValue("", true);
+			Voting voting = (Voting) getResource(votingDao, id);
+			csvExp.addHeader(voting);
+			csvExp.addLine(voting);
+			csvExp.addValue("", true);
+			//--
+			csvExp.addValue("Total Jury Score", false);
+			csvExp.addValue("Total Audience Score", false);
+			csvExp.addValue("", true);
+			csvExp.addValue(String.valueOf(getTotalScoreJury(id)), false);
+			csvExp.addValue(String.valueOf(getTotalScoreAudience(id)), true);
+			csvExp.addValue("", true);
+			//--
+			csvExp.addValue("Votes:", true);
+			csvExp.addValue("", true);
+			csvExp.addList(new ArrayList<Object>(voteList));
+		}
+		return csvExp.toString();
 	}
 	@GET
 	@Path("{id}/totalscorejury")
@@ -177,6 +207,9 @@ public class VotingResource extends Resource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public int getVotesAudienceCount(@PathParam("id") int id) throws IOException{
 		int sliderCount = getSliders(id).size();
+		if(sliderCount==0){
+			return 0;
+		}
 		return getVoteList(id,modes.audienceOnly).size()/sliderCount;
 	}
 	@GET
@@ -190,6 +223,9 @@ public class VotingResource extends Resource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public int getVotesJuryCount(@PathParam("id") int id) throws IOException{
 		int sliderCount = getSliders(id).size();
+		if(sliderCount==0){
+			return 0;
+		}
 		return getVoteList(id,modes.juryOnly).size()/sliderCount;
 	}
 	@PUT

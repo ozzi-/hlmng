@@ -68,6 +68,27 @@ public class ModelHelper {
 		strB.append("End\n");
 		return strB.toString();
 	}
+	
+	
+	public static <T> String objToCSV(T obj,boolean header){
+		StringBuilder strB = new StringBuilder();
+		Class<? extends Object> clsObj = obj.getClass();
+		Field[] methods = clsObj.getDeclaredFields();
+		for (Field field : methods) {
+			field.setAccessible(true);
+			try {
+				if(header){
+					strB.append(field.getName());	
+				}else{					
+					strB.append(field.get(obj));
+				}
+				strB.append(';');
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace(); 
+			}
+		}
+		return strB.toString();
+	}
 
 	
 	/**

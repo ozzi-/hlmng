@@ -38,10 +38,12 @@
 	  	</tr>
 	  	<tr>
   			<td>Total</td>
-  			<td>{{votingStatsCtrl.voting.totalVoteScoreJury}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
-  			<td>{{votingStatsCtrl.voting.totalVoteScoreAudience}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
+  			<td>{{votingStatsCtrl.voting.totalVoteScoreJury | number:3}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
+  			<td>{{votingStatsCtrl.voting.totalVoteScoreAudience | number:3}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
   		</tr>
   	</table>
+  	<br><br>
+  	<button class="btn btn-info">CSV Export</button>
   </div>
 </div>
 	

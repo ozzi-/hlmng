@@ -17,6 +17,8 @@ import javax.sql.DataSource;
 
 import log.Log;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.owasp.esapi.ESAPI;
 
 /**
@@ -46,8 +48,8 @@ public class DB {
 		add(new SafeValues(5, "(([0-1][0-9])|([2][0-3])):([0-5][0-9])")); // HH:MM
 		add(new SafeValues(10, "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])")); //  YYYY-MM-DD
 		add(new SafeValues(19, "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01]) (([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])")); //  YYYY-MM-DD HH:MM:ss
-		add(new SafeValues(9, "image/png")); // image/png
-		add(new SafeValues(10, "image/jpeg")); // image/jpeg	
+		add(new SafeValues(9, "image/png"));
+		add(new SafeValues(10, "image/jpeg")); 	
 	}};
 
 		
@@ -170,18 +172,14 @@ public class DB {
 		return ps;
 	}
 
-	private static Object escapeString(Object value) {
-		String valueOld = (String)value;
-		value = ESAPI.encoder().encodeForHTML((String)value);	
-		String valueS = (String) value;
-		valueS = valueS.replace("&#x21;", "!");
-		valueS = valueS.replace("&#x3f;", "?");
-		valueS = valueS.replace("&#x3a;", ":");
-		valueS = valueS.replace("&#x23;", "#");
-		valueS = valueS.replace("&#x40;", "@");
-		value=valueS;
+	private static Object escapeString(Object valueP) {
+		String value = (String)valueP;
+		String valueOld = value;
+		value = ESAPI.encoder().canonicalize(value);
+		value = value.replaceAll("\0", "");
+		value=Jsoup.clean(value, Whitelist.none());
 		if(!valueOld.equals(value)){
-			Log.addEntry(Level.WARNING,"ESAPI Encoding returned different value, possible XSS attack prevented!");
+			Log.addEntry(Level.WARNING,"Escaping the string returned different value, possible XSS attack prevented!");
 		}
 		return value;
 	}
