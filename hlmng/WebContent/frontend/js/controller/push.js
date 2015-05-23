@@ -4,13 +4,12 @@ pushModule.controller('PushListController', ['$http','RestService','$stateParams
 	var hlmng = this;
 	hlmng.pushes = [];
 	hlmng.pushesPaginated=[];
-	
 	hlmng.currentPage = 1;
+	
 	hlmng.updatePage = function(){
 		ToolService.pagination(hlmng.pushes,hlmng);
 	};
 
-	
 	RestService.list('push').then(function(data){
 	    $.each(data, function(i, item){
 	    	hlmng.pushes.push(item);	 

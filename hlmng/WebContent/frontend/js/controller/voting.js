@@ -8,12 +8,12 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	hlmng.votingsUpcomingEndPresentation = [];
 	hlmng.votingsRunning = [];
 	hlmng.votingsFinished = [];
-	hlmng.votingsList = [hlmng.votingsUpcomingPrePresentation,hlmng.votingsUpcomingPresentation,hlmng.votingsUpcomingEndPresentation,hlmng.votingsRunning,hlmng.votingsFinished];
+	hlmng.votingsList = [hlmng.votingsUpcomingPrePresentation,hlmng.votingsUpcomingPresentation,
+	                     hlmng.votingsUpcomingEndPresentation,hlmng.votingsRunning,hlmng.votingsFinished];
 	
 	hlmng.putVoting = RestService.put;
 	hlmng.postPausePresentation= RestService.post;
 
-	// use /ispaused 
 	hlmng.pausePresentation = function(voting) {
 		if(voting.ispaused==false){
 			var pause='{ "start":"00:00:00" , "votingIDFK":0}';
@@ -25,8 +25,9 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 			});
 		}
 	};
+	
 	hlmng.resumePresentation = function(voting) {
-		if(voting.ispaused==true){
+		if(voting.ispaused){
 			RestService.get(voting.votingID,'voting','getpause').then(function(data){
 				var pauseObj = data;
 				pauseObj.stop= ToolService.getCurTime();
@@ -40,7 +41,6 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 		voting.status = "presentation";
 		voting.presentationStarted=ToolService.getCurTime();
 		voting.ispaused=false;
-		voting.votingStartedAt=ToolService.getCurTime();
 		hlmng.putVoting(voting,voting.votingID,'voting');
 		hlmng.removeFromAll(voting);
 		hlmng.votingsUpcomingPresentation.push(voting);
@@ -87,7 +87,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	
 	var refreshVoting = function(index){
 		var voting = hlmng.votingsRunning[index];
-			RestService.get(hlmng.votingsRunning[index].votingID,'voting','votes/audience/count').then(function(data){	
+		RestService.get(hlmng.votingsRunning[index].votingID,'voting','votes/audience/count').then(function(data){	
 			voting.votesAudienceCount=data;
 			RestService.get(voting.votingID,'voting','votes/jury/count').then(function(data){
 				voting.votesJuryCount=data;
@@ -109,6 +109,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	        promise = undefined;
 	    }
 	});
+	
 	RestService.get($stateParams.eventId,'event','votings').then(function(data){
 	    $.each(data, function(i, item){
     		hlmng.votings.push(item);	 

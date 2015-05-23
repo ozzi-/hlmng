@@ -16,6 +16,7 @@ newsModule.controller('NewsNewController', ['$http','RestService','ToolService',
 	hlmng.news={}; 
 	hlmng.media={};
 	hlmng.postNews = RestService.post;
+	
 	hlmng.postAndRedir = function() {  
 		hlmng.news.eventIDFK=$stateParams.eventId;
 		hlmng.news.mediaIDFK=dataService.dataObj;
