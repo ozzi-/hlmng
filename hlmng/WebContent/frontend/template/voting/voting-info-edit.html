@@ -1,11 +1,11 @@
 <div class="form-group">
 	<label for="voting-name">Name</label><br>
-	<input class="form-control" type="text" size="40" name="voting-name" ng-model="voting.name" required>
+	<input class="form-control" type="text" maxlength="50" size="40" name="voting-name" ng-model="voting.name" required>
 </div>
 
 <div class="form-group">
 	<label for="voting-votingDuration">Voting Duration</label><br>
-	<input class="form-control" type="text" size="40" name="voting-votingDuration" ng-model="voting.votingDuration" required>
+	<input class="form-control" type="text" pattern="(([0-1][0-9])|([2][0-3])):([0-5][0-9]):([0-5][0-9])" placeholder="HH:MM:SS" size="40" name="voting-votingDuration" ng-model="voting.votingDuration" required>
 </div>	
 
 <div class="form-group">

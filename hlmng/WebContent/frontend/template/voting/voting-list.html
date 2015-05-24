@@ -26,6 +26,8 @@
 </span> 
 <span ng-show="(votingListCtrl.votingsUpcomingPrePresentation.length==0)&&(votingListCtrl.votingsUpcomingPresentation==0)&&(votingListCtrl.votingsUpcomingEndPresentation.length==0)">Nothing here yet</span>
 <br><br>
+
+
 <h1>Running Votings</h1>
 <span ng-repeat="voting in votingListCtrl.votingsRunning  | filter:search:strict">
 	<voting-info voting="voting"></voting-info><br>
@@ -43,6 +45,8 @@
 </span>
 <nothing-here-yet list="votingListCtrl.votingsRunning"></nothing-here-yet>
 <br><br>
+
+
 <h1>Finished Votings</h1>
 <span ng-repeat="voting in votingListCtrl.votingsFinished  | filter:search:strict">
 	<voting-info voting="voting"></voting-info><br>

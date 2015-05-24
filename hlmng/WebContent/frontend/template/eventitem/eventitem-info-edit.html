@@ -1,10 +1,12 @@
 <div class="form-group">
 	<label for="eventitem-name">Name</label><br>
-	<input class="form-control" type="text" size="40" name="eventitem-name" ng-model="eventitem.name" required>
+	<input class="form-control" maxlength="60" type="text" size="40" name="eventitem-name" ng-model="eventitem.name" required>
 </div>
 <div class="form-group">
 	<label for="eventitem-description">Description</label><br>
-	<input class="form-control" type="text" size="40" name="eventitem-description" ng-model="eventitem.description" required>
+	<textarea rows="10" class="form-control" type="text" maxlength="350" size="40" name="eventitem-description" ng-model="eventitem.description" required>
+	</textarea>
+	<br>
 </div>
 <div class="form-group">
 	<label for="eventitem-startTime">From</label><br>

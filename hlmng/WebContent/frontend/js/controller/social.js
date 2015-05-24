@@ -8,7 +8,6 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 	hlmng.socialsRejected = [];
 	hlmng.socialsPending  = [];
 	
-
 	hlmng.setAccepted = function(social) {  
 		social.status = "accepted";
 		hlmng.putSocial(social,social.socialID,'social');

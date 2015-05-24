@@ -1,10 +1,10 @@
 <div class="form-group">
 	<label for="speaker-name">Name</label><br>
-	<input class="form-control" type="text" name="speaker-name" placeholder="Name, Sirname" ng-model="speaker.name" required><br>
+	<input class="form-control" type="text" maxlength="60" name="speaker-name" placeholder="Name, Sirname" ng-model="speaker.name" required><br>
 </div>
 <div class="form-group">
 	<label for="speaker-title">Title</label><br>
-	<input class="form-control" type="text" name="speaker-name" placeholder="Title" ng-model="speaker.title" required><br>
+	<input class="form-control" type="text" maxlength="25" name="speaker-title" placeholder="Title" ng-model="speaker.title" required><br>
 </div>
 <div class="form-group">
 	<label for="speaker-nationality">Nationality</label><br>
@@ -13,5 +13,5 @@
 </div>
 <div class="form-group">
 	<label for="speaker-title">Biography</label><br>
-	<textarea  class="form-control" type="text" cols="40" rows="5" name="speaker-description" placeholder="Biography" ng-model="speaker.description" required></textarea>
+	<textarea  class="form-control" type="text" cols="40" rows="5" maxlength="240" name="speaker-description" placeholder="Biography" ng-model="speaker.description" required></textarea>
 </div>

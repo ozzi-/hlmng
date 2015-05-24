@@ -1,11 +1,13 @@
 <div class="form-group">
 	<label for="event-name">Name</label><br>
-	<input class="form-control" type="text" size="40" name="event-name" ng-model="event.name" required>
+	<input class="form-control" type="text" size="40" maxlength="60" name="event-name" ng-model="event.name" required>
 </div>
 <div class="form-group">
 	<label for="event-description">Description</label><br>
-	<input class="form-control" type="text" size="40" name="event-description" ng-model="event.description" required><br>
+	<textarea rows="10" class="form-control" type="text" size="40" maxlength="1000" name="event-description" ng-model="event.description" required>
+	</textarea>
 </div>
+<br>
 <div class="form-group">
 	<label for="event-startDate">From</label><br>
 	<date-picker date="event.startDate">
