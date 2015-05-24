@@ -71,7 +71,7 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}/export")
 	@Produces({"text/csv"})
-	public String doExport(@PathParam("id") int id) throws IOException, java.text.ParseException{
+	public Response doExport(@PathParam("id") int id) throws IOException, java.text.ParseException{
 		CSVExporter csvExp = new CSVExporter();
 		List<Vote> voteList = getVoteList(id,modes.all);
 		if(voteList.size()==0){
@@ -83,19 +83,28 @@ public class VotingResource extends Resource {
 			csvExp.addHeader(voting);
 			csvExp.addLine(voting);
 			csvExp.addValue("", true);
+			csvExp.addValue("", true);
+			//--
+			csvExp.addValue("Sliders", true);
+			csvExp.addValue("", true);
+			csvExp.addList(sliderDao.listByFK("votingIDFK", id));
+			csvExp.addValue("", true);
+			csvExp.addValue("", true);
+			//--
+			csvExp.addValue("Votes:", true);
+			csvExp.addValue("", true);
+			csvExp.addList(new ArrayList<Object>(voteList));
+			csvExp.addValue("", true);
+			csvExp.addValue("", true);
 			//--
 			csvExp.addValue("Total Jury Score", false);
 			csvExp.addValue("Total Audience Score", false);
 			csvExp.addValue("", true);
 			csvExp.addValue(String.valueOf(getTotalScoreJury(id)), false);
 			csvExp.addValue(String.valueOf(getTotalScoreAudience(id)), true);
-			csvExp.addValue("", true);
-			//--
-			csvExp.addValue("Votes:", true);
-			csvExp.addValue("", true);
-			csvExp.addList(new ArrayList<Object>(voteList));
+			csvExp.addValue("", true);	
 		}
-		return csvExp.toString();
+		return Response.ok(csvExp.toString()).header("Content-Disposition", "attachment; filename= export_voting_"+id+".csv").build();
 	}
 	@GET
 	@Path("{id}/totalscorejury")

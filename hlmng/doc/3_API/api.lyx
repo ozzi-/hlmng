@@ -4184,7 +4184,7 @@ pending
 \begin_inset Quotes ard
 \end_inset
 
- 
+, ausser QR Code Auth wird mitgesendet 
 \begin_inset Newline newline
 \end_inset
 
@@ -4201,6 +4201,22 @@ pub/social/{id}
 \end_inset
 
 GET - Liefert den besagten Social Eintrag
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm+pub/social/{id}/publications
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefert alle Publications 
 \begin_inset Newline newline
 \end_inset
 
