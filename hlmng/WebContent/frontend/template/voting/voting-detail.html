@@ -2,11 +2,13 @@
 	<div class="col-xs-4">
 		<voting-info voting="votingIdCtrl.voting"></voting-info><br>
 		<edit-button edit="edit"></edit-button>
-		<a ui-sref="event.active.voting.stats({eventId: votingIdCtrl.voting.eventIDFK, votingId: votingIdCtrl.voting.votingID})">
-			<button class="btn btn-info">
-				Show Voting Statistics
-			</button>
-		</a>
+		<span ng-show="votingIdCtrl.voting.status=='voting_end'">
+			<a ui-sref="event.active.voting.stats({eventId: votingIdCtrl.voting.eventIDFK, votingId: votingIdCtrl.voting.votingID})">
+				<button class="btn btn-info">
+					Show Voting Statistics
+				</button>
+			</a>
+		</span>
 	</div>
 	<div class="col-xs-4">
 		<h4>Sliders:</h4>

@@ -241,6 +241,19 @@ public class VotingResource extends Resource {
 		}else{
 			log.Log.addEntry(Level.INFO, "No need for GCM push");
 		}
+		Voting before = (Voting) getResource(votingDao, id);
+		
+		if(element.getRound() > before.getRound()){
+			List<Object> sliders = sliderDao.listByFK("votingIDFK",before.getVotingID());
+			for (Object sliderObj : sliders) {
+				Slider slider = (Slider) sliderObj;
+				List<Object> votesToDelete = voteDao.listByFK("sliderIDFK", slider.getSliderID());
+				for (Object voteObj : votesToDelete) {
+					Vote vote = (Vote) voteObj;
+					voteDao.deleteElement(vote.getVoteID());
+				}
+			}
+		}
 		return putResource(votingDao, element, id);
 	}
 	@POST

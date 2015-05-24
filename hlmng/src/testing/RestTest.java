@@ -96,12 +96,8 @@ public class RestTest {
 		} catch (NoSuchAlgorithmException e) {
 		}
 
-		
 		double response =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscoreaudience", "GET",null,null));
-		assertEquals(6.857,response,0.05);
-
-		response =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscorejury", "GET",null,null));
-		assertEquals(6.714,response,0.05);
+		double response2 =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscorejury", "GET",null,null));
 
 		assertTrue(voteDao.deleteElement(vote4_2_id));
 		assertTrue(voteDao.deleteElement(vote2_2_id));
@@ -113,7 +109,9 @@ public class RestTest {
 		assertTrue(sliderDao.deleteElement(sliderid2));
 		assertTrue(sliderDao.deleteElement(sliderid1));
 		assertTrue(votingDao.deleteElement(votingid));
-		
+		assertEquals(6.857,response,0.05);
+		assertEquals(6.714,response2,0.05);
+
 	}
 	
 	@Test

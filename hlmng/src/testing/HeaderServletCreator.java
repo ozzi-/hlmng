@@ -17,6 +17,9 @@ import javax.ws.rs.core.MultivaluedMap;
 
 public class HeaderServletCreator {
 
+	/**
+	 * We need this class to mock a login
+	 */
 	public static HttpServletResponse returnServletResponse() {
 		return new HttpServletResponse() {
 			@Override

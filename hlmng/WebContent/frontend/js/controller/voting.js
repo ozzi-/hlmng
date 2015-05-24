@@ -69,6 +69,13 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 		hlmng.votingsFinished.push(voting);
 	};
 	
+	hlmng.newRound = function(voting) {  
+	    if (confirm("Are you sure?")) {
+			voting.round += voting.round;
+			hlmng.endPresentation(voting);
+	    }
+	};
+	
 	hlmng.removeFromAll = function(voting){	
 		for (var index = 0; index < hlmng.votingsList.length; ++index) {
 			var i = hlmng.votingsList[index].indexOf(voting);
