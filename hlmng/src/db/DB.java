@@ -151,7 +151,7 @@ public class DB {
 							}
 						}
 						if(!isSafe){
-							value = escapeString(value);	
+							value = escapeString(value);
 						}
 					}
 					ps.setObject(++i, value);
@@ -177,7 +177,9 @@ public class DB {
 		String valueOld = value;
 		value = ESAPI.encoder().canonicalize(value);
 		value = value.replaceAll("\0", "");
+		value = value.replaceAll("\n", "-newline-");
 		value=Jsoup.clean(value, Whitelist.none());
+		value = value.replaceAll("-newline-","\n");
 		if(!valueOld.equals(value)){
 			Log.addEntry(Level.WARNING,"Escaping the string returned different value, possible XSS attack prevented!");
 		}

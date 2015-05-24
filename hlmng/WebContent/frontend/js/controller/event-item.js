@@ -47,5 +47,6 @@ eventItemModule.controller('EventItemIdController', ['$http','$stateParams','Res
 	};
 	
 	hlmng.deleteEventItem = RestService.del;
+	hlmng.putEventItem = RestService.put;
 
 }]);

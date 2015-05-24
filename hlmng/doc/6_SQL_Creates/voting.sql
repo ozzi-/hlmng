@@ -21,7 +21,7 @@
   /*!40101 SET character_set_client = utf8 */;
   CREATE TABLE `voting` (
     `votingID` int(11) NOT NULL AUTO_INCREMENT,
-    `name` varchar(40) NOT NULL,
+    `name` varchar(50) NOT NULL,
     `juryCount` int(11) NOT NULL,
     `status` varchar(25) NOT NULL,
     `sliderMaxValue` int(11) NOT NULL,

@@ -8,7 +8,7 @@
 			<event-item-info-edit eventitem="eventItemIdCtrl.eventitem"></event-item-info-edit>
 		</form>
 		<button class="btn btn-danger" ng-click="eventItemIdCtrl.deleteEventItem(eventItemIdCtrl.eventitem.eventItemID,'eventitem'); eventItemIdCtrl.redirToList();">Delete this Event Item</button>
-		<button class="btn btn-success" ng-disabled="!eventItemInfoEditForm.$valid" ng-click="edit=!edit ;eventItemIdCtrl.putEvent(eventItemIdCtrl.eventitem,eventItemIdCtrl.eventitem.eventItemID,'eventitem');">Submit</button>
+		<button class="btn btn-success" ng-disabled="!eventItemInfoEditForm.$valid" ng-click="edit=!edit ;eventItemIdCtrl.putEventItem(eventItemIdCtrl.eventitem,eventItemIdCtrl.eventitem.eventItemID,'eventitem');">Submit</button>
 	</div>
 </div>
 
