@@ -15,6 +15,8 @@
 	<social-info social="social"></social-info>
 	<button ng-click="socialListCtrl.setPending(social);" class="btn btn-danger">Send to pending</button>
 	<button ng-click="socialListCtrl.setPublished(social);" class="btn btn-info">Publish on Social Media</button>
+	<br>
+	<facebook messagetext="social.text" messageimage="social.media"></facebook>
 	<hr>
 </span>
 <nothing-here-yet list="socialListCtrl.socialsAccepted"></nothing-here-yet>

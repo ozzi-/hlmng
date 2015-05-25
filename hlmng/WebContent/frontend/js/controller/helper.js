@@ -1,6 +1,19 @@
 var helperModule = angular.module('helper', []);
 
 
+
+helperModule.directive('facebook', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/helper/facebook.html',
+		scope:{
+			messagetext: "=messagetext",
+			messageimage: "=messageimage"
+		}
+	};
+});
+
+
 helperModule.directive('editButton', function(){
 	return {
 		restrict: 'E',

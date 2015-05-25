@@ -27,8 +27,8 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(25) NOT NULL,
-  `deviceID` varchar(60) NOT NULL,
-  `regID` varchar(185) NOT NULL,
+  `deviceID` varchar(16) NOT NULL,
+  `regID` varchar(210) NOT NULL,
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

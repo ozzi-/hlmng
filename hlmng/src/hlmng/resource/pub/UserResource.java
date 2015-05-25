@@ -45,14 +45,11 @@ public class  UserResource  extends Resource {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Object postUser(User element) throws IOException {	
-		String escapedName  = ESAPI.encoder().encodeForHTML(element.getName());
-		String escapedRegId  = ESAPI.encoder().encodeForHTML(element.getRegID());
-		String escapedDevId  = ESAPI.encoder().encodeForHTML(element.getDeviceID());
 
-		if(!(escapedName.equals(element.getName())) || !(escapedRegId.equals(element.getRegID())) || !(escapedDevId.equals(element.getDeviceID()))){
-			Log. addEntry(Level.WARNING,"Somebody possibly tried to insert XSS in the user creation");
+		if(!element.getName().matches("^[a-zA-Z0-9_]{3,25}$") && element.getDeviceID().length()<16 && element.getRegID().length()<100){		
+			Log.addEntry(Level.WARNING,"Somebody tried to create a user with invalid input");
 			return Response.status(HTTPCodes.badRequest).build();
 		}
 		User userNameExists = ((UserDao) userDao).getUserByName(element.getName());
