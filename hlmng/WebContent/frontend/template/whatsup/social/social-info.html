@@ -3,7 +3,16 @@
 		ID: {{social.socialID}}
 	</a><br>
 	<b>Author Name:</b> {{social.authorName}}<br>
-	<b>Media:</b> <a ng-href="{{social.media}}"><img ng-src="{{social.media+'_thumb'}}" err-src="{{'./img/empty.png'}}"/></a><br>
+	<b>Media:</b> 
+	<span ng-hide="social.media">
+	None
+	</span>
+	<span ng-show="social.media">
+		<a ng-href="{{social.media}}">
+			<img ng-src="{{social.media}}_thumb" err-src="{{'./img/empty.png'}}"/>
+		</a>
+	</span>
+	<br>
 	<b>Status:</b> {{social.status}}<br>
 	<b>Text:</b> {{social.text}}<br>
 	<br>

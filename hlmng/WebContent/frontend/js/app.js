@@ -1,23 +1,17 @@
 var app = angular.module('hlmngApp',['stateprovider','speaker','event','voting','social','news',
                                      'push','navbar','eventroom','qrcode','eventitem','media',
-                                     'helper','directive','slider','facebook','ui.bootstrap']);
+                                     'helper','directive','slider','facebook','ezfb','ui.bootstrap']);
+
+var initInjector = angular.injector(['ng']);
+var $http = initInjector.get('$http');
 
 
 var apiUrl = '../rest/adm/';
+var appId=1589703351304338;
+
 
 app.service('dataService', function() {
   var _dataObj = 0;
   this.dataObj = _dataObj;
 });
 
-app.directive('errSrc', function() {
-  return {
-    link: function(scope, element, attrs) {
-      element.bind('error', function() {
-        if (attrs.src != attrs.errSrc) {
-          attrs.$set('src', attrs.errSrc);
-        }
-      });
-    }
-  };
-});

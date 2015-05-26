@@ -297,9 +297,7 @@ public class ResourceHelper {
 	}
 	
 	public static void setMediaURLPath(UriInfo uri, Media media) {
-		 // we want to access the images without HTTPS - facebook etc dont like self signed certs
-		String restAppPathHTTP = HLMNGSettings.restAppPath.replace("https", "http"); 
-		media.setLink(restAppPathHTTP+"/"+HLMNGSettings.pubURL.substring(1) +"/media/"
+		media.setLink(HLMNGSettings.restAppPath+"/"+HLMNGSettings.pubURL.substring(1) +"/media/"
 				+ media.getType() + "/" + media.getLink());
 	}
 }

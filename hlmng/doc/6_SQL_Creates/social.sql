@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS `social`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `social` (
   `socialID` int(11) NOT NULL AUTO_INCREMENT,
-  `text` varchar(160) NOT NULL,	
+  `text` varchar(140) NOT NULL,	
   `status` varchar(25) NOT NULL,
   `userIDFK` int(11) NOT NULL,
   `mediaIDFK` int(11) NULL,

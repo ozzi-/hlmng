@@ -14,10 +14,10 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 		hlmng.removeFromAll(social);
 		hlmng.socialsAccepted.push(social);
 	}; 
-	hlmng.setPublished = function(social,link) {  
+	hlmng.setPublished = function(social,link,publisher) {  
 		social.status = "published";
 		var socialPublish = {
-			    publisher:"Facebook",
+			    publisher:publisher,
 			    publishedLink:link,
 			    socialIDFK: social.socialID
 		}; 

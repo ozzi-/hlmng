@@ -1,71 +1,59 @@
-var facebookModule = angular.module('facebook', []);
+var facebookModule = angular.module('facebook', ['ezfb']);
 
-function statusChangeCallback(response) {
-	console.log('statusChangeCallback');
-	console.log(response);
-    if (response.status === 'connected') {
-      document.getElementById('status').innerHTML = 'Logged in';
-      document.getElementById('fb-root').style.visibility="hidden";
-      document.getElementById('fb-root').style.display="none";
-    } else if (response.status === 'not_authorized') {
-        document.getElementById('status').innerHTML = 'Please log into this app first (on facebook.com)';
-        document.getElementById('fb-root').style.visibility="visible";
-        document.getElementById('fb-root').style.display="inline";
-    } else {
-        document.getElementById('status').innerHTML = '';
-        document.getElementById('fb-root').style.visibility="visible";
-        document.getElementById('fb-root').style.display="inline";
-    }
-};
-
-// This function is called when someone finishes with the Login
-// Button.  See the onlogin handler attached to it in the sample
-// code below.
-function checkLoginState() {
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-}
-
-window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1589703351304338',
-      cookie     : true,  // enable cookies to allow the server to access the session
-      xfbml      : true,  // parse social plugins on this page
-      version    : 'v2.2' // use version 2.2
-    });
-
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
- };
-
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
-  
-  
-facebookModule.controller('FacebookController', ['$http','$window','$scope','RestService','ToolService','$stateParams', function($http,$window,$scope,RestService,ToolService,$stateParams){
+facebookModule.config(function (ezfbProvider) {
+	ezfbProvider.setLocale('en_US');
+});
 	
-	$window.fbAsyncInit();
+facebookModule.config(function (ezfbProvider) {
+	ezfbProvider.setInitParams({
+		appId: appId,
+	    version: 'v2.2' 
+	});
+});
+  
+facebookModule.controller('FacebookController', ['$http','ezfb','$log','$window','$scope','RestService','ToolService','$stateParams', function($http,ezfb,$log,$window,$scope,RestService,ToolService,$stateParams){
+
 	var hlmng = this;
 	hlmng.appId="";
+	hlmng.loginStatus="";
 	hlmng.pageId="";
 	
+
+	ezfb.Event.subscribe('auth.statusChange', function (statusRes) {
+		hlmng.loginStatus = statusRes.status;
+	});
 	
+	 hlmng.login = function () {
+		 $log.log("Login button");
+		 //ezfb.login(null, {scope: 'email,user_likes'});		 
+	     ezfb.login(function (res) {
+	     }, {scope: 'publish_actions, manage_pages, publish_pages'}) .then(function (res) {
+	     });
+	 };
+	 
+	 hlmng.logout = function () {
+		 ezfb.logout();
+	 };
+
 	
+	 /**
+	   * For generating better looking JSON results
+	   */
+	  var autoToJSON = ['loginStatus', 'apiRes']; 
+	  angular.forEach(autoToJSON, function (varName) {
+	    $scope.$watch(varName, function (val) {
+	      $scope[varName + 'JSON'] = JSON.stringify(val, null, 2);
+	    }, true);
+	  });
+
+
 	RestService.list('settings').then(function(data){
 		hlmng.appId=data.appId;
 		hlmng.pageId=data.pageId;
 	});
   	
 	hlmng.postMessage = function (socialCtrl, social) {
+		$log.log("Starting message post");
 		var messagetext = social.text;
 		var parent=this;
 		this.socialobj=social;
@@ -79,7 +67,7 @@ facebookModule.controller('FacebookController', ['$http','$window','$scope','Res
 	    				alert('Post successful!');
 	    				var resArr= response.id.split("_");
 	    				var fbLink= "https://facebook.com/permalink.php?story_fbid="+resArr[1]+"&id="+resArr[0];
-	    				socialCtrl.setPublished(parent.socialobj,fbLink);
+	    				socialCtrl.setPublished(parent.socialobj,fbLink,"Facebook");
 	    			}
 				}
 	        );
@@ -88,8 +76,12 @@ facebookModule.controller('FacebookController', ['$http','$window','$scope','Res
 	};
 	
 	  hlmng.postImageAndText = function (socialCtrl, social){
+		$log.log("Starting message+image post");
 		var messagetext = social.text;
 		var messageimage= social.media;
+		// FB can't handle self signed cert's, so we removed the https rewrite for pub/media/* 
+		messageimage=messageimage.replace("https","http"); 
+		
 		this.socialobj=social;
 	    FB.api('/' + hlmng.pageId, {fields: 'access_token'}, function(resp) {
 	      if(resp.access_token) {
@@ -105,7 +97,7 @@ facebookModule.controller('FacebookController', ['$http','$window','$scope','Res
 	      				alert('Post successful!');
 	    				var resArr= response.id.split("_");
 	    				var fbLink= "https://facebook.com/permalink.php?story_fbid="+resArr[1]+"&id="+resArr[0];
-	    				socialCtrl.setPublished(parent.socialobj,fbLink);
+	    				socialCtrl.setPublished(parent.socialobj,fbLink,"Facebook");
 	      			}
 	          });
 	      }
