@@ -15,13 +15,13 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 		hlmng.socialsAccepted.push(social);
 	}; 
 	hlmng.setPublished = function(social,link,publisher) {  
+		
 		social.status = "published";
 		var socialPublish = {
 			    publisher:publisher,
 			    publishedLink:link,
 			    socialIDFK: social.socialID
 		}; 
-		
 		RestService.post(socialPublish,'social/publish').then(function(data){
 			social.publications=data;
 			hlmng.putSocial(social,social.socialID,'social');

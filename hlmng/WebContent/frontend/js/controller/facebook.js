@@ -35,6 +35,14 @@ facebookModule.controller('FacebookController', ['$http','ezfb','$log','$window'
 		 ezfb.logout();
 	 };
 
+	 updateLoginStatus();
+	 
+	 function updateLoginStatus () {
+	    return ezfb.getLoginStatus()
+	      .then(function (res) {
+	    	  hlmng.loginStatus = res.status;
+	      });
+	  }
 	
 	 /**
 	   * For generating better looking JSON results
@@ -77,6 +85,8 @@ facebookModule.controller('FacebookController', ['$http','ezfb','$log','$window'
 	
 	  hlmng.postImageAndText = function (socialCtrl, social){
 		$log.log("Starting message+image post");
+		var parent=this;
+		this.socialobj=social;
 		var messagetext = social.text;
 		var messageimage= social.media;
 		// FB can't handle self signed cert's, so we removed the https rewrite for pub/media/* 

@@ -8,7 +8,8 @@ helperModule.directive('facebook', function(){
 		templateUrl: 'template/helper/facebook.html',
 		scope:{
 			socialobj: "=socialobj",
-			socialctrl: "=socialctrl"
+			socialctrl: "=socialctrl",
+			loginstatus: "=loginstatus"
 		}
 	};
 });

@@ -1,5 +1,6 @@
 <label>Search for Social Item: <input ng-model="search"></label><hr>
 <h1>Pending:</h1>
+<hr>
 <span ng-repeat="social in socialListCtrl.socialsPending | filter:search:strict">
 	<social-info social="social"></social-info>
 	<button ng-click="socialListCtrl.setAccepted(social);" class="btn btn-success">Accept</button>
@@ -10,26 +11,28 @@
 <br><br>
 
 <h1>Accepted:</h1>
+<hr>
 <span ng-controller="FacebookController as fbCtrl">
 	<button class="btn btn-primary" ng-click="fbCtrl.login()" ng-disabled="fbCtrl.loginStatus == 'connected'"><img src="./img/fb.png">
 	Connect with Facebook</button>
 	&nbsp; 
 	<button class="btn btn-danger" ng-click="fbCtrl.logout()" ng-disabled="!fbCtrl.loginStatus || fbCtrl.loginStatus != 'connected'">Logout</button>
-</span>
-<br>
-<hr>
-<br>
-<span ng-repeat="social in socialListCtrl.socialsAccepted | filter:search:strict">
-	<social-info social="social"></social-info>
-	<button ng-click="socialListCtrl.setPending(social);" class="btn btn-danger">Send back to pending</button>
-	<br><br>
-	<facebook socialobj="social" socialctrl="socialListCtrl"></facebook>
-	<hr>
+	<br>
+	<br>
+	<span ng-repeat="social in socialListCtrl.socialsAccepted | filter:search:strict">
+		<social-info social="social"></social-info>
+		<button ng-click="socialListCtrl.setPending(social);" class="btn btn-danger">Send back to pending</button>
+		<br><br>
+		
+		<facebook socialobj="social" socialctrl="socialListCtrl" loginstatus="fbCtrl.loginStatus"></facebook>
+		<hr>
+	</span>
 </span>
 <nothing-here-yet list="socialListCtrl.socialsAccepted"></nothing-here-yet>
 <br><br>
 
 <h1>Accepted & Published</h1>
+<hr>
 <span ng-repeat="social in socialListCtrl.socialsPublished | filter:search:strict">
 	<social-info social="social"></social-info>
 	Published on:<br>
@@ -42,6 +45,7 @@
 <br><br>
 
 <h1>Rejected:</h1>
+<hr>
 <span ng-repeat="social in socialListCtrl.socialsRejected | filter:search:strict">
 	<social-info social="social"></social-info>
 	<button ng-click="socialListCtrl.setPending(social);" class="btn btn-warning">Reactive (Pending)</button>
