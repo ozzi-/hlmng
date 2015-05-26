@@ -1,6 +1,8 @@
 <div>
 	<a ui-sref="event.active.eventitem.id({eventId: eventitem.eventIDFK, eventItemId: eventitem.eventItemID})">
-		ID: {{eventitem.eventItemID}}
+		<button class="btn btn-primary">
+			ID: {{eventitem.eventItemID}}
+		</button>
 	</a><br>
 	<b>Name:</b> {{eventitem.name}}<br>
 	<b>Description:</b> {{eventitem.description}}<br>

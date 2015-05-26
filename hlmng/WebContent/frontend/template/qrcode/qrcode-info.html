@@ -1,6 +1,8 @@
 <div>
 	<a ui-sref="event.active.qrcode.id({eventId: qrcode.eventIDFK, qrcodeId: qrcode.qrcodeID})">
-		ID: {{qrcode.qrcodeID}}
+		<button class="btn btn-primary">
+			ID: {{qrcode.qrcodeID}}
+		</button>
 	</a><br>
 	Payload: {{qrcode.payload}}<br>
 	Role: {{qrcode.role}}<br>
