@@ -66,6 +66,11 @@ public class Resource {
 		int insertedID = dao.addElement(element); 
 		return dao.getElement(insertedID);			
 	}
+	
+	protected Object postResourceWithID(GenDao dao, Object element){
+		dao.addIDElement(element); 
+		return element;			
+	}
 
 	
 	/**

@@ -25,7 +25,7 @@ public class QueryBuilder {
 	 * update		= update table set fieldName1=?, fieldName2=?, ... where tableID = ? 
 	 */
 	public enum opType {
-		list,listLimit , get, delete, add, update
+		list,listLimit , get, delete, add, addid, update
 	}
 
 	
@@ -86,8 +86,13 @@ public class QueryBuilder {
 					break;
 				case add:
 					query = "INSERT INTO " + tableName + " ";
-					query += buildFieldsString(methods, classID, false);
-					query += buildValuesString(methods);
+					query += buildFieldsString(methods, classID, false,false);
+					query += buildValuesString(methods,false);
+					break;
+				case addid:
+					query = "INSERT INTO " + tableName + " ";
+					query += buildFieldsString(methods, classID, false,true);
+					query += buildValuesString(methods,true);
 					break;
 				case delete:
 					query = "DELETE FROM " + tableName + " WHERE " + tableID
@@ -99,7 +104,7 @@ public class QueryBuilder {
 					break;
 				case update:
 					query = "UPDATE " + tableName + " SET ";
-					query += buildFieldsString(methods, classID, true);
+					query += buildFieldsString(methods, classID, true,false);
 					query += " WHERE " + tableID + " = ? ;";
 					break;
 				default:
@@ -121,12 +126,11 @@ public class QueryBuilder {
 	 * @param true for update statement, false for insert
 	 * @return the desired partial query string
 	 */
-	private static String buildFieldsString(Field[] methods, String classID,
-			boolean set) {
+	private static String buildFieldsString(Field[] methods, String classID, boolean set, boolean idset) {
 		int i = 0;
 		String fieldsString = (set) ? "" : "( ";
 		for (Field field : methods) {
-			if (!classID.toLowerCase().equals(field.getName().toLowerCase()) && !(DB.getDontMapFields().contains(field.getName()))) {
+			if ((!classID.toLowerCase().equals(field.getName().toLowerCase())|| idset) && !(DB.getDontMapFields().contains(field.getName()))) {
 				if (i != 0) {
 					fieldsString += " , " + field.getName()
 							+ ((set) ? "=?" : "");
@@ -147,10 +151,10 @@ public class QueryBuilder {
 	 * @param methods
 	 * @return
 	 */
-	private static String buildValuesString(Field[] methods) {
+	private static String buildValuesString(Field[] methods, boolean idset) {
 		int i = 0;
 		String valuesString = " values (";
-		int dontMap = countDontMapFields(methods);
+		int dontMap = countDontMapFields(methods)-((idset)?1:0);
 		for (int j = 0; j < methods.length - dontMap; j++) {
 			if (i != 0) {
 				valuesString += " , ?";

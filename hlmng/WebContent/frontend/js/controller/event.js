@@ -11,6 +11,17 @@ eventModule.controller('EventNewController', ['$http','RestService','ToolService
 			ToolService.redir('event.active.overview',{eventId:hlmng.event.eventID});
 		});
 	};
+	hlmng.takenIDs=[];
+	RestService.list('event').then(function(data){
+	    $.each(data, function(i, item){
+	    	hlmng.takenIDs.push(item.eventID);
+	    });
+	});
+	hlmng.isTaken = function(id){
+		var taken =hlmng.takenIDs.indexOf(parseInt(id))!=-1;
+		$scope.eventInfoNewForm.eventid.$setValidity("taken",!taken);
+		return taken;
+	};
 }]);
 
 

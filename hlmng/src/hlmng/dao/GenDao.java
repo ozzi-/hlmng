@@ -23,7 +23,8 @@ import db.QueryBuilder;
 
 public class GenDao {
 	
-    private String addElement; 
+    private String addElement;
+    private String addIdElement; 
     private String removeElement;
     private String listElements;
     private String listElementsLimit;
@@ -51,6 +52,7 @@ public class GenDao {
 		
 		String classPath = "hlmng.model";
 	    addElement = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.add);
+	    addIdElement = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.addid);
 	    removeElement = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.delete);
 	    listElements = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.list);
 	    listElementsLimit = QueryBuilder.buildQuery(className,classPath,QueryBuilder.opType.listLimit);
@@ -59,24 +61,35 @@ public class GenDao {
 	    fkElement = QueryBuilder.buildFKQuery(className,classPath);
 	}
 	
+	public <T> int addElement(Object model) {
+		return addElementInternal(model,addElement,false);
+	}
+	
+	public <T> int addIDElement(Object model) {
+		return addElementInternal(model,addIdElement,true);
+	}
+
 	/**
 	 * @param model
+	 * @param addElement2 
 	 * @return returns -1 if not inserted, else the id of the freshly inserted row
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> int addElement(Object model) {
+	public <T> int addElementInternal(Object model, String statement,boolean idset) {
         int insertedID=-1;
         T tModel;
 		try(Connection dbConnection = getDBConnection()){
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
-			try(PreparedStatement ps = dbConnection.prepareStatement(addElement,Statement.RETURN_GENERATED_KEYS)){
-				try(PreparedStatement psF = DB.setAllFieldsOfPS(ps, classType, tModel ,null)){
+			try(PreparedStatement ps = dbConnection.prepareStatement(statement,Statement.RETURN_GENERATED_KEYS)){
+				try(PreparedStatement psF = DB.setAllFieldsOfPS(ps, classType, tModel ,null,idset)){
 					if(psF!=null){
 						psF.executeUpdate();
-						try(ResultSet rs = ps.getGeneratedKeys()){						
-							rs.next();
-							insertedID = rs.getInt(1);				
-						}						
+						if(!idset){
+							try(ResultSet rs = ps.getGeneratedKeys()){						
+								rs.next();
+								insertedID = rs.getInt(1);				
+							}
+						}
 					}
 				}
 			}			
@@ -130,7 +143,7 @@ public class GenDao {
 		try (Connection dbConnection = getDBConnection()){
 			tModel = (T) Class.forName("hlmng.model."+classType.getSimpleName()).cast(model);
 			try(PreparedStatement ps = dbConnection.prepareStatement(updateElement)){
-				try(PreparedStatement psF = DB.setAllFieldsOfPS(ps, classType, tModel,id)){
+				try(PreparedStatement psF = DB.setAllFieldsOfPS(ps, classType, tModel,id,false)){
 					rs = psF.executeUpdate();							
 				}
 			}

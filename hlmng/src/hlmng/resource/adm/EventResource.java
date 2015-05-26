@@ -132,7 +132,7 @@ public class EventResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object postEvent(Event element) throws IOException {
-		return postResource(eventDao, element);
+		return (Event)postResourceWithID(eventDao, element);
 	}
 	
 	@DELETE

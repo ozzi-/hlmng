@@ -122,7 +122,7 @@ public class DB {
 	 * @param If you are making an insert statement you won't have to add a ID so pass NULL! Else the ID should be the one of the object in the DB which you want to change (... where ID={x} ) 
 	 * @return The prepared statement 
 	 */
-	public static <T> PreparedStatement setAllFieldsOfPS(PreparedStatement ps, Class<?> classType,T tModel,Integer idLastParam) {
+	public static <T> PreparedStatement setAllFieldsOfPS(PreparedStatement ps, Class<?> classType,T tModel,Integer idLastParam,boolean idset) {
 		int i=0;
 		Object value;
 		PropertyDescriptor propertyDescriptor;
@@ -130,8 +130,8 @@ public class DB {
 		String className= classType.getSimpleName();
 		String classID = className.toLowerCase()+"ID";	
 		for (Field field : classType.getDeclaredFields()) {
-			// ID is set by DB, others injected
-			if(!classID.toLowerCase().equals(field.getName().toLowerCase())&& !(dontMapFields.contains(field.getName()))){ 
+			// ID is set by DB, others injected if idset = false
+			if((!classID.toLowerCase().equals(field.getName().toLowerCase())||idset)&& !(dontMapFields.contains(field.getName()))){ 
 				try {
 					propertyDescriptor = new PropertyDescriptor(field.getName(), classType);
 					Method method = propertyDescriptor.getReadMethod();
