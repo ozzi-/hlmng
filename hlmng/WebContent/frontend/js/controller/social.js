@@ -14,16 +14,21 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 		hlmng.removeFromAll(social);
 		hlmng.socialsAccepted.push(social);
 	}; 
-	hlmng.setPublished = function(social) {  
+	hlmng.setPublished = function(social,link) {  
 		social.status = "published";
-		alert("Waiting for Publish Functions from Tobias. . . ");
-		RestService.get(social.socialID,'social','publications').then(function(data){
+		var socialPublish = {
+			    publisher:"Facebook",
+			    publishedLink:link,
+			    socialIDFK: social.socialID
+		}; 
+		
+		RestService.post(socialPublish,'social/publish').then(function(data){
 			social.publications=data;
-			hlmng.socialsPublished.push(social);	
 			hlmng.putSocial(social,social.socialID,'social');
 			hlmng.removeFromAll(social);
 			hlmng.socialsPublished.push(social);
 		});
+
 	}; 
 	hlmng.setRejected = function(social) {  
 		social.status = "rejected";

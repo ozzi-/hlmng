@@ -7,8 +7,8 @@ helperModule.directive('facebook', function(){
 		restrict: 'E',
 		templateUrl: 'template/helper/facebook.html',
 		scope:{
-			messagetext: "=messagetext",
-			messageimage: "=messageimage"
+			socialobj: "=socialobj",
+			socialctrl: "=socialctrl"
 		}
 	};
 });

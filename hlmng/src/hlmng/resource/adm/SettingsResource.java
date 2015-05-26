@@ -16,7 +16,6 @@ import settings.HLMNGSettings;
 
 @Path(HLMNGSettings.admURL+"/settings")
 public class SettingsResource extends Resource{
-
 	
 	@SuppressWarnings("unchecked")
 	@GET
@@ -25,6 +24,9 @@ public class SettingsResource extends Resource{
 		JSONObject settingsJSON = new JSONObject();
 		settingsJSON.put("pageId",HLMNGSettings.facebookPageId);
 		settingsJSON.put("appId",HLMNGSettings.facebookAppId);
+		settingsJSON.put("maxMediaImageSizeMB",HLMNGSettings.maxMediaImageSizeMB);
+		settingsJSON.put("mediaUploadThumbnailPixel", HLMNGSettings.mediaUploadThumbnailPixel);
+		settingsJSON.put("newestSelectLimit", HLMNGSettings.selectLimit);
 		return settingsJSON.toJSONString();
 	}
 	

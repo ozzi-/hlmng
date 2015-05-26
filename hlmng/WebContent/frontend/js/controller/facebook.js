@@ -5,10 +5,16 @@ function statusChangeCallback(response) {
 	console.log(response);
     if (response.status === 'connected') {
       document.getElementById('status').innerHTML = 'Logged in';
+      document.getElementById('fb-root').style.visibility="hidden";
+      document.getElementById('fb-root').style.display="none";
     } else if (response.status === 'not_authorized') {
         document.getElementById('status').innerHTML = 'Please log into this app first (on facebook.com)';
+        document.getElementById('fb-root').style.visibility="visible";
+        document.getElementById('fb-root').style.display="inline";
     } else {
-        document.getElementById('status').innerHTML = 'Please log into Facebook';
+        document.getElementById('status').innerHTML = '';
+        document.getElementById('fb-root').style.visibility="visible";
+        document.getElementById('fb-root').style.display="inline";
     }
 };
 
@@ -47,33 +53,44 @@ window.fbAsyncInit = function() {
   
 facebookModule.controller('FacebookController', ['$http','$window','$scope','RestService','ToolService','$stateParams', function($http,$window,$scope,RestService,ToolService,$stateParams){
 	
+	$window.fbAsyncInit();
 	var hlmng = this;
 	hlmng.appId="";
 	hlmng.pageId="";
+	
+	
 	
 	RestService.list('settings').then(function(data){
 		hlmng.appId=data.appId;
 		hlmng.pageId=data.pageId;
 	});
   	
-	hlmng.postMessage = function (messagetext) {
+	hlmng.postMessage = function (socialCtrl, social) {
+		var messagetext = social.text;
+		var parent=this;
+		this.socialobj=social;
 		FB.api('/' + hlmng.pageId, {fields: 'access_token'}, function(resp) {
 			if(resp.access_token) {
-	        FB.api('/' + hlmng.pageId + '/feed', 'post',{ message: messagetext, access_token: resp.access_token },
-	        function(response) {
-	        	if(response.error){
-	        		alert(response.error.message);
-	            }else{
-	            	alert('Post successful! todo');
-	            	// TODO add to published
-	            }
-	        }
+				FB.api('/' + hlmng.pageId + '/feed', 'post',{ message: messagetext, access_token: resp.access_token },
+				function(response) {
+	    			if(response.error){
+	    				alert(response.error.message);
+	    			}else{
+	    				alert('Post successful!');
+	    				var resArr= response.id.split("_");
+	    				var fbLink= "https://facebook.com/permalink.php?story_fbid="+resArr[1]+"&id="+resArr[0];
+	    				socialCtrl.setPublished(parent.socialobj,fbLink);
+	    			}
+				}
 	        );
 	      }
 		});
 	};
 	
-	  hlmng.postImageAndText = function (messagetext,messageimage){
+	  hlmng.postImageAndText = function (socialCtrl, social){
+		var messagetext = social.text;
+		var messageimage= social.media;
+		this.socialobj=social;
 	    FB.api('/' + hlmng.pageId, {fields: 'access_token'}, function(resp) {
 	      if(resp.access_token) {
 	        FB.api('/' + hlmng.pageId + '/photos','post',
@@ -85,8 +102,10 @@ facebookModule.controller('FacebookController', ['$http','$window','$scope','Res
 	      			if(response.error){
 	      				alert(response.error.message);
 	      			}else{
-	      				alert('Post successful! todo');
-	      				// TODO add to published
+	      				alert('Post successful!');
+	    				var resArr= response.id.split("_");
+	    				var fbLink= "https://facebook.com/permalink.php?story_fbid="+resArr[1]+"&id="+resArr[0];
+	    				socialCtrl.setPublished(parent.socialobj,fbLink);
 	      			}
 	          });
 	      }

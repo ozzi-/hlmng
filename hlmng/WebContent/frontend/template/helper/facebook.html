@@ -1,15 +1,4 @@
 <div ng-controller="FacebookController as fbCtrl">
-	<b>Login Status:</b><br>
-	<span id="status">
-	</span>
-	<div id="fb-root">
-		<fb:login-button scope="publish_actions, manage_pages, publish_pages" ng-click="checkLoginState()">
-		</fb:login-button>
-	</div>
-	
-	<button class="btn btn-info" ng-click="fbCtrl.postMessage(messagetext)">POST Message</button>
-	<br>
-	<button class="btn btn-info" ng-click="fbCtrl.postImageAndText(messagetext,messageimage)">POST Image+Message</button>
-	
-
+	<button class="btn btn-info" ng-click="fbCtrl.postMessage(socialctrl,socialobj)">Facebook: Post Message</button>
+	<button class="btn btn-info" ng-hide="socialobj.media==undefined" ng-click="fbCtrl.postImageAndText(socialctrl,socialobj)">Facebook: Post Image & Message</button>	
 </div>

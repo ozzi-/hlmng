@@ -11,12 +11,21 @@
 <br><br>
 
 <h1>Accepted:</h1>
+<b>Facebook Login Status:</b><br>
+<span id="status">
+</span>
+<div id="fb-root">
+	<fb:login-button scope="publish_actions, manage_pages, publish_pages" ng-click="checkLoginState()">
+	</fb:login-button>
+</div>
+<br>
+<hr>
+<br>
 <span ng-repeat="social in socialListCtrl.socialsAccepted | filter:search:strict">
 	<social-info social="social"></social-info>
-	<button ng-click="socialListCtrl.setPending(social);" class="btn btn-danger">Send to pending</button>
-	<button ng-click="socialListCtrl.setPublished(social);" class="btn btn-info">Publish on Social Media</button>
-	<br>
-	<facebook messagetext="social.text" messageimage="social.media"></facebook>
+	<button ng-click="socialListCtrl.setPending(social);" class="btn btn-danger">Send back to pending</button>
+	<br><br>
+	<facebook socialobj="social" socialctrl="socialListCtrl"></facebook>
 	<hr>
 </span>
 <nothing-here-yet list="socialListCtrl.socialsAccepted"></nothing-here-yet>

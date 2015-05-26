@@ -3,6 +3,7 @@ package hlmng.resource.adm;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.Social;
+import hlmng.model.SocialPublish;
 import hlmng.resource.Resource;
 import hlmng.resource.ResourceHelper;
 
@@ -65,9 +66,23 @@ public class SocialResource extends Resource  {
 	@Path("{id}/publications")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getPublications(@PathParam("id") int id){
-		return socialPublishDao.listByFK("socialIDFK", id);
+		List<Object> sPubList = socialPublishDao.listByFK("socialIDFK", id);
+		for (Object sPubObj : sPubList) {
+			SocialPublish sPub = (SocialPublish) sPubObj;
+			sPub.setPublishedLink(sPub.getPublishedLink().replace("&amp;","&"));
+		}
+		return sPubList;
 	}
 
+	@POST
+	@Path("publish")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> postSocialPublications(SocialPublish spub) throws IOException {
+		socialPublishDao.addElement(spub);
+		return getPublications(spub.getSocialIDFK());
+	}
+	
 	@DELETE
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
