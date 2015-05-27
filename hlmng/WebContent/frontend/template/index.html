@@ -3,4 +3,7 @@
   <p>Here you can ... todo</p>
 </div>
 
-
+<div ng-init="status=false">
+	<button ng-click="status=!status">Show loading</button>
+	<div loading-spinner="status"></div>
+</div>

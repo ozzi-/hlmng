@@ -1,5 +1,5 @@
 var app = angular.module('hlmngApp',['stateprovider','speaker','event','voting','social','news',
-                                     'push','navbar','eventroom','qrcode','eventitem','media',
+                                     'push','navbar','eventroom','qrcode','eventitem','media','angularSpinner',
                                      'helper','directive','slider','facebook','ezfb','ui.bootstrap']);
 
 var initInjector = angular.injector(['ng']);

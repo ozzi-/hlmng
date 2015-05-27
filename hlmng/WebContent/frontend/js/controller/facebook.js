@@ -11,13 +11,13 @@ facebookModule.config(function (ezfbProvider) {
 	});
 });
   
-facebookModule.controller('FacebookController', ['$http','ezfb','$log','$window','$scope','RestService','ToolService','$stateParams', function($http,ezfb,$log,$window,$scope,RestService,ToolService,$stateParams){
+facebookModule.controller('FacebookController', ['$http','$scope','ezfb','$log','$window','$scope','RestService','ToolService','$stateParams', function($http,$scope,ezfb,$log,$window,$scope,RestService,ToolService,$stateParams){
 
 	var hlmng = this;
 	hlmng.appId="";
 	hlmng.loginStatus="";
 	hlmng.pageId="";
-	
+	hlmng.loading=false;
 
 	ezfb.Event.subscribe('auth.statusChange', function (statusRes) {
 		hlmng.loginStatus = statusRes.status;
@@ -59,36 +59,38 @@ facebookModule.controller('FacebookController', ['$http','ezfb','$log','$window'
 		hlmng.appId=data.appId;
 		hlmng.pageId=data.pageId;
 	});
-  	
+	
+
 	hlmng.postMessage = function (socialCtrl, social) {
-		$log.log("Starting message post");
-		var messagetext = social.text;
 		var parent=this;
+		var messagetext = social.text;
 		this.socialobj=social;
+		hlmng.loading=true;
 		FB.api('/' + hlmng.pageId, {fields: 'access_token'}, function(resp) {
 			if(resp.access_token) {
 				FB.api('/' + hlmng.pageId + '/feed', 'post',{ message: messagetext, access_token: resp.access_token },
 				function(response) {
 	    			if(response.error){
-	    				alert(response.error.message);
+	    				alert("FB API ERROR: "+response.error.message);
+	    				location.reload();
 	    			}else{
 	    				alert('Post successful!');
 	    				var resArr= response.id.split("_");
 	    				var fbLink= "https://facebook.com/permalink.php?story_fbid="+resArr[1]+"&id="+resArr[0];
 	    				socialCtrl.setPublished(parent.socialobj,fbLink,"Facebook");
 	    			}
-				}
+				}.bind(this)
 	        );
 	      }
-		});
+		}.bind(this));
 	};
 	
 	  hlmng.postImageAndText = function (socialCtrl, social){
-		$log.log("Starting message+image post");
 		var parent=this;
 		this.socialobj=social;
 		var messagetext = social.text;
 		var messageimage= social.media;
+		hlmng.loading=true;
 		// FB can't handle self signed cert's, so we removed the https rewrite for pub/media/* 
 		messageimage=messageimage.replace("https","http"); 
 		
@@ -99,10 +101,10 @@ facebookModule.controller('FacebookController', ['$http','ezfb','$log','$window'
 	          { 
 	    		message: messagetext,
 	    		url: messageimage,
-	    		access_token: resp.access_token 
-	    			},function(response) {
+	    		access_token: resp.access_token },function(response) {
 	      			if(response.error){
-	      				alert(response.error.message);
+	    				alert("FB API ERROR: "+response.error.message);
+	    				location.reload();
 	      			}else{
 	      				alert('Post successful!');
 	    				var resArr= response.id.split("_");

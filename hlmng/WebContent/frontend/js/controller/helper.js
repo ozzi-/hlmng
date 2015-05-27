@@ -1,4 +1,21 @@
-var helperModule = angular.module('helper', []);
+var helperModule = angular.module('helper', ['angularSpinner']);
+
+helperModule.config(['usSpinnerConfigProvider', function (usSpinnerConfigProvider) {
+    usSpinnerConfigProvider.setDefaults({color: 'red'});
+}]);
+
+
+helperModule.directive('loadingSpinner', function(){
+ return {
+      restrict: 'A',
+      replace: true,
+      transclude: true,
+      scope: {
+        loadingspinner: '=loadingSpinner'
+      },
+      templateUrl: 'template/helper/loading.html'
+ };
+});
 
 
 
@@ -46,7 +63,7 @@ helperModule.directive('nothingHereYet', function(){
 	};
 });
 
-directiveModule.directive('datePicker', function(){
+helperModule.directive('datePicker', function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'template/helper/date-picker.html',
@@ -75,7 +92,7 @@ directiveModule.directive('datePicker', function(){
 	};
 });
 
-directiveModule.directive('timePicker', function(){
+helperModule.directive('timePicker', function(){
 	return {
 		restrict: 'E',
 		templateUrl: 'template/helper/time-picker.html',

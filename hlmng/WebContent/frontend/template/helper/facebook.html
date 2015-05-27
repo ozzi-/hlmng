@@ -1,4 +1,5 @@
-<div ng-controller="FacebookController as fbCtrl">
-	<button class="btn btn-info"  ng-disabled="!loginstatus || loginstatus != 'connected'" ng-click="fbCtrl.postMessage(socialctrl,socialobj)">Facebook: Post Message</button>
-	<button class="btn btn-info"  ng-disabled="!loginstatus || loginstatus != 'connected'" ng-hide="socialobj.media==undefined" ng-click="fbCtrl.postImageAndText(socialctrl,socialobj)">Facebook: Post Image & Message</button>	
-</div>
+<span ng-controller="FacebookController as fbCtrl">
+	<span loading-spinner="fbCtrl.loading"></span>
+	<button class="btn btn-info"  ng-disabled="!loginstatus || loginstatus != 'connected' || fbCtrl.loading" ng-click="fbCtrl.postMessage(socialctrl,socialobj)">Facebook: Post Message</button>
+	<button class="btn btn-info"  ng-disabled="!loginstatus || loginstatus != 'connected' || fbCtrl.loading" ng-hide="socialobj.media==undefined" ng-click="fbCtrl.postImageAndText(socialctrl,socialobj)">Facebook: Post Image & Message</button>
+</span>
