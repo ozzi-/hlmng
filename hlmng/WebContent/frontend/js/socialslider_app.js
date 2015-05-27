@@ -5,7 +5,7 @@ var myapp = angular.module('stateprovider', ["ui.router"]);
 myapp.config(function($stateProvider, $urlRouterProvider){
 	$urlRouterProvider.otherwise("/");
 	$stateProvider.
-    state('event', {
+    state('show', {
 		url: "/event/{eventId:int}/interval/{interval:int}/updateinterval/{updateinterval:int}",
 		templateUrl: "template/socialslider/socialslider.html",
        	controller: "SocialSliderController",
@@ -13,15 +13,29 @@ myapp.config(function($stateProvider, $urlRouterProvider){
     }).
     state('index', {
 		url: "/",
-		template: "Use /event/{id}/interval/{ms}/updateinterval/{ms}"
+		templateUrl: "template/helper/socialslider-default.html"
     });
 });
 
 
 app.controller('SocialSliderController', ['$http','$log','$stateParams','RestService','$scope','$interval',function($http,$log,$stateParams,RestService,$scope,$interval){
 	
-	var refreshData = function() {
-		
+	$scope.socialsAccepted = [];
+	$scope.intervalSlide = $stateParams.interval;
+
+	
+	RestService.list('social').then(function(data){
+	    $.each(data, function(i, item){
+	    	if(item.eventIDFK==$stateParams.eventId){
+	    		if(item.status=="accepted" || item.status=="published"){
+	    			$scope.socialsAccepted.push(item);
+	    			$log.log("+ "+item.text);
+	    		}
+	    	}
+	    });
+	});
+	
+	var refreshData = function() {		
 		RestService.list('social').then(function(data){
 		    $.each(data, function(i, item){
 		    	if(item.eventIDFK==$stateParams.eventId){
@@ -33,11 +47,13 @@ app.controller('SocialSliderController', ['$http','$log','$stateParams','RestSer
     			        	thereIndex=i;
     			        }
     			    }
-	    			if(there==false && item.status=="accepted"){
-    					$scope.socialsAccepted.push(item);	
+	    			if(there==false && (item.status=="accepted"||item.status=="published")){
+    					$scope.socialsAccepted.push(item);
+    					$log.log("+ "+item.text);
 	    			}
-	    			if(there==true && item.status!="accepted"){
-    					$scope.socialsAccepted.splice(thereIndex,1);	 
+	    			if(there==true && (item.status!="accepted"&&item.status!="published")){
+    					$scope.socialsAccepted.splice(thereIndex,1);
+    					$log.log("- "+item.text);
 	    			}
 		    	}
 		    });
@@ -52,17 +68,5 @@ app.controller('SocialSliderController', ['$http','$log','$stateParams','RestSer
 	        promise = undefined;
 	    }
 	});
-	
-	
-	$scope.socialsAccepted = [];
-	$scope.intervalSlide = $stateParams.interval;
-	RestService.list('social').then(function(data){
-	    $.each(data, function(i, item){
-	    	if(item.eventIDFK==$stateParams.eventId){
-	    		if(item.status=="accepted"){
-	    			$scope.socialsAccepted.push(item);
-	    		}
-	    	}
-	    });
-	});
+
 }]);

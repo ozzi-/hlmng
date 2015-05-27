@@ -1,0 +1,24 @@
+<br>
+<div class="row">
+	<div class="col-md-2 col-md-offset-5" ng-init="updateinterval=20; interval=5;">
+		<form name="socialSliderForm">
+			<div class="form-group">
+				<label for="eventid">Event ID</label><br>
+				<input class="form-control" maxlength="60" type="text" size="40" name="eventid" ng-model="eventid" required>
+			</div>
+			<div class="form-group">
+				<label for="interval">Interval (seconds))</label><br>
+				<input name="count" ng-model="interval" type="number" value="5" min="1" max="50" > 
+			</div>
+			<div class="form-group">
+				<label for="interval">Update Interval (seconds)</label><br>
+				<input name="count" ng-model="updateinterval" type="number" value="20" min="10" max="3600" > 
+			</div>
+		</form>		
+		<a ui-sref="show({eventId: eventid, interval: interval*1000, updateinterval: updateinterval*1000})">
+			<button ng-disabled="!socialSliderForm.$valid" class="btn btn-primary">
+				Start Slideshow
+			</button>
+		</a>
+	</div>
+</div>
