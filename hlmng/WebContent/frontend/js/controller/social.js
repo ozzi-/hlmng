@@ -14,21 +14,16 @@ socialModule.controller('SocialListController', ['$http','RestService','$statePa
 		hlmng.removeFromAll(social);
 		hlmng.socialsAccepted.push(social);
 	}; 
-	hlmng.setPublished = function(social,link,publisher) {  
-		
-		social.status = "published";
-		var socialPublish = {
-			    publisher:publisher,
-			    publishedLink:link,
-			    socialIDFK: social.socialID
-		}; 
-		RestService.post(socialPublish,'social/publish').then(function(data){
-			social.publications=data;
-			hlmng.putSocial(social,social.socialID,'social');
+	hlmng.setPublished = function(social) {  
+		RestService.get(social.socialID,'social').then(function(updatedsocial){
+			updatedsocial.status = "published";
+			hlmng.putSocial(updatedsocial,updatedsocial.socialID,'social');
 			hlmng.removeFromAll(social);
-			hlmng.socialsPublished.push(social);
+			RestService.get(updatedsocial.socialID,'social','publications').then(function(publicationsdata){
+				updatedsocial.publications=publicationsdata;
+				hlmng.socialsPublished.push(updatedsocial);			
+			});
 		});
-
 	}; 
 	hlmng.setRejected = function(social) {  
 		social.status = "rejected";

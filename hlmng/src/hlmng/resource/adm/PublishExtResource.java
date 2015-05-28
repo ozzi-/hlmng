@@ -1,90 +1,107 @@
 package hlmng.resource.adm;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import facebook4j.Account;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
-import facebook4j.PostUpdate;
-import facebook4j.ResponseList;
+import facebook4j.Media;
+import facebook4j.PhotoUpdate;
 import facebook4j.auth.AccessToken;
-import facebook4j.auth.OAuthAuthorization;
-import facebook4j.conf.Configuration;
+import hlmng.dao.GenDao;
+import hlmng.dao.GenDaoLoader;
+import hlmng.model.AccessTokenFB;
 import hlmng.model.Social;
+import hlmng.model.SocialPublish;
+import hlmng.resource.Resource;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-import org.json.simple.JSONObject;
-
+import log.Log;
 import settings.HLMNGSettings;
+import settings.HTTPCodes;
 import twitter4j.Status;
+import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 @Path(HLMNGSettings.admURL+"/publish")
-public class PublishExtResource {
+public class PublishExtResource  extends Resource{
 
+	public static AccessToken accessTokenFB=null;
+	private static GenDao mediaDao =GenDaoLoader.instance.getMediaDao();
+	private static GenDao socialPublishDao = GenDaoLoader.instance.getSocialPublishDao();
 	
-	@SuppressWarnings("unchecked")
 	@POST
 	@Path("/twitter")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JSONObject postToTwitter(Social social) throws TwitterException {
+	public Response postToTwitter(Social social) throws TwitterException, IOException {
 	    Twitter twitter = TwitterFactory.getSingleton();
 	    
-		String strng = (social.getMedia()==null)?social.getAuthorName()+": "+social.getText():social.getAuthorName()+": "+social.getText()+"\n"+social.getMedia();
+		String strng = social.getAuthorName()+": "+social.getText();
 		if(strng.length()>140){
-			return null; 
+		    response.sendError(HTTPCodes.requestEntityTooLarge);
 	    }
-		Status status = twitter.updateStatus(strng);
-		String url= "https://twitter.com/" + status.getUser().getScreenName()+ "/status/" + status.getId();
-		JSONObject ret = new JSONObject();
-		ret.put("publishedlink",url);
-		ret.put("publisher","Twitter");
-		return ret;
+		
+        StatusUpdate status = new StatusUpdate(strng);
+
+		if(!social.getMedia().equals("")){
+			hlmng.model.Media mediaFile = (hlmng.model.Media) mediaDao.getElement(social.getMediaIDFK());
+			status.setMedia(new File(HLMNGSettings.mediaFileRootDir+mediaFile.getLink()));
+		}
+		Status statusRespone = twitter.updateStatus(status);
+		String twitterLink= "https://twitter.com/" + statusRespone.getUser().getScreenName()+ "/status/" + statusRespone.getId();
+		
+		socialPublishDao.addElement(new SocialPublish("Twitter", twitterLink, social.getSocialID()));
+		
+		return Response.accepted().build();
 	}
 	
+	@POST
+	@Path("/facebook/updatetoken")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateAccessToken(AccessTokenFB acToFb) throws FacebookException, MalformedURLException {
+		accessTokenFB= acToFb.createToken();
+		Log.addEntry(Level.INFO,"Updating Facebook Access Token"); 
+	}
 	
-	@SuppressWarnings("unchecked")
 	@POST
 	@Path("/facebook")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public JSONObject postToFacebook(Social social) throws FacebookException, MalformedURLException {
+	public Response postToFacebook(Social social) throws FacebookException, IOException {
 
 		Facebook facebook = new FacebookFactory().getInstance();
-		facebook.setOAuthAccessToken(facebook.getOAuthAppAccessToken());
-//		AccessToken oauthToken = facebook.getOAuthAppAccessToken();
-//		String pageAccessToken="";
-//		ResponseList<Account> accounts = facebook.getAccounts();
-//		for (Account account : accounts) {
-//			System.out.println(account.getName());
-//			if(account.getName().equals(HLMNGSettings.facebookAppName)){
-//				pageAccessToken = account.getAccessToken();
-//			}
-//		}
-//		System.out.println(pageAccessToken);
-//		if(pageAccessToken.equals("")){
-//			return null;
-//		}
-//		AccessToken p = new AccessToken(pageAccessToken);
-//		facebook.setOAuthAccessToken(p);
+		if(accessTokenFB==null){
+		    response.sendError(HTTPCodes.failedDependency);
+			Log.addEntry(Level.WARNING,"Couldn't post to Facebook due to a missing access token, make sure the frontend loads the social list page first"); 
+		    return null;
+		}
+		facebook.setOAuthAccessToken(accessTokenFB);
+		String postID;
+		if(social.getMedia().equals("")){
+			postID = facebook.postStatusMessage(social.getAuthorName()+": "+social.getText());    
+			postID= postID.substring(postID.lastIndexOf("_") + 1);
+		}else{
+			hlmng.model.Media mediaFile = (hlmng.model.Media) mediaDao.getElement(social.getMediaIDFK());
+			Media mediaFB = new Media(new File(HLMNGSettings.mediaFileRootDir+mediaFile.getLink()));
+			
+			PhotoUpdate update = new PhotoUpdate(mediaFB);
+			update.message(social.getAuthorName()+": "+social.getText());
+			postID = facebook.postPhoto(update);    			
+		}
+
+		String fbLink= "https://facebook.com/permalink.php?story_fbid="+postID+"&id="+HLMNGSettings.facebookPageId;
 		
-		PostUpdate post = new PostUpdate(new URL("http://priklad.sk"))
-        .picture(new URL("http://priklad.sk/obrazcok/testik.png"))
-        .name("priklad")
-        .caption("priklad")
-        .message("priklad")
-        .description("priklad");
-		 facebook.postFeed(post);
-	
-		 return null;
-		
+		socialPublishDao.addElement(new SocialPublish("Facebook", fbLink, social.getSocialID()));
+		return Response.accepted().build();
 		
 	}
 	

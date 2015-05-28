@@ -1,6 +1,6 @@
 var app = angular.module('hlmngApp',['stateprovider','speaker','event','voting','social','news','publisher',
                                      'push','navbar','eventroom','qrcode','eventitem','media','angularSpinner',
-                                     'helper','directive','slider','facebook','ezfb','ui.bootstrap']);
+                                     'helper','directive','slider','ezfb','ui.bootstrap']);
 
 var initInjector = angular.injector(['ng']);
 var $http = initInjector.get('$http');

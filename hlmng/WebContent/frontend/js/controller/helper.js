@@ -23,7 +23,8 @@ helperModule.directive('publisher', function(){
 		templateUrl: 'template/helper/publisher.html',
 		scope:{
 			socialobj: "=socialobj",
-			socialctrl: "=socialctrl"
+			socialctrl: "=socialctrl",
+			pubctrl: "=pubctrl"
 		}
 	};
 });

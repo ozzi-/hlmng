@@ -12,14 +12,21 @@
 
 <h1>Accepted:</h1>
 <hr>
-
+<span ng-controller="PublisherController as pubCtrl">
+	<button class="btn btn-primary" ng-click="pubCtrl.login()" ng-disabled="pubCtrl.loginStatusFB == 'connected'"><img src="./img/fb.png">
+	Connect with Facebook</button>
+	&nbsp; 
+	<button class="btn btn-danger" ng-click="pubCtrl.logout()" ng-disabled="!pubCtrl.loginStatusFB || pubCtrl.loginStatusFB != 'connected'">Logout</button>
+	<br>
+	<br>
 	<span ng-repeat="social in socialListCtrl.socialsAccepted | filter:search:strict">
 		<social-info social="social"></social-info>
 		<button ng-click="socialListCtrl.setPending(social);" class="btn btn-danger">Send back to pending</button>
 		<br><br>
-		<publisher socialobj="social" socialctrl="socialListCtrl"></publisher>
+		<publisher socialobj="social" pubctrl="pubCtrl" socialctrl="socialListCtrl"></publisher>
 		<hr>
 	</span>
+</span>
 <nothing-here-yet list="socialListCtrl.socialsAccepted"></nothing-here-yet>
 <br><br>
 

@@ -281,9 +281,7 @@ public class ResourceHelper {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	
+	}	
 
 	public static Response mediaResponse(String filePath, String fileType, Request request) {
 		ResponseBuilder response;
