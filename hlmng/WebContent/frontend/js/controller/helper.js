@@ -17,6 +17,16 @@ helperModule.directive('loadingSpinner', function(){
  };
 });
 
+helperModule.directive('publisher', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/helper/publisher.html',
+		scope:{
+			socialobj: "=socialobj",
+			socialctrl: "=socialctrl"
+		}
+	};
+});
 
 
 helperModule.directive('facebook', function(){

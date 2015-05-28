@@ -1,4 +1,4 @@
-var app = angular.module('hlmngApp',['stateprovider','speaker','event','voting','social','news',
+var app = angular.module('hlmngApp',['stateprovider','speaker','event','voting','social','news','publisher',
                                      'push','navbar','eventroom','qrcode','eventitem','media','angularSpinner',
                                      'helper','directive','slider','facebook','ezfb','ui.bootstrap']);
 

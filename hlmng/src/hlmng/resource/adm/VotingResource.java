@@ -73,8 +73,10 @@ public class VotingResource extends Resource {
 	@Produces({"text/csv"})
 	public Response doExport(@PathParam("id") int id) throws IOException, java.text.ParseException{
 		CSVExporter csvExp = new CSVExporter();
-		List<Vote> voteList = getVoteList(id,modes.all);
-		if(voteList.size()==0){
+		List<Vote> voteListAll = getVoteList(id,modes.all);
+		List<Vote> voteListAudience = getVoteList(id,modes.audienceOnly);
+		List<Vote> voteListJury = getVoteList(id,modes.juryOnly);
+		if(voteListAll.size()==0){
 			csvExp.addValue("Didn't find any votes or voting id invalid", true);
 		}else{
 			csvExp.addValue("Voting Settings", true);
@@ -87,13 +89,21 @@ public class VotingResource extends Resource {
 			//--
 			csvExp.addValue("Sliders", true);
 			csvExp.addValue("", true);
-			csvExp.addList(sliderDao.listByFK("votingIDFK", id));
+			List<Object> sliderList = sliderDao.listByFK("votingIDFK", id);
+			csvExp.addList(sliderList);
 			csvExp.addValue("", true);
 			csvExp.addValue("", true);
-			//--
-			csvExp.addValue("Votes:", true);
-			csvExp.addValue("", true);
-			csvExp.addList(new ArrayList<Object>(voteList));
+			// -- 
+			csvExp.addValue("Slider Scores", true);
+			for (Object sliderObj : sliderList) {
+				Slider slider = (Slider) sliderObj;
+				csvExp.addValue(slider.getName(), true);
+				csvExp.addValue("Jury", false);
+				csvExp.addValue(Double.toString(getSliderScore(slider.getSliderID(),true)), false);
+				csvExp.addValue("Audience", false);
+				csvExp.addValue(Double.toString(getSliderScore(slider.getSliderID(),false)), false); 
+				csvExp.addValue("", true);
+			}
 			csvExp.addValue("", true);
 			csvExp.addValue("", true);
 			//--
@@ -102,7 +112,25 @@ public class VotingResource extends Resource {
 			csvExp.addValue("", true);
 			csvExp.addValue(String.valueOf(getTotalScoreJury(id)), false);
 			csvExp.addValue(String.valueOf(getTotalScoreAudience(id)), true);
-			csvExp.addValue("", true);	
+			csvExp.addValue("", true);
+			//--
+			csvExp.addValue("Votes - Audience & Jury", true);
+			csvExp.addValue("", true);
+			csvExp.addList(new ArrayList<Object>(voteListAll));
+			csvExp.addValue("", true);
+			csvExp.addValue("", true);
+			//--
+			csvExp.addValue("Votes - Jury", true);
+			csvExp.addValue("", true);
+			csvExp.addList(new ArrayList<Object>(voteListJury));
+			csvExp.addValue("", true);
+			csvExp.addValue("", true);
+			//--
+			csvExp.addValue("Votes - Audience", true);
+			csvExp.addValue("", true);
+			csvExp.addList(new ArrayList<Object>(voteListAudience));
+			csvExp.addValue("", true);
+			csvExp.addValue("", true);
 		}
 		return Response.ok(csvExp.toString()).header("Content-Disposition", "attachment; filename= export_voting_"+id+".csv").build();
 	}
@@ -112,7 +140,8 @@ public class VotingResource extends Resource {
 	public Double getTotalScoreJury(@PathParam("id") int id) throws IOException, java.text.ParseException{
 		List<Object> objSliderList= sliderDao.listByFK("votingIDFK", id);
 		boolean inTime = isPresentationInTimeInternal(id);
-		Double totalScoreJury = getTotalScore(objSliderList,inTime,id);
+		Double totalScoreJury = getTotalScoreJury(objSliderList,inTime,id);
+		System.out.println("totalscore: "+totalScoreJury);
 		return totalScoreJury;
 	}
 	@GET
@@ -251,8 +280,8 @@ public class VotingResource extends Resource {
 			log.Log.addEntry(Level.INFO, "No need for GCM push");
 		}
 		Voting before = (Voting) getResource(votingDao, id);
-		
-		if(element.getRound() > before.getRound()){
+		System.out.println(element.getRound()+" - "+before.getRound());
+		if(element.getRound() > before.getRound()){ // new round started
 			List<Object> sliders = sliderDao.listByFK("votingIDFK",before.getVotingID());
 			for (Object sliderObj : sliders) {
 				Slider slider = (Slider) sliderObj;
@@ -336,17 +365,20 @@ public class VotingResource extends Resource {
 		}
         return calcDifference(pauseTotal,presentationDiff);
 	}
-	private Double getTotalScore(List<Object> objSliderList,Boolean inTime, int id) {
+	private Double getTotalScoreJury(List<Object> objSliderList,Boolean inTime, int id) {
 		double totalScore = 0.0;
 		int virtualSliderCount=0;
 		for (Object obj : objSliderList) {
 			Slider slider = (Slider) obj;
 			virtualSliderCount+=slider.getWeight();
-			totalScore += getSliderScore(slider.getSliderID(),false)*slider.getWeight();
+			totalScore += getSliderScore(slider.getSliderID(),true)*slider.getWeight();
 		}
 		Voting voting = (Voting) votingDao.getElement(id);
 		double inTimeScore = (inTime)?voting.getSliderMaxValue()*voting.getInTimeScoreWeight():0.0;
 		virtualSliderCount+=voting.getInTimeScoreWeight();
+		if(totalScore<0 && inTimeScore<0.1){
+			inTimeScore=-1.0; 
+		}
 		totalScore+=inTimeScore;
 		return totalScore / virtualSliderCount;
 	}

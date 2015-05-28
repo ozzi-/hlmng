@@ -71,7 +71,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	
 	hlmng.newRound = function(voting) {  
 	    if (confirm("Are you sure?")) {
-			voting.round += voting.round;
+	    	voting.round += 1;
 			hlmng.endPresentation(voting);
 	    }
 	};
