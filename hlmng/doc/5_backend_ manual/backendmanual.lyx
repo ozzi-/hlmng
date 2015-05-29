@@ -113,11 +113,11 @@ customHeadersFooters
 \begin_body
 
 \begin_layout Title
-HLM-NG | User Manual (Backend)
+HLM-NG | Backend User Manual
 \end_layout
 
 \begin_layout Author
-Oussama Zgheb & Tobias Zahner
+Oussama Zgheb
 \end_layout
 
 \begin_layout LyX-Code
@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="4">
+<lyxtabular version="3" rows="4" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -324,7 +324,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -333,7 +333,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -342,11 +342,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Weitere Settings erfasst
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Facebook & Twitter
 \end_layout
 
 \end_inset
@@ -390,7 +428,7 @@ Einleitung
 
 \begin_layout Standard
 Dieses Dokument soll einer mit der Materie vertrauten Person eine Hilfestellung
- zur Konfiguration, Installation und Unterhalt des HLMNG Backend geben.
+ zur Konfiguration und Installation des HLMNG Backend geben.
 \end_layout
 
 \begin_layout Section
@@ -398,9 +436,9 @@ Voraussetzungen
 \end_layout
 
 \begin_layout Standard
-Die Software wurde auf unter Ubuntu 12.04 LTS sowie Lubuntu 14.10 entwickelt
- und getestet, weitere Betriebssysteme sind höchst wahrscheinlich auch möglich
- einzusetzen.
+Die Software wurde auf unter Ubuntu 12.04 LTS, Lubuntu 14.10 sowie Debian
+ 7 entwickelt und getestet , weitere Betriebssysteme sind höchst wahrscheinlich
+ auch möglich einzusetzen.
 \end_layout
 
 \begin_layout Standard
@@ -419,13 +457,14 @@ MySQL 5.6
 Eclipse EE (Kepler oder neuer)
 \end_layout
 
-\begin_layout Standard
-Um den Google Cloud Messaging Dienst zu benutzen, braucht man ein Google
- Konto sowie einen ApiKey.
+\begin_layout Subsection
+Google Cloud Messaging
 \end_layout
 
 \begin_layout Standard
-Details zur Eröffnung eines Accounts finden sich hier 
+Um den Google Cloud Messaging Dienst zu benutzen, braucht man ein Google
+ Konto sowie einen ApiKey.
+ Informationen zur Eröffnung eines Accounts finden sich hier 
 \begin_inset Flex URL
 status open
 
@@ -451,11 +490,503 @@ https://console.developers.google.com/project
 
 \end_inset
 
- den Api ansehen.
+ ein neues Project erstellen.
+ Nun muss man unter 
+\begin_inset Quotes ald
+\end_inset
+
+APIs & Auth
+\begin_inset Quotes ard
+\end_inset
+
+ den Dienst 
+\begin_inset Quotes ald
+\end_inset
+
+Google Cloud Messaging for Android
+\begin_inset Quotes ard
+\end_inset
+
+ aktivieren.
+ Unter 
+\begin_inset Quotes ald
+\end_inset
+
+APIs & Auth -> Credentials
+\begin_inset Quotes ard
+\end_inset
+
+ kann ein 
+\begin_inset Quotes ald
+\end_inset
+
+Key for server applications
+\begin_inset Quotes ard
+\end_inset
+
+ (API Key) erstellt werden.
+\end_layout
+
+\begin_layout Subsection
+Facebook
+\end_layout
+
+\begin_layout Subsubsection
+App erstellen
+\end_layout
+
+\begin_layout Standard
+Um auf eine Facebook Seite zu Posten wird eine App benötigt, diese kann
+ unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://developers.facebook.com/
+\end_layout
+
+\end_inset
+
+ erstellt werden.
+ Zuerst muss jedoch ein Facebook Konto bestehen sowie auf Facebook angemeldet
+ sein.
+ Wichtig: Der App Typ muss dabei 
+\begin_inset Quotes ald
+\end_inset
+
+Website
+\begin_inset Quotes ard
+\end_inset
+
+ sein und die Site URL richtig gesetzt sein, z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+https://fix.confoxy.com/hlmng/frontend/
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Nun findet man im Dashboard der App folgende Daten: 
+\begin_inset Quotes ald
+\end_inset
+
+App ID
+\begin_inset Quotes ard
+\end_inset
+
+ und 
+\begin_inset Quotes ald
+\end_inset
+
+App Secret
+\begin_inset Quotes ard
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Konfiguration
+\end_layout
+
+\begin_layout Standard
+Nun müssen die Parameter der Facebook4J Library 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://facebook4j.org/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ hinterlegt werden.
+ Dies geschieht in der Datei facebook4j.properties im Rootverzeichnis 
+\begin_inset Quotes ald
+\end_inset
+
+src
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Die Datei sollte also wie folgt aussehen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+oauth.appId=****************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.appSecret=********************************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.permissions=publish_actions, manage_pages, publish_pages
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Diese Tokens laufen nie ab, es Bedarf also keiner nachträglichen Änderungen
+ mehr.
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://developers.facebook.com/docs/facebook-login/access-tokens
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ Nach Bedarf kann auch 
+\begin_inset Quotes ald
+\end_inset
+
+debug=true
+\begin_inset Quotes ard
+\end_inset
+
+ hinzugefügt werden, diese liefert wertvolle Informationen auf Sysout.
+\end_layout
+
+\begin_layout Subsection
+Twitter 
+\end_layout
+
+\begin_layout Subsubsection
+App erstellen
+\end_layout
+
+\begin_layout Standard
+Um die Twitter API zu benutzen muss man unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://apps.twitter.com/
+\end_layout
+
+\end_inset
+
+ ein App erstellen.
+ Dafür wird ein Twitter Account benötigt, bei bedarf sollte dieser zuerst
+ erstellt und angemeldet sein.
+ Wichtig ist, dass beim erstellen der App das Feld 
+\begin_inset Quotes ald
+\end_inset
+
+Website
+\begin_inset Quotes ard
+\end_inset
+
+ mit der richtigen URL ausgefüllt wird, also z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+https://fix.confoxy.com/hlmng/frontend/
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Nach dem erstellen der App sollte man nun unter 
+\begin_inset Quotes ald
+\end_inset
+
+Keys and Access Tokens
+\begin_inset Quotes ard
+\end_inset
+
+ die benötigten Daten finden.
+\begin_inset Newline newline
+\end_inset
+
+Folgende Parameter benötigt, 
+\begin_inset Quotes ald
+\end_inset
+
+Consumer Key
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+Consumer Secret
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+Access Token
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+Access Token Secret
+\begin_inset Quotes ard
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Konfiguration
+\end_layout
+
+\begin_layout Standard
+Nun müssen die Parameter der Twitter4J Library 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://twitter4j.org/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ hinterlegt werden.
+ Dies geschieht in der Datei twitter4j.properties im Rootverzeichnis 
+\begin_inset Quotes ald
+\end_inset
+
+src
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Die Datei sollte also wie folgt aussehen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+oauth.consumerKey=***********************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.consumerSecret=**************************************************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.accessToken=*********************************************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.accessTokenSecret=*******************************************
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Diese Tokens laufen nie ab, es Bedarf also keiner nachträglichen Änderungen
+ mehr, ausser das App wird durch den Twitter Account entfernt.
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://dev.twitter.com/oauth/overview/faq
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ Nach Bedarf kann auch 
+\begin_inset Quotes ald
+\end_inset
+
+debug=true
+\begin_inset Quotes ard
+\end_inset
+
+ hinzugefügt werden, diese liefert wertvolle Informationen auf Sysout.
+\end_layout
+
+\begin_layout Subsection
+Tomcat
+\end_layout
+
+\begin_layout Standard
+Um sicherzustellen, dass genügend Ressourcen vorhanden sind, wird empfohlen
+ den Java Heap Space etwas grösser als die Default Einstellung festzulegen.
+ Dies geschieht im File 
+\begin_inset Quotes ald
+\end_inset
+
+/etc/default/tomcat7
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Dort sollte die Zeile 
+\begin_inset Quotes ald
+\end_inset
+
+JAVA_OPTS
+\begin_inset Quotes ard
+\end_inset
+
+ wie folgt aussehen: 
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+JAVA_OPTS="-Djava.awt.headless=true -Xmx768m -Xms384m -XX:+UseConcMarkSweepGC"
+\end_layout
+
+\end_inset
+
+Xmx ist dabei die maximale Heap Size, Xms die initiale Grösse.
+ Bei grosser Benutzeranzahl muss die maximale Heap Size eventuell erhöht
+ werden.
 \end_layout
 
 \begin_layout Section
 Konfiguration
+\end_layout
+
+\begin_layout Subsection
+Ordner erstellen
+\end_layout
+
+\begin_layout Standard
+Das Backend muss Daten auf dem Filesystem ablegen können.
+ Empfohlen ist, die folgenden Ordner unter 
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/hlmng
+\begin_inset Quotes ard
+\end_inset
+
+ abzulegen.
+ Es werden die Unterordner 
+\begin_inset Quotes ald
+\end_inset
+
+logs
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+media
+\begin_inset Quotes ard
+\end_inset
+
+, und 
+\begin_inset Quotes ald
+\end_inset
+
+qr
+\begin_inset Quotes ard
+\end_inset
+
+ benötigt.
+ Wichtig ist, dass der User tomcat7 owner ist.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+chown tomcat7 /var/lib/hlmng/*
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -475,7 +1006,7 @@ src/settings/HLMNGSettings.java
 
  
 \series default
-können jegliche Einstellungen vorgenommen werden.
+können die Parameter für das Backend vorgenommen werden.
 \begin_inset Newline newline
 \end_inset
 
@@ -488,46 +1019,139 @@ Pfade
 
 \begin_layout Itemize
 jdbcPath (String) = Der JDBC Pfad zur Datenbank
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+jdbc:mysql://127.0.0.1/hlmng
+\begin_inset Quotes ard
+\end_inset
+
+, wobei hlmng der Datenbank Schema Name ist
 \end_layout
 
 \begin_layout Itemize
 pubURL = Der Pfad unter welchem der Public Rest API Teil sein soll
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/pub
+\begin_inset Quotes ard
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
 admURL = Der Pfad unter welchem der Admin Rest API Teil sein soll
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/adm
+\begin_inset Quotes ard
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
 qrFileRootDir (String) = Der Pfad unter welchem alle die gerenderten Qr
  Codes abgelegt werden
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/hlmng/qr/
+\begin_inset Quotes ard
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-mediaFileRootDir (String)= Der Pfad unter welchem alle 'upgeloadeten' Dateien
+mediaFileRootDir (String)= Der Pfad unter welchem alle heraufgeladenen Dateien
  abgelegt werden
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/hlmng/media
+\begin_inset Quotes ard
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-logFileRootDir (String) = Der Pfad unter welchem die Logfiles abgelegt 
+logFileRootDir (String) = Der Pfad unter welchem die Logfiles abgelegt werden
+ (falls aktiv)
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/hlmng/logs
+\begin_inset Quotes ard
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-appPath (String) = Der Pfad unter welchem die Schnittstelle erreichbar sein
- soll
+restAppPath (String) = Der Pfad unter welchem die Schnittstelle erreichbar
+ sein soll
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+https://fix.confoxy.com/hlmng/rest
+\begin_inset Quotes ard
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
 gcmURL (String) = Die URL der Google Cloud Messaging API um Nachrichten
- zu senden (normalerweise ist dies: 
-\begin_inset Flex URL
-status open
+ zu senden
+\begin_inset Newline newline
+\end_inset
 
-\begin_layout Plain Layout
+z.B: 
+\begin_inset Quotes ald
+\end_inset
 
 https://android.googleapis.com/gcm/send
-\end_layout
-
+\begin_inset Quotes ard
 \end_inset
 
 
@@ -579,7 +1203,7 @@ status open
 
 \begin_layout Plain Layout
 
-		/rest/*
+		/rest/*      <---- */
 \end_layout
 
 \begin_layout Plain Layout
@@ -611,6 +1235,19 @@ jdbcPassword (String) = Das JDBC Passwort für den User
 
 \begin_layout Itemize
 apiKey (String) = Der vom Google erhaltene Key für ihre API's
+\end_layout
+
+\begin_layout Subsubsection
+Facebook
+\end_layout
+
+\begin_layout Itemize
+facebookAppId (String) = Die Facebook App ID
+\end_layout
+
+\begin_layout Itemize
+facebookPageId (String) = Die Facebook Page ID auf welche gepostet werden
+ soll
 \end_layout
 
 \begin_layout Subsubsection
@@ -657,6 +1294,14 @@ actionGraceTime
 
 \begin_layout Itemize
 actionGraceTime (int) = Die Aktionen Zeitfenster (in ms)
+\end_layout
+
+\begin_layout Itemize
+Angestrengtheit (int) = Die Länge der QR Code Payload in Bit
+\end_layout
+
+\begin_layout Itemize
+mediaUploadThumbnailPixel (int) = Die maximale Höhe oder Länge eines Thumbnails
 \end_layout
 
 \begin_layout Subsection
@@ -724,169 +1369,6 @@ url="jdbc:mysql://localhost:3306/hlmng?autoReconnect=true"
 \begin_layout Plain Layout
 
 username="user" password="password" />
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Tomcat SSL
-\end_layout
-
-\begin_layout Standard
-Das Zertifikat für Tomcat wir in einem Java Keystore abgelegt.
- Nun kann man entweder ein Self Signed Cert erstellen oder ein bestehendes
- importieren.
-\end_layout
-
-\begin_layout Standard
-Selbst eines Erzeugen:
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "showstringspaces=false"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-keytool -genkey -alias [youralias] -keyalg RSA
-\end_layout
-
-\begin_layout Plain Layout
-
-        -keystore [/preferred/keystore/path]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Bestehendes Importieren: 
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "showstringspaces=false"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-keytool -import -alias [youralias] -file [/preferred/certificate.cer] 
-\end_layout
-
-\begin_layout Plain Layout
-
-        -keystore [/preferred/keystore/path]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-
-\end_layout
-
-\begin_layout Standard
-Unter 
-\series bold
-
-\begin_inset Quotes ald
-\end_inset
-
-/var/lib/tomcat7/conf/server.xml
-\begin_inset Quotes ard
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-Falls das ganze mit dem integrierten Eclipse Tomcat läuft wird der Pfad
- etwa so aussehen: 
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-
-\begin_inset Quotes ald
-\end_inset
-
-/home/ozzi/ide/workspace_ee/Servers/Tomcat v7.0 Server at localhost-config/server.
-xml
-\begin_inset Quotes ard
-\end_inset
-
-
-\series default
- 
-\end_layout
-
-\begin_layout Standard
-Sollten alle Connectors auskommentiert und dieser eingefügt werden:
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "showstringspaces=false"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-<Connector port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
-\end_layout
-
-\begin_layout Plain Layout
-
-maxThreads="150" SSLEnabled="true" scheme="https" secure="true" 
-\end_layout
-
-\begin_layout Plain Layout
-
-clientAuth="false" sslProtocol="TLS" /> 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Backend Oberfläche
-\end_layout
-
-\begin_layout Standard
-Dem AngularJS Backend muss auch noch den Pfad zu der REST API mitgeteilt
- werden, dies geschieht unter 
-\begin_inset Quotes ald
-\end_inset
-
-hlmng/WebContent/js/app.js
-\begin_inset Quotes ard
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "showstringspaces=false"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-var apiUrl = 'https://localhost:8443/hlmng/rest/adm'; 
 \end_layout
 
 \end_inset

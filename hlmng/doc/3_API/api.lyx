@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="29" columns="4">
+<lyxtabular version="3" rows="30" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1344,7 +1344,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1353,7 +1353,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1362,11 +1362,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Newest Calls verschoben, inTimeScoreWeight
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+28.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Publish Calls
 \end_layout
 
 \end_inset
@@ -3295,6 +3333,62 @@ adm/presentationpause/
 
 \series default
 POST - Erstellt neuen Presentationpause Eintrag
+\end_layout
+
+\begin_layout Subsection
+Publish
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+adm/publish/twitter
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+POST - Erstellt einen neuen Twitter Post, erwartet ein Social Item (max.
+ 140 Zeichen)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/publish/facebook
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+POST - Erstellt einen neuen Facebook Post, erwartet ein Social Item (aktuelles
+ User Access Token muss bestehen)
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/publish/facebook/updatetoken
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+POST - Updatet das User Access Token welches für die Facebook Posts verwendet
+ wird.
+ Dieses Token wir per Facebook JS API zur Verfügung gestellt.
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -4265,6 +4359,22 @@ DELETE - Löscht den besagten Social Eintrag
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Settings
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+adm/settings
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - Liefert gewisse Einstellungen der Applikation zurück
 \end_layout
 
 \begin_layout Subsection
