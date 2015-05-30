@@ -6,7 +6,7 @@ publisherModule.config(function (ezfbProvider) {
 	
 publisherModule.config(function (ezfbProvider) {
 	ezfbProvider.setInitParams({
-		appId: appId,
+		appId: facebookAppId,
 	    version: 'v2.2' 
 	});
 });
@@ -15,7 +15,6 @@ publisherModule.controller('PublisherController', ['$http','$log','ezfb','RestSe
 	var hlmng = this;
 	hlmng.post = RestService.post;
 	hlmng.loginStatusFB="";
-	hlmng.appId="";
 	hlmng.pageId="";
 
 	ezfb.Event.subscribe('auth.statusChange', function (statusRes) {
@@ -51,7 +50,6 @@ publisherModule.controller('PublisherController', ['$http','$log','ezfb','RestSe
 	  }
 	
 	 RestService.list('settings').then(function(data){
-			hlmng.appId=data.appId;
 			hlmng.pageId=data.pageId;
 		});
 	

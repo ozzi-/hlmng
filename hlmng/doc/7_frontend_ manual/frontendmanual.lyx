@@ -1,0 +1,1514 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{tocloft}
+\usepackage{graphicx} 
+\usepackage{hyperref} 
+\usepackage{fancyhdr}
+
+
+%% Footnotes-Listing %%
+\newcommand{\listfootnotesname}{}% 'List of Footnotes' title 
+\newlistof[chapter]{footnotes}{fnt}{\listfootnotesname}% New 'List of...' for footnotes 
+\let\oldfootnote\footnote % Save the old \footnote{...} command 
+\renewcommand\footnote[1]{% Redefine the new footnote to also add 'List of Footnote' entries. 
+    \refstepcounter{footnotes}% Add and step a reference to the footnote/counter. 
+    \oldfootnote{#1}% Make a regular footnote. 
+    \addcontentsline{fnt}{footnotes}{\protect 
+\numberline{\thefootnotes}#1}% Add the 'List of...' entry. 
+}
+
+\definecolor{dkgreen}{RGB}{0,142,0}
+\definecolor{orange}{RGB}{217,108,0}
+\definecolor{dkred}{RGB}{179,0,0}
+\definecolor{lgrey}{RGB}{240,240,240}
+
+% Keine einzelnen Zeilen beim Anfang eines Abschnitts (Schusterjungen)
+\clubpenalty=10000
+% Keine einzelnen Zeilen am Ende eines Abschnitts (Hurenkinder)
+\widowpenalty= 10000 \displaywidowpenalty = 10000 
+
+\fancyhead[RE,LO]{\leftmark}
+\fancyhead[LE,RO]{HLM-NG}
+%%\fancyfoot[CE,CO]{\leftmark}%%
+%%\fancyfoot[LE,RO]{\thepage}%%
+
+\usepackage{parskip}
+\end_preamble
+\use_default_options true
+\begin_modules
+customHeadersFooters
+\end_modules
+\maintain_unincluded_children false
+\language german-ch
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language danish
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\small\ttfamily},commentstyle={\color{dkgreen}},keywordstyle={\color{dkred}},language=Java,stringstyle={\color{dkred}},backgroundcolor={\color{lgrey}},framexleftmargin={0.3 cm}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+HLM-NG | Frontend User Manual
+\end_layout
+
+\begin_layout Author
+Oussama Zgheb
+\end_layout
+
+\begin_layout LyX-Code
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=0.20
+\backslash
+textwidth]{../logo.png}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Address
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="4">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Datum
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Version
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Änderung
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Autor
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Initial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bedienkonzept, Moderation, Voting
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Einleitung
+\end_layout
+
+\begin_layout Standard
+Dieses Dokument soll einer mit der Materie vertrauten Person eine Hilfestellung
+ zur Konfiguration und Installation des HLM-NG Frontend geben.
+\end_layout
+
+\begin_layout Section
+Voraussetzungen
+\end_layout
+
+\begin_layout Itemize
+Das Frontend wurde entwickelt und getestet mit Chromium (Chrome) 41 sowie
+ Firefox 37.
+\begin_inset Newline newline
+\end_inset
+
+Weitere moderne Browser sollten ohne Probleme auch funktionieren.
+ 
+\end_layout
+
+\begin_layout Itemize
+Das Frontend ist dank Bootstrap auch auf Mobile Geräten benutzbar.
+\end_layout
+
+\begin_layout Itemize
+Javascript muss aktiviert sein sowie eventuell das Zertifikat hinzugefügt
+ werden.
+ 
+\end_layout
+
+\begin_layout Itemize
+Es wird auf gewissen Seiten das Facebook SDK eingebunden.
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://developers.facebook.com/docs/javascript
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Gewisse Browser Plugins (Adblock Plus, NoScript) können die Funktionalität
+ beeinträchtigen.
+\end_layout
+
+\begin_layout Section
+Konfiguration
+\end_layout
+
+\begin_layout Subsection
+app.js
+\end_layout
+
+\begin_layout Standard
+Der AngularJS Applikation muss bereits beim Start gewisse Parameter bekannt
+ sein, deshalb müssen unter 
+\begin_inset Quotes ald
+\end_inset
+
+src/WebContent/frontend/js/app.js
+\begin_inset Quotes ard
+\end_inset
+
+ zwei Parameter angepasst sein.
+ Der Rest Path muss festgelegt sein, um überhaupt eine Verbindung aufzubauen.
+ Die Facebook App ID muss bekannt sein, bevor der zugehörige Controller
+ startet.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+app.js
+\begin_inset Quotes ard
+\end_inset
+
+ sollte also folgende Zeilen enthalten: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+var apiUrl = '../rest/adm/'; 
+\end_layout
+
+\begin_layout Plain Layout
+
+var facebookAppId=1234578901234567; 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Zugriffsschutz
+\end_layout
+
+\begin_layout Standard
+Das Frontend selbst verfügt über keine Authentisierung sowie Authentifizierung,
+ dies wird auf dem betroffenen Webserver mittels dem Apache Plugin 
+\begin_inset Quotes ald
+\end_inset
+
+mod_but
+\begin_inset Quotes ard
+\end_inset
+
+ realisiert.
+ 
+\end_layout
+
+\begin_layout Standard
+Dabei können gewisse URLs als Private gekennzeichnet werden, welche dann
+ ein Cookie verlangen.
+ Falls dies fehlt wird auf eine Loginmaske weitergeleitet (HTTP Code 302).
+ Auf dieser Maske werden die Login Daten überprüft und je nachdem ein Cookie
+ gesetzt.
+ Dieser Vorgang sowie weitere Informationen sind in der Dokumentation 
+\begin_inset Quotes ald
+\end_inset
+
+mod_but
+\begin_inset Quotes ard
+\end_inset
+
+ der Compass Security zu finden.
+\end_layout
+
+\begin_layout Subsection
+httpd.conf
+\end_layout
+
+\begin_layout Standard
+In der Datei 
+\begin_inset Quotes ald
+\end_inset
+
+/opt/apache_but/httpd/conf/httpd.conf
+\begin_inset Quotes ard
+\end_inset
+
+ wurden folgende zusätzliche Anpassungen zu der Default Config der Compass
+ Security vorgenommen.
+\end_layout
+
+\begin_layout Subsubsection
+mod_rewrite
+\end_layout
+
+\begin_layout Standard
+Das Modul 
+\begin_inset Quotes ald
+\end_inset
+
+mod_rewrite
+\begin_inset Quotes ard
+\end_inset
+
+ ist so konfiguriert, dass automatisch HTTPS forciert wird.
+ Dies muss jedoch für 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+/rest/pub/media/*
+\begin_inset Quotes ard
+\end_inset
+
+
+\series default
+ deaktiviert werden, da externe APIs (Facebook & Twitter) Zugang benötigen
+ und selbst signierte Zertifikate nicht akzeptiert werden.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+RewriteEngine On
+\end_layout
+
+\begin_layout Plain Layout
+
+LogLevel alert rewrite:trace4
+\end_layout
+
+\begin_layout Plain Layout
+
+RewriteCond %{HTTPS} off
+\end_layout
+
+\begin_layout Plain Layout
+
+RewriteCond %{SCRIPT_FILENAME} !
+\backslash
+/hlmng
+\backslash
+/rest
+\backslash
+/pub
+\backslash
+/media
+\backslash
+/* 
+\end_layout
+
+\begin_layout Plain Layout
+
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+mod_but
+\end_layout
+
+\begin_layout Standard
+Das Modul 
+\begin_inset Quotes ald
+\end_inset
+
+mod_but
+\begin_inset Quotes ard
+\end_inset
+
+ übernimmt die 
+\begin_inset Quotes ald
+\end_inset
+
+Login Funktion
+\begin_inset Quotes ard
+\end_inset
+
+, wichtig dabei ist, dass der Pfad zu 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+/rest/adm/*
+\begin_inset Quotes ard
+\end_inset
+
+
+\series default
+ sowie 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+/frontend/*
+\series default
+
+\begin_inset Quotes ard
+\end_inset
+
+ durch diesen Mechanismus gesichert ist.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Folgende Einstellungen müssen dabei vorgenommen werden:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+MOD_BUT_SESSION_FREE_URL '(^
+\backslash
+*
+\backslash
+$)|(^/hlmng/rest/pub/.*)|(^/error/)|(^/renew)|
+\end_layout
+
+\begin_layout Plain Layout
+
+(^/favicon
+\backslash
+.ico
+\backslash
+$)|(^/info)|(^/en/)|(^/de/)|(^/static/)|(^/fbws/)' 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<Location /hlmng/frontend/>
+\end_layout
+
+\begin_layout Plain Layout
+
+	MOD_BUT_LOGON_REQUIRED      On
+\end_layout
+
+\begin_layout Plain Layout
+
+	ProxyPass http://localhost:8080/hlmng/frontend/ timeout=10
+\end_layout
+
+\begin_layout Plain Layout
+
+</Location>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<Location /hlmng/rest/adm/>         
+\end_layout
+
+\begin_layout Plain Layout
+
+	MOD_BUT_LOGON_REQUIRED      On
+\end_layout
+
+\begin_layout Plain Layout
+
+	ProxyPass http://localhost:8080/hlmng/rest/adm/ timeout=10
+\end_layout
+
+\begin_layout Plain Layout
+
+</Location>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<Location /hlmng/rest/pub/>
+\end_layout
+
+\begin_layout Plain Layout
+
+	MOD_BUT_LOGON_REQUIRED      Off
+\end_layout
+
+\begin_layout Plain Layout
+
+	ProxyPass http://localhost:8080/hlmng/rest/pub/ timeout=10 
+\end_layout
+
+\begin_layout Plain Layout
+
+</Location> 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Benutzung
+\end_layout
+
+\begin_layout Subsection
+Allgemeines Bedienkonzept
+\end_layout
+
+\begin_layout Subsubsection
+Menüleiste
+\end_layout
+
+\begin_layout Standard
+In der Menüleiste sind die momentan verfügbaren Ansichten eingeblendet.
+ Die aktive Ansicht ist dabei dunkler eingefärbt, in diesem Beispiel 
+\begin_inset Quotes ald
+\end_inset
+
+Speaker List
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Per Klick auf 
+\begin_inset Quotes ald
+\end_inset
+
+Logout
+\begin_inset Quotes ard
+\end_inset
+
+ kann jederzeit die Session mit dem Server beendet werden.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename menuleiste.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Ansicht
+\end_layout
+
+\begin_layout Standard
+Jede Ansicht hat eine andere Funktion, sei es eine Übersicht, ein Formular
+ zur Erstellung eines Objektes und so weiter.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Quotes ald
+\end_inset
+
+List
+\begin_inset Quotes ard
+\end_inset
+
+ Ansichten verfügen wo sinnvoll über ein Suchfeld, die Liste wird in Echtzeit
+ gefiltert.
+ Bei List Ansichten bei denen viele Objekte erwartet werden, ist zudem eine
+ 
+\begin_inset Quotes ald
+\end_inset
+
+Pagination
+\begin_inset Quotes ard
+\end_inset
+
+ Funktion aktiv, welche es erlaubt die Objekte auf mehreren Seiten aufzuteilen.
+ 
+\emph on
+Tipp
+\emph default
+: Bei einer Suche über das Suchfeld werden alle Seiten durchsucht und auf
+ einer Seite zusammengeführt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename inhalt.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Operationen
+\end_layout
+
+\begin_layout Paragraph
+Objekt editieren
+\end_layout
+
+\begin_layout Standard
+Auf den roten 
+\begin_inset Quotes ald
+\end_inset
+
+ID
+\begin_inset Quotes ard
+\end_inset
+
+ Button des gewünschten Objektes klicken 
+\begin_inset Graphics
+	filename id_button.png
+
+\end_inset
+
+ --> 
+\begin_inset Graphics
+	filename edit_button.png
+
+\end_inset
+
+ --> 
+\begin_inset Graphics
+	filename submit_button.png
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Objekt löschen
+\end_layout
+
+\begin_layout Standard
+Objekt editieren --> 
+\begin_inset Graphics
+	filename delete_button.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+*
+\series default
+ Nicht alle Objekt Typen können gelöscht werden
+\end_layout
+
+\begin_layout Subsubsection
+Bereiche
+\end_layout
+
+\begin_layout Paragraph
+Globaler Bereich
+\end_layout
+
+\begin_layout Standard
+Im Globalen Bereich wird alles, was ausserhalb eines Event Kontextes passiert,
+ verwaltet.
+ Dies umfasst die 
+\begin_inset Quotes ald
+\end_inset
+
+Events
+\begin_inset Quotes ard
+\end_inset
+
+ selbst, die 
+\begin_inset Quotes ald
+\end_inset
+
+Speaker
+\begin_inset Quotes ard
+\end_inset
+
+ sowie die 
+\begin_inset Quotes ald
+\end_inset
+
+Push
+\begin_inset Quotes ard
+\end_inset
+
+ Funktion.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename global.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Event spezifischer Bereich
+\end_layout
+
+\begin_layout Standard
+Um Objekte eines Events zu verwalten, muss man in den Event spezifischen
+ Bereich.
+ Dies geschieht durch den 
+\begin_inset Graphics
+	filename set_active_button.png
+	scale 40
+
+\end_inset
+
+ Knopf welcher sich bei jedem Event Objekt befindet.
+ Dieser Bereich umfasst die 
+\begin_inset Quotes ald
+\end_inset
+
+Event Rooms
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+Event Items
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+QR Codes
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+Social Items
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+News
+\begin_inset Quotes ard
+\end_inset
+
+ sowie 
+\begin_inset Quotes ald
+\end_inset
+
+Votings
+\begin_inset Quotes ard
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename spez.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Voting
+\end_layout
+
+\begin_layout Standard
+Beim Voting geht es darum, dass ein Team seine Lösung zu einer Hacking-Lab
+ Challenge präsentiert.
+ Die Zeit der Präsentation soll dabei gemessen und danach ein Voting gehalten
+ werden.
+ Das Voting dient einerseits zum Einbezug der Zuschauer (Audience Votes)
+ sowie zur offiziellen Bewertung durch die Jury (Jury Votes).
+\end_layout
+
+\begin_layout Subsubsection
+Voting Parameter
+\end_layout
+
+\begin_layout Standard
+Beim erstellen eines Voting können folgende Parameter gesetzt werden,
+\end_layout
+
+\begin_layout Paragraph
+Name
+\end_layout
+
+\begin_layout Standard
+Der Name welche angezeigt werden soll
+\end_layout
+
+\begin_layout Paragraph
+Voting Duration
+\end_layout
+
+\begin_layout Standard
+Die Zeit für welche das Audience Voting laufen soll, die Jury kann Voten
+ bis Zustand
+\end_layout
+
+\begin_layout Paragraph
+Jury Member Count
+\end_layout
+
+\begin_layout Standard
+Legt fest, wie viele Jury Mitglieder anwesend sind, dies dient lediglich
+ zur späteren Überprüfung wie viele tatsächlich gevotet haben
+\end_layout
+
+\begin_layout Paragraph
+Presentation Min Time
+\end_layout
+
+\begin_layout Standard
+Legt fest, wie lange die Präsentation mindestens sein muss
+\end_layout
+
+\begin_layout Paragraph
+Presentation Max Time
+\end_layout
+
+\begin_layout Standard
+Legt fest, wie lange die Präsentation maximal sein darf
+\end_layout
+
+\begin_layout Paragraph
+Rating Mode
+\end_layout
+
+\begin_layout Standard
+Legt fest, was die zu verwendende Formel bei der Auswertung sein soll
+\end_layout
+
+\begin_layout Paragraph
+Slider Max Value
+\end_layout
+
+\begin_layout Standard
+Der maximale Score welcher für jeden Slider abgegeben werden kann
+\end_layout
+
+\begin_layout Paragraph
+In Time Score Weight
+\end_layout
+
+\begin_layout Standard
+Der Gewichtungsfaktor für den In Time Score, welcher für die Einhaltung
+ des Präsentations Zeitfenster vergeben wird
+\end_layout
+
+\begin_layout Paragraph
+Slider
+\end_layout
+
+\begin_layout Standard
+Jeder Slider repräsentiert einen Aspekt des Vortrags, welcher bewertet werden
+ soll.
+ Jeder einzelne hat einen eigenen Gewichtungsfaktor
+\end_layout
+
+\begin_layout Subsubsection
+Zustände
+\end_layout
+
+\begin_layout Standard
+Ein Voting befindet sich immer in einem der folgenden Zuständen,
+\end_layout
+
+\begin_layout Paragraph
+pre_presentation
+\end_layout
+
+\begin_layout Standard
+Die Präsentation wurde erfasst, jedoch noch nicht gestartet.
+ 
+\end_layout
+
+\begin_layout Paragraph
+presentation
+\end_layout
+
+\begin_layout Standard
+Die Präsentation hat begonnen, die Zeit wird gemessen.
+ Die Präsentation kann dabei beliebig oft pausiert und wieder weitergeführt
+ werden.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename pause_presentation_button.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename resume_presentation_button.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+presentation_end
+\end_layout
+
+\begin_layout Standard
+Die Präsentation wurde beendet, die Mobile Apps werden benachrichtigt und
+ zeigen dem Benutzer an, dass bald ein Voting startet.
+\end_layout
+
+\begin_layout Paragraph
+voting
+\end_layout
+
+\begin_layout Standard
+Das Voting hat begonnen, die Mobile Apps werden erneut benachrichtigt und
+ die Benutzer können nun ihre Votes abgeben.
+\end_layout
+
+\begin_layout Paragraph
+voting_end
+\end_layout
+
+\begin_layout Standard
+Das Voting wurde beendet.
+ Die Statistiken sind nun verfügbar.
+\end_layout
+
+\begin_layout Subsubsection
+Statistiken
+\end_layout
+
+\begin_layout Standard
+Die Statistiken sind verfügbar, sobald das Voting im Zustand 
+\begin_inset Quotes ald
+\end_inset
+
+voting_end
+\begin_inset Quotes ard
+\end_inset
+
+ ist.
+ Die Bewertung sowie alle Votes können als CSV 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://creativyst.com/Doc/Articles/CSV/CSV01.htm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ exportiert werden.
+\end_layout
+
+\begin_layout Standard
+Falls eine Präsentation den zeitlich vorgegeben Rahmen eingehalten hat,
+ wird dies mit dem maximal möglichen 
+\begin_inset Quotes ald
+\end_inset
+
+Slider Max Score
+\begin_inset Quotes ard
+\end_inset
+
+ und der definierten Gewichtung 
+\begin_inset Quotes ald
+\end_inset
+
+In Time Weight
+\begin_inset Quotes ard
+\end_inset
+
+ in der Jury Voting belohnt.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+*
+\series default
+ Bei der automatischen Berechnung ist die momentan einzige implementierte
+ Formel 
+\begin_inset Quotes ald
+\end_inset
+
+Arithmetic
+\begin_inset Quotes ard
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Autorisierung mittels QR Codes
+\end_layout
+
+\begin_layout Standard
+Um gewissen Mobile App Benutzer spezielle Berechtigungen zu geben, kann
+ ein QR Code für eine Rolle generiert werden.
+ Dieser Code kann im App einmalig eingelesen werden und ermöglicht nun dem
+ Benutzer des App spezielle Berechtigungen.
+\end_layout
+
+\begin_layout Standard
+Folgend sind die zwei Rollen genauer beschrieben: 
+\end_layout
+
+\begin_layout Subsubsection
+Jury
+\end_layout
+
+\begin_layout Standard
+Die 
+\begin_inset Quotes ald
+\end_inset
+
+Jury
+\begin_inset Quotes ard
+\end_inset
+
+ Rolle ermöglicht den Mobile Benutzern ihre Votes auf dem Speicher mit dem
+ Jury Flag zu speichern.
+\end_layout
+
+\begin_layout Subsubsection
+Author
+\end_layout
+
+\begin_layout Standard
+Die 
+\begin_inset Quotes ald
+\end_inset
+
+Author
+\begin_inset Quotes ard
+\end_inset
+
+ Rolle ermöglicht den Mobile Benutzern ihre Social Items ohne vorherige
+ Überprüfung zu veröffentlichen.
+\end_layout
+
+\begin_layout Subsection
+Moderation von Social Items
+\end_layout
+
+\begin_layout Standard
+Um Vandalismus zu verhindern gibt es ein Moderationssystem für die Social
+ Items.
+ Ein durch einen Mobile App Benutzer neu erstelltes Social Item wird mit
+ dem Zustand 
+\begin_inset Quotes ald
+\end_inset
+
+pending
+\begin_inset Quotes ard
+\end_inset
+
+ erstellt.
+ Dieses kann nun akzeptiert werden (
+\begin_inset Quotes ald
+\end_inset
+
+accepted
+\begin_inset Quotes ard
+\end_inset
+
+ - sichtbar für alle Benutzer) oder abgelehnt werden (
+\begin_inset Quotes ald
+\end_inset
+
+rejected
+\begin_inset Quotes ard
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+Publishing
+\end_layout
+
+\begin_layout Standard
+Um Leute auf der ganzen Welt am Event teilhaben zu lassen, gibt es die Möglichke
+it Social Items im Zustand 
+\begin_inset Quotes ald
+\end_inset
+
+accepted
+\begin_inset Quotes ard
+\end_inset
+
+ auf Facebook sowie Twitter zu publizieren.
+ Dabei kann nur der Text oder auch das hochgeladene Bild (falls vorhanden)
+ publiziert werden.
+ Sobald dies passiert ist, ändert der Zustand sich auf 
+\begin_inset Quotes ald
+\end_inset
+
+published
+\begin_inset Quotes ard
+\end_inset
+
+ und enthält nun Links zu den publizierten Beiträgen.
+\end_layout
+
+\begin_layout Paragraph
+Facebook
+\end_layout
+
+\begin_layout Standard
+Um ein Social Item auf Facebook zu publizieren muss ein Facebook User im
+ Browser angemeldet sein, falls dies nicht der Fall ist erscheint ein 
+\begin_inset Quotes ald
+\end_inset
+
+Connect with Facebook
+\begin_inset Quotes ard
+\end_inset
+
+ Button.
+ Der angemeldete Benutzer muss zusätzlich das dazugehörige App den Zugriff
+ gewähren.
+\end_layout
+
+\begin_layout Paragraph
+Twitter
+\end_layout
+
+\begin_layout Standard
+Um ein Social Item auf Twitter zu publizieren gibt nebst der 140 Zeichen
+ Begrenzung 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://dev.twitter.com/overview/api/counting-characters
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ keine Voraussetzungen, diese können also ohne vorherigen Login publiziert
+ werden.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fussnoten Index
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+listoffootnotes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
