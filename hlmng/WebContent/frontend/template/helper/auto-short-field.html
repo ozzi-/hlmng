@@ -1,0 +1,6 @@
+<span ng-show="field.length <= threshold || toggle">
+	{{field}} <span ng-show="field.length > threshold"><a ng-click="toggle=!toggle">[Less]</a></span>
+</span >
+<span ng-show="field.length > threshold  && !toggle">
+	{{field | limitTo: threshold}} <a ng-click="toggle=!toggle">[More]</a>
+</span >

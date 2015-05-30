@@ -1,4 +1,4 @@
-<label>Search for News: <input ng-model="search"></label><hr>
+<label>Search for News: <input class="form-control" ng-model="search"></label><hr>
 <span ng-repeat="news in newsListCtrl.newsList  | filter:search:strict">
 	<news-info news="news"></news-info><br><hr>
 </span>

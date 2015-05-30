@@ -74,6 +74,17 @@ helperModule.directive('nothingHereYet', function(){
 	};
 });
 
+helperModule.directive('autoShortField', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'template/helper/auto-short-field.html',
+		scope:{
+			field: "=field",
+			threshold: "=threshold"
+		}
+	};
+});
+
 helperModule.directive('datePicker', function(){
 	return {
 		restrict: 'E',

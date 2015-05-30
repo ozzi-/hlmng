@@ -1,4 +1,4 @@
-<label>Search for Event Item: <input ng-model="search"></label><hr>
+<label>Search for Event Item: <input class="form-control" ng-model="search"></label><hr>
 <span ng-repeat="eventItem in eventItemListCtrl.eventitems | filter:search:strict">
 	<event-item-info eventitem="eventItem" details="false"></event-item-info><br><hr>
 </span>
