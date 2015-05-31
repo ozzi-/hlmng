@@ -15,6 +15,8 @@ publisherModule.controller('PublisherController', ['$http','$log','ezfb','RestSe
 	var hlmng = this;
 	hlmng.post = RestService.post;
 	hlmng.loginStatusFB="";
+	hlmng.publishMediaToo="true";
+	hlmng.thisElem;
 	hlmng.pageId="";
 
 	ezfb.Event.subscribe('auth.statusChange', function (statusRes) {
@@ -53,9 +55,9 @@ publisherModule.controller('PublisherController', ['$http','$log','ezfb','RestSe
 			hlmng.pageId=data.pageId;
 		});
 	
-	hlmng.postFB = function(socialobj,socialCtrl,postMedia) { 
+	hlmng.postFB = function(socialobj,socialCtrl) { 
 		hlmng.loading=true;
-		if(postMedia==false){
+		if(hlmng.publishMediaToo==="false"){
 			socialobj.media="";
 		}
 		hlmng.post(socialobj,'publish/facebook').then(function(data){
@@ -65,9 +67,9 @@ publisherModule.controller('PublisherController', ['$http','$log','ezfb','RestSe
 
 	};
 	
-	hlmng.postBoth = function(socialobj,socialCtrl,postMedia) { 
+	hlmng.postBoth = function(socialobj,socialCtrl) { 
 		hlmng.loading=true;
-		if(postMedia==false){
+		if(hlmng.publishMediaToo==="false"){
 			socialobj.media="";
 		}
 		hlmng.post(socialobj,'publish/twitter').then(function(data){
@@ -78,9 +80,9 @@ publisherModule.controller('PublisherController', ['$http','$log','ezfb','RestSe
 		});
 	};
 		
-	hlmng.postTweet = function(socialobj,socialCtrl,postMedia) { 
+	hlmng.postTweet = function(socialobj,socialCtrl) { 
 		hlmng.loading=true;
-		if(postMedia==false){
+		if(hlmng.publishMediaToo==="false"){
 			socialobj.media="";
 		}
 		hlmng.post(socialobj,'publish/twitter').then(function(data){

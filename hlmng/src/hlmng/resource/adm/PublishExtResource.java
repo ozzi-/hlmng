@@ -46,14 +46,13 @@ public class PublishExtResource  extends Resource{
 	public Response postToTwitter(Social social) throws TwitterException, IOException {
 	    Twitter twitter = TwitterFactory.getSingleton();
 	    
-		String strng = social.getAuthorName()+": "+social.getText();
+		String strng = social.getText();
 		if(strng.length()>140){
 		    response.sendError(HTTPCodes.requestEntityTooLarge);
 	    }
-		
         StatusUpdate status = new StatusUpdate(strng);
 
-		if(!social.getMedia().equals("")){
+        if(social.getMedia()!=null && !social.getMedia().equals("")){
 			hlmng.model.Media mediaFile = (hlmng.model.Media) mediaDao.getElement(social.getMediaIDFK());
 			status.setMedia(new File(HLMNGSettings.mediaFileRootDir+mediaFile.getLink()));
 		}
@@ -87,7 +86,7 @@ public class PublishExtResource  extends Resource{
 		facebook.setOAuthAccessToken(accessTokenFB);
 		String postID;
 		if(social.getMedia().equals("")){
-			postID = facebook.postStatusMessage(social.getAuthorName()+": "+social.getText());    
+			postID = facebook.postStatusMessage(social.getText());    
 			postID= postID.substring(postID.lastIndexOf("_") + 1);
 		}else{
 			hlmng.model.Media mediaFile = (hlmng.model.Media) mediaDao.getElement(social.getMediaIDFK());

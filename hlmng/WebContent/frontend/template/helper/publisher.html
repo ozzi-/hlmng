@@ -1,21 +1,22 @@
-<span loading-spinner="pubctrl.loading"></span>
-<button class="btn btn-info" ng-disabled="pubctrl.loading || pubctrl.loginStatusFB !='connected'" ng-click="pubctrl.postFB(socialobj,socialctrl,false)">
-	<img src="./img/fb.png"> Post Message
+<span style="position: relative;" loading-spinner="pubctrl.loading && pubctrl.thisElem==socialobj.socialID"></span>
+<span ng-hide="socialobj.media==undefined">
+	<label>
+		<input type="radio" ng-model="pubctrl.publishMediaToo" value="true">
+		Media
+	</label>
+	<label>
+		<input type="radio" ng-model="pubctrl.publishMediaToo" value="false">
+		Text only
+	</label>
+	<br>
+</span>
+<button class="btn btn-info" ng-disabled="pubctrl.loading || pubctrl.loginStatusFB !='connected'" ng-click="pubctrl.postFB(socialobj,socialctrl); pubctrl.thisElem=socialobj.socialID;">
+	<img src="./img/fb.png"> Post
 </button>
-<button class="btn btn-info" ng-hide="socialobj.media==undefined" ng-disabled="pubctrl.loading || pubctrl.loginStatusFB !='connected'" ng-click="pubctrl.postFB(socialobj,socialctrl,true)">
-	<img src="./img/fb.png"> Post Message+Media
+<button class="btn btn-info" ng-disabled="pubctrl.loading" ng-click="pubctrl.postTweet(socialobj,socialctrl); pubctrl.thisElem=socialobj.socialID;">
+	<img src="./img/tw.png"> Tweet
+</button>
+<button class="btn btn-info" ng-disabled="pubctrl.loading || pubctrl.loginStatusFB !='connected'" ng-click="pubctrl.postBoth(socialobj,socialctrl); pubctrl.thisElem=socialobj.socialID.socialID;">
+	<img src="./img/fb.png"><img src="./img/tw.png"> Post & Tweet
 </button>
 
-<button class="btn btn-info" ng-disabled="pubctrl.loading" ng-click="pubctrl.postTweet(socialobj,socialctrl,false)">
-	<img src="./img/tw.png"> Post Message
-</button>
-<button class="btn btn-info" ng-hide="socialobj.media==undefined" ng-disabled="pubctrl.loading" ng-click="pubctrl.postTweet(socialobj,socialctrl,true)">
-	<img src="./img/tw.png"> Post Message+Media
-</button>
-
-<button class="btn btn-info" ng-disabled="pubctrl.loading || pubctrl.loginStatusFB !='connected'" ng-click="pubctrl.postBoth(socialobj,socialctrl,false)">
-	<img src="./img/fb.png"><img src="./img/tw.png"> Post Message
-</button>
-<button class="btn btn-info" ng-hide="socialobj.media==undefined" ng-disabled="pubctrl.loading || pubctrl.loginStatusFB !='connected'" ng-click="pubctrl.postBoth(socialobj,socialctrl,true)">
-	<img src="./img/fb.png"><img src="./img/tw.png"> Post Message+Media
-</button>

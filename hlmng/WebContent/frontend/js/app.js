@@ -9,7 +9,6 @@ var $http = initInjector.get('$http');
 var apiUrl = '../rest/adm/';
 var facebookAppId=1589703351304338;
 
-
 app.service('dataService', function() {
   var _dataObj = 0;
   this.dataObj = _dataObj;
