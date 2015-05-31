@@ -3,12 +3,12 @@
 
 <h1>Upcoming Votings</h1>
 <span ng-repeat="voting in votingListCtrl.votingsUpcomingPrePresentation  | filter:search:strict">
-	<voting-info voting="voting"></voting-info><br>
+	<br><voting-info voting="voting"></voting-info><br>
 	<button ng-click="votingListCtrl.startPresentation(voting);" class="btn btn-info">Start Presentation</button>
 	<br><br>
 </span>
 <span ng-repeat="voting in votingListCtrl.votingsUpcomingPresentation  | filter:search:strict">
-	<voting-info voting="voting"></voting-info><br>
+	<br><voting-info voting="voting"></voting-info><br>
 	<span ng-hide="voting.ispaused">
 		<button ng-click="votingListCtrl.endPresentation(voting);" class="btn btn-warning">End Presentation</button>
 	</span>
@@ -21,7 +21,7 @@
 	<br><br>
 </span>
 <span ng-repeat="voting in votingListCtrl.votingsUpcomingEndPresentation  | filter:search:strict">
-	<voting-info voting="voting"></voting-info><br>
+	<br><voting-info voting="voting"></voting-info><br>
 	<button ng-click="votingListCtrl.startVoting(voting);" class="btn btn-success">Start Voting</button>
 	<br><br>
 </span> 
@@ -31,7 +31,7 @@
 
 <h1>Running Votings</h1>
 <span ng-repeat="voting in votingListCtrl.votingsRunning  | filter:search:strict">
-	<voting-info voting="voting"></voting-info><br>
+	<br><voting-info voting="voting"></voting-info><br>
 	Jury Vote Count: <span class="label label-success">{{voting.votesJuryCount}}/{{voting.juryCount}}</span><br>
 	Audience Vote Count: <span class="label label-info">{{voting.votesAudienceCount}}</span><br>
 	<span ng-show="voting.audiencevotingover">
@@ -50,7 +50,7 @@
 
 <h1>Finished Votings</h1>
 <span ng-repeat="voting in votingListCtrl.votingsFinished  | filter:search:strict">
-	<voting-info voting="voting"></voting-info><br>
+	<br><voting-info voting="voting"></voting-info><br>
 	<a ui-sref="event.active.voting.stats({eventId: voting.eventIDFK, votingId: voting.votingID})">
 		<button class="btn btn-info">
 			Show Voting Statistics

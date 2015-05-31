@@ -1,5 +1,5 @@
 <div ng-hide="edit">
-	<div class="col-xs-4">
+	<div class="col-md-6 col-xs-6">
 		<voting-info voting="votingIdCtrl.voting"></voting-info><br>
 		<edit-button edit="edit"></edit-button>
 		<span ng-show="votingIdCtrl.voting.status=='voting_end'">
@@ -10,7 +10,7 @@
 			</a>
 		</span>
 	</div>
-	<div class="col-xs-4">
+	<div class="col-md-6 col-xs-6">
 		<h4>Sliders:</h4>
 		<span ng-repeat="slider in votingIdCtrl.sliders">
 			<slider-info slider="slider"></slider-info><br>
@@ -19,7 +19,7 @@
 </div>
 
 <div ng-show="edit">
-	<div class="col-xs-4">
+	<div class="col-md-6 col-xs-12">
 		<form name="votingInfoEditForm" novalidate>
 			<voting-info-edit voting="votingIdCtrl.voting"></voting-info-edit>
 		</form>

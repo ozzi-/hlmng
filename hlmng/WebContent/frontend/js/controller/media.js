@@ -12,8 +12,10 @@ mediaModule.controller('MediaController', ['$scope', 'ToolService','$log','dataS
 	$scope.showUploadButton=false;
 	$scope.showUploadPicture=false;
 	$scope.showUploadErrorCode=false;
+	$scope.loading=false;
 	
 	$scope.uploadFile = function(file){
+		$scope.loading=true;
 		$log.log("Starting upload in media controller");
         ToolService.uploadFile(file).then(function(data){
         	$scope.uploadedMediaLink=data.link;
@@ -21,10 +23,12 @@ mediaModule.controller('MediaController', ['$scope', 'ToolService','$log','dataS
         	$scope.showUploadPicture=true;
         	$scope.showUploadErrorCode=false;
         	dataService.dataObj =data.mediaID; 
+        	$scope.loading=false;
         }, function (reason){
         	$scope.showUploadPicture=false;
         	$scope.showUploadErrorCode=true;
         	$scope.uploadErrorCode=reason;
+        	$scope.loading=false;
         });
     };
 }]);

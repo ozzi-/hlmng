@@ -141,7 +141,6 @@ public class VotingResource extends Resource {
 		List<Object> objSliderList= sliderDao.listByFK("votingIDFK", id);
 		boolean inTime = isPresentationInTimeInternal(id);
 		Double totalScoreJury = getTotalScoreJury(objSliderList,inTime,id);
-		System.out.println("totalscore: "+totalScoreJury);
 		return totalScoreJury;
 	}
 	@GET
@@ -280,8 +279,8 @@ public class VotingResource extends Resource {
 			log.Log.addEntry(Level.INFO, "No need for GCM push");
 		}
 		Voting before = (Voting) getResource(votingDao, id);
-		System.out.println(element.getRound()+" - "+before.getRound());
-		if(element.getRound() > before.getRound()){ // new round started
+		if(element.getRound() > before.getRound()){ 
+			log.Log.addEntry(Level.INFO, "New round started, deleting old votes . . ");
 			List<Object> sliders = sliderDao.listByFK("votingIDFK",before.getVotingID());
 			for (Object sliderObj : sliders) {
 				Slider slider = (Slider) sliderObj;
