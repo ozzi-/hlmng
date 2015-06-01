@@ -29,9 +29,3 @@ CREATE TABLE `slider` (
   CONSTRAINT `votingIDFK_sl` FOREIGN KEY (`votingIDFK`) REFERENCES `voting` (`votingID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `slider` WRITE;
-INSERT INTO `slider` VALUES (1,'Language',2,1);
-INSERT INTO `slider` VALUES (2,'Graphics',1,1);
-INSERT INTO `slider` VALUES (3,'Solution',3,1);
-UNLOCK TABLES;

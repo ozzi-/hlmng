@@ -33,7 +33,3 @@ CREATE TABLE `news` (
   CONSTRAINT `eventIDFK_ne` FOREIGN KEY (`eventIDFK`) REFERENCES `event` (`eventID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `news` WRITE;
-INSERT INTO `news` VALUES (1,'BREAKING NEWS','nothing at all happened','Max Muster',1,1);
-UNLOCK TABLES;

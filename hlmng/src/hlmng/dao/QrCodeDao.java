@@ -7,6 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+import org.owasp.esapi.ESAPI;
+
 import log.Log;
 import db.DB;
 
@@ -21,6 +25,8 @@ public class QrCodeDao extends GenDao {
 	
 	public QrCode getQrCodeByPayload(String payload) {
 		QrCode element = null;
+		payload = ESAPI.encoder().canonicalize(payload);
+		payload=Jsoup.clean(payload, Whitelist.none());
 		try (Connection dbConnection = getDBConnection()){
 			try(PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM qrcode WHERE payload = ?")){
 				ps.setString(1,payload);

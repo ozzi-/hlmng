@@ -43,25 +43,3 @@ CREATE TABLE `eventitem` (
   CONSTRAINT `speakerIDFK_ei` FOREIGN KEY (`speakerIDFK`) REFERENCES `speaker` (`speakerID`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `eventitem`
---
-
-LOCK TABLES `eventitem` WRITE;
-/*!40000 ALTER TABLE `eventitem` DISABLE KEYS */;
-INSERT INTO `eventitem` VALUES (1,'Lunchbreak','We are going to eat Hamburgers','2015-06-15','12:00','13:30',1,1,1);
-INSERT INTO `eventitem` VALUES (2,'Hacking with Shovels','A introduction to the new Toolset \'Shovel\'!','2015-06-15','13:30','14:30',1,1,1);
-/*!40000 ALTER TABLE `eventitem` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2015-03-17  8:14:36

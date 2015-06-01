@@ -29,8 +29,3 @@ CREATE DATABASE  IF NOT EXISTS `hlmng` /*!40100 DEFAULT CHARACTER SET latin1 */;
     CONSTRAINT `votingIDFK_pp` FOREIGN KEY (`votingIDFK`) REFERENCES `voting` (`votingID`) ON DELETE CASCADE ON UPDATE CASCADE
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   /*!40101 SET character_set_client = @saved_cs_client */;
-
-  LOCK TABLES `presentationpause` WRITE;
-  /*INSERT INTO `presentationpause` VALUES (1,);
-  INSERT INTO `presentationpause` VALUES (2);*/
-  UNLOCK TABLES; 

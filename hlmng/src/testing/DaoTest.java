@@ -9,6 +9,7 @@ import hlmng.model.EventItem;
 import hlmng.model.EventRoom;
 import hlmng.model.Media;
 import hlmng.model.Slider;
+import hlmng.model.Speaker;
 import hlmng.model.User;
 import hlmng.model.Vote;
 import hlmng.model.Voting;
@@ -25,6 +26,7 @@ public class DaoTest {
 	GenDao userDao = GenDaoLoader.instance.getUserDao();
 	GenDao eventDao = GenDaoLoader.instance.getEventDao();
 	GenDao eventRoomDao = GenDaoLoader.instance.getEventRoomDao();
+	GenDao speakerDao = GenDaoLoader.instance.getSpeakerDao();
 	GenDao eventItemDao = GenDaoLoader.instance.getEventItemDao();
 	GenDao mediaDao = GenDaoLoader.instance.getMediaDao();
 	GenDao votingDao = GenDaoLoader.instance.getVotingDao();
@@ -44,6 +46,7 @@ public class DaoTest {
 		mediaDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 		votingDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 		voteDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		speakerDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 		sliderDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 	}
 	
@@ -61,12 +64,11 @@ public class DaoTest {
 	
 	@Test
 	public void testLastUpdateTimeChange(){
-		long t1= eventDao.getLastUpdateTime();
-		Event event = new Event("event", "desc", "2015-05-05", "2015-05-05", false);
-		int eventid = eventDao.addElement(event);
-		eventDao.deleteElement(eventid);
-		
-		long t2= eventDao.getLastUpdateTime();
+		long t1= speakerDao.getLastUpdateTime();
+		Speaker speaker = new Speaker("test", "test", "test", "CH", 1);
+		int speakerid = speakerDao.addElement(speaker);
+		speakerDao.deleteElement(speakerid);
+		long t2= speakerDao.getLastUpdateTime();
 		assertFalse(t1==t2);
 	}
 	

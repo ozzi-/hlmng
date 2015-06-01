@@ -78,7 +78,7 @@ public class AuthTest {
 	@Test
 	public void testQrRestAllOK() throws IOException {
 		int eventIDFK = 1;
-		QrCode qrcode = new QrCode("TESTPAYLOAD", "jury", eventIDFK);
+		QrCode qrcode = new QrCode("jury-2-5bucqk9rsndjs8gjgmpqqmrsep", "jury", eventIDFK);
 		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
 		User user = new User("TEST", "112233", "112233");
 		int userid = userDao.addElement(user);

@@ -32,8 +32,3 @@ CREATE TABLE `vote` (
   CONSTRAINT `userIDFK_vo` FOREIGN KEY (`userIDFK`) REFERENCES `user` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `vote` WRITE;
-INSERT INTO `vote` VALUES (1,7,0,1,1);
-INSERT INTO `vote` VALUES (2,7,1,1,2);
-UNLOCK TABLES;

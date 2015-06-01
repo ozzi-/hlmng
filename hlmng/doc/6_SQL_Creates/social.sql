@@ -36,8 +36,3 @@ CREATE TABLE `social` (
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `social` WRITE;
-INSERT INTO `social` VALUES (1,'Wow cool presentaion','accepted',1,1,1);
-INSERT INTO `social` VALUES (2,'Lunch time!','pending',2,NULL,1);
-UNLOCK TABLES;

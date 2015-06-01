@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="4">
+<lyxtabular version="3" rows="4" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -324,7 +324,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -333,7 +333,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -342,11 +342,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Bedienkonzept, Moderation, Voting
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+01.06.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Events, Workflow
 \end_layout
 
 \end_inset
@@ -399,7 +437,7 @@ Voraussetzungen
 
 \begin_layout Itemize
 Das Frontend wurde entwickelt und getestet mit Chromium (Chrome) 41 sowie
- Firefox 37.
+ Firefox 37/38.
 \begin_inset Newline newline
 \end_inset
 
@@ -458,6 +496,8 @@ app.js
 \begin_layout Standard
 Der AngularJS Applikation muss bereits beim Start gewisse Parameter bekannt
  sein, deshalb müssen unter 
+\series bold
+
 \begin_inset Quotes ald
 \end_inset
 
@@ -465,8 +505,10 @@ src/WebContent/frontend/js/app.js
 \begin_inset Quotes ard
 \end_inset
 
+
+\series default
  zwei Parameter angepasst sein.
- Der Rest Path muss festgelegt sein, um überhaupt eine Verbindung aufzubauen.
+ Der Rest Path muss festgelegt sein, um eine Verbindung aufzubauen.
  Die Facebook App ID muss bekannt sein, bevor der zugehörige Controller
  startet.
  
@@ -533,7 +575,28 @@ mod_but
 \begin_inset Quotes ard
 \end_inset
 
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Ivan Bütler, 
+\begin_inset Quotes ald
+\end_inset
+
+MOD_BUT Documentation
+\begin_inset Quotes ard
+\end_inset
+
+ , 10.
+ Aug.
+ 2009 
+\end_layout
+
+\end_inset
+
  der Compass Security zu finden.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -542,10 +605,14 @@ httpd.conf
 
 \begin_layout Standard
 In der Datei 
+\series bold
+
 \begin_inset Quotes ald
 \end_inset
 
 /opt/apache_but/httpd/conf/httpd.conf
+\series default
+
 \begin_inset Quotes ard
 \end_inset
 
@@ -792,6 +859,11 @@ status open
 
 \begin_layout Section
 Benutzung
+\end_layout
+
+\begin_layout Standard
+Folgendes Kapitel soll den Operatoren des HLM-NG Frontend den Einstieg erleichte
+rn sowie als Nachschlagewerk dienen.
 \end_layout
 
 \begin_layout Subsection
@@ -1076,6 +1148,64 @@ Votings
 \end_layout
 
 \begin_layout Subsection
+Events
+\end_layout
+
+\begin_layout Standard
+Beim Erstellen eines Events können folgende Parameter gesetzt werden,
+\end_layout
+
+\begin_layout Paragraph
+ID
+\end_layout
+
+\begin_layout Standard
+Hier sollte man die gleiche Event ID wie auf dem Hacking-Lab Server verwenden,
+ sodass das Mobile App die Scores und Teams anzeigen kann
+\end_layout
+
+\begin_layout Paragraph
+Name
+\end_layout
+
+\begin_layout Standard
+Der Name welcher angezeigt werden soll
+\end_layout
+
+\begin_layout Paragraph
+Description
+\end_layout
+
+\begin_layout Standard
+Ein aussagekräftige Beschreibung des Events
+\end_layout
+
+\begin_layout Paragraph
+From
+\end_layout
+
+\begin_layout Standard
+Das Startdatum des Events
+\end_layout
+
+\begin_layout Paragraph
+To
+\end_layout
+
+\begin_layout Standard
+Das Enddatum des Events - darf gleich dem From Datum oder später sein
+\end_layout
+
+\begin_layout Paragraph
+Active
+\end_layout
+
+\begin_layout Standard
+Falls die Checkbox aktiv ist, wird der Event in der Eventauswahl im Mobile
+ App angezeigt
+\end_layout
+
+\begin_layout Subsection
 Voting
 \end_layout
 
@@ -1093,7 +1223,7 @@ Voting Parameter
 \end_layout
 
 \begin_layout Standard
-Beim erstellen eines Voting können folgende Parameter gesetzt werden,
+Beim Erstellen eines Voting können folgende Parameter gesetzt werden,
 \end_layout
 
 \begin_layout Paragraph
@@ -1481,6 +1611,50 @@ https://dev.twitter.com/overview/api/counting-characters
 
  keine Voraussetzungen, diese können also ohne vorherigen Login publiziert
  werden.
+\end_layout
+
+\begin_layout Subsection
+Allgemeiner Workflow
+\end_layout
+
+\begin_layout Enumerate
+Erstellen eines Events
+\end_layout
+
+\begin_layout Enumerate
+Erstellen der Speaker, falls noch nicht vorhanden
+\end_layout
+
+\begin_layout Enumerate
+Erstellen der Event Rooms
+\end_layout
+
+\begin_layout Enumerate
+Erstellen der Event Items
+\end_layout
+
+\begin_layout Enumerate
+Freischaltung des Events vor dem Event beginn
+\end_layout
+
+\begin_layout Standard
+Bei Bedarf:
+\end_layout
+
+\begin_layout Enumerate
+Erstellen der QR Codes
+\end_layout
+
+\begin_layout Enumerate
+Erstellen der Votings
+\end_layout
+
+\begin_layout Enumerate
+Moderation der Social Items
+\end_layout
+
+\begin_layout Enumerate
+Erstellen von News / Push Meldungen
 \end_layout
 
 \begin_layout Standard
