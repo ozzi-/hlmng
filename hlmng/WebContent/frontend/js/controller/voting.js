@@ -7,6 +7,7 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	hlmng.votingsUpcomingPresentation = [];
 	hlmng.votingsUpcomingEndPresentation = [];
 	hlmng.votingsRunning = [];
+	hlmng.eventID= $stateParams.eventId;
 	hlmng.votingsFinished = [];
 	hlmng.votingsList = [hlmng.votingsUpcomingPrePresentation,hlmng.votingsUpcomingPresentation,
 	                     hlmng.votingsUpcomingEndPresentation,hlmng.votingsRunning,hlmng.votingsFinished];
@@ -88,21 +89,41 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	var refreshData = function() {
 		var index;
 		for (index = 0; index < hlmng.votingsRunning.length; ++index) {		
-			refreshVoting(index);
+			refreshRunningVoting(index);
 		}
+		for (index = 0; index < hlmng.votingsUpcomingPresentation.length; ++index) {		
+			refreshRunningPresentation(index);
+		}
+		
 	};
 	
-	var refreshVoting = function(index){
+	var refreshRunningPresentation = function(index){
+		var voting = hlmng.votingsUpcomingPresentation[index];
+		RestService.get(hlmng.votingsUpcomingPresentation[index].votingID,'voting','duration').then(function(data){	
+			if(data){
+				voting.duration=data;				
+			}
+		});
+	};
+	
+	var refreshRunningVoting = function(index){
 		var voting = hlmng.votingsRunning[index];
+		RestService.get(hlmng.votingsRunning[index].votingID,'voting','audiencevotingtimeleft').then(function(data){
+			if(data){
+				voting.audiencevotingtimeleft=data;
+			}
+		});
 		RestService.get(hlmng.votingsRunning[index].votingID,'voting','votes/audience/count').then(function(data){	
 			voting.votesAudienceCount=data;
+	
+	
+			RestService.get(voting.votingID,'voting','audiencevotingover').then(function(data){
+				if(data){
+					voting.audiencevotingover=true;
+				}
+			});
 			RestService.get(voting.votingID,'voting','votes/jury/count').then(function(data){
 				voting.votesJuryCount=data;
-				RestService.get(voting.votingID,'voting','audiencevotingover').then(function(data){
-					if(data){
-						voting.audiencevotingover=true;
-					}
-				});
 			});
 		});
 	};
@@ -271,14 +292,8 @@ votingModule.controller('VotingStatsController', ['$http','$stateParams','RestSe
 			       	label: 'Voting Duration',
 			       	value: hlmng.voting.votingDuration
 			    },{
-			       	label: 'Jury Vote Count',
-			       	value: hlmng.voting.votingDuration
-			    },{
 			       	label: 'Jury Count',
 			       	value: hlmng.voting.juryCount
-			    },{
-			       	label: 'Audience Vote Count',
-			       	value: hlmng.voting.votingDuration
 			    },{
 			       	label: 'Mode',
 			       	value: hlmng.voting.arithmeticMode

@@ -2,6 +2,7 @@ package hlmng.auth;
 
 import hlmng.model.ModelHelper;
 
+
 /**
  * POD: AuthCredential is a container for a username and the according secret
  */

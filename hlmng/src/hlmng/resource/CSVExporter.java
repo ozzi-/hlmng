@@ -19,9 +19,11 @@ public class CSVExporter {
 		csv+=ModelHelper.objToCSV(obj,false)+"\n";
 	}
 	public void addList(List<Object> list) {
-		addHeader(list.get(0));
-		for (Object object : list) {
-			addLine(object);
+		if(list!=null && list.size()!=0){
+			addHeader(list.get(0));
+			for (Object object : list) {
+				addLine(object);
+			}			
 		}
 	}
 	public String toString(){

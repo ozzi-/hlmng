@@ -75,7 +75,7 @@ public class GenDao {
 	 * @return returns -1 if not inserted, else the id of the freshly inserted row
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> int addElementInternal(Object model, String statement,boolean idset) {
+	private <T> int addElementInternal(Object model, String statement,boolean idset) {
         int insertedID=-1;
         T tModel;
 		try(Connection dbConnection = getDBConnection()){
@@ -180,7 +180,7 @@ public class GenDao {
 			Log.addEntry(Level.WARNING,"Element couldn't be returned (GET). "+e.getMessage());
 			e.printStackTrace();
 		}
-		Log.addEntry(Level.INFO,className+" Element get ("+element+")");
+		Log.addEntry(Level.FINEST,className+" Element get ("+element+")");
 		return element;
 	}
 	
@@ -212,7 +212,7 @@ public class GenDao {
 			Log.addEntry(Level.WARNING,"Elements couldn't be listed by FK. "+e.getMessage());
 			e.printStackTrace();
 		}
-		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
+		Log.addEntry(Level.FINEST,className+" Element list ("+elemList.hashCode()+"["+elemList.size()+"])");
 		return elemList;
 	}
 	
@@ -230,7 +230,7 @@ public class GenDao {
 			Log.addEntry(Level.WARNING,"Elements couldn't be listed. "+e.getMessage());
 			e.printStackTrace();
 		} 
-		Log.addEntry(Level.INFO,className+" Element list ("+elemList.hashCode()+". limited="+(listElementsQuery.equals(listElementsLimit))+" ["+elemList.size()+"]) ");
+		Log.addEntry(Level.FINEST,className+" Element list ("+elemList.hashCode()+". limited="+(listElementsQuery.equals(listElementsLimit))+" ["+elemList.size()+"]) ");
 		return elemList;
 	}
 

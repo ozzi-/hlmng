@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
-import hlmng.model.Event;
 import hlmng.model.EventItem;
 import hlmng.model.EventRoom;
 import hlmng.model.Media;
@@ -96,11 +95,7 @@ public class DaoTest {
 		boolean userCreate =testDaoGenericAdd(new User("name","deviceid","regid"), userDao);
 		assertTrue(userCreate);
     }
-	@Test
-	 public void testNewEvent(){
-		boolean eventCreate =testDaoGenericAdd(new Event("event","description","2014-01-01","2014-01-01",true), eventDao);
-		assertTrue(eventCreate);
-	}
+
 	@Test
 	 public void testNewMedia(){
 		boolean mediaCreate =testDaoGenericAdd(new Media("testtype","testlink"), mediaDao);

@@ -21,6 +21,7 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -59,58 +60,144 @@ public class RestTest {
 		sliderDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 	}
 
+	@SuppressWarnings("serial")
 	@Test
-	public void testVoteScoring() throws IOException{
-		Voting voting = new Voting("Name",10,"voting_end",8,"00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:06:00",1,1,1);
+	/**
+	 * In detail calculations of this test can be found as an excel sheet, see /src/doc/testing.xls
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void testVoteScoring() throws IOException, InterruptedException{
+		Voting voting = new Voting("Name",10,"voting_end",10,"00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:06:00",1,1,1);
 		int votingid = votingDao.addElement(voting);
 
 		Slider slider1 = new Slider("slider1",1, votingid);
 		int sliderid1 = sliderDao.addElement(slider1);
+		Slider slider3 = new Slider("slider3",3, votingid);
+		int sliderid3 = sliderDao.addElement(slider3);
 		Slider slider2 = new Slider("slider2",2, votingid);
 		int sliderid2 = sliderDao.addElement(slider2);
-		Slider slider4 = new Slider("slider4",4, votingid);
-		int sliderid4 = sliderDao.addElement(slider4);
-		// public votings
-		Vote vote1_1 = new Vote(10,0,sliderid1,1);
-		int vote1_1_id = voteDao.addElement(vote1_1);
 		
-		Vote vote2_1 = new Vote(5,0,sliderid2,1);
-		int vote2_1_id = voteDao.addElement(vote2_1);
+		ArrayList<Integer> voteList= new ArrayList<>();
+		ArrayList<Vote> voteObjList= new ArrayList<>();
+		// Jury
+		ArrayList<Integer> voteScoreSlider1Jury = new ArrayList<Integer>(){{
+			add(6);
+			add(5);
+			add(4);
+			add(5);
+			add(6);
+			add(7);
+			add(8);
+			add(10);
+			add(10);
+		}};
+		ArrayList<Integer> voteScoreSlider3Jury = new ArrayList<Integer>(){{
+			add(7);
+			add(4);
+			add(3);
+			add(5);
+			add(6);
+			add(4);
+			add(3);
+			add(2);
+			add(4);
+		}};
+		ArrayList<Integer> voteScoreSlider05Jury = new ArrayList<Integer>(){{
+			add(5);
+			add(6);
+			add(7);
+			add(8);
+			add(6);
+			add(5);
+			add(4);
+			add(3);
+			add(3);
+		}};
+		// Audience
+		ArrayList<Integer> voteScoreSlider1Audience = new ArrayList<Integer>(){{
+			add(6);
+			add(5);
+			add(4);
+			add(5);
+			add(6);
+			add(7);
+			add(8);
+			add(10);
+			add(10);
+		}};
+		ArrayList<Integer> voteScoreSlider3Audience = new ArrayList<Integer>(){{
+			add(7);
+			add(4);
+			add(3);
+			add(5);
+			add(6);
+			add(4);
+			add(3);
+			add(2);
+			add(4);
+		}};
+		ArrayList<Integer> voteScoreSlider05Audience = new ArrayList<Integer>(){{
+			add(5);
+			add(6);
+			add(7);
+			add(8);
+			add(6);
+			add(5);
+			add(4);
+			add(3);
+			add(3);
+		}};
+		// Jury
+		for (Integer score : voteScoreSlider1Jury) {
+			voteObjList.add(new Vote(score,1,sliderid1,1));
+		}
+		for (Integer score : voteScoreSlider3Jury) {
+			voteObjList.add(new Vote(score,1,sliderid3,1));
+		}
+		for (Integer score : voteScoreSlider05Jury) {
+			voteObjList.add(new Vote(score,1,sliderid2,1));
+		}
+		// Audience
+		for (Integer score : voteScoreSlider1Audience) {
+			voteObjList.add(new Vote(score,0,sliderid1,1));
+		}
+		for (Integer score : voteScoreSlider3Audience) {
+			voteObjList.add(new Vote(score,0,sliderid3,1));
+		}
+		for (Integer score : voteScoreSlider05Audience) {
+			voteObjList.add(new Vote(score,0,sliderid2,1));
+		}
+		// INSERT
+		for (Vote vote : voteObjList) {
+			voteList.add(voteDao.addElement(vote));
+		}
 		
-		Vote vote4_1 = new Vote(7,0,sliderid4,1);
-		int vote4_1_id = voteDao.addElement(vote4_1);
-		// jury votings
-		Vote vote1_2 = new Vote(7,1,sliderid1,1);
-		int vote1_2_id = voteDao.addElement(vote1_2);
-		
-		Vote vote2_2 = new Vote(10,1,sliderid2,1);
-		int vote2_2_id = voteDao.addElement(vote2_2);
-
-		Vote vote4_2 = new Vote(5,1,sliderid4,1);
-		int vote4_2_id = voteDao.addElement(vote4_2);
-
-
 		try {
 			turnOffSslChecking();
 		} catch (KeyManagementException e) {
 		} catch (NoSuchAlgorithmException e) {
 		}
 
-		double response =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscoreaudience", "GET",null,null));
-		double response2 =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscorejury", "GET",null,null));
-
-		assertTrue(voteDao.deleteElement(vote4_2_id));
-		assertTrue(voteDao.deleteElement(vote2_2_id));
-		assertTrue(voteDao.deleteElement(vote1_2_id));
-		assertTrue(voteDao.deleteElement(vote4_1_id));
-		assertTrue(voteDao.deleteElement(vote2_1_id));
-		assertTrue(voteDao.deleteElement(vote1_1_id));
-		assertTrue(sliderDao.deleteElement(sliderid4));
-		assertTrue(sliderDao.deleteElement(sliderid2));
+		double totalscoreaudience =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscoreaudience", "GET",null,null));
+		double totalscorejury =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscorejury", "GET",null,null));
+		
+		Voting votingNotInTime = new Voting("Name",10,"voting_end",10,"00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:08:00",1,1,1);
+		assertTrue(votingDao.updateElement(votingNotInTime,votingid));
+		double totalscorejuryNotInTime =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscorejury", "GET",null,null));
+		
+		// CLEANUP
+		for (Integer voteID : voteList) {
+			assertTrue(voteDao.deleteElement(voteID));
+		}
 		assertTrue(sliderDao.deleteElement(sliderid1));
+		assertTrue(sliderDao.deleteElement(sliderid3));
+		assertTrue(sliderDao.deleteElement(sliderid2));
+		Thread.sleep(50); // the DB isn't too fast on my laptop, else FK constraint fails sometimrs
 		assertTrue(votingDao.deleteElement(votingid));
-		assertEquals(6.857,response,0.05);
-		assertEquals(6.714,response2,0.05);
+		assertEquals(4.944,totalscoreaudience,0.05);
+		assertEquals(5.698,totalscorejury,0.05);
+		assertEquals(4.269,totalscorejuryNotInTime,0.05);
 
 	}
 	
@@ -193,9 +280,11 @@ public class RestTest {
 
 	@Test
 	public void testEventRest() throws IOException {
-		Event orig = new Event("eventname", "description", "2015-01-01",
+		int elementID = 949494;
+		Event orig = new Event(elementID,"eventname", "description", "2015-01-01",
 				"2015-01-01",true);
-		int elementID = eventDao.addElement(orig);
+		eventDao.addIDElement(orig);
+		
 		String response = "";
 		try {
 			turnOffSslChecking();

@@ -113,7 +113,7 @@ customHeadersFooters
 \begin_body
 
 \begin_layout Title
-HLM-NG | Backend User Manual
+HLM-NG | Backend Installation Guide
 \end_layout
 
 \begin_layout Author
@@ -991,7 +991,7 @@ Xmx ist dabei die maximale Heap Size, Xms die initiale Grösse.
 \end_layout
 
 \begin_layout Section
-Konfiguration
+Installation Server
 \end_layout
 
 \begin_layout Subsection
@@ -1526,7 +1526,7 @@ username="user" password="password" />
 \end_layout
 
 \begin_layout Section
-Deployment
+Installation Software
 \end_layout
 
 \begin_layout Subsection
@@ -1621,6 +1621,19 @@ WebApps
  sein.
 \end_layout
 
+\begin_layout Subsubsection
+Überprüfung
+\end_layout
+
+\begin_layout Standard
+Was muss einer tun , checken ob alles ok.
+ Screenshot so muss es aussehen, TODO
+\end_layout
+
+\begin_layout Standard
+FAQ, was passiert wenn DB login falsch, schema falsch
+\end_layout
+
 \begin_layout Section
 Unterhalt
 \end_layout
@@ -1697,6 +1710,16 @@ Libraries
 Es werden einige Libraries verwendet, diese sollten periodisch oder bei
  bekannten Sicherheitslücken aktualisiert werden und das Projekt neu kompiliert,
  getestet und deployed werden.
+\end_layout
+
+\begin_layout Itemize
+ui-Router
+\begin_inset Newline newline
+\end_inset
+
+Da das Modul ui-Router noch in Entwicklung ist, kann es durchaus sein, dass
+ es noch grössere Änderungen geben wird.
+ Diese müssten bei einem Update des Moduls eventuell nachgeführt werden.
 \end_layout
 
 \begin_layout Standard

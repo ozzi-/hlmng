@@ -1,18 +1,21 @@
-<div>
-	<a ui-sref="event.active.voting.id({eventId: voting.eventIDFK, votingId: voting.votingID})">
-		<button class="btn btn-primary">
-			ID: {{voting.votingID}}
-		</button>
-	</a><br>
-	Name: {{voting.name}}<br>
-	Status: {{voting.status}}<br>
-	Round: {{voting.round}}<br>
-	Voting Duration: {{voting.votingDuration}}<br>
-	Voting Started At: {{voting.votingStarted}}<br>
-	Jury Count: {{voting.juryCount}}<br>
-	<br>
-	Slider Max Value: {{voting.sliderMaxValue}}<br>
-	Arithmetic Mode: {{voting.arithmeticMode}}<br>
-	In Time Score Weight: {{voting.inTimeScoreWeight}}<br>
-</div>
+<span style="padding-left: 0px;"  class="row">
+	<span style="padding-left: 0px;"  class="col-md-6 col-xs-6">
+		<a ui-sref="event.active.voting.id({eventId: voting.eventIDFK, votingId: voting.votingID})">
+			<button class="btn btn-primary">
+				ID: {{voting.votingID}}
+			</button>
+		</a><br>
+		Name: {{voting.name}}<br>
+		Status: {{voting.status}}<br>
+		Round: {{voting.round}}<br>
+		Voting Duration: {{voting.votingDuration}}<br>
+		<span ng-show="{{voting.votingStarted!=null}}">Voting Started At: {{voting.votingStarted}}<br></span>
+	</span>
+	<span style="padding-left: 0px;" class="col-md-6 col-xs-6">
+		Jury Count: {{voting.juryCount}}<br>
+		Slider Max Value: {{voting.sliderMaxValue}}<br>
+		Arithmetic Mode: {{voting.arithmeticMode}}<br>
+		In Time Score Weight: {{voting.inTimeScoreWeight}}<br>
+	</span>
+</span>
 

@@ -25,7 +25,7 @@ public class Log {
 		try {  
 			fh = new FileHandler(HLMNGSettings.logFileRootDir+"/hlmng%u.log", false);
 			logger.addHandler(fh);
-			logger.setLevel(Level.ALL);
+			logger.setLevel(Level.INFO);
 			Formatter formatter = new FormatterS();
 			fh.setFormatter(formatter);
 			addEntry(Level.INFO, "Successfully started logger");
@@ -48,7 +48,9 @@ public class Log {
 
 	private static void logMessage(Level level, String message) {
 		if (HLMNGSettings.logSysErr) {
-			System.err.println(getTime() + " | " + level + " | " + message);
+			if((level.toString().equals("FINEST") && HLMNGSettings.showFinest) || !level.toString().equals("FINEST")){
+				System.err.println(getTime() + " | " + level + " | " + message);				
+			}
 		} else {
 			logger.log(level, message);
 		}
