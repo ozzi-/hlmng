@@ -30,6 +30,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,7 +46,7 @@ public class RestTest {
 	GenDao voteDao = GenDaoLoader.instance.getVoteDao();
 	GenDao votingDao = GenDaoLoader.instance.getVotingDao();
 	GenDao sliderDao = GenDaoLoader.instance.getSliderDao();
-	
+	private static final int eventID= 9999;
 
 	@Before
 	public void init() {
@@ -58,6 +59,11 @@ public class RestTest {
 		voteDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		votingDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		sliderDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
+		eventDao.addIDElement(new Event(eventID,"test", "test", "2015-05-05", "2015-05-05",true));
+	}
+	@After
+	public void bye(){
+		assertTrue(eventDao.deleteElement(eventID));
 	}
 
 	@SuppressWarnings("serial")
@@ -68,7 +74,7 @@ public class RestTest {
 	 * @throws InterruptedException
 	 */
 	public void testVoteScoring() throws IOException, InterruptedException{
-		Voting voting = new Voting("Name",10,"voting_end",10,"2015-05-05","00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:06:00",1,1,1);
+		Voting voting = new Voting("Name",10,"voting_end",10,"2015-05-05","00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:06:00",1,1,eventID);
 		int votingid = votingDao.addElement(voting);
 
 		Slider slider1 = new Slider("slider1",1, votingid);
@@ -193,7 +199,7 @@ public class RestTest {
 		assertTrue(sliderDao.deleteElement(sliderid1));
 		assertTrue(sliderDao.deleteElement(sliderid3));
 		assertTrue(sliderDao.deleteElement(sliderid2));
-		Thread.sleep(50); // the DB isn't too fast on my laptop, else FK constraint fails sometimrs
+		Thread.sleep(50); // the DB isn't too fast on my laptop, else FK constraint fails sometimes
 		assertTrue(votingDao.deleteElement(votingid));
 		assertEquals(4.944,totalscoreaudience,0.05);
 		assertEquals(5.698,totalscorejury,0.05);
@@ -274,6 +280,7 @@ public class RestTest {
 		}
 		
 		assertTrue(sliderDao.deleteElement(sliderid));
+		System.out.println(votingid+" !!!");
 		assertTrue(votingDao.deleteElement(votingid));
 		assertTrue(userDao.deleteElement(userid));
 	}
