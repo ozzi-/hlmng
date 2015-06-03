@@ -2,7 +2,7 @@ app.factory('ToolService', ['$location','RestService','$state','$log','$http','$
 	return {
 		
 		redir: function(state,params){
-			$log.log("Redirecting to state: "+state+" with params: "+params.toSource());
+			$log.log("Redirecting to state: "+state);
 			$state.go(state,params);
 		},
 		

@@ -77,7 +77,7 @@ public class SocialResource extends Resource  {
 	public Object postSocial(Social element) throws IOException {
 		Social social = null;
 		if(AuthChecker.checkAuthorization(headers, servletResponse)){
-			Log.addEntry(Level.INFO, "CHEKED AUTH POST SOCIAL");
+			Log.addEntry(Level.INFO, "Checked auth of social post, continuing");
 			if(!(ESAPI.encoder().encodeForHTML(element.getText()).equals(element.getText()))){
 				Log. addEntry(Level.WARNING,"Somebody possibly tried to insert XSS while posting a social entry");
 			}
@@ -101,7 +101,7 @@ public class SocialResource extends Resource  {
 			String qrHeader = headers.getHeaderString("X-QRCode"); 
 		
 			if(qrHeader!=null){							
-				AuthResult qrAuthRes = AuthChecker.checkQRCodeAuthorization(qrHeader,element.getEventIDFK(),user,"jury",TimeHelper.getCurrentDateTime());
+				AuthResult qrAuthRes = AuthChecker.checkQRCodeAuthorization(qrHeader,element.getEventIDFK(),user,"author",TimeHelper.getCurrentDateTime());
 				if(qrAuthRes.isAuthorized()){
 					isAuthor=true;
 				}else{

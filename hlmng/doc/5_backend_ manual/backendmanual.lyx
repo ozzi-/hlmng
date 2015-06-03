@@ -1626,12 +1626,160 @@ WebApps
 \end_layout
 
 \begin_layout Standard
-Was muss einer tun , checken ob alles ok.
- Screenshot so muss es aussehen, TODO
+Falls alles erfolgreich installiert wurde, sollte unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://localhost:8443/hlmng/frontend/
 \end_layout
 
-\begin_layout Standard
-FAQ, was passiert wenn DB login falsch, schema falsch
+\end_inset
+
+ das Frontend geladen werden.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename welcome.png
+	lyxscale 40
+	scale 55
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ Als Test sollte erfolgreich ein 
+\begin_inset Quotes ald
+\end_inset
+
+Speaker
+\begin_inset Quotes ard
+\end_inset
+
+ erstellt werden können.
+ Unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://localhost:8443/hlmng/rest/adm/speaker
+\end_layout
+
+\end_inset
+
+ sollte der soeben erstellte 
+\begin_inset Quotes ald
+\end_inset
+
+Speaker
+\begin_inset Quotes ard
+\end_inset
+
+ nun als JSON angezeigt werden.
+ Zudem sollte das Log frei von Warnings oder Errors sein.
+\end_layout
+
+\begin_layout Subsubsection
+Common Mistakes
+\end_layout
+
+\begin_layout Itemize
+Falsch Verbindungsdaten in 
+\begin_inset Quotes ald
+\end_inset
+
+context.xml
+\begin_inset Quotes ard
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException:
+\end_layout
+
+\begin_layout Plain Layout
+
+Could not create connection to database server.
+ Attempted reconnect 3 times.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+oder
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Caused by: java.sql.SQLException: Access denied for user 'hlmdng_db' .
+ .
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes ald
+\end_inset
+
+Seite konnte nicht gefunden werden
+\begin_inset Quotes ard
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Sicherstellen, dass die Pfade richtig konfiguriert sind und die Applikation
+ von Tomcat geladen wurde.
+\end_layout
+
+\begin_layout Itemize
+Nicht das Log Konsultieren
+\begin_inset Newline newline
+\end_inset
+
+
+\series medium
+Viele Fehler können durch das konsultieren des Log lokalisiert werden.
+\end_layout
+
+\begin_layout Itemize
+Falsche Systemzeit
+\begin_inset Newline newline
+\end_inset
+
+Falls eine falsche / abweichende Systemzeit auf dem Server (sowie auf dem
+ System des Operator Browsers) kann es zu Fehlern bei Countdown und Timer
+ anzeigen geben.
+ Auch Twitter sowie Facebook können bei abweichender Systemzeit die Posts
+ verweigern (respektive deren Oauth Implementiertung).
 \end_layout
 
 \begin_layout Section
@@ -1669,8 +1817,9 @@ Arbeitsspeicher
 \end_inset
 
 Da kein langfristiger Testlauf mit mehren hunderten Benutzern im Rahmen
- der Entwicklung der Bachelorarbeit simuliert werden konnte, sollte die
- Arbeitsspeicher Auslastung überwacht werden, z.B.
+ der Entwicklung der Bachelorarbeit simuliert werden konnte, sollte beim
+ ersten produktiven Einsatz die Arbeitsspeicher Auslastung überwacht werden,
+ z.B.
  mit JStat 
 \begin_inset Foot
 status open
@@ -1694,6 +1843,7 @@ https://docs.oracle.com/javase/7/docs/technotes/tools/share/jstat.html
 .
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
 Datenbank
 \begin_inset Newline newline
@@ -1702,6 +1852,7 @@ Datenbank
 Der übliche Unterhalt der Datenbank sollte gewährleistet sein.
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 Libraries
 \begin_inset Newline newline

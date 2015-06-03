@@ -8,7 +8,7 @@
 	<br><hr><br>
 </span>
 <span ng-repeat="voting in votingListCtrl.votingsUpcomingPresentation  | filter:search:strict">
-	<voting-info voting="voting"></voting-info>Presentation Timer: {{voting.duration}}<br>
+	<voting-info voting="voting"></voting-info>Presentation Timer:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{voting.duration}}<br>
 	Presentation Max Time: {{voting.presentationMaxTime}}
 	<br><br>
 	<span ng-hide="voting.ispaused">
@@ -56,6 +56,9 @@
 <hr>
 <a ng-href="../rest/adm/voting/event/{{votingListCtrl.eventID}}/exportall">
   	<button class="btn btn-info">CSV Export all Votings</button>
+</a>
+<a ng-href="../rest/adm/voting/event/{{votingListCtrl.eventID}}/exportallranked">
+  	<button class="btn btn-info">CSV Export Ranking</button>
 </a>
 <hr>
 <br>

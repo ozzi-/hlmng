@@ -169,7 +169,7 @@ votingModule.controller('VotingNewController', ['$http','$stateParams','RestServ
 	hlmng.postVoting = RestService.post;
 	hlmng.postSlider = RestService.post;
 	var internalIDCounter=0;
-	var defaultSlider='{ "name":"" , "votingIDFK":0, "weight":1,"internalID":3 }';
+	var defaultSlider='{ "name":"" , "votingIDFK":0, "weight":1,"internalID":0 }';
 
 	
 	hlmng.resetDefault = function() { 
@@ -200,7 +200,7 @@ votingModule.controller('VotingNewController', ['$http','$stateParams','RestServ
 			for (var index = 0; index < hlmng.sliders.length ; ++index) {
 				hlmng.sliders[index].votingIDFK= hlmng.voting.votingID;
 				hlmng.postSlider(hlmng.sliders[index],'slider').then(function(data){
-					if(index==hlmng.sliders.length){
+					if(index==hlmng.sliders.length){					
 						ToolService.redir('event.active.voting.id',{eventId: $stateParams.eventId, votingId: hlmng.voting.votingID});
 					}
 				});

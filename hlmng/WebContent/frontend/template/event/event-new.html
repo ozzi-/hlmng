@@ -3,7 +3,7 @@
 		<div class="form-group">
 			<label for="eventid">ID - Set the same ID as hacking-lab.com </label><br>
 			<input class="form-control" pattern="\d*" type="text" size="40" maxlength="60" name="eventid" ng-model="eventNewCtrl.event.eventID" required>
-			<span style="color:red;" ng-if="eventNewCtrl.isTaken(event.eventID)">
+			<span style="color:red;" ng-if="eventNewCtrl.isTaken(eventNewCtrl.event.eventID)">
 				ID already taken, double check your input please
 			</span>
 		</div>

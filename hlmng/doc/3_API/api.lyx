@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="30" columns="4">
+<lyxtabular version="3" rows="31" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1382,7 +1382,7 @@ Oussama Zgheb
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1391,7 +1391,7 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1400,11 +1400,49 @@ Oussama Zgheb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Publish Calls
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+03.06.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Voting Export Calls
 \end_layout
 
 \end_inset
@@ -4994,33 +5032,21 @@ Der maximale Wert der Slider
 
 
 \series bold
-presentationStarted [Null]
+votingDate
 \series default
- - Der Zeitpunkt an dem die Präsentation gestartet wurde
+ 
 \series bold
-
-\begin_inset Newline newline
+[Null] 
+\series default
+- Das Datum an welchem das Voting auf den Status 
+\begin_inset Quotes ald
 \end_inset
 
-presentationEnded [Null] 
-\series default
-- Der Zeitpunkt an dem die Präsentation beendet wurde
-\begin_inset Newline newline
+voting
+\begin_inset Quotes ard
 \end_inset
 
-
-\series bold
-presentationMaxTime 
-\series default
-- Die maximal erlaubte Zeit für eine Präsentation
-\begin_inset Newline newline
-\end_inset
-
-
-\series bold
-presentationMinTime 
-\series default
-- Die minimal erlaubte Zeit für eine Präsentation
+ gesetzt wurde
 \begin_inset Newline newline
 \end_inset
 
@@ -5054,6 +5080,38 @@ Die Auswahl der mathematischen Funktion zur Auswertung (median,todo)
 
 
 \series bold
+presentationMinTime 
+\series default
+- Die minimal erlaubte Zeit für eine Präsentation
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+presentationMaxTime 
+\series default
+- Die maximal erlaubte Zeit für eine Präsentation
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+presentationStarted [Null]
+\series default
+ - Der Zeitpunkt an dem die Präsentation gestartet wurde
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+presentationEnded [Null] 
+\series default
+- Der Zeitpunkt an dem die Präsentation beendet wurde
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
 inTimeScoreWeight
 \series default
  - Legt die Gewichtung fest, mit welcher der Score für die Einhaltung der
@@ -5065,19 +5123,15 @@ inTimeScoreWeight
 \series bold
 round - 
 \series default
-Die Runde 
-\series bold
-TODO
-\series default
-
+Die Durchführungsrunde des Voting
 \begin_inset Newline newline
 \end_inset
 
 
 \series bold
-presentationIDFK - 
+eventIDFK - 
 \series default
-Ein FK zu der Präsentation über welche abgestimmt wird
+Ein FK zu dem Event in welchem das Voting stattfindet
 \end_layout
 
 \begin_layout LyX-Code
@@ -5113,6 +5167,16 @@ status open
 
 \begin_layout Plain Layout
 
+	"sliderMaxValue": 10,
+\end_layout
+
+\begin_layout Plain Layout
+
+	"votingDate": "2015-05-05",
+\end_layout
+
+\begin_layout Plain Layout
+
 	"votingStarted": "14:04:27",
 \end_layout
 
@@ -5123,17 +5187,7 @@ status open
 
 \begin_layout Plain Layout
 
-	"presentationStarted": "14:30:30",
-\end_layout
-
-\begin_layout Plain Layout
-
-	"presentationEnded": "14:37:50", 
-\end_layout
-
-\begin_layout Plain Layout
-
-	"presentationMaxTime": "00:07:00", 
+	"arithmeticMode": "median",
 \end_layout
 
 \begin_layout Plain Layout
@@ -5143,12 +5197,17 @@ status open
 
 \begin_layout Plain Layout
 
-	"sliderMaxValue": 10,
+	"presentationMaxTime": "00:07:00", 
 \end_layout
 
 \begin_layout Plain Layout
 
-	"arithmeticMode": "median",
+	"presentationStarted": "14:30:30",
+\end_layout
+
+\begin_layout Plain Layout
+
+	"presentationEnded": "14:37:50", 
 \end_layout
 
 \begin_layout Plain Layout
@@ -5522,6 +5581,53 @@ GET - Anzahl Votes der Jury (es muss dabei für jeden Slider ein Vote vorhanden
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+adm/voting/{id}/export
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - CSV Datei mit Voting Infos und allen Votes
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+adm/voting/event/{id}/exportall
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - CSV Datei mit allen Votings des Events (Infos
+\series bold
+ 
+\series default
+& alle Votes)
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+adm/voting/event/{id}/exportallranked
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+GET - CSV Datei mit Audience + Jury Score für alle Votings des Events um
+ eine Rangliste zu erstellen
 \end_layout
 
 \begin_layout Subsubsection

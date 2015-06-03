@@ -78,6 +78,28 @@ public class VotingResource extends Resource {
 		return Response.ok(csvExp.toString()).header("Content-Disposition", "attachment; filename= export_voting_"+votingID+".csv").build();
 	}
 	@GET
+	@Path("/event/{id}/exportallranked")
+	@Produces({"text/csv"})
+	public Response doExportAllRanked(@PathParam("id") int eventID) throws IOException, java.text.ParseException{
+		CSVExporter csvExp = new CSVExporter();
+		List<Object> votingObjList = votingDao.listByFK("eventIDFK", eventID);
+		csvExp.addValue("Voting",false);
+		csvExp.addValue("Jury Score",false);
+		csvExp.addValue("Audience Score",false);
+		csvExp.addValue("Voting Started",false);
+		csvExp.addValue("Voting Date",true);
+		for (Object votingObj : votingObjList) {
+			Voting voting = (Voting) votingObj;
+			csvExp.addValue(voting.getName(),false);
+			csvExp.addValue(String.valueOf(getTotalScoreJury(voting.getVotingID())),false);
+			csvExp.addValue(String.valueOf(getTotalScoreAudience(voting.getVotingID())),false);
+			csvExp.addValue(voting.getVotingStarted(),false);
+			csvExp.addValue(voting.getVotingDate(),true);
+		}
+		
+		return Response.ok(csvExp.toString()).header("Content-Disposition", "attachment; filename= export_voting_of_event_"+eventID+"(ranked).csv").build();
+	}
+	@GET
 	@Path("/event/{id}/exportall")
 	@Produces({"text/csv"})
 	public Response doExportAll(@PathParam("id") int eventID) throws IOException, java.text.ParseException{
@@ -92,9 +114,8 @@ public class VotingResource extends Resource {
 			createVotingDetailCSV(voting.getVotingID(), csvExp);
 			csvExp.addValue("",true);
 			csvExp.addValue("",true);
-		}
-		
-		return Response.ok(csvExp.toString()).header("Content-Disposition", "attachment; filename= export_voting_"+eventID+".csv").build();
+		}		
+		return Response.ok(csvExp.toString()).header("Content-Disposition", "attachment; filename= export_voting_of_event_"+eventID+".csv").build();
 	}
 	private void createVotingDetailCSV(int id, CSVExporter csvExp)
 			throws IOException, java.text.ParseException {
@@ -110,7 +131,7 @@ public class VotingResource extends Resource {
 		csvExp.addValue("", true);
 		csvExp.addValue("", true);
 		//--
-		csvExp.addValue("Sliders & Weights", true);
+		csvExp.addValue("Sliders & Weibghts", true);
 		csvExp.addValue("###############", true);
 		csvExp.addValue("", true);
 		List<Object> sliderList = sliderDao.listByFK("votingIDFK", id);
@@ -236,9 +257,11 @@ public class VotingResource extends Resource {
 	public boolean checkAudienceVotingOver(@PathParam("id") int id) throws IOException, java.text.ParseException{
 		Voting voting = (Voting) getResource(votingDao, id);
 		
-		int comp = TimeHelper.compareDates(TimeHelper.getCurrentDate(),voting.getVotingDate());
-		if(comp>0){ // next day - same time = suddenly its not over anymore - this prevents it
-			return true;
+		if(voting.getVotingDate()!=null){
+			int comp = TimeHelper.compareDates(TimeHelper.getCurrentDate(),voting.getVotingDate());
+			if(comp>0){ // next day - same time = suddenly its not over anymore - this prevents it
+				return true;
+			}
 		}
 		if(voting==null || voting.getVotingDuration()==null || voting.getVotingStarted()==null){
 			return false;
@@ -256,8 +279,15 @@ public class VotingResource extends Resource {
 	@GET
 	@Path("{id}/audiencevotingtimeleft")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String checkAudienceVotingTimeLeft(@PathParam("id") int id) throws IOException{
+	public String checkAudienceVotingTimeLeft(@PathParam("id") int id) throws IOException, java.text.ParseException{
 		Voting voting = (Voting) getResource(votingDao, id);
+		
+		if(voting.getVotingDate()!=null){
+			int comp = TimeHelper.compareDates(TimeHelper.getCurrentDate(),voting.getVotingDate());
+			if(comp>0){ 
+				return "00:00:00";
+			}			
+		}
 		if(voting==null || voting.getVotingDuration()==null || voting.getVotingStarted()==null || voting.getStatus().equals(Voting.statusEnum.voting_end)){
 			return "00:00:00";
 		}
@@ -330,18 +360,13 @@ public class VotingResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException, ParseException {
-		setVotingDateIfNeeded(element);
-		doGCM(element);
-		checkIfRoundChanged(element, id);
+		setVotingDateIfVotingStatus(element);
+		checkForGCM(element);
+		Voting before = (Voting) getResource(votingDao, id);
+		checkForNewRound(element, before);
 		return putResource(votingDao, element, id);
 	}
-	private void setVotingDateIfNeeded(Voting element) {
-		if(element.getStatus().equals(Voting.statusEnum.voting)){
-			element.setVotingDate(TimeHelper.getCurrentDate());
-		}
-	}
-	private void checkIfRoundChanged(Voting element, int id) throws IOException {
-		Voting before = (Voting) getResource(votingDao, id);
+	private void checkForNewRound(Voting element, Voting before) {
 		if(element.getRound() > before.getRound()){ 
 			log.Log.addEntry(Level.INFO, "New round started, deleting old votes . . ");
 			List<Object> sliders = sliderDao.listByFK("votingIDFK",before.getVotingID());
@@ -355,8 +380,8 @@ public class VotingResource extends Resource {
 			}
 		}
 	}
-	private void doGCM(Voting element) throws IOException, ProtocolException,
-			ParseException {
+	private void checkForGCM(Voting element) throws IOException,
+			ProtocolException, ParseException {
 		if(element.getStatus().equals(Voting.statusEnum.presentation_end.toString()) || element.getStatus().equals(Voting.statusEnum.voting.toString())){
 			List<Object> users = listResource(userDao, false);
 			Push pushNotif = new Push(element.getStatus(),"{ \"votingID\": "+element.getVotingID()+" , \"name\": \""+element.getName()+"\" }", "vote_event" );
@@ -366,6 +391,13 @@ public class VotingResource extends Resource {
 			log.Log.addEntry(Level.INFO, "No need for GCM push");
 		}
 	}
+	private void setVotingDateIfVotingStatus(Voting element) {
+		if(element.getStatus().equals(Voting.statusEnum.voting.toString())){
+			element.setVotingDate(TimeHelper.getCurrentDate());
+			System.out.println(element.getVotingDate());
+		}
+	}
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -431,7 +463,6 @@ public class VotingResource extends Resource {
 		}else{
 			presentationEnded=voting.getPresentationEnded();
 		}
-		System.out.println(voting.getPresentationStarted()+" -- "+presentationEnded);
 		String presentationDiff = calcDifference(voting.getPresentationStarted(), presentationEnded);
         String pauseTotal="00:00:00"; 
         String pausePart ="00:00:00";

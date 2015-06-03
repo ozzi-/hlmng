@@ -25,7 +25,7 @@
     `juryCount` int(11) NOT NULL,
     `status` varchar(25) NOT NULL,
     `sliderMaxValue` int(11) NOT NULL,
-    `votingDate` varchar(10) NOT NULL,
+    `votingDate` varchar(10),
     `votingStarted` varchar(8) ,
     `votingDuration` varchar(8) NOT NULL,
     `arithmeticMode` varchar(25) NOT NULL,

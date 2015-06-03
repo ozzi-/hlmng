@@ -50,7 +50,9 @@ public class AuthChecker {
 					return new AuthResult(true, HTTPCodes.ok);
 				}
 			}else{
-				Log.addEntry(Level.WARNING, "User tried to vote with a qr code that has a wrong role. UserID:"+user.getUserID());
+				Log.addEntry(Level.WARNING, "User tried to access role with a qr code that has a wrong role.\n"
+						+ " Role from QR Code:"+qrcode.getRole()+", Role tried to claim: "+role
+						+ " UserID:"+user.getUserID());
 				return new AuthResult(false, HTTPCodes.forbidden);
 			}
 		}else{

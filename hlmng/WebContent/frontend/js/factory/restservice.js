@@ -35,7 +35,7 @@ app.factory('RestService', ['$log','$http','$q', function ($log,$http,$q) {
 				$log.log('get '+className+' successfully, ID='+objId);
                 deferred.resolve(data);
             }).error(function (data,error) {
-				$log.log('couldn\'t get '+className+', ID='+objId+"\nError:"+error);
+				$log.log('couldn\'t get '+className+', ID='+objId+"\nError:"+error+"\n Call was:"+(apiUrl+className+'/'+objId+addition));
                 deferred.reject(data);
             });
             return deferred.promise;
