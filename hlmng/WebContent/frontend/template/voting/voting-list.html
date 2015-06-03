@@ -8,7 +8,8 @@
 	<br><hr><br>
 </span>
 <span ng-repeat="voting in votingListCtrl.votingsUpcomingPresentation  | filter:search:strict">
-	<voting-info voting="voting"></voting-info>Presentation Timer: {{voting.duration}} / {{voting.presentationMaxTime}}
+	<voting-info voting="voting"></voting-info>Presentation Timer: {{voting.duration}}<br>
+	Presentation Max Time: {{voting.presentationMaxTime}}
 	<br><br>
 	<span ng-hide="voting.ispaused">
 		<button ng-click="votingListCtrl.endPresentation(voting);" class="btn btn-warning">End Presentation</button>
@@ -35,7 +36,7 @@
 	<voting-info voting="voting"></voting-info><br><br>
 	Jury Vote Count: <span class="label label-success">{{voting.votesJuryCount}}/{{voting.juryCount}}</span><br>
 	Audience Vote Count: <span class="label label-info">{{voting.votesAudienceCount}}</span><br>
-	Audience Voting Time Left: <span class="label label-info">{{voting.audiencevotingtimeleft}}</span><br>
+	Audience Voting Countdown: <span class="label label-info">{{voting.audiencevotingtimeleft}}</span><br>
 	<span ng-show="voting.audiencevotingover">
 		Public Voting : <span class="label label-warning">Over</span>
 	</span>

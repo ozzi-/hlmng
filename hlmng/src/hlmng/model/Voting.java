@@ -6,6 +6,7 @@ public class Voting {
 	private int juryCount;
 	private String status;
 	private int sliderMaxValue;
+	private String votingDate;
 	private String votingStarted;
 	private String votingDuration;
 	private String arithmeticMode;
@@ -25,12 +26,13 @@ public class Voting {
 	public Voting(){
 	
 	}
-	public Voting(int votingID, String name, int juryCount, String status, int sliderMaxValue, String votingStarted, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded,int inTimeScoreWeight, int round, int eventIDFK){
+	public Voting(int votingID, String name, int juryCount, String status, int sliderMaxValue, String date, String votingStarted, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded,int inTimeScoreWeight, int round, int eventIDFK){
 		this.votingID=votingID;
 		this.name=name;
 		this.juryCount=juryCount;
 		this.status=status;
 		this.sliderMaxValue=sliderMaxValue;
+		this.votingDate=date;
 		this.votingStarted=votingStarted;
 		this.votingDuration=votingDuration;
 		this.arithmeticMode=arithmeticMode;
@@ -42,11 +44,12 @@ public class Voting {
 		this.round=round;
 		this.eventIDFK=eventIDFK;
 	}
-	public Voting(String name, int juryCount, String status, int sliderMaxValue, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded, int inTimeScoreWeight, int round, int eventIDFK){
+	public Voting(String name, int juryCount, String status, int sliderMaxValue, String date, String votingDuration, String arithmeticMode, String presentationMinTime, String presentationMaxTime, String presentationStarted, String presentationEnded, int inTimeScoreWeight, int round, int eventIDFK){
 		this.name=name;
 		this.juryCount=juryCount;
 		this.status=status;
 		this.sliderMaxValue=sliderMaxValue;
+		this.votingDate=date;
 		this.votingDuration=votingDuration;
 		this.arithmeticMode=arithmeticMode;
 		this.presentationMinTime=presentationMinTime;
@@ -147,6 +150,12 @@ public class Voting {
 	}
 	public void setInTimeScoreWeight(int inTimeScoreWeight) {
 		this.inTimeScoreWeight = inTimeScoreWeight;
+	}
+	public String getVotingDate() {
+		return votingDate;
+	}
+	public void setVotingDate(String date) {
+		this.votingDate = date;
 	}
 
 }

@@ -1,6 +1,7 @@
 package hlmng.resource;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,6 +12,12 @@ public class TimeHelper {
 	private static final DateFormat formatterTime = new SimpleDateFormat("HH:mm:ss");
 	private static final DateFormat formatterTimeMillisecs = new SimpleDateFormat("HH:mm:ss.SSS");
 	
+	public static int compareDates(String date1S, String date2S) throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	Date date1 = sdf.parse(date1S);
+    	Date date2 = sdf.parse(date2S);
+    	return date1.compareTo(date2);	
+	}
 	
 	/**
 	 * @return yyyy-MM-dd

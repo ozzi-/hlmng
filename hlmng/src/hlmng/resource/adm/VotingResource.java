@@ -14,6 +14,7 @@ import hlmng.resource.TimeHelper;
 import hlmng.resource.TimeHelper.TimePart;
 
 import java.io.IOException;
+import java.net.ProtocolException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -232,8 +233,13 @@ public class VotingResource extends Resource {
 	}
 	@GET
 	@Path("{id}/audiencevotingover")
-	public boolean checkAudienceVotingOver(@PathParam("id") int id) throws IOException{
+	public boolean checkAudienceVotingOver(@PathParam("id") int id) throws IOException, java.text.ParseException{
 		Voting voting = (Voting) getResource(votingDao, id);
+		
+		int comp = TimeHelper.compareDates(TimeHelper.getCurrentDate(),voting.getVotingDate());
+		if(comp>0){ // next day - same time = suddenly its not over anymore - this prevents it
+			return true;
+		}
 		if(voting==null || voting.getVotingDuration()==null || voting.getVotingStarted()==null){
 			return false;
 		}
@@ -324,14 +330,17 @@ public class VotingResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException, ParseException {
-		if(element.getStatus().equals(Voting.statusEnum.presentation_end.toString()) || element.getStatus().equals(Voting.statusEnum.voting.toString())){
-			List<Object> users = listResource(userDao, false);
-			Push pushNotif = new Push(element.getStatus(),"{ \"votingID\": "+element.getVotingID()+" , \"name\": \""+element.getName()+"\" }", "vote_event" );
-			PushResource.doGCMSend(pushNotif, users);
-			postResource(pushDao,pushNotif);
-		}else{
-			log.Log.addEntry(Level.INFO, "No need for GCM push");
+		setVotingDateIfNeeded(element);
+		doGCM(element);
+		checkIfRoundChanged(element, id);
+		return putResource(votingDao, element, id);
+	}
+	private void setVotingDateIfNeeded(Voting element) {
+		if(element.getStatus().equals(Voting.statusEnum.voting)){
+			element.setVotingDate(TimeHelper.getCurrentDate());
 		}
+	}
+	private void checkIfRoundChanged(Voting element, int id) throws IOException {
 		Voting before = (Voting) getResource(votingDao, id);
 		if(element.getRound() > before.getRound()){ 
 			log.Log.addEntry(Level.INFO, "New round started, deleting old votes . . ");
@@ -345,7 +354,17 @@ public class VotingResource extends Resource {
 				}
 			}
 		}
-		return putResource(votingDao, element, id);
+	}
+	private void doGCM(Voting element) throws IOException, ProtocolException,
+			ParseException {
+		if(element.getStatus().equals(Voting.statusEnum.presentation_end.toString()) || element.getStatus().equals(Voting.statusEnum.voting.toString())){
+			List<Object> users = listResource(userDao, false);
+			Push pushNotif = new Push(element.getStatus(),"{ \"votingID\": "+element.getVotingID()+" , \"name\": \""+element.getName()+"\" }", "vote_event" );
+			PushResource.doGCMSend(pushNotif, users);
+			postResource(pushDao,pushNotif);
+		}else{
+			log.Log.addEntry(Level.INFO, "No need for GCM push");
+		}
 	}
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -412,6 +431,7 @@ public class VotingResource extends Resource {
 		}else{
 			presentationEnded=voting.getPresentationEnded();
 		}
+		System.out.println(voting.getPresentationStarted()+" -- "+presentationEnded);
 		String presentationDiff = calcDifference(voting.getPresentationStarted(), presentationEnded);
         String pauseTotal="00:00:00"; 
         String pausePart ="00:00:00";
