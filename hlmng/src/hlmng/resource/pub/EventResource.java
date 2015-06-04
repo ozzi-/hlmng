@@ -4,10 +4,12 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.dao.SocialDao;
 import hlmng.model.Event;
+import hlmng.model.EventItem;
 import hlmng.resource.Resource;
 import hlmng.resource.ResourceHelper;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -28,7 +30,7 @@ public class EventResource extends Resource {
 	private GenDao pushDao =GenDaoLoader.instance.getPushDao();
 	private SocialDao socialDao =GenDaoLoader.instance.getSocialDao();
 	private GenDao votingDao =GenDaoLoader.instance.getVotingDao();
-	
+	private GenDao speakerDao =GenDaoLoader.instance.getSpeakerDao();	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -71,6 +73,24 @@ public class EventResource extends Resource {
 	public List<Object> getEventItems(@PathParam("id") int id) throws IOException{
 		List<Object> obj=eventItemDao.listByFK("eventIDFK",id);
 		return obj;
+	}
+	@GET
+	@Path("{id}/speakers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> getEventSpeakers(@PathParam("id") int id) throws IOException{
+		List<Object> eventItemObjList=eventItemDao.listByFK("eventIDFK",id);
+		List<Object> speakersAtEvent= new ArrayList<Object>();
+		List<Integer> speakerIDsAtEvent = new ArrayList<Integer>();
+		for (Object eventItemObj : eventItemObjList) {
+			EventItem eventItem = (EventItem) eventItemObj;
+			if(!speakerIDsAtEvent.contains(eventItem.getSpeakerIDFK())){
+				speakerIDsAtEvent.add(eventItem.getSpeakerIDFK());				
+			}
+		}
+		for (Integer speakerID : speakerIDsAtEvent) {
+			speakersAtEvent.add(speakerDao.getElement(speakerID));
+		}
+		return speakersAtEvent;
 	}
 	@GET
 	@Path("{id}/eventrooms")

@@ -1941,6 +1941,22 @@ GET - Liefert den besagten Event
 \end_inset
 
 
+\begin_inset Newline newline
+\end_inset
+
+
+\series bold
+pub/event/{id}/speakers
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+GET - Liefer alle Speaker welche ein Event Item an diesem Event leiten
+\begin_inset Newline newline
+\end_inset
+
+
 \series bold
 
 \begin_inset Newline newline
