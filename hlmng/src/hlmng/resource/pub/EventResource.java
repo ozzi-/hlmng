@@ -90,6 +90,7 @@ public class EventResource extends Resource {
 		for (Integer speakerID : speakerIDsAtEvent) {
 			speakersAtEvent.add(speakerDao.getElement(speakerID));
 		}
+		ResourceHelper.enrichSpeakerWithMedia(uri,speakersAtEvent);
 		return speakersAtEvent;
 	}
 	@GET

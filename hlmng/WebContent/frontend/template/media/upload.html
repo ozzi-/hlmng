@@ -1,4 +1,7 @@
 <div ng-controller="MediaController">
+	Maximum file Size: 3.0 MB<br>
+	Supported file formats: png, jpg<br>
+	<br>
 	<input type="file" ng-click="showUploadButton=true;" file-model="myFile"/>
 	<button class="btn btn-info" ng-disabled="!showUploadButton" ng-click="uploadFile(myFile);">Upload</button>
 	<div ng-show="showUploadPicture">
