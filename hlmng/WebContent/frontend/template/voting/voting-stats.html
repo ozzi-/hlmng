@@ -27,8 +27,8 @@
   		</tr>
 	  	<tr ng-repeat="slider in votingStatsCtrl.sliders" ng-class-odd="'rowodd'" ng-class-even="'roweven'">
 	  		<td>{{slider.name}} ({{slider.weight}}x)</td>
-	  		<td>{{slider.voteScoreJury}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
-	  		<td>{{slider.voteScoreAudience}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
+	  		<td>{{slider.voteScoreJury| number:3}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
+	  		<td>{{slider.voteScoreAudience | number:3}} / {{votingStatsCtrl.voting.sliderMaxValue}}</td>
 	  	</tr>
 	  	<tr>
 	  		<td>Presentation In Time (x{{votingStatsCtrl.voting.inTimeScoreWeight}})</td>

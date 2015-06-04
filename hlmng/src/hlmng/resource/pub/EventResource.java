@@ -2,6 +2,7 @@ package hlmng.resource.pub;
 
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
+import hlmng.dao.SocialDao;
 import hlmng.model.Event;
 import hlmng.resource.Resource;
 import hlmng.resource.ResourceHelper;
@@ -25,7 +26,7 @@ public class EventResource extends Resource {
 	private GenDao eventItemDao =GenDaoLoader.instance.getEventItemDao();
 	private GenDao eventRoomDao =GenDaoLoader.instance.getEventRoomDao();
 	private GenDao pushDao =GenDaoLoader.instance.getPushDao();
-	private GenDao socialDao =GenDaoLoader.instance.getSocialDao();
+	private SocialDao socialDao =GenDaoLoader.instance.getSocialDao();
 	private GenDao votingDao =GenDaoLoader.instance.getVotingDao();
 	
 	
@@ -53,7 +54,7 @@ public class EventResource extends Resource {
 	@Path("{id}/socials/newest")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getNewestSocials(@PathParam("id") int id) throws IOException {
-		List<Object> socialObjects = socialDao.listByFKLimited("eventIDFK", id);
+		List<Object> socialObjects =socialDao.getNewestAcceptedOrPublished(id);
 		ResourceHelper.enrichSocialListWithUsernameAndMedia(uri,socialObjects);
 		return socialObjects;
 	}

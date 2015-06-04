@@ -480,7 +480,7 @@ Die Software wurde auf unter Ubuntu 12.04 LTS, Lubuntu 14.10 & 15.04 sowie
 \end_layout
 
 \begin_layout Standard
-Folgende Software muss auf dem Zielgerät installiert sein:
+Folgende Software wird auf dem Zielgerät benötigt:
 \end_layout
 
 \begin_layout Itemize
@@ -749,7 +749,7 @@ debug=true
 \begin_inset Quotes ard
 \end_inset
 
- hinzugefügt werden, diese liefert wertvolle Informationen auf Sysout.
+ hinzugefügt werden, diese liefert wertvolle Informationen auf System.out.
 \end_layout
 
 \begin_layout Subsection
@@ -945,7 +945,7 @@ debug=true
 \begin_inset Quotes ard
 \end_inset
 
- hinzugefügt werden, diese liefert wertvolle Informationen auf Sysout.
+ hinzugefügt werden, diese liefert wertvolle Informationen auf System.out.
 \end_layout
 
 \begin_layout Subsection

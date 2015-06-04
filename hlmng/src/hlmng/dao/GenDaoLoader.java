@@ -35,7 +35,7 @@ public enum GenDaoLoader {
 	private GenDao sliderDao;
 	private GenDao presentationDao;
 	private GenDao pushDao;
-	private GenDao socialDao;
+	private SocialDao socialDao;
 	private GenDao presentationpauseDao;
 	private GenDao socialPublishDao;
 
@@ -48,7 +48,7 @@ public enum GenDaoLoader {
 		pushDao=new GenDao(Push.class);
 		qrCodeDao=new QrCodeDao(QrCode.class);
 		sliderDao=new GenDao(Slider.class);
-		socialDao=new GenDao(Social.class);
+		socialDao=new SocialDao(Social.class);
 		speakerDao= new GenDao(Speaker.class);
 		userDao = new UserDao(User.class);
 		voteDao=new VoteDao(Vote.class);
@@ -68,7 +68,7 @@ public enum GenDaoLoader {
 	public void setSliderDao(GenDao sliderDao) {
 		this.sliderDao = sliderDao;
 	}
-	public GenDao getSocialDao() {
+	public SocialDao getSocialDao() {
 		return socialDao;
 	}
 	public UserDao getUserDao() {

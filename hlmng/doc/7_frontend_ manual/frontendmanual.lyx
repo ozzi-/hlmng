@@ -490,7 +490,9 @@ Installation
 \end_layout
 
 \begin_layout Standard
-TODO für Wer
+Folgendes Kapitel richtet sich an die Person welche das Frontend einrichten
+ und unterhalten wird.
+ Wissen zu den eingesetzten Technologien wird empfohlen (AngularJS, Linux).
 \end_layout
 
 \begin_layout Subsection
@@ -866,8 +868,8 @@ Benutzung
 \end_layout
 
 \begin_layout Standard
-Folgendes Kapitel soll den Operatoren des HLM-NG Frontend den Einstieg erleichte
-rn sowie als Nachschlagewerk dienen.
+Folgendes Kapitel soll den Operatoren des Frontend das Grundlegende Konzept
+ erläutern sowie als Nachschlagewerk dienen.
 \end_layout
 
 \begin_layout Subsection
@@ -979,23 +981,22 @@ ID
  Button des gewünschten Objektes klicken 
 \begin_inset Graphics
 	filename id_button.png
+	scale 50
 
 \end_inset
 
  --> 
 \begin_inset Graphics
 	filename edit_button.png
+	scale 50
 
 \end_inset
 
  --> 
 \begin_inset Graphics
 	filename submit_button.png
+	scale 50
 
-\end_inset
-
-
-\begin_inset Newline newline
 \end_inset
 
 
@@ -1009,7 +1010,7 @@ Objekt löschen
 Objekt editieren --> 
 \begin_inset Graphics
 	filename delete_button.png
-	scale 40
+	scale 50
 
 \end_inset
 
@@ -1021,7 +1022,8 @@ Objekt editieren -->
 \series bold
 *
 \series default
- Nicht alle Objekt Typen können gelöscht werden
+ Nicht alle Objekt Typen können gelöscht werden da Abhängigkeiten untereinander
+ existieren
 \end_layout
 
 \begin_layout Subsubsection
@@ -1083,7 +1085,7 @@ Um Objekte eines Events zu verwalten, muss man in den Event spezifischen
  Dies geschieht durch den 
 \begin_inset Graphics
 	filename set_active_button.png
-	scale 40
+	scale 50
 
 \end_inset
 

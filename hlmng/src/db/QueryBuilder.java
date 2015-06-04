@@ -48,8 +48,6 @@ public class QueryBuilder {
 				if (field.getName().contains("FK")) {
 					map.put(field.getName(), "SELECT * FROM " + tableName
 							+ " WHERE " + field.getName() + " = ?;");
-				}
-				if (field.getName().contains("FK")) {
 					map.put(field.getName()+"_limited", "SELECT * FROM " + tableName
 							+ " WHERE " + field.getName() + " = ?  ORDER BY "+tableID+" DESC LIMIT "+HLMNGSettings.selectLimit+";");
 				}
