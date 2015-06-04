@@ -149,7 +149,7 @@ textwidth]{../logo.png}
 \begin_layout Address
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="31" columns="4">
+<lyxtabular version="3" rows="24" columns="4">
 <features rotate="0" tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -413,7 +413,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.0
+1.3
 \end_layout
 
 \end_inset
@@ -451,7 +451,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.1
+1.4
 \end_layout
 
 \end_inset
@@ -489,7 +489,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.2
+1.5
 \end_layout
 
 \end_inset
@@ -518,44 +518,6 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-27.03.15
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.3
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Vote Vorgang in UML
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Oussama Zgheb
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 30.03.15
 \end_layout
 
@@ -565,45 +527,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.4
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Erneuerungen bei Push
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Oussama Zgheb
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-30.03.15
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.5
+1.6
 \end_layout
 
 \end_inset
@@ -641,7 +565,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.6
+1.7
 \end_layout
 
 \end_inset
@@ -679,7 +603,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.7
+1.8
 \end_layout
 
 \end_inset
@@ -717,7 +641,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.8
+1.9
 \end_layout
 
 \end_inset
@@ -755,7 +679,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.9
+2.0
 \end_layout
 
 \end_inset
@@ -791,44 +715,6 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-12.04.15
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.91
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Lastupdate Call
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Oussama Zgheb
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 14.04.15
 \end_layout
 
@@ -838,7 +724,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.0
+2.1
 \end_layout
 
 \end_inset
@@ -867,44 +753,6 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-17.04.15
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Social Items haben AuthorName Feld
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Oussama Zgheb
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 20.04.15
 \end_layout
 
@@ -914,7 +762,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.2
+2.2
 \end_layout
 
 \end_inset
@@ -923,7 +771,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-Event Active Felder
+Event Active Felder, X-QRCode Header
 \end_layout
 
 \end_inset
@@ -952,7 +800,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.0
+3.0
 \end_layout
 
 \end_inset
@@ -982,60 +830,6 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-28.04.15
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.0.1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Fertigstellung Adm / Pub, 
-\begin_inset Quotes ald
-\end_inset
-
-/sliders
-\begin_inset Quotes ard
-\end_inset
-
- und 
-\begin_inset Quotes ald
-\end_inset
-
-/votes
-\begin_inset Quotes ard
-\end_inset
-
- Calls für Voting
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Oussama Zgheb
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 06.05.15
 \end_layout
 
@@ -1045,7 +839,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.1
+3.1
 \end_layout
 
 \end_inset
@@ -1082,44 +876,6 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-07.05.15
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.1.1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Inhaltliche Verbesserungen, X-QRCode Header Feld
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Oussama Zgheb
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 08.05.15
 \end_layout
 
@@ -1129,7 +885,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.2
+3.2
 \end_layout
 
 \end_inset
@@ -1158,44 +914,6 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-13.05.15
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.2.1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Media Thumbnail
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Oussama Zgheb
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 14.05.15
 \end_layout
 
@@ -1205,7 +923,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.3
+3.3
 \end_layout
 
 \end_inset
@@ -1243,7 +961,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.4
+3.4
 \end_layout
 
 \end_inset
@@ -1281,7 +999,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.5
+4.0
 \end_layout
 
 \end_inset
@@ -1319,7 +1037,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.6
+4.1
 \end_layout
 
 \end_inset
@@ -1357,7 +1075,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.7
+4.2
 \end_layout
 
 \end_inset
@@ -1395,7 +1113,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.8
+4.3
 \end_layout
 
 \end_inset
@@ -1433,7 +1151,7 @@ Oussama Zgheb
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.9
+4.4
 \end_layout
 
 \end_inset
@@ -1654,7 +1372,8 @@ HTTP-Auth
 status open
 
 \begin_layout Plain Layout
-https://de.wikipedia.org/wiki/HTTP-Authentifizierung#Basic_Authentication
+The Internet Society: HTTP Authentication (1999), https://www.ietf.org/rfc/rfc2617.
+txt (Stand 13.05.2015)
 \end_layout
 
 \end_inset
@@ -1705,17 +1424,26 @@ Diverses
 
 \begin_layout Itemize
 Eine fixe Reihenfolge der Properties ist bei JSON (standardmässig) nicht
- gewährleistet 
+ gewährleistet
 \begin_inset Foot
 status open
 
 \begin_layout Plain Layout
-4.3.3 Object - http://goo.gl/eAjLb
+ECMA: ECMAScript Language Specification (1999), Kapitel 4.3.3, http://www.ecma-inte
+rnational.org/
+\begin_inset Newline newline
+\end_inset
+
+publications/files/ECMA-ST-ARCH/ECMA-262,%203rd%20edition,%20December%201999.pdf
+\begin_inset Newline newline
+\end_inset
+
+(Stand 10.05.2015)
 \end_layout
 
 \end_inset
 
-
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -1803,17 +1531,8 @@ Bei jeder Resource gibt es einen call Namens
 \begin_inset Quotes ard
 \end_inset
 
- welcher den Zeitpunkt (in Unixzeit 
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-https://de.wikipedia.org/wiki/Unixzeit
-\end_layout
-
-\end_inset
-
-) angibt, an welchem irgend ein Element geändert wurde.
+ welcher den Zeitpunkt (als Unix Timestamp) angibt, an welchem irgend ein
+ Element geändert wurde.
  So kann der Client erfahren (durch vergleichen des letzten Zeitpunktes)
  ob sein Datenbestand noch aktuell ist.
 \end_layout
@@ -1856,7 +1575,8 @@ Sämtliche Medien Ressourcen offerieren Client Caching durch ETag
 status open
 
 \begin_layout Plain Layout
-www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19
+W3.org: Header Field Definitions,  www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#s
+ec14.19 (Stand: 10.04.15) 
 \end_layout
 
 \end_inset
@@ -2950,7 +2670,8 @@ S
 status open
 
 \begin_layout Plain Layout
-https://stackoverflow.com/questions/913626
+The Internet Society: Returning Values from Forms (1998), https://www.ietf.org/rfc
+/rfc2388.txt (Stand: 05.04.15)
 \end_layout
 
 \end_inset
@@ -3936,8 +3657,23 @@ Folgendes Diagramm soll den Ablauf und die möglichen Return Codes aufzeigen,
 \begin_inset Graphics
 	filename img/Qr Proc.png
 	width 90page%
-	height 80pheight%
+	height 75pheight%
 	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+Sequenz Diagramm - QR Code Übeprüfung 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Eigene Darstellung
+\end_layout
 
 \end_inset
 
@@ -4949,17 +4685,6 @@ PUT - Updatet den besagten Vote
 \end_inset
 
 
-\begin_inset Newline newline
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsubsection
@@ -4976,8 +4701,23 @@ Folgendes Diagramm soll den Ablauf und die möglichen Return Codes aufzeigen,
 \begin_inset Graphics
 	filename img/Client Vote.png
 	width 90page%
-	height 80pheight%
+	height 75pheight%
 	keepAspectRatio
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+Sequenz Diagramm - Vote Ablauf 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Eigene Darstellung
+\end_layout
 
 \end_inset
 
