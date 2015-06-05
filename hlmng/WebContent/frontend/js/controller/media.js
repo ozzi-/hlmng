@@ -22,7 +22,8 @@ mediaModule.controller('MediaController', ['$scope', 'ToolService','$log','dataS
         	$scope.uploadedMediaID=data.mediaID;
         	$scope.showUploadPicture=true;
         	$scope.showUploadErrorCode=false;
-        	dataService.dataObj =data.mediaID; 
+        	dataService.dataObj =data.mediaID;
+        	dataService.dataObj2 =data.link; 
         	$scope.loading=false;
         }, function (reason){
         	$scope.showUploadPicture=false;

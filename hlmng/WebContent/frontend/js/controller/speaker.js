@@ -32,7 +32,7 @@ speakerModule.controller('SpeakerListController', ['$http','RestService','ToolSe
 }]);
 
 
-speakerModule.controller('SpeakerIdController', ['$http','$stateParams','RestService','ToolService', function($http, $stateParams,RestService,ToolService){
+speakerModule.controller('SpeakerIdController', ['$http','$stateParams','RestService','ToolService','dataService', function($http, $stateParams,RestService,ToolService,dataService){
 	var hlmng = this;
 	
 	hlmng.speaker = {};	
@@ -40,7 +40,18 @@ speakerModule.controller('SpeakerIdController', ['$http','$stateParams','RestSer
 		hlmng.speaker=data;
 	});
 
-	hlmng.putSpeaker = RestService.put;
+	hlmng.putSpeaker = function(speaker,speakerID){
+		if(dataService.dataObj!=0){
+			hlmng.speaker.mediaIDFK=dataService.dataObj;
+        	hlmng.speaker.media=dataService.dataObj2; 
+		}
+		dataService.dataObj=0;
+		dataService.dataObj2=0;
+		
+		RestService.put(speaker,speakerID,'speaker');
+		ToolService.redir('speaker.id',{speakerId: hlmng.speaker.speakerID}); 
+	};
+
 	hlmng.deleteSpeaker = RestService.del;
 
 }]);

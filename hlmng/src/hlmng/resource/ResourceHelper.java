@@ -180,13 +180,9 @@ public class ResourceHelper {
 			FormDataContentDisposition contentDispositionHeader, String mimeType, UriInfo uri, Request request) throws IOException {
 		Response response;
 		if(mimeType.equals("image/png")||mimeType.equals("image/jpeg")){
-			String filePath = HLMNGSettings.mediaFileRootDir+contentDispositionHeader.getFileName();
-			File f = new File(filePath);
-			if(f.exists()){
-				response=  Response.status(HTTPCodes.unprocessableEntity).entity("File name already exists locally. Try again with another one!").build(); 
-			}else{
-				response = saveImage(fileInputStream, contentDispositionHeader, mimeType, filePath,uri,request);
-			}
+			long uniqueName= System.currentTimeMillis();
+			String filePath = HLMNGSettings.mediaFileRootDir+uniqueName+contentDispositionHeader.getFileName();
+			response = saveImage(fileInputStream, contentDispositionHeader, mimeType, filePath,uri,request,uniqueName);
 		}else{
 			Log.addEntry(Level.WARNING, "File wasn't uploaded because of wrong mime type: "+mimeType );
 			response=Response.status(HTTPCodes.unsupportedMediaType).build();
@@ -196,7 +192,7 @@ public class ResourceHelper {
 	
 	private static Response saveImage(InputStream fileInputStream,
 			FormDataContentDisposition contentDispositionHeader,
-			String mimeType, String filePath, UriInfo uri, Request request) throws IOException {
+			String mimeType, String filePath, UriInfo uri, Request request, long uniqueName) throws IOException {
 		Response response;
 		boolean savedOK=false;
 		try {
@@ -207,7 +203,7 @@ public class ResourceHelper {
 				if(!thumbnailWorked){
 					Log.addEntry(Level.WARNING, "Thumbnail creation failed!");
 				}
-				int insertedID = mediaDao.addElement(new Media(mimeType,contentDispositionHeader.getFileName()));
+				int insertedID = mediaDao.addElement(new Media(mimeType,uniqueName+contentDispositionHeader.getFileName()));
 				response= getMediaAsResponse(insertedID, uri, request);
 			}else{
 				Log.addEntry(Level.WARNING, "File couldn't be saved to:"+filePath+" with mime type: "+mimeType );

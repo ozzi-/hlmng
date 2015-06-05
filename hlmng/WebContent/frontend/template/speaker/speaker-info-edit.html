@@ -15,3 +15,18 @@
 	<label for="speaker-title">Biography</label><br>
 	<textarea  class="form-control" type="text" cols="40" rows="5" maxlength="240" name="speaker-description" placeholder="Biography" ng-model="speaker.description" required></textarea>
 </div>
+<br>
+ 
+<span ng-show="!toggle">
+	Img: <a ng-href="{{speaker.media}}">
+		<img class="speaker-image" ng-src="{{speaker.media+'_thumb'}}" err-src="{{'./img/speaker_default.png'}}"/><br>
+	</a>
+	<button class="btn btn-default" ng-click="toggle=!toggle">Change Image</button>
+</span >
+<span ng-show="toggle">
+	<media-upload></media-upload>		
+</span >
+
+
+
+<br><br>

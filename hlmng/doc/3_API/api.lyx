@@ -2709,10 +2709,6 @@ Die möglichen Return Codes sind (nebst den üblichen Authorization needed
 \end_layout
 
 \begin_layout Itemize
-422 - Datei mit gleichem Namen existiert bereits
-\end_layout
-
-\begin_layout Itemize
 413- Datei zu gross 
 \end_layout
 

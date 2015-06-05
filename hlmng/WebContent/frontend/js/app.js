@@ -12,5 +12,7 @@ var facebookAppId=1589703351304338;
 app.service('dataService', function() {
   var _dataObj = 0;
   this.dataObj = _dataObj;
+  var _dataObj2 = 0;
+  this.dataObj2 = _dataObj2;
 });
 

@@ -4,6 +4,10 @@
 .roweven {
   color: white;
 }
+.autoshortfield{
+	max-width: 350px;
+	word-wrap:break-word;
+}
 
 .content {
 	background:#000 url(../img/bg.png) repeat-x;

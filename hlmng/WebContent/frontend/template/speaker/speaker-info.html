@@ -4,11 +4,11 @@
 			ID: {{speaker.speakerID}}
 		</button>
 	</a><br>
-	Name: {{speaker.name}}<br>
-	Title: {{speaker.title}}<br>
-	Nationality: {{speaker.nationality}} <img  ng-src="{{ './img/flags/flag_'+(speaker.nationality | lowercase)+'.png'}}" err-src="{{'./img/flags/flag_invalid.png'}}"/><br>
-	Img: <a ng-href="{{speaker.media}}">
+	<b>Name:</b> {{speaker.name}}<br>
+	<b>Title:</b> {{speaker.title}}<br>
+	<b>Nationality:</b> {{speaker.nationality}} <img  ng-src="{{ './img/flags/flag_'+(speaker.nationality | lowercase)+'.png'}}" err-src="{{'./img/flags/flag_invalid.png'}}"/><br>
+	<b>Biography:</b> <auto-short-field threshold=100 field="speaker.description"></auto-short-field><br>
+	<b>Img:</b> <a ng-href="{{speaker.media}}">
 		<img class="speaker-image" ng-src="{{speaker.media+'_thumb'}}" err-src="{{'./img/speaker_default.png'}}"/><br>
 	</a>
-	Description: {{speaker.description}}
 </div>
