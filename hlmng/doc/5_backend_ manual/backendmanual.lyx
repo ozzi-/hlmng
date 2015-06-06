@@ -113,7 +113,7 @@ customHeadersFooters
 \begin_body
 
 \begin_layout Title
-HLM-NG | Backend Installation Guide
+Hacking-Lab Mobile Event App | Backend Installation Guide
 \end_layout
 
 \begin_layout Author
@@ -131,7 +131,7 @@ status open
 \backslash
 includegraphics[width=0.20
 \backslash
-textwidth]{../logo.png}
+textwidth]{logo.png}
 \end_layout
 
 \end_inset

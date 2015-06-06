@@ -5,9 +5,7 @@ newsModule.controller('NewsListController', ['$http','RestService','$stateParams
 	hlmng.newsList = [];
 	
 	RestService.list('news').then(function(data){
-	    $.each(data, function(i, item){
-	    	hlmng.newsList.push(item);	 
-	    });
+		hlmng.newsList = data;
 	});
 }]);
 
@@ -23,7 +21,7 @@ newsModule.controller('NewsNewController', ['$http','RestService','ToolService',
 		dataService.dataObj=0;
 		hlmng.postNews(hlmng.news,'news').then(function(data){
 			hlmng.news=data;
-			ToolService.redir('event.active.news.id',{eventId: $stateParams.eventId, newsId: hlmng.news.newsID});
+			ToolService.redir('event.active.whatsup.news.id',{eventId: $stateParams.eventId, newsId: hlmng.news.newsID});
 		}); 
 	};
 }]);
