@@ -8,6 +8,7 @@ import hlmng.auth.AuthResult;
 import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.dao.UserDao;
+import hlmng.model.Event;
 import hlmng.model.QrCode;
 import hlmng.model.User;
 import hlmng.resource.TimeHelper;
@@ -26,6 +27,8 @@ public class AuthTest {
 	private int insertedID;
 	private UserDao userDao;
 	GenDao qrDao = GenDaoLoader.instance.getQrCodeDao();
+	GenDao eventDao = GenDaoLoader.instance.getEventDao();
+	private static final int eventIDFK= 9999;
 
 	@Before
 	public void init(){
@@ -35,8 +38,10 @@ public class AuthTest {
 		loginData.put("password",HLMNGSettings.jdbcPassword); 
 		userDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
 		qrDao.setTest(true,loginData,HLMNGSettings.jdbcPath);
+		eventDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		insertedID=userDao.addElement(new User("user", "1234", "4321"));
 		assertTrue(insertedID>0);
+		eventDao.addIDElement(new Event(eventIDFK,"test", "test", "2015-05-05", "2015-05-05",true));
 	}
 	
 	
@@ -77,7 +82,6 @@ public class AuthTest {
 
 	@Test
 	public void testQrRestAllOK() throws IOException {
-		int eventIDFK = 1;
 		QrCode qrcode = new QrCode("jury-2-5bucqk9rsndjs8gjgmpqqmrsep", "jury", eventIDFK);
 		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
 		User user = new User("TEST", "112233", "112233");
@@ -93,7 +97,6 @@ public class AuthTest {
 	
 	@Test
 	public void testQrRestWrongUnkownQrCode() throws IOException {
-		int eventIDFK = 1;
 		QrCode qrcode = new QrCode("TESTPAYLOAD", "jury", eventIDFK);
 		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
 		User user = new User("TEST", "112233", "112233");
@@ -108,7 +111,6 @@ public class AuthTest {
 
 	@Test
 	public void testQrRestWrongUser() throws IOException {
-		int eventIDFK = 1;
 		QrCode qrcode = new QrCode("TESTPAYLOAD", "jury", eventIDFK);
 		qrcode.setUserIDFK(1); // <--
 		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
@@ -126,7 +128,6 @@ public class AuthTest {
 
 	@Test
 	public void testQrRestWrongRole() throws IOException {
-		int eventIDFK = 1;
 		QrCode qrcode = new QrCode("TESTPAYLOAD", "moderator", eventIDFK);
 		qrcode.setCreatedAt(TimeHelper.getCurrentDateTime());
 		User user = new User("TEST", "112233", "112233");

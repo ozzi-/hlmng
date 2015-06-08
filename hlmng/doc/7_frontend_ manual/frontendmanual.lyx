@@ -131,7 +131,7 @@ status open
 \backslash
 includegraphics[width=0.20
 \backslash
-textwidth]{../logo.png}
+textwidth]{logo.png}
 \end_layout
 
 \end_inset
@@ -428,7 +428,7 @@ Einleitung
 
 \begin_layout Standard
 Dieses Dokument soll einer mit der Materie vertrauten Person eine Hilfestellung
- zur Konfiguration und Installation des HLM-NG Frontend geben.
+ zur Konfiguration und Installation des Frontend geben.
 \end_layout
 
 \begin_layout Section
@@ -905,7 +905,8 @@ Logout
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename menuleiste.png
+	filename img/menuleiste.png
+	lyxscale 50
 	scale 50
 
 \end_inset
@@ -953,7 +954,8 @@ Tipp
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename inhalt.png
+	filename img/inhalt.png
+	lyxscale 30
 	scale 50
 
 \end_inset
@@ -980,21 +982,24 @@ ID
 
  Button des gewünschten Objektes klicken 
 \begin_inset Graphics
-	filename id_button.png
+	filename img/id_button.png
+	lyxscale 50
 	scale 50
 
 \end_inset
 
  --> 
 \begin_inset Graphics
-	filename edit_button.png
+	filename img/edit_button.png
+	lyxscale 30
 	scale 50
 
 \end_inset
 
  --> 
 \begin_inset Graphics
-	filename submit_button.png
+	filename img/submit_button.png
+	lyxscale 30
 	scale 50
 
 \end_inset
@@ -1009,7 +1014,8 @@ Objekt löschen
 \begin_layout Standard
 Objekt editieren --> 
 \begin_inset Graphics
-	filename delete_button.png
+	filename img/delete_button.png
+	lyxscale 30
 	scale 50
 
 \end_inset
@@ -1067,7 +1073,8 @@ Push
 
 
 \begin_inset Graphics
-	filename global.png
+	filename img/global.png
+	lyxscale 30
 	scale 60
 
 \end_inset
@@ -1084,7 +1091,8 @@ Um Objekte eines Events zu verwalten, muss man in den Event spezifischen
  Bereich.
  Dies geschieht durch den 
 \begin_inset Graphics
-	filename set_active_button.png
+	filename img/set_active_button.png
+	lyxscale 30
 	scale 50
 
 \end_inset
@@ -1145,7 +1153,8 @@ Votings
 
 
 \begin_inset Graphics
-	filename spez.png
+	filename img/spez.png
+	lyxscale 30
 	scale 60
 
 \end_inset
@@ -1339,14 +1348,16 @@ Die Präsentation hat begonnen, die Zeit wird gemessen.
 
 
 \begin_inset Graphics
-	filename pause_presentation_button.png
+	filename img/pause_presentation_button.png
+	lyxscale 30
 	scale 40
 
 \end_inset
 
 
 \begin_inset Graphics
-	filename resume_presentation_button.png
+	filename img/resume_presentation_button.png
+	lyxscale 30
 	scale 40
 
 \end_inset

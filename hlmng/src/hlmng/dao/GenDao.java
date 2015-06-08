@@ -96,7 +96,7 @@ public class GenDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(insertedID!=-1){
+		if(insertedID!=-1 || idset){
 			Log.addEntry(Level.INFO,className+" Element add "+ModelHelper.valuestoString(model)+" inserted ID = "+insertedID);			
 		}else{
 			Log.addEntry(Level.WARNING,className+" Element wasn't added due to malformed input "+ModelHelper.valuestoString(model)+" inserted ID = "+insertedID);			

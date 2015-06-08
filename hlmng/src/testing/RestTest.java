@@ -47,7 +47,7 @@ public class RestTest {
 	GenDao votingDao = GenDaoLoader.instance.getVotingDao();
 	GenDao sliderDao = GenDaoLoader.instance.getSliderDao();
 	private static final int eventID= 9999;
-
+	private static int userID;
 	@Before
 	public void init() {
 		Properties loginData = new Properties();
@@ -60,6 +60,7 @@ public class RestTest {
 		votingDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		sliderDao.setTest(true, loginData, HLMNGSettings.jdbcPath);
 		eventDao.addIDElement(new Event(eventID,"test", "test", "2015-05-05", "2015-05-05",true));
+		userID=userDao.addElement(new User("test", "2221128", "72727"));
 	}
 	@After
 	public void bye(){
@@ -156,23 +157,23 @@ public class RestTest {
 		}};
 		// Jury
 		for (Integer score : voteScoreSlider1Jury) {
-			voteObjList.add(new Vote(score,1,sliderid1,1));
+			voteObjList.add(new Vote(score,1,sliderid1,userID));
 		}
 		for (Integer score : voteScoreSlider3Jury) {
-			voteObjList.add(new Vote(score,1,sliderid3,1));
+			voteObjList.add(new Vote(score,1,sliderid3,userID));
 		}
 		for (Integer score : voteScoreSlider05Jury) {
-			voteObjList.add(new Vote(score,1,sliderid2,1));
+			voteObjList.add(new Vote(score,1,sliderid2,userID));
 		}
 		// Audience
 		for (Integer score : voteScoreSlider1Audience) {
-			voteObjList.add(new Vote(score,0,sliderid1,1));
+			voteObjList.add(new Vote(score,0,sliderid1,userID));
 		}
 		for (Integer score : voteScoreSlider3Audience) {
-			voteObjList.add(new Vote(score,0,sliderid3,1));
+			voteObjList.add(new Vote(score,0,sliderid3,userID));
 		}
 		for (Integer score : voteScoreSlider05Audience) {
-			voteObjList.add(new Vote(score,0,sliderid2,1));
+			voteObjList.add(new Vote(score,0,sliderid2,userID));
 		}
 		// INSERT
 		for (Vote vote : voteObjList) {
@@ -188,7 +189,7 @@ public class RestTest {
 		double totalscoreaudience =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscoreaudience", "GET",null,null));
 		double totalscorejury =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscorejury", "GET",null,null));
 		
-		Voting votingNotInTime = new Voting("Name",10,"voting_end",10,"2015-05-05","00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:08:00",1,1,1);
+		Voting votingNotInTime = new Voting("Name",10,"voting_end",10,"2015-05-05","00:00:40","arithemtic","00:05:00","00:07:00","13:00:00","13:08:00",1,1,eventID);
 		assertTrue(votingDao.updateElement(votingNotInTime,votingid));
 		double totalscorejuryNotInTime =  Double.parseDouble(doURL(HLMNGSettings.restAppPath+HLMNGSettings.admURL+"/voting/"+votingid+"/totalscorejury", "GET",null,null));
 		
@@ -213,7 +214,7 @@ public class RestTest {
 		User user = new User("testusername", "1234test1234", "4321test");
 		int userid  = userDao.addElement(user);
 			
-		Voting voting = new Voting("TEST", 10, "voting", 10,"2015-05-05","00:00:50", "median","00:05:30","00:06:30",TimeHelper.getCurrentTime(),"00:07:00", 1,1,1);
+		Voting voting = new Voting("TEST", 10, "voting", 10,"2015-05-05","00:00:50", "median","00:05:30","00:06:30",TimeHelper.getCurrentTime(),"00:07:00", 1,1,eventID);
 		voting.setVotingStarted(TimeHelper.getCurrentTime());
 		int votingid = votingDao.addElement(voting);
 		
@@ -260,7 +261,7 @@ public class RestTest {
 		User user = new User("name", "1234", "4321");
 		int userid  = userDao.addElement(user);
 			
-		Voting voting = new Voting("TEST", 10, "voting", 10,"2015-05-05","00:00:50", "testmode","00:03:50","00:33:33","00:07:00","00:07:00",1,1,1);
+		Voting voting = new Voting("TEST", 10, "voting", 10,"2015-05-05","00:00:50", "testmode","00:03:50","00:33:33","00:07:00","00:07:00",1,1,eventID);
 		int votingid = votingDao.addElement(voting);
 		
 		Slider slider = new Slider("TEST", 1, votingid);
