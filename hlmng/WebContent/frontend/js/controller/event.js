@@ -28,12 +28,17 @@ eventModule.controller('EventNewController', ['$http','RestService','ToolService
 
 eventModule.controller('EventOverviewController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
 	var hlmng = this;
+	hlmng.event = {};
 	hlmng.eventroomsCount = 0;
 	hlmng.eventitemsCount = 0;
 	hlmng.qrcodeCount = 0;
 	hlmng.socialCount = 0;
 	hlmng.newsCount = 0;
 	hlmng.socialPendingCount = 0;
+	
+	RestService.get($stateParams.eventId,'event').then(function(data){
+		hlmng.event = data;
+	});
 	
 	RestService.list('eventroom').then(function(data){
 	    $.each(data, function(i, item){
