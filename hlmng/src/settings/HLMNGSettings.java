@@ -4,14 +4,12 @@ package settings;
 
 public class HLMNGSettings {
 	
-	static boolean production=false;
-
 	/**
-	 * Data base Configuration
+	 * Database Configuration for JUnit
 	 */
 	public static final String jdbcPath="jdbc:mysql://127.0.0.1/hlmng";
-	public static final String jdbcUser="user";
-	public static final String jdbcPassword="pw12";
+	public static final String jdbcUser="*****";
+	public static final String jdbcPassword="***********";
 	
 	/**
 	 * Rest API URL config
@@ -26,6 +24,13 @@ public class HLMNGSettings {
 					
 	public static final String pubURL="/pub";
 	public static final String admURL="/adm";
+	
+	/**
+	 * Facebook Config
+	 */	
+	public static final String facebookAppId= "*****";
+	public static final String facebookPageId= "*******";
+
 	
 	/**
 	 * Cache Control max-age in Sekunden
@@ -64,13 +69,14 @@ public class HLMNGSettings {
 	 * Set sysErr to false to write log output into a (numbered) logfile.
 	 */
 	public static final boolean logSysErr = true;
+	public static final boolean showFinest = true;
 	public static final String logFileRootDir = "/var/lib/hlmng/logs";
 	
 	/**
 	 * GCM
 	 */
 	public static final String gcmURL = "https://android.googleapis.com/gcm/send"; 
-	public static final String apiKey = "AIzaSyD62VEqAESTccbNguLB5RI5OwfbbiOp4B8";
+	public static final String apiKey = "*****************";
 	
 	/**
 	 * Querybuilder
