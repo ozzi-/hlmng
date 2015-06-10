@@ -25,7 +25,7 @@ pushModule.controller('PushNewController', ['$http','RestService','ToolService',
 	hlmng.postAndRedir = function() {  
 		hlmng.postPush(hlmng.push,'push').then(function(data){
 			hlmng.push=data;
-			ToolService.redir('push.id',{pushId: hlmng.push.pushID}); 
+			ToolService.redir('push.list',{}); 
 		}); 
 	};
 }]);
