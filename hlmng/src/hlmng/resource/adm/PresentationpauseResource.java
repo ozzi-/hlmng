@@ -4,6 +4,7 @@ import hlmng.dao.GenDao;
 import hlmng.dao.GenDaoLoader;
 import hlmng.model.PresentationPause;
 import hlmng.resource.Resource;
+import hlmng.resource.TimeHelper;
 
 import java.io.IOException;
 
@@ -30,6 +31,7 @@ public class PresentationpauseResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response putPresentationpause(PresentationPause element,@PathParam("id") int id) throws IOException {
+		element.setStop(TimeHelper.getCurrentTime());
 		return putResource(presentationpauseDao, element, id);
 	}
 	
@@ -37,8 +39,8 @@ public class PresentationpauseResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object postPresentationPause(PresentationPause element) throws IOException, ParseException {
+		element.setStart(TimeHelper.getCurrentTime());
 		return postResource(presentationpauseDao, element);
 	}
-	
-	
+
 }

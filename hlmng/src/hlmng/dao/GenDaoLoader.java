@@ -40,6 +40,7 @@ public enum GenDaoLoader {
 	private GenDao socialPublishDao;
 
 	private GenDaoLoader() {
+		System.out.println("Gen Dao Loading...");
 		eventDao = new GenDao(Event.class);
 		eventItemDao = new GenDao(EventItem.class);
 		eventRoomDao= new GenDao(EventRoom.class);

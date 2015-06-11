@@ -1,0 +1,2162 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{tocloft}
+\usepackage{graphicx} 
+\usepackage{hyperref} 
+\usepackage{fancyhdr}
+
+
+%% Footnotes-Listing %%
+\newcommand{\listfootnotesname}{}% 'List of Footnotes' title 
+\newlistof[chapter]{footnotes}{fnt}{\listfootnotesname}% New 'List of...' for footnotes 
+\let\oldfootnote\footnote % Save the old \footnote{...} command 
+\renewcommand\footnote[1]{% Redefine the new footnote to also add 'List of Footnote' entries. 
+    \refstepcounter{footnotes}% Add and step a reference to the footnote/counter. 
+    \oldfootnote{#1}% Make a regular footnote. 
+    \addcontentsline{fnt}{footnotes}{\protect 
+\numberline{\thefootnotes}#1}% Add the 'List of...' entry. 
+}
+
+\definecolor{dkgreen}{RGB}{0,142,0}
+\definecolor{orange}{RGB}{217,108,0}
+\definecolor{dkred}{RGB}{179,0,0}
+\definecolor{lgrey}{RGB}{240,240,240}
+
+% Keine einzelnen Zeilen beim Anfang eines Abschnitts (Schusterjungen)
+\clubpenalty=10000
+% Keine einzelnen Zeilen am Ende eines Abschnitts (Hurenkinder)
+\widowpenalty= 10000 \displaywidowpenalty = 10000 
+
+\fancyhead[RE,LO]{\leftmark}
+\fancyhead[LE,RO]{HLM-NG}
+%%\fancyfoot[CE,CO]{\leftmark}%%
+%%\fancyfoot[LE,RO]{\thepage}%%
+
+\usepackage{parskip}
+\end_preamble
+\use_default_options true
+\begin_modules
+customHeadersFooters
+\end_modules
+\maintain_unincluded_children false
+\language german-ch
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language danish
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\small\ttfamily},commentstyle={\color{dkgreen}},keywordstyle={\color{dkred}},language=Java,stringstyle={\color{dkred}},backgroundcolor={\color{lgrey}},framexleftmargin={0.3 cm}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Hacking-Lab Mobile Event App | Backend Installation Guide
+\end_layout
+
+\begin_layout Author
+Oussama Zgheb
+\end_layout
+
+\begin_layout LyX-Code
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=0.20
+\backslash
+textwidth]{logo.png}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Address
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Datum
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Version
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Änderung
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{
+\end_layout
+
+\end_inset
+
+Autor
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Initial
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.04.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Weitere Settings erfasst
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29.05.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Facebook & Twitter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+01.06.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Installation, Unterhalt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.06.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Common Mistakes, SSL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Oussama Zgheb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Einleitung
+\end_layout
+
+\begin_layout Standard
+Dieses Dokument soll einer mit der Materie vertrauten Person eine Hilfestellung
+ zur Konfiguration und Installation des HLM-NG Backend geben.
+\end_layout
+
+\begin_layout Section
+Voraussetzungen
+\end_layout
+
+\begin_layout Standard
+Die Software wurde auf unter Ubuntu 12.04 LTS, Lubuntu 14.10 & 15.04 sowie
+ Debian 7 entwickelt und getestet , weitere Betriebssysteme sind höchst
+ wahrscheinlich auch möglich einzusetzen.
+\end_layout
+
+\begin_layout Standard
+Folgende Software wird auf dem Zielgerät benötigt:
+\end_layout
+
+\begin_layout Itemize
+Tomcat 7
+\end_layout
+
+\begin_layout Itemize
+MySQL 5.6
+\end_layout
+
+\begin_layout Itemize
+Eclipse EE (Kepler oder neuer)
+\end_layout
+
+\begin_layout Subsection
+Google Cloud Messaging
+\end_layout
+
+\begin_layout Standard
+Google Cloud Messaging 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://developer.android.com/google/gcm/gs.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ wird eingesetzt, um Push Meldungen auf die Mobile Apps zu verteilen.
+ Um den Dienst benutzen zu können, braucht man ein Google Konto 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://accounts.google.com/signup
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ sowie einen ApiKey.
+ Um den ApiKey zu erhalten muss man unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://console.developers.google.com/project
+\end_layout
+
+\end_inset
+
+ ein neues Project erstellen.
+ Nun findet man unter 
+\begin_inset Quotes ald
+\end_inset
+
+APIs & Auth
+\begin_inset Quotes ard
+\end_inset
+
+ den Dienst 
+\begin_inset Quotes ald
+\end_inset
+
+Google Cloud Messaging for Android
+\begin_inset Quotes ard
+\end_inset
+
+, dieser mussa aktiviert werden.
+ Unter 
+\begin_inset Quotes ald
+\end_inset
+
+APIs & Auth -> Credentials
+\begin_inset Quotes ard
+\end_inset
+
+ kann ein 
+\begin_inset Quotes ald
+\end_inset
+
+Key for server applications
+\begin_inset Quotes ard
+\end_inset
+
+ (API Key) erstellt werden.
+ Diese Daten werden später benötigt.
+\end_layout
+
+\begin_layout Subsection
+Facebook
+\end_layout
+
+\begin_layout Subsubsection
+App erstellen
+\end_layout
+
+\begin_layout Standard
+Um auf eine Facebook Seite zu Posten wird eine App benötigt, diese kann
+ unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://developers.facebook.com/
+\end_layout
+
+\end_inset
+
+ erstellt werden.
+ Zuerst muss jedoch ein Facebook Konto bestehen sowie auf Facebook angemeldet
+ sein.
+ Wichtig: Der App Typ muss dabei 
+\begin_inset Quotes ald
+\end_inset
+
+Website
+\begin_inset Quotes ard
+\end_inset
+
+ sein und die Site URL richtig gesetzt sein, z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+https://fix.confoxy.com/hlmng/frontend/
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Nun findet man im Dashboard der App folgende Daten: 
+\begin_inset Quotes ald
+\end_inset
+
+App ID
+\begin_inset Quotes ard
+\end_inset
+
+ und 
+\begin_inset Quotes ald
+\end_inset
+
+App Secret
+\begin_inset Quotes ard
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Konfiguration
+\end_layout
+
+\begin_layout Standard
+Nun müssen die Parameter der Facebook4J Library 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://facebook4j.org/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ hinterlegt werden.
+ Dies geschieht in der Datei facebook4j.properties im Rootverzeichnis 
+\begin_inset Quotes ald
+\end_inset
+
+src
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Die Datei sollte also wie folgt aussehen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+oauth.appId=****************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.appSecret=********************************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.permissions=publish_actions, manage_pages, publish_pages
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Diese Tokens laufen nie ab, es Bedarf also keiner nachträglichen Änderungen
+ mehr.
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://developers.facebook.com/docs/facebook-login/access-tokens
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ Nach Bedarf kann auch 
+\begin_inset Quotes ald
+\end_inset
+
+debug=true
+\begin_inset Quotes ard
+\end_inset
+
+ hinzugefügt werden, diese liefert wertvolle Informationen auf System.out.
+\end_layout
+
+\begin_layout Subsection
+Twitter 
+\end_layout
+
+\begin_layout Subsubsection
+App erstellen
+\end_layout
+
+\begin_layout Standard
+Um die Twitter API zu benutzen muss man unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://apps.twitter.com/
+\end_layout
+
+\end_inset
+
+ ein App erstellen.
+ Dafür wird ein Twitter Account benötigt, bei bedarf sollte dieser zuerst
+ erstellt und angemeldet sein.
+ Wichtig ist, dass beim erstellen der App das Feld 
+\begin_inset Quotes ald
+\end_inset
+
+Website
+\begin_inset Quotes ard
+\end_inset
+
+ mit der richtigen URL ausgefüllt wird, also z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+https://fix.confoxy.com/hlmng/frontend/
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Nach dem erstellen der App sollte man nun unter 
+\begin_inset Quotes ald
+\end_inset
+
+Keys and Access Tokens
+\begin_inset Quotes ard
+\end_inset
+
+ die benötigten Daten finden.
+\begin_inset Newline newline
+\end_inset
+
+Folgende Parameter benötigt, 
+\begin_inset Quotes ald
+\end_inset
+
+Consumer Key
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+Consumer Secret
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+Access Token
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+Access Token Secret
+\begin_inset Quotes ard
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Konfiguration
+\end_layout
+
+\begin_layout Standard
+Nun müssen die Parameter der Twitter4J Library 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://twitter4j.org/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ hinterlegt werden.
+ Dies geschieht in der Datei twitter4j.properties im Rootverzeichnis 
+\begin_inset Quotes ald
+\end_inset
+
+src
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Die Datei sollte also wie folgt aussehen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+oauth.consumerKey=***********************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.consumerSecret=**************************************************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.accessToken=*********************************************
+\end_layout
+
+\begin_layout Plain Layout
+
+oauth.accessTokenSecret=*******************************************
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Diese Tokens laufen nie ab, es Bedarf also keiner nachträglichen Änderungen
+ mehr, ausser das App wird durch den Twitter Account entfernt.
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://dev.twitter.com/oauth/overview/faq
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ Nach Bedarf kann auch 
+\begin_inset Quotes ald
+\end_inset
+
+debug=true
+\begin_inset Quotes ard
+\end_inset
+
+ hinzugefügt werden, diese liefert wertvolle Informationen auf System.out.
+\end_layout
+
+\begin_layout Subsection
+Tomcat
+\end_layout
+
+\begin_layout Standard
+Um sicherzustellen, dass genügend Ressourcen vorhanden sind, wird empfohlen
+ den Java Heap Space etwas grösser als die Default Einstellung festzulegen.
+ Dies geschieht im File 
+\begin_inset Quotes ald
+\end_inset
+
+/etc/default/tomcat7
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Dort sollte die Zeile 
+\begin_inset Quotes ald
+\end_inset
+
+JAVA_OPTS
+\begin_inset Quotes ard
+\end_inset
+
+ wie folgt aussehen: 
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+JAVA_OPTS="-Djava.awt.headless=true -Xmx768m -Xms384m -XX:+UseConcMarkSweepGC"
+\end_layout
+
+\end_inset
+
+Xmx ist dabei die maximale Heap Size, Xms die initiale Grösse.
+ Bei grosser Benutzeranzahl muss die maximale Heap Size eventuell erhöht
+ werden.
+\end_layout
+
+\begin_layout Section
+Installation Server
+\end_layout
+
+\begin_layout Subsection
+Ordner erstellen
+\end_layout
+
+\begin_layout Standard
+Das Backend muss Daten auf dem Filesystem ablegen können.
+ Empfohlen ist, die folgenden Ordner unter 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/hlmng
+\begin_inset Quotes ard
+\end_inset
+
+
+\series default
+ abzulegen.
+ Es werden die Unterordner 
+\begin_inset Quotes ald
+\end_inset
+
+logs
+\begin_inset Quotes ard
+\end_inset
+
+, 
+\begin_inset Quotes ald
+\end_inset
+
+media
+\begin_inset Quotes ard
+\end_inset
+
+, und 
+\begin_inset Quotes ald
+\end_inset
+
+qr
+\begin_inset Quotes ard
+\end_inset
+
+ benötigt.
+ Wichtig dabei ist, dass der User tomcat7 owner ist.
+ Dies kann wie folgt übernommen werden:
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+chown tomcat7 /var/lib/hlmng/*
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+HLMNGSettings
+\end_layout
+
+\begin_layout Standard
+Unter 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+src/settings/HLMNGSettings.java
+\begin_inset Quotes ard
+\end_inset
+
+ 
+\series default
+können die Parameter für das Backend vorgenommen werden.
+ Nachfolgend werden alle erklärt,
+\end_layout
+
+\begin_layout Subsubsection
+Pfade
+\end_layout
+
+\begin_layout Itemize
+jdbcPath (String) = Der JDBC Pfad zur Datenbank
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+jdbc:mysql://127.0.0.1/hlmng
+\begin_inset Quotes ard
+\end_inset
+
+, wobei hlmng der Datenbank Schema Name ist
+\end_layout
+
+\begin_layout Itemize
+pubURL = Der Pfad unter welchem der Public Rest API Teil sein soll
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/pub
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+admURL = Der Pfad unter welchem der Admin Rest API Teil sein soll
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/adm
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+qrFileRootDir (String) = Der Pfad unter welchem alle die gerenderten Qr
+ Codes abgelegt werden
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/hlmng/qr/
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+mediaFileRootDir (String)= Der Pfad unter welchem alle heraufgeladenen Dateien
+ abgelegt werden
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/hlmng/media
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+logFileRootDir (String) = Der Pfad unter welchem die Logfiles abgelegt werden
+ (falls aktiv)
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/hlmng/logs
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+restAppPath (String) = Der Pfad unter welchem die Schnittstelle erreichbar
+ sein soll
+\begin_inset Newline newline
+\end_inset
+
+z.B.
+ 
+\begin_inset Quotes ald
+\end_inset
+
+https://fix.confoxy.com/hlmng/rest
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+gcmURL (String) = Die URL der Google Cloud Messaging API um Nachrichten
+ zu senden
+\begin_inset Newline newline
+\end_inset
+
+z.B: 
+\begin_inset Quotes ald
+\end_inset
+
+https://android.googleapis.com/gcm/send
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Der Subpfad zur Rest API wird im File 
+\begin_inset Quotes ald
+\end_inset
+
+WebContent/web.xml
+\begin_inset Quotes ard
+\end_inset
+
+ festgelegt:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<servlet-mapping>
+\end_layout
+
+\begin_layout Plain Layout
+
+	<servlet-name>
+\end_layout
+
+\begin_layout Plain Layout
+
+		Jersey REST Service
+\end_layout
+
+\begin_layout Plain Layout
+
+	</servlet-name>
+\end_layout
+
+\begin_layout Plain Layout
+
+	<url-pattern>
+\end_layout
+
+\begin_layout Plain Layout
+
+		/rest/*      <---- */
+\end_layout
+
+\begin_layout Plain Layout
+
+	</url-pattern>
+\end_layout
+
+\begin_layout Plain Layout
+
+</servlet-mapping>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Login Daten
+\end_layout
+
+\begin_layout Itemize
+jdbcUser (String) = Der JDBC User für die Datenbank
+\end_layout
+
+\begin_layout Itemize
+jdbcPassword (String) = Das JDBC Passwort für den User
+\end_layout
+
+\begin_layout Itemize
+apiKey (String) = Der vom Google erhaltene Key für ihre API's
+\end_layout
+
+\begin_layout Subsubsection
+Facebook
+\end_layout
+
+\begin_layout Itemize
+facebookAppId (String) = Die Facebook App ID
+\end_layout
+
+\begin_layout Itemize
+facebookPageId (String) = Die Facebook Page ID auf welche gepostet werden
+ soll
+\end_layout
+
+\begin_layout Subsubsection
+Weiteres
+\end_layout
+
+\begin_layout Itemize
+cacheTime (int) = Cache Max-Age in Sekunden
+\end_layout
+
+\begin_layout Itemize
+qrCodeWidth , qrCodeHeight (int)= Die Dimension der gerenderten Qr Codes
+ in Pixel
+\end_layout
+
+\begin_layout Itemize
+maxMediaImageSizeMB (Double) = Die maximale Dateigrösse für die Datei uploads
+ in Megabyte
+\end_layout
+
+\begin_layout Itemize
+logSysErr (boolean) = Falls Wahr wird jeglicher Log Output auf System.Error
+ umgeleitet anstatt direkt in das Logfile geschrieben zu werden
+\end_layout
+
+\begin_layout Itemize
+selectLimit (int) = Die Anzahl von Elementen die bei limitieren Queries
+ geladen werden sollen (z.B.
+ bei /newest calls)
+\end_layout
+
+\begin_layout Itemize
+maxActionsAllowed (int) = Die Anzahl Aktionen (siehe API Dokumentation ->
+ Spam Schutz) welche in 
+\begin_inset Quotes ald
+\end_inset
+
+actionGraceTime
+\begin_inset Quotes ard
+\end_inset
+
+ durchgeführt werden dürfen
+\end_layout
+
+\begin_layout Itemize
+actionGraceTime (int) = Die Aktionen Zeitfenster (in ms)
+\end_layout
+
+\begin_layout Itemize
+Angestrengtheit (int) = Die Länge der QR Code Payload in Bit
+\end_layout
+
+\begin_layout Itemize
+mediaUploadThumbnailPixel (int) = Die maximale Höhe oder Länge eines Thumbnails
+\end_layout
+
+\begin_layout Subsection
+MySQL
+\end_layout
+
+\begin_layout Subsubsection
+Konfiguration
+\end_layout
+
+\begin_layout Standard
+Auf der MySQL Server Instanz muss ein Schema mit dem Namen 
+\begin_inset Quotes ald
+\end_inset
+
+hlmng
+\begin_inset Quotes ard
+\end_inset
+
+ erstellt werden (andere Namen sind möglich, diese müssen dann auch so in
+ die Konfiguration übernommen werden).
+ In dieses Schema müssen alle sich unter
+\series bold
+ 
+\begin_inset Quotes ald
+\end_inset
+
+src/doc/6_SQL_Creates
+\begin_inset Quotes ard
+\end_inset
+
+
+\series default
+ befindende SQL Dateien importiert werden.
+ Dies ist möglich mit dem 
+\begin_inset Quotes ald
+\end_inset
+
+source
+\begin_inset Quotes ard
+\end_inset
+
+ Befehl oder einer GUI wie MySQL Workbench 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://www.mysql.de/products/workbench/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ Nun sollte ein Benutzer mit den benötigten Berechtigungen (delete,insert,select
+,update) angelegt werden, dies sollte etwa wie folgt aussehen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+CREATE USER 'user'@'localhost' IDENTIFIED BY '************';
+\end_layout
+
+\begin_layout Plain Layout
+
+GRANT DELETE,INSERT,SELECT,UPDATE ON hlmng.* TO 'user'@'localhost';
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Verbindungsdaten
+\end_layout
+
+\begin_layout Standard
+Unter 
+\series bold
+
+\begin_inset Quotes ald
+\end_inset
+
+hlmmng/WebContent/META-INF/context.xml
+\begin_inset Quotes ard
+\end_inset
+
+ 
+\series default
+werden die Informationen für die MySQL Verbindung festgelegt, siehe 
+\begin_inset Quotes ald
+\end_inset
+
+url
+\begin_inset Quotes ard
+\end_inset
+
+ sowie 
+\begin_inset Quotes ald
+\end_inset
+
+username
+\begin_inset Quotes ard
+\end_inset
+
+ und 
+\begin_inset Quotes ald
+\end_inset
+
+password
+\begin_inset Quotes ard
+\end_inset
+
+.
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<Resource name="jdbc/hlmng" auth="Container" type="javax.sql.DataSource"
+\end_layout
+
+\begin_layout Plain Layout
+
+driverClassName="com.mysql.jdbc.Driver" 
+\end_layout
+
+\begin_layout Plain Layout
+
+url="jdbc:mysql://localhost:3306/hlmng?autoReconnect=true" 
+\end_layout
+
+\begin_layout Plain Layout
+
+username="user" password="password" />
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+HTTPS
+\end_layout
+
+\begin_layout Standard
+Als erstes muss ein Keystore mit einem Cert erstellt werden.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+keytool -genkey -alias tomcat -keyalg RSA 
+\end_layout
+
+\end_inset
+
+Nun muss im server.xml von Tomcat der Connector konfiguriert werden, wichtig
+ ist, dass der User Tomcat dieses File lesen kann.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<Connector executor="tomcatThreadPool" port="8080" 
+\end_layout
+
+\begin_layout Plain Layout
+
+protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" />
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
+\end_layout
+
+\begin_layout Plain Layout
+
+disableUploadTimeout="true"  enableLookups="false" maxThreads="25"
+\end_layout
+
+\begin_layout Plain Layout
+
+keyAlias="hlmng" port="8443" keystoreFile="/home/ozzi/.keystore" 
+\end_layout
+
+\begin_layout Plain Layout
+
+keystorePass="*****" protocol="org.apache.coyote.http11.Http11NioProtocol"
+\end_layout
+
+\begin_layout Plain Layout
+
+scheme="https" secure="true" sslProtocol="TLS" />
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Installation Software
+\end_layout
+
+\begin_layout Subsection
+Eclipse Einstellungen
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Tipp: 
+\series default
+Das angelegte Projekt sollte vom Typ 
+\begin_inset Quotes ald
+\end_inset
+
+Dynamic Web Project
+\begin_inset Quotes ard
+\end_inset
+
+ sein, damit ein Tomcat Server in Eclipse hinzugefügt werden kann und somit
+ auf einfache Weise lokal deployed werden kann.
+\end_layout
+
+\begin_layout Standard
+Bei Eclipse EE ist es wichtig, das 
+\begin_inset Quotes ald
+\end_inset
+
+Compiler compliance level
+\begin_inset Quotes ard
+\end_inset
+
+ auf 1.7 zu setzen.
+ Da ansonsten bei der Kompilation mit OS X oder potentiell weiteren Betriebssyst
+em die folgende Exception auftritt: 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Unsupported major.minor version 52.0
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Das 
+\begin_inset Quotes ald
+\end_inset
+
+Compiler compliance level
+\begin_inset Quotes ard
+\end_inset
+
+ kann in den Properties unter 
+\begin_inset Quotes ald
+\end_inset
+
+Java Compiler
+\begin_inset Quotes ard
+\end_inset
+
+ gefunden werden, siehe untenstehenden Screenshot.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename compliance.png
+	lyxscale 60
+	width 55page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Zudem müssen die Libraries im Buildpath wie folgenden Screenshot hinzugefügt
+ werden.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename lib.png
+	lyxscale 40
+	width 60page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Version Control
+\end_layout
+
+\begin_layout Standard
+Die neuste Version kann per GitHub 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/ozzi-/hlmng
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ bezogen werden.
+\end_layout
+
+\begin_layout Subsection
+Kompilaton
+\end_layout
+
+\begin_layout Subsubsection
+Eclipse
+\end_layout
+
+\begin_layout Standard
+Unter Eclipse kann man das Projekt wie folgt exportieren:
+\begin_inset Newline newline
+\end_inset
+
+Project Explorer -> Rechtsklick -> Export -> War File 
+\end_layout
+
+\begin_layout Subsubsection
+Commandline
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+cd /path/to/project
+\end_layout
+
+\begin_layout Plain Layout
+
+jar cvf hlmng.war *
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Installation
+\end_layout
+
+\begin_layout Standard
+Das erstellte WAR File muss in den 
+\begin_inset Quotes ald
+\end_inset
+
+WebApps
+\begin_inset Quotes ard
+\end_inset
+
+ Ordner von Tomcat kopiert werden.
+ Dieser befindet sich bei Debian unter 
+\begin_inset Quotes ald
+\end_inset
+
+/var/lib/tomcat7/webapps/
+\begin_inset Quotes ard
+\end_inset
+
+.
+ Die Anwendung sollte nun automatisch deployed werden und sogleich erreichbar
+ sein.
+\end_layout
+
+\begin_layout Subsubsection
+Überprüfung
+\end_layout
+
+\begin_layout Standard
+Falls alles erfolgreich installiert wurde, sollte unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://localhost:8443/hlmng/frontend/
+\end_layout
+
+\end_inset
+
+ das Frontend geladen werden.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename welcome.png
+	lyxscale 40
+	scale 55
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ Als Test sollte erfolgreich ein 
+\begin_inset Quotes ald
+\end_inset
+
+Speaker
+\begin_inset Quotes ard
+\end_inset
+
+ erstellt werden können.
+ Unter 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://localhost:8443/hlmng/rest/adm/speaker
+\end_layout
+
+\end_inset
+
+ sollte der soeben erstellte 
+\begin_inset Quotes ald
+\end_inset
+
+Speaker
+\begin_inset Quotes ard
+\end_inset
+
+ nun als JSON angezeigt werden.
+ Zudem sollte das Log frei von Warnings oder Errors sein.
+\end_layout
+
+\begin_layout Subsubsection
+Common Mistakes
+\end_layout
+
+\begin_layout Itemize
+Falsch Verbindungsdaten in 
+\begin_inset Quotes ald
+\end_inset
+
+context.xml
+\begin_inset Quotes ard
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+lstparams "showstringspaces=false"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException:
+\end_layout
+
+\begin_layout Plain Layout
+
+Could not create connection to database server.
+ Attempted reconnect 3 times.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+oder
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Caused by: java.sql.SQLException: Access denied for user 'hlmdng_db' .
+ .
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes ald
+\end_inset
+
+Seite konnte nicht gefunden werden
+\begin_inset Quotes ard
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Sicherstellen, dass die Pfade richtig konfiguriert sind und die Applikation
+ von Tomcat geladen wurde.
+\end_layout
+
+\begin_layout Itemize
+Nicht das Log Konsultieren
+\begin_inset Newline newline
+\end_inset
+
+
+\series medium
+Viele Fehler können durch das konsultieren des Log lokalisiert werden.
+\end_layout
+
+\begin_layout Itemize
+Falsche Systemzeit
+\begin_inset Newline newline
+\end_inset
+
+Falls eine falsche / abweichende Systemzeit auf dem Server (sowie auf dem
+ System des Operator Browsers) kann es zu Fehlern bei Countdown und Timer
+ anzeigen geben.
+ Auch Twitter sowie Facebook können bei abweichender Systemzeit die Posts
+ verweigern (respektive deren Oauth Implementiertung).
+\end_layout
+
+\begin_layout Itemize
+Twitter Publishing: Error 500 
+\begin_inset Newline newline
+\end_inset
+
+Dieser Fehler ist zu sehen in der Browser JS Konsole und macht sich bemerkbar,
+ wenn beim Posten auf Twitter der Spinner nicht verschwindet / nichts passiert.
+ Dies liegt höchstwahrscheinlich an falschen Tokens in der Datei 
+\begin_inset Quotes ald
+\end_inset
+
+src/twitter4j.properties
+\begin_inset Quotes ard
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Facebook Post: Error 424
+\begin_inset Newline newline
+\end_inset
+
+Dieser Fehler erscheint in der Browser JS Konsole, wenn in 
+\begin_inset Quotes ald
+\end_inset
+
+src/facebook4j.properties
+\begin_inset Quotes ard
+\end_inset
+
+ die Tokens falsch sind oder in 
+\begin_inset Quotes ald
+\end_inset
+
+WebContent/frontend/js/app.js
+\begin_inset Quotes ard
+\end_inset
+
+ die falschen Facebook ID hinterlegt ist.
+\end_layout
+
+\begin_layout Section
+Unterhalt
+\end_layout
+
+\begin_layout Standard
+Folgende Unterhaltsarbeiten können im längerfristigen Betrieb auftreten:
+\end_layout
+
+\begin_layout Itemize
+Expiry der API Token
+\begin_inset Newline newline
+\end_inset
+
+Neue Token generieren und in der Applikation einfügen.
+\end_layout
+
+\begin_layout Itemize
+Festplattenspeicher
+\begin_inset Newline newline
+\end_inset
+
+QR Codes auf dem Dateisystem können gelöscht werden, bei Bedarf werden diese
+ neu angelegt.
+\begin_inset Newline newline
+\end_inset
+
+Alte Log Dateien können migriert oder gelöscht werden.
+\end_layout
+
+\begin_layout Itemize
+Arbeitsspeicher
+\begin_inset Newline newline
+\end_inset
+
+Da kein langfristiger Testlauf mit mehren hunderten Benutzern im Rahmen
+ der Entwicklung der Bachelorarbeit simuliert werden konnte, sollte beim
+ ersten produktiven Einsatz die Arbeitsspeicher Auslastung überwacht werden,
+ z.B.
+ mit JStat 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://docs.oracle.com/javase/7/docs/technotes/tools/share/jstat.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Datenbank
+\begin_inset Newline newline
+\end_inset
+
+Der übliche Unterhalt der Datenbank sollte gewährleistet sein.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Libraries
+\begin_inset Newline newline
+\end_inset
+
+Es werden einige Libraries verwendet, diese sollten periodisch oder bei
+ bekannten Sicherheitslücken aktualisiert werden und das Projekt neu kompiliert,
+ getestet und deployed werden.
+\end_layout
+
+\begin_layout Itemize
+ui-Router
+\begin_inset Newline newline
+\end_inset
+
+Da das Modul ui-Router noch in Entwicklung ist, kann es durchaus sein, dass
+ es noch grössere Änderungen geben wird.
+ Diese müssten bei einem Update des Moduls eventuell nachgeführt werden.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fussnoten Index
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+listoffootnotes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

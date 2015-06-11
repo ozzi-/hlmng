@@ -83,9 +83,11 @@ public class PublishExtResource  extends Resource{
 			Log.addEntry(Level.WARNING,"Couldn't post to Facebook due to a missing access token, make sure the frontend loads the social list page first"); 
 		    return null;
 		}
+				
 		facebook.setOAuthAccessToken(accessTokenFB);
 		String postID;
-		if(social.getMedia().equals("")){
+		
+		if(social.getMedia()==null || social.getMedia().equals("")){
 			postID = facebook.postStatusMessage(social.getText());    
 			postID= postID.substring(postID.lastIndexOf("_") + 1);
 		}else{

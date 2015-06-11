@@ -19,7 +19,6 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 		if(voting.ispaused==false){
 			var pause='{ "start":"00:00:00" , "votingIDFK":0}';
 			var pauseObj=JSON.parse(pause);
-			pauseObj.start = ToolService.getCurTime();
 			pauseObj.votingIDFK= voting.votingID;
 			hlmng.postPausePresentation(pauseObj,'presentationpause').then(function(data){
 				voting.ispaused=true;
@@ -31,7 +30,6 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 		if(voting.ispaused){
 			RestService.get(voting.votingID,'voting','getpause').then(function(data){
 				var pauseObj = data;
-				pauseObj.stop= ToolService.getCurTime();
 				RestService.put(pauseObj,pauseObj.presentationpauseID,'presentationpause');
 				voting.ispaused=false;
 			});
@@ -40,7 +38,6 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	
 	hlmng.startPresentation = function(voting) {  
 		voting.status = "presentation";
-		voting.presentationStarted=ToolService.getCurTime();
 		voting.ispaused=false;
 		hlmng.putVoting(voting,voting.votingID,'voting');
 		hlmng.removeFromAll(voting);
@@ -49,7 +46,6 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	
 	hlmng.endPresentation = function(voting) {  
 		voting.status = "presentation_end";
-		voting.presentationEnded=ToolService.getCurTime();
 		hlmng.putVoting(voting,voting.votingID,'voting');
 		hlmng.removeFromAll(voting);
 		hlmng.votingsUpcomingEndPresentation.push(voting);
@@ -57,7 +53,6 @@ votingModule.controller('VotingListController', ['$http','RestService','$statePa
 	
 	hlmng.startVoting = function(voting) {  
 		voting.status = "voting";
-		voting.votingStarted=ToolService.getCurTime();
 		hlmng.putVoting(voting,voting.votingID,'voting');
 		hlmng.removeFromAll(voting);
 		hlmng.votingsRunning.push(voting);

@@ -361,6 +361,7 @@ public class VotingResource extends Resource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException, ParseException {
 		setVotingDateIfVotingStatus(element);
+		setTimes(element);
 		checkForGCM(element);
 		Voting before = (Voting) getResource(votingDao, id);
 		checkForNewRound(element, before);
@@ -394,7 +395,6 @@ public class VotingResource extends Resource {
 	private void setVotingDateIfVotingStatus(Voting element) {
 		if(element.getStatus().equals(Voting.statusEnum.voting.toString())){
 			element.setVotingDate(TimeHelper.getCurrentDate());
-			System.out.println(element.getVotingDate());
 		}
 	}
 	
@@ -402,7 +402,19 @@ public class VotingResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object postVoting(Voting element) throws IOException{
+		setTimes(element);
 		return postResource(votingDao, element);
+	}
+	private void setTimes(Voting element) {
+		if(element.getStatus().equals(Voting.statusEnum.presentation.toString())){
+			element.setPresentationStarted(TimeHelper.getCurrentTime());
+		}
+		if(element.getStatus().equals(Voting.statusEnum.presentation_end.toString())){
+			element.setPresentationEnded(TimeHelper.getCurrentTime());
+		}
+		if(element.getStatus().equals(Voting.statusEnum.voting.toString())){
+			element.setVotingStarted(TimeHelper.getCurrentTime());
+		}
 	}
 
 	private enum modes{

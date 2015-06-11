@@ -3016,7 +3016,7 @@ Die eindeutige ID der Presentationpause
 
 
 \series bold
-start - 
+start [!] - 
 \series default
 Der Startzeitpunkt der Pause
 \begin_inset Newline newline
@@ -3024,7 +3024,7 @@ Der Startzeitpunkt der Pause
 
 
 \series bold
-stop [Null] - 
+stop [!] [Null] - 
 \series default
 Der Stopzeitpunkt der Pause
 \begin_inset Newline newline
@@ -4788,7 +4788,7 @@ votingDate
 \series default
  
 \series bold
-[Null] 
+[!] [Null] 
 \series default
 - Das Datum an welchem das Voting auf den Status 
 \begin_inset Quotes ald
@@ -4804,7 +4804,7 @@ voting
 
 
 \series bold
-votingStarted - [Null] 
+votingStarted - [!] [Null] 
 \series default
 Der Zeitpunkt an welchem das Voting gestartet wurde (also status=voting)
 \series bold
@@ -4848,7 +4848,7 @@ presentationMaxTime
 
 
 \series bold
-presentationStarted [Null]
+presentationStarted [!] [Null]
 \series default
  - Der Zeitpunkt an dem die Präsentation gestartet wurde
 \series bold
@@ -4856,7 +4856,7 @@ presentationStarted [Null]
 \begin_inset Newline newline
 \end_inset
 
-presentationEnded [Null] 
+presentationEnded [!] [Null] 
 \series default
 - Der Zeitpunkt an dem die Präsentation beendet wurde
 \begin_inset Newline newline
