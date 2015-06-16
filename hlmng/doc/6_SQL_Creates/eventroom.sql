@@ -26,8 +26,9 @@ DROP TABLE IF EXISTS `eventroom`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eventroom` (
   `eventRoomID` int(11) NOT NULL AUTO_INCREMENT,
-  `eventIDFK` int(11) DEFAULT NULL,
-  `name` varchar(60) DEFAULT NULL,
+  `eventIDFK` int(11) NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `color` varchar(7) NOT NULL,
   `location` varchar(60),
   PRIMARY KEY (`eventRoomID`),
   KEY `eventIDFK_er` (`eventIDFK`),
