@@ -31,7 +31,10 @@ CREATE TABLE `event` (
   `startDate` varchar(10) NOT NULL,
   `endDate` varchar(10) NOT NULL,
   `active` tinyint(1) NOT NULL,
-  PRIMARY KEY (`eventID`)
+  `mediaIDFK` int(11) DEFAULT NULL,
+  PRIMARY KEY (`eventID`),
+  KEY `mediaIDFK_ev` (`mediaIDFK`),
+  CONSTRAINT `mediaIDFK_ev` FOREIGN KEY (`mediaIDFK`) REFERENCES `media` (`mediaID`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
