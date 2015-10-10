@@ -1,5 +1,8 @@
 package hlmng.dao;
 
+import java.io.IOException;
+
+import resources.GetPropertyValues;
 import hlmng.model.Event;
 import hlmng.model.EventItem;
 import hlmng.model.EventRoom;
@@ -56,6 +59,15 @@ public enum GenDaoLoader {
 		votingDao=new GenDao(Voting.class);
 		presentationpauseDao=new GenDao(PresentationPause.class);
 		socialPublishDao=new GenDao(SocialPublish.class);
+		
+		GetPropertyValues properties = new GetPropertyValues();
+		try {
+			properties.getAndSetPropValues();
+		} catch (IOException e) {
+			System.err.println("Problem loading properties file");
+			e.printStackTrace();
+		}
+		
 	}
 	public GenDao getPresentationpauseDao(){
 		return presentationpauseDao;

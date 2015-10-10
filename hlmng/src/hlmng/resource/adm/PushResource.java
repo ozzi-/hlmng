@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.ProtocolException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -91,6 +92,12 @@ public class PushResource  extends Resource{
 
 	protected static void doGCMSend(Push element, List<Object> users)
 			throws ProtocolException, IOException, ParseException {
+		
+		if(!settings.HLMNGSettings.sendGCM){
+			log.Log.addEntry(Level.INFO, "GCM push is disabled by config.properties");
+			return;
+		}
+		
 		List<String> regIds = new ArrayList<String>();
 		for (Object userobject : users) {
 			regIds.add(((User) userobject).getRegID());
