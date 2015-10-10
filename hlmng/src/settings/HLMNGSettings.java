@@ -2,15 +2,17 @@ package settings;
 
 
 
+
 public class HLMNGSettings {
 	
 	/**
 	 * Database Configuration for JUnit
 	 */
 	public static final String jdbcPath="jdbc:mysql://127.0.0.1/hlmng";
-	public static final String jdbcUser="*****";
-	public static final String jdbcPassword="***********";
-	
+	public static final String jdbcUser="****";
+	public static final String jdbcPassword="*****";
+	 
+
 	/**
 	 * Rest API URL config
 	 * Example: hostname:port/rest/pub
@@ -18,8 +20,8 @@ public class HLMNGSettings {
 	 * Sadly we can't use uri.getBaseUri() since we are using the reverse proxy and that
 	 * function then returns localhost..
 	 */
-	public static final String restAppPath="https://localhost:8443/hlmng/rest";
-	//public static final String restAppPath="https://fix.confoxy.com/hlmng/rest";
+	//public static final String restAppPath="https://localhost:8443/hlmng/rest";
+	public static final String restAppPath="https://fix.confoxy.com/hlmng/rest";
 
 					
 	public static final String pubURL="/pub";
@@ -28,8 +30,8 @@ public class HLMNGSettings {
 	/**
 	 * Facebook Config
 	 */	
-	public static final String facebookAppId= "*****";
-	public static final String facebookPageId= "*******";
+	public static final String facebookAppId= "1**338";
+	public static final String facebookPageId= "7395***3755";
 
 	
 	/**
@@ -76,7 +78,9 @@ public class HLMNGSettings {
 	 * GCM
 	 */
 	public static final String gcmURL = "https://android.googleapis.com/gcm/send"; 
-	public static final String apiKey = "*****************";
+	public static final String apiKey = "AIzaSyD*************wfbbiOp4B8";
+	public static boolean sendGCM=true;
+
 	
 	/**
 	 * Querybuilder
