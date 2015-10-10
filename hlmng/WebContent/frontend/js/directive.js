@@ -25,7 +25,8 @@ directiveModule.directive('speakerInfoEdit', function(){
 		restrict: 'E',
 		templateUrl: 'template/speaker/speaker-info-edit.html',
 		scope: {
-			speaker: "=speaker"
+			speaker: "=speaker",
+			hidechangeimage:"=hidechangeimage"
 		}
 	};
 });
@@ -76,7 +77,8 @@ directiveModule.directive('eventInfoEdit', function(){
 		restrict: 'E',
 		templateUrl: 'template/event/event-info-edit.html',
 		scope: {
-			event: "=event"
+			event: "=event",
+			hidechangeimage:"=hidechangeimage"
 		}
 	};
 });
