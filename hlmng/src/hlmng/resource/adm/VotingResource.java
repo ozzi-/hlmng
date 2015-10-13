@@ -131,7 +131,7 @@ public class VotingResource extends Resource {
 		csvExp.addValue("", true);
 		csvExp.addValue("", true);
 		//--
-		csvExp.addValue("Sliders & Weibghts", true);
+		csvExp.addValue("Sliders & Weights", true);
 		csvExp.addValue("###############", true);
 		csvExp.addValue("", true);
 		List<Object> sliderList = sliderDao.listByFK("votingIDFK", id);
@@ -139,7 +139,7 @@ public class VotingResource extends Resource {
 		csvExp.addValue("", false);
 		csvExp.addValue("In Time Score", false);
 		csvExp.addValue(String.valueOf(voting.getInTimeScoreWeight()), false);
-		csvExp.addValue("''", false);
+		csvExp.addValue(String.valueOf(id), false);
 		csvExp.addValue("", true);
 		csvExp.addValue("", true);
 		// -- 
@@ -152,8 +152,12 @@ public class VotingResource extends Resource {
 		for (Object sliderObj : sliderList) {
 			Slider slider = (Slider) sliderObj;
 			csvExp.addValue(slider.getName(), false);
-			csvExp.addValue(Double.toString(getSliderScore(slider.getSliderID(),true)), false);
-			csvExp.addValue(Double.toString(getSliderScore(slider.getSliderID(),false)), false); 
+			String juryScore = Double.toString(getSliderScore(slider.getSliderID(),true));
+			juryScore = padZeros(juryScore);
+			csvExp.addValue(juryScore, false);
+			String audienceScore = Double.toString(getSliderScore(slider.getSliderID(),false));
+			audienceScore = padZeros(audienceScore);
+			csvExp.addValue(audienceScore, false); 
 			csvExp.addValue("", true);
 		}
 
@@ -163,9 +167,12 @@ public class VotingResource extends Resource {
 		double actualInTimeScore = (inTime)?possibleInTimeScore:0.0;
 		csvExp.addValue(String.valueOf(actualInTimeScore), false);
 		csvExp.addValue(" ", true);
+		
 		csvExp.addValue("Total", false);
-		csvExp.addValue(String.valueOf(getTotalScoreJury(id)), false);
-		csvExp.addValue(String.valueOf(getTotalScoreAudience(id)), true);
+		String juryTotalScore =padZeros(String.valueOf(getTotalScoreJury(id)));
+		csvExp.addValue(juryTotalScore, false);
+		String audienceTotalScore= padZeros(String.valueOf(getTotalScoreAudience(id)));
+		csvExp.addValue(audienceTotalScore, true);
 
 		csvExp.addValue("", true);
 		csvExp.addValue("", true);
@@ -190,6 +197,20 @@ public class VotingResource extends Resource {
 		csvExp.addList(new ArrayList<Object>(voteListAudience));
 		csvExp.addValue("", true);
 		csvExp.addValue("", true);
+	}
+	/*
+	 * We need this, else some versions of excel think its a a date.  
+	 */
+	private String padZeros(String score) {
+		return(score+= returnCharXTimes("0", 6-score.length()));
+	}
+	private String returnCharXTimes(String ch, int x){
+		String result="";
+		if(x<1){return result;}
+		for (int i = 0; i < x; i++) {
+			result+=ch;
+		}
+		return result;
 	}
 	@GET
 	@Path("{id}/totalscorejury")
@@ -360,10 +381,10 @@ public class VotingResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response putVoting(Voting element,@PathParam("id") int id) throws IOException, ParseException {
-		setVotingDateIfVotingStatus(element);
-		setTimes(element);
-		checkForGCM(element);
 		Voting before = (Voting) getResource(votingDao, id);
+		setVotingDateIfVotingStatus(element);
+		setTimes(element,before);
+		checkForGCM(element);
 		checkForNewRound(element, before);
 		return putResource(votingDao, element, id);
 	}
@@ -386,11 +407,13 @@ public class VotingResource extends Resource {
 		if(element.getStatus().equals(Voting.statusEnum.presentation_end.toString()) || element.getStatus().equals(Voting.statusEnum.voting.toString())){
 			List<Object> users = listResource(userDao, false);
 			Push pushNotif = new Push(element.getStatus(),"{ \"votingID\": "+element.getVotingID()+" , \"name\": \""+element.getName()+"\" }", "vote_event" );
-			PushResource.doGCMSend(pushNotif, users);
-			postResource(pushDao,pushNotif);
+			boolean sent=PushResource.doGCMSend(pushNotif, users);
+			if(sent){
+				postResource(pushDao,pushNotif);				
+			}
 		}else{
 			log.Log.addEntry(Level.INFO, "No need for GCM push");
-		}
+		}			
 	}
 	private void setVotingDateIfVotingStatus(Voting element) {
 		if(element.getStatus().equals(Voting.statusEnum.voting.toString())){
@@ -402,18 +425,23 @@ public class VotingResource extends Resource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object postVoting(Voting element) throws IOException{
-		setTimes(element);
+		setTimes(element,null);
 		return postResource(votingDao, element);
 	}
-	private void setTimes(Voting element) {
-		if(element.getStatus().equals(Voting.statusEnum.presentation.toString())){
-			element.setPresentationStarted(TimeHelper.getCurrentTime());
+	private void setTimes(Voting current, Voting before) {
+		if(before!=null){
+			current.setPresentationEnded(before.getPresentationEnded());
+			current.setPresentationStarted(before.getPresentationStarted());
+			current.setVotingStarted(before.getVotingStarted());
 		}
-		if(element.getStatus().equals(Voting.statusEnum.presentation_end.toString())){
-			element.setPresentationEnded(TimeHelper.getCurrentTime());
+		if(current.getStatus().equals(Voting.statusEnum.presentation.toString())){
+			current.setPresentationStarted(TimeHelper.getCurrentTime());
 		}
-		if(element.getStatus().equals(Voting.statusEnum.voting.toString())){
-			element.setVotingStarted(TimeHelper.getCurrentTime());
+		if(current.getStatus().equals(Voting.statusEnum.presentation_end.toString())){
+			current.setPresentationEnded(TimeHelper.getCurrentTime());
+		}
+		if(current.getStatus().equals(Voting.statusEnum.voting.toString())){
+			current.setVotingStarted(TimeHelper.getCurrentTime());
 		}
 	}
 

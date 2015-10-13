@@ -105,7 +105,9 @@ public class EventResource extends Resource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getEvent() throws IOException {
-		return listResource(eventDao, false);
+		List<Object> eventObjects = listResource(eventDao, false);
+		ResourceHelper.enrichEventListWithMedia(uri, eventObjects);
+		return eventObjects;
 	}
 	@GET
 	@Path("/lastupdate")
@@ -113,12 +115,13 @@ public class EventResource extends Resource {
 	public long getLastUpdateTime() throws IOException {
 		return eventDao.getLastUpdateTime();
 	}
-	
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Event getEvent(@PathParam("id") int id) throws IOException{
-		return (Event) getResource(eventDao, id);
+		Event event = (Event) getResource(eventDao, id);
+		ResourceHelper.enrichEventWithMedia(uri, event);
+		return event;
 	}
 	@PUT
 	@Path("{id}")

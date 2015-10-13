@@ -81,21 +81,25 @@ public class PushResource  extends Resource{
 	public Object postPush(Push element) throws IOException, ParseException {
 		if(!UserActionLimiter.actionsExceeded("pushResource")){
 			List<Object> users = listResource(GenDaoLoader.instance.getUserDao(), false);
-			doGCMSend(element, users);
-			ModelHelper.valuestoString(element);
-			return postResource(pushDao, element);
+			boolean sent= doGCMSend(element, users);
+			if(sent){
+				ModelHelper.valuestoString(element);
+				return postResource(pushDao, element);				
+			}else{
+				return "didn't send gcm push as disabled";
+			}
 		}else{
 			return null;
 		}
 	}
 
 
-	protected static void doGCMSend(Push element, List<Object> users)
+	protected static boolean doGCMSend(Push element, List<Object> users)
 			throws ProtocolException, IOException, ParseException {
 		
 		if(!settings.HLMNGSettings.sendGCM){
 			log.Log.addEntry(Level.INFO, "GCM push is disabled by config.properties");
-			return;
+			return false;
 		}
 		
 		List<String> regIds = new ArrayList<String>();
@@ -105,6 +109,7 @@ public class PushResource  extends Resource{
 		
 		String gcmResponse = GCM.sendGcm(element.getTitle(), element.getText(), regIds);			
 		setPushMetaData(element, gcmResponse);
+		return true;
 	}
 
 
