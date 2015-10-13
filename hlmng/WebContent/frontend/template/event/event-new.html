@@ -7,7 +7,9 @@
 				ID already taken, double check your input please
 			</span>
 		</div>
-		<event-info-edit event="eventNewCtrl.event"></event-info-edit>
+		<event-info-edit event="eventNewCtrl.event" hidechangeimage="true"></event-info-edit>
+		<br><br>
+		<media-upload></media-upload>
 		<br><br>
 	</form>
 	<button class="btn btn-success" ng-disabled="!eventInfoNewForm.$valid" ng-click="eventNewCtrl.postAndRedir();">Submit</button>

@@ -1,11 +1,13 @@
 var eventModule = angular.module('event', []);
 
 
-eventModule.controller('EventNewController', ['$http','RestService','ToolService','$scope','$filter', function($http,RestService,ToolService,$scope,$filter){
+eventModule.controller('EventNewController', ['$http','RestService','ToolService','$scope','$filter','dataService', function($http,RestService,ToolService,$scope,$filter,dataService){
 	var hlmng = this;
 	hlmng.event={};
 	hlmng.postEvent = RestService.post;
 	hlmng.postAndRedir = function() {
+		hlmng.event.mediaIDFK=dataService.dataObj;
+		dataService.dataObj=0;
 		hlmng.postEvent(hlmng.event,'event').then(function(data){
 			hlmng.event=data;
 			ToolService.redir('event.active.overview',{eventId:hlmng.event.eventID});
@@ -85,7 +87,7 @@ eventModule.controller('EventOverviewController', ['$http','$stateParams','RestS
 
 }]);
 
-eventModule.controller('EventIdController', ['$http','$stateParams','RestService', function($http, $stateParams,RestService){
+eventModule.controller('EventIdController', ['$http','$stateParams','RestService','dataService', function($http, $stateParams,RestService,dataService){
 	var hlmng = this;
 	hlmng.form = {};
 	
@@ -93,7 +95,17 @@ eventModule.controller('EventIdController', ['$http','$stateParams','RestService
 		hlmng.event=data;
 	});
 
-	hlmng.putEvent = RestService.put;
+	hlmng.putEvent = function(event,eventID) {
+		if(dataService.dataObj!=0){
+			hlmng.event.mediaIDFK=dataService.dataObj;
+	       	hlmng.event.media=dataService.dataObj2; 
+		}
+		dataService.dataObj=0;
+		dataService.dataObj2=0;
+			
+		RestService.put(event,eventID,'event');
+		ToolService.redir('event.active.id',{eventId: hlmng.event.eventID}); 
+	};
 }]);
 
 eventModule.controller('EventListController', ['$http','RestService', function($http,RestService){

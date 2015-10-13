@@ -4,7 +4,7 @@
 <div ng-show="edit">
 	<div class="col-md-6 col-xs-12">
 		<form name="speakerInfoEditForm" novalidate>
-				<speaker-info-edit speaker="speakerIdCtrl.speaker"></speaker-info-edit>
+				<speaker-info-edit speaker="speakerIdCtrl.speaker" hidechangeimage="false"></speaker-info-edit>
 		</form>	
 		<br>
 		<button class="btn btn-danger" ng-click="speakerIdCtrl.deleteSpeaker(speakerIdCtrl.speaker.speakerID,'speaker'); speakerIdCtrl.redir('speaker.list');">Delete this Speaker</button>

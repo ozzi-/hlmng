@@ -21,11 +21,11 @@
 	Img: <a ng-href="{{speaker.media}}">
 		<img class="speaker-image" ng-src="{{speaker.media+'_thumb'}}" err-src="{{'./img/speaker_default.png'}}"/><br>
 	</a>
-	<button class="btn btn-default" ng-click="toggle=!toggle">Change Image</button>
+	<button class="btn btn-default" ng-hide="hidechangeimage" ng-click="toggle=!toggle">Change Image</button>
 </span >
 <span ng-show="toggle">
 	<media-upload></media-upload>		
-</span >
+</span>
 
 
 

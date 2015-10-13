@@ -22,3 +22,15 @@
 	<label for="event-active">Active (Unlocks in HLM)</label><br> 
 	<input type="checkbox" name= "event-active" ng-model="event.active">
 </div>
+<span ng-show="!toggle">
+	<span ng-show="event.media">
+		Img: 
+		<a ng-href="{{event.media}}">
+			<img class="speaker-image" ng-src="{{event.media+'_thumb'}}" err-src="{{'./img/empty.png'}}"/><br>
+		</a>
+	</span>
+	<button class="btn btn-default" ng-hide="hidechangeimage" ng-click="toggle=!toggle">Change Image</button>
+</span>
+<span ng-show="toggle">
+	<media-upload></media-upload>		
+</span >
